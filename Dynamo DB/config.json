@@ -1,0 +1,42 @@
+{
+  "topics": [ 
+    {
+      "Introduction": [
+        "What is DynamoDB?",
+        "Core Components"
+      ]
+    }, {
+      "Dynamo API": [
+        "Control Plane",
+        "Data Plane",
+        "DynamoDB Streams",
+        "Transactions"
+      ]
+    }, {
+      "Naming Rules and Data Types": [
+        "Naming Rules",
+        "Data Types"
+      ]
+    }, {
+      "Read Consistency": []
+    }, {
+      "Read-Write Capacity Mode": []
+    }, {
+      "Partitions and Data Distribution": [
+        "Data Distribution: Partition Key",
+        "Data Distribution: Partition Key and Sort Key"
+      ]
+    }, {
+      "CRUD operations": [
+        "Create a table",
+        "Describe a table",
+        "Insert Data into a Table",
+        "Reading Data from a Table"
+      ]
+    }, {
+      "Managing Indices": []
+    }, {
+      
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+<link rel="stylesheet" href="styles.css">
+
+<div class="navbar">
+  <h1><a href="./00.main.html">Dynamo DB</a></h1>
+</div>
+
+<div class="topic">
+  <h2 id="CreateTable">Create a table</h2>
+  <p>must provide following parameters to <span class="code">CreateTable</span></p>
+  <ul>
+    <li><span class="code">TableName: string</span> = {name of the table}</li>
+    <li><span class="code">KeySchema: object[]</span> = {attributes that are used for the primary key}</li>
+    <li><span class="code">AttributeDefinitions: object[]</span> = {Data types for the key schema attributes}</li>
+    <li><span class="code">ProvisionedThroughput: object</span> = {Number of reads and writes per second that you need for this table}</li>
+  </ul>
+
+  <pre class="code">
+    {
+        TableName : "Music",
+        KeySchema: [ 
+            { AttributeName: "Artist", KeyType: "HASH" }, //Partition key
+            { AttributeName: "SongTitle", KeyType: "RANGE" } //Sort key
+        ],
+        AttributeDefinitions: [
+            { AttributeName: "Artist", AttributeType: "S" },
+            { AttributeName: "SongTitle", AttributeType: "S" }
+        ],
+        ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 } // Only specified if using provisioned mode
+    }
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="DescribeTable">Describe Table</h2>
+  <p>The only parameter is the table name.</p>
+  <ul>
+    <li><span class="code">TableName: string</span> = {name of the table}</li>
+  </ul>
+
+  <pre class="code">
+    {
+        TableName: "Music"
+    }
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="InsertDataIntoATable">Insert Data into a Table</h2>
+
+  <h3>PartiQL</h3>
+  <p>use the ExecuteStatement action to add an item to a table, using the Insert PartiQL statement.</p>
+  <pre class="code">
+    INSERT INTO Music VALUE { 'Artist': 'No One You Know', 'SongTitle': 'Call Me Today' }
+  </pre>
+
+  <h3>Classic APIs</h3>
+  <p>use the PutItem action to add an item to a table.</p>
+  <pre class="code">
+    { 
+        TableName: "Music",
+        Item: { "Artist":"No One You Know", "SongTitle":"Call Me Today" }
+    }
+  </pre>
+
+  <div class="notes">
+    <span class="subtopics">//</span> Most SQL databases are transaction oriented. When you issue an <span class="code">INSERT</span> statement, the data modifications are not permanent until you issue a <span class="code">COMMIT</span> statement. With Amazon DynamoDB, the effects of a PutItem action are permanent when DynamoDB replies with an HTTP 200 status code (OK).<br/>
+    <span class="subtopics">//</span> In addition to <span class="code">PutItem</span>, DynamoDB supports a <span class="code">BatchWriteItem</span> action for writing multiple items at the same time.<br/>
+  </div>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="ReadingDataFromATable">Reading Data from a Table</h2>
+  <p>Amazon DynamoDB provides the following operations for reading data:</p>
+  <ul>
+    <li><span class="code">ExecuteStatement</span>: Retrieves a single or multiple items from a table using the PartiQL. DynamoDB also provides the <span class="code">BatchExecuteStatement</span> operation, allowing you to retrieve multiple items from different tables in a single operation.</li>
+    <li><span class="code">GetItem</span>: Retrieves a single item from a table. (DynamoDB also provides the <span class="code">BatchGetItem</span> operation, allowing you to perform up to 100 <span class="code">GetItem</span> calls in a single operation.)</li>
+    <li><span class="code">Query</span>: Retrieves all of the items that have a specific partition key. Within those items, you can apply a condition to the sort key and retrieve only a subset of the data. It provides quick, efficient access to the partitions where the data is stored.</li>
+    <li><span class="code">Scan</span>: Retrieves all of the items in the specified table.</li>
+  </ul>
+
+  <div class="notes">
+    <span class="subtopics">//</span> This is the most efficient way to read a single item because it provides direct access to the physical location of the item.<br/>
+    <span class="subtopics">//</span> DynamoDB is a non-relational NoSQL database that does not support table joins. Instead, applications read data from one table at a time.<br/>
+  </div>
+
+  <h3>PartiQL</h3>
+  <p>use <span class="code">ExecuteStatement</span> to retrieve the items with statement similar to that of SQL</p>
+
+  <pre class="code">
+    SELECT * FROM Music WHERE Artist='No One You Know';
+  </pre>
+
+
+  <h3>Classic APIs</h3>
+
+  <p><span class="code">GetItem</span></p>
+  <pre class="code">
+    /* optional param 'ProjectionExpression' to return only some attributes */
+
+    { TableName: "Music",
+      Key: { "Artist": "No One You Know", "SongTitle": "Call Me Today" },
+      "ProjectionExpression": "AlbumTitle, Year, Price"
+    }
+  </pre>
+
+  <p><span class="code">Query</span>: You must specify an equality condition for the partition key, and you can optionally provide another condition for the sort key.</p>
+  <pre class="code">
+    /* Return a single song, by primary key */
+    { TableName: "Music",
+      KeyConditionExpression: "Artist = :a and SongTitle = :t",
+      ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call Me Today" }
+    }
+
+    /* Return all of the songs by an artist, matching first part of title */
+    {
+      TableName: "Music",
+      KeyConditionExpression: "Artist = :a and begins_with(SongTitle, :t)",
+      ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call" }
+    }
+  </pre>
+  <div class="notes">
+    <span class="subtopic">//</span> You can use an optional <span class="code">FilterExpression</span> to remove certain items from the results before they are returned to you.<br/>
+    <span class="subtopic">//</span>  you must use <span class="code">ExpressionAttributeValues</span> as placeholders in expression parameters (such as <span class="code">KeyConditionExpression</span> and <span class="code">FilterExpression</span>). This is analogous to the use of bind variables in relational databases, where you substitute the actual values into the <span class="code">SELECT</span> statement at runtime.<br/>
+  </div>
+
+  <p><span class="code">Scan</span></p>
+  <pre class="code">
+    { TableName:  "Music" }
+  </pre>
+  <div class="notes">
+    <span class="subtopic">//</span> <span class="code">ProjectionExpression</span> can be used to get certain attributes.<br/>
+    <span class="subtopic">//</span> The <span class="code">Scan</span> action also provides a <span class="code">FilterExpression</span> parameter, which you can use to discard items that you do not want to appear in the results. A <span class="code">FilterExpression</span> is applied after the scan is performed, but before the results are returned to you.<br/>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./06.partitions_and_data_distribution.html">06. Partitions and Data Distribution</a></span>
+  <span class="next"><a href="./08.managing_indices.html">08. Managing Indices</a></span>
+</div>

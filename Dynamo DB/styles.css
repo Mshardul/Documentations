@@ -1,0 +1,65 @@
+:root {
+  --navbar-background-color: #8181F5;
+  --footer-background-color: #8181F5;
+  --index-link-color: #5121F5;
+  --topic-border-color: #8181F5;
+  --note-background-color: lavender;
+  --code-background-color: #f2f3f3;
+}
+
+/* header */
+.navbar {
+  background-color: var(--navbar-background-color);
+  overflow: hidden;
+  text-align: center;
+  margin: 10px;
+}
+
+/* footer */
+.footer {
+  background-color: var(--footer-background-color);
+  overflow: hidden;
+  margin: 10px;
+  font-size: x-large;
+  padding: 10px;
+}
+.prev, .next {display:inline}
+.prev {float: left}
+.next {float: right}
+
+/* page-wise */
+ul {
+  margin: 0px;
+}
+
+p {
+  margin-bottom: 0px;
+}
+
+h2 {
+  border-bottom: 5px solid black;
+}
+
+/* special classes */
+.notes {
+  border-radius: 10px;
+  padding: 5px;
+  background-color: var(--note-background-color);
+  margin: 2px
+}
+
+.topic {
+  border: 5px solid var(--topic-border-color);
+  border-radius: 15px;
+  padding: 5px;
+}
+
+.subtopic {
+  font-weight: bold;
+}
+
+.code {
+  background-color: var(--code-background-color);
+  font-family: American Typewriter;
+}
+

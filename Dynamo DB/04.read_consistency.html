@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="styles.css">
+
+<div class="navbar">
+  <h1><a href="./00.main.html">Dynamo DB</a></h1>
+</div>
+
+<div class="topic">
+  <h2 id="ReadConstistency">Read Consistency</h2>
+  <ul>
+    <li><span class="subtopic">AWS Regions</span>: Amazon DynamoDB is available in multiple AWS Regions around the world. Each Region is independent and isolated from other AWS Regions.</li>
+    <li><span class="subtopic">Availability Zones</span>: Every AWS Region consists of multiple distinct locations called Availability Zones. Each Availability Zone is isolated from failures in other Availability Zones, and provides inexpensive, low-latency network connectivity to other Availability Zones in the same Region.</li>
+    <li>When your application writes data to a DynamoDB table and receives an HTTP 200 response (OK), the write has occurred and is durable. The data is eventually consistent across all storage locations, usually within one second or less.</li>
+    <li>DynamoDB supports eventually consistent and strongly consistent reads.</li>
+  </ul>
+
+  <h3>Eventually consistent</h3>
+  <p>When you read data from a DynamoDB table, the response might not reflect the results of a recently completed write operation. The response might include some stale data. If you repeat your read request after a short time, the response should return the latest data.</p>
+
+  <h3>Strongly consistent</h3>
+  <p>When you request a strongly consistent read, DynamoDB returns a response with the most up-to-date data, reflecting the updates from all prior write operations that were successful. However, this consistency comes with some disadvantages:</p>
+  <ul>
+    <li>A strongly consistent read might not be available if there is a network delay or outage. In this case, DynamoDB may return a server error (HTTP 500).</li>
+    <li>Strongly consistent reads may have higher latency than eventually consistent reads.</li>
+    <li>Strongly consistent reads are not supported on global secondary indexes.</li>
+    <li>Strongly consistent reads use more throughput capacity than eventually consistent reads.</li>
+  </ul>
+
+  <div class="notes">
+    <span class="subtopic">//</span>  DynamoDB uses eventually consistent reads, unless you specify otherwise. Read operations (such as GetItem, Query, and Scan) provide a ConsistentRead parameter. If you set this parameter to true, DynamoDB uses strongly consistent reads during the operation.
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./03.naming_rules_and_data_types.html">03. Naming Rules and Data Types</a></span>
+  <span class="next"><a href="./05.read_write_capacity_mode.html">05. Read-Write Capacity Mode</a></span>
+</div>

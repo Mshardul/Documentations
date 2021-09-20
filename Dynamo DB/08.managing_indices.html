@@ -4,11 +4,67 @@
   <h1><a href="./00.main.html">Dynamo DB</a></h1>
 </div>
 
+<div class="notes"><span class="subtopic">//</span> Indexes give you access to alternate query patterns, and can speed up queries.</div>
 <div class="topic">
-  <p>Indexes give you access to alternate query patterns, and can speed up queries.</p>
+  <h2 id="CreatingAnIndex">Creating an Index</h2>
+    <p>Indexes in DynamoDB are different from their relational counterparts. When you create a secondary index, you must specify its key attributes—a partition key and a sort key. After you create the secondary index, you can Query it or Scan it just as you would with a table.</p>
+    <p>Dynamo DB supports 2 kinds of Indices</p>
+    <ul>
+      <li><span class="subtopic">Global secondary indexes</span> – The primary key of the index can be any two attributes from its table.</li>
+      <li><span class="subtopic">Local secondary indexes</span> – The partition key of the index must be the same as the partition key of its table. However, the sort key can be any other attribute.
+    </ul>
+    <p>Add a global secondary index to an existing table, using the <span class="code">UpdateTable</span> action and specifying <span class="code">GlobalSecondaryIndexUpdatesFollowing</span>. Following params are required</p>
+    <ul>
+      <li><span class="code">IndexName</span>: A name for the index.</li>
+      <li><span class="code">KeySchema</span>: The attributes that are used for the index's primary key.</li>
+      <li><span class="code">Projection</span>: Attributes from the table that are copied to the index.</li>
+      <li><span class="code">ProvisionedThroughput</span>(for provisioned tables): number of reads and writes per second that you need for this index.</li>
+    </ul>
+    <pre class="code">
+      {
+        TableName: "Music",
+        AttributeDefinitions:[
+            {AttributeName: "Genre", AttributeType: "S"},
+            {AttributeName: "Price", AttributeType: "N"}
+        ],
+        GlobalSecondaryIndexUpdates: [{
+            Create: {
+                IndexName: "GenreAndPriceIndex",
+                KeySchema: [
+                    {AttributeName: "Genre", KeyType: "HASH"}, //Partition key
+                    {AttributeName: "Price", KeyType: "RANGE"}, //Sort key
+                ],
+                Projection: { "ProjectionType": "ALL" },
+                ProvisionedThroughput: { "ReadCapacityUnits": 1,"WriteCapacityUnits": 1 } // Only specified if using provisioned mode
+            } } ] 
+      }
+    </pre>
+    <div class="notes">
+      <span class="subtopic">//</span> DynamoDB does not have a query optimizer, so a secondary index is only used when you Query it or Scan it.<br/>
+      <span class="subtopic">//</span> You can request strongly consistent Query or Scan actions on a table or a local secondary index. However, global secondary indexes support only eventual consistency.<br/>
+    </div>
+  </div>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="QueryingAnIndex">Querying an Index</h2>
+  <p>perform Query operations directly on the index, in the same way as on a table. must specify both TableName and IndexName</p>
+  <pre class="code">
+    {
+        TableName: "Music",
+        IndexName: "GenreAndPriceIndex",
+        KeyConditionExpression: "Genre = :genre and Price < :price",
+        ExpressionAttributeValues: {
+            ":genre": "Country",
+            ":price": 0.50
+        }
+    };
+  </pre>
 </div>
 
 <div class="footer">
   <span class="prev"><a href="./07.crud_operations.html">07. CRUD Operations</a></span>
-  <!-- <span class="next"><a href="./08.managing_indices.html">08. Managing Indices</a></span> -->
+  <span class="next"><a href="./09.cli_examples.html">09. CLI Examples</a></span>
 </div>

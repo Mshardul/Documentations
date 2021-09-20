@@ -1,0 +1,116 @@
+<link rel="stylesheet" href="styles.css">
+
+<div class="navbar">
+  <h1><a href="./00.main.html">Dynamo DB</a></h1>
+</div>
+
+<div class="topic">
+  <h2 id="CreateATable">Create a Table</h2>
+  <pre class="code">
+    $ aws dynamodb create-table \
+        --table-name Music \
+        --attribute-definitions \
+            AttributeName=Artist,AttributeType=S \
+            AttributeName=SongTitle,AttributeType=S \
+        --key-schema \
+            AttributeName=Artist,KeyType=HASH \
+            AttributeName=SongTitle,KeyType=RANGE \
+        --provisioned-throughput \
+            ReadCapacityUnits=10,WriteCapacityUnits=5
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="WriteData">Write Data</h2>
+  <pre class="code">
+    aws dynamodb put-item \
+        --table-name Music  \
+        --item \
+            '{"Artist": {"S": "No One You Know"}, "SongTitle": {"S": "Call Me Today"}, "AlbumTitle": {"S": "Somewhat Famous"}, "Awards": {"N": "1"}}'
+  </pre>
+
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="ReadData">Read Data</h2>
+  <pre class="code">
+    aws dynamodb get-item --consistent-read \
+        --table-name Music \
+        --key '{ "Artist": {"S": "Acme Band"}, "SongTitle": {"S": "Happy Day"}}'
+  </pre>
+
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="UpdateData">Update Data</h2>
+  <pre class="code">
+    aws dynamodb update-item \
+        --table-name Music \
+        --key '{ "Artist": {"S": "Acme Band"}, "SongTitle": {"S": "Happy Day"}}' \
+        --update-expression "SET AlbumTitle = :newval" \
+        --expression-attribute-values '{":newval":{"S":"Updated Album Title"}}' \
+        --return-values ALL_NEW
+  </pre>
+
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="QueryData">Query Data</h2>
+  <pre class="code">
+    aws dynamodb query \
+        --table-name Music \
+        --key-condition-expression "Artist = :name" \
+        --expression-attribute-values  '{":name":{"S":"Acme Band"}}'
+  </pre>
+
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="CreateAGlobalSecondaryIndex">Create a Global Secondary Index</h2>
+  <pre class="code">
+    aws dynamodb update-table \
+        --table-name Music \
+        --attribute-definitions AttributeName=AlbumTitle,AttributeType=S \
+        --global-secondary-index-updates \
+            "[{\"Create\":{\"IndexName\": \"AlbumTitle-index\",\"KeySchema\":[{\"AttributeName\":\"AlbumTitle\",\"KeyType\":\"HASH\"}], \
+            \"ProvisionedThroughput\": {\"ReadCapacityUnits\": 10, \"WriteCapacityUnits\": 5      },\"Projection\":{\"ProjectionType\":\"ALL\"}}}]"
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="QueryTheGlobalSecondaryIndex">Query the Global Secondary Index</h2>
+  <pre class="code">
+    aws dynamodb query \
+        --table-name Music \
+        --index-name AlbumTitle-index \
+        --key-condition-expression "AlbumTitle = :name" \
+        --expression-attribute-values  '{":name":{"S":"Somewhat Famous"}}'
+  </pre>
+
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="DeleteATable">Delete a table</h2>
+  <pre class="code">
+    aws dynamodb delete-table --table-name Music
+  </pre>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./08.managing_indices.html">08. Managing Indices</a></span>
+  <span class="next"><a href="./10.accessing_dynamo_db.html">10. Accessing DynamoDB</a></span>
+</div>

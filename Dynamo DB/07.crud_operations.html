@@ -67,8 +67,8 @@
   </pre>
 
   <div class="notes">
-    <span class="subtopics">//</span> Most SQL databases are transaction oriented. When you issue an <span class="code">INSERT</span> statement, the data modifications are not permanent until you issue a <span class="code">COMMIT</span> statement. With Amazon DynamoDB, the effects of a PutItem action are permanent when DynamoDB replies with an HTTP 200 status code (OK).<br/>
-    <span class="subtopics">//</span> In addition to <span class="code">PutItem</span>, DynamoDB supports a <span class="code">BatchWriteItem</span> action for writing multiple items at the same time.<br/>
+    <span class="subtopic">//</span> Most SQL databases are transaction oriented. When you issue an <span class="code">INSERT</span> statement, the data modifications are not permanent until you issue a <span class="code">COMMIT</span> statement. With Amazon DynamoDB, the effects of a PutItem action are permanent when DynamoDB replies with an HTTP 200 status code (OK).<br/>
+    <span class="subtopic">//</span> In addition to <span class="code">PutItem</span>, DynamoDB supports a <span class="code">BatchWriteItem</span> action for writing multiple items at the same time.<br/>
   </div>
 </div>
 
@@ -85,8 +85,8 @@
   </ul>
 
   <div class="notes">
-    <span class="subtopics">//</span> This is the most efficient way to read a single item because it provides direct access to the physical location of the item.<br/>
-    <span class="subtopics">//</span> DynamoDB is a non-relational NoSQL database that does not support table joins. Instead, applications read data from one table at a time.<br/>
+    <span class="subtopic">//</span> This is the most efficient way to read a single item because it provides direct access to the physical location of the item.<br/>
+    <span class="subtopic">//</span> DynamoDB is a non-relational NoSQL database that does not support table joins. Instead, applications read data from one table at a time.<br/>
   </div>
 
   <h3>PartiQL</h3>
@@ -137,6 +137,71 @@
     <span class="subtopic">//</span> <span class="code">ProjectionExpression</span> can be used to get certain attributes.<br/>
     <span class="subtopic">//</span> The <span class="code">Scan</span> action also provides a <span class="code">FilterExpression</span> parameter, which you can use to discard items that you do not want to appear in the results. A <span class="code">FilterExpression</span> is applied after the scan is performed, but before the results are returned to you.<br/>
   </div>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="UpdateDataInATable">Update Table</h2>
+  <p><span class="code">UpdateItem</span> action modifies a single item. In case of modifying multiple items, use multiple <span class="code">UpdateItem</span> operations.</p>
+  <p>Following params are used:</p>
+  <ul>
+    <li><span class="code">Key</span>: Key attributes of the item to be modified</li>
+    <li><span class="code">UpdateExpression</span>: to specify attribute values</li>
+    <li><span class="code">ConditionExpression</span>(optional): similar to 'where' in SQL</li>
+    <li><span class="code">ReturnValues</span>(optional): to return a value</li>
+  </ul>
+  <div class="notes">
+    <span class="subtopic">//</span> UpdateItem behaves like an "upsert" operation: The item is updated if it exists in the table, but if not, a new item is added (inserted).<br/>
+  </div>
+  <pre class="code">
+    /* update label and price, when certain conditions are met */
+    {
+        TableName: "Music",
+        Key: { "Artist":"No One You Know", "SongTitle":"Call Me Today" },
+        UpdateExpression: "SET RecordLabel = :label",
+        ConditionExpression: "Price >= :p",
+        ExpressionAttributeValues: { ":label": "Global Records", ":p": 2.00 }
+    }
+
+    /* increment nof plays */
+    {
+      TableName: "Music",
+      Key: { "Artist":"No One You Know", "SongTitle":"Call Me Today" },
+      UpdateExpression: "SET Plays = Plays + :incr",
+      ExpressionAttributeValues: { ":incr": 1 },
+      ReturnValues: "UPDATED_NEW"
+    }
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 class="DeleteDataFromATable">Delete Data from a Table</h2>
+  <p>use <span class="code">DeleteItem</span> to delete data from a table, one at a time.</p>
+  <div class="notes">
+    <span class="subtopic">//</span> DynamoDB supports a <span class="code">BatchWriteItem</span> action for deleting multiple items at the same time.<br/>
+  </div>
+  <p>Following params are required:</p>
+  <ul>
+    <li><span class="code">Key</span>: Key attributes of the item to delete.</li>
+    <li><span class="code">ConditionExpression</span> (optional): item is deleted only if this expression results to <span class="code">true</span></li>
+  </ul>
+  <pre class="code">
+    {
+        TableName: "Music",
+        Key: { Artist: "The Acme Band", SongTitle: "Look Out, World" },
+        ConditionExpression: "attribute_exists(RecordLabel)"
+    }
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 class="RemovingATable">Removing a Table</h2>
+  <p>use <span class="code">DeleteTable</span> to permanently remove a table</p>
 </div>
 
 <div class="footer">

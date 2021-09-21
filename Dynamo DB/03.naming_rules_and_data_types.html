@@ -20,19 +20,19 @@
   <h2 id="DataTypes">Data Types</h2>
   <p>Data types for attributes can be categorized as follows</p>
   <ul>
-    <li><span class="subtopic">Scalar Types –</span> can represent exactly one value. The scalar types are number, string, binary, Boolean, and null.</li>
-    <li><span class="subtopic">Document Types –</span> can represent a complex structure with nested attributes. The document types are list and map.</li>
-    <li><span class="subtopic">Set Types –</span> can represent multiple scalar values. The set types are string set, number set, and binary set.</li>
+    <li><span class="point">Scalar Types</span>: can represent exactly one value. The scalar types are number, string, binary, Boolean, and null.</li>
+    <li><span class="point">Document Types</span>: can represent a complex structure with nested attributes. The document types are list and map.</li>
+    <li><span class="point">Set Types</span>: can represent multiple scalar values. The set types are string set, number set, and binary set.</li>
   </ul>
   <div class="notes">
-    <span class="subtopic">//</span> While creating a table or a secondary index, you must specify the names and data types of each primary key attribute (partition key and sort key). Furthermore, each primary key attribute must be defined as type string, number, or binary.<br/>
-    <span class="subtopic">//</span> DynamoDB is a NoSQL database and is schemaless ie other than the primary key attributes, you don't have to define any attributes or data types when you create tables.<br/>
-    <span class="subtopic">//</span> All numbers are sent across the network to DynamoDB as strings, to maximize compatibility across languages and libraries. However, DynamoDB treats them as number type attributes for mathematical operations.<br/>
-    <span class="subtopic">//</span> If number precision is important, you should pass numbers to DynamoDB using strings that you convert from the number type.<br/>
-    <span class="subtopic">//</span> DynamoDB collates and compares strings using the bytes of the underlying UTF-8 string encoding.<br/>
-    <span class="subtopic">//</span> A list is similar to a JSON array. There are no restrictions on the data types that can be stored in a list element, and the elements in a list element do not have to be of the same type.<br/>
-    <span class="subtopic">//</span> A map is similar to a JSON object. There are no restrictions on the data types that can be stored in a map element, and the elements in a map do not have to be of the same type.<br/>
-    <span class="subtopic">//</span> Each value within a set must be unique. The order of the values within a set is not preserved.<br/>
+    // While creating a table or a secondary index, you must specify the names and data types of each primary key attribute (partition key and sort key). Furthermore, each primary key attribute must be defined as type string, number, or binary.<br/>
+    // DynamoDB is a NoSQL database and is schemaless ie other than the primary key attributes, you don't have to define any attributes or data types when you create tables.<br/>
+    // All numbers are sent across the network to DynamoDB as strings, to maximize compatibility across languages and libraries. However, DynamoDB treats them as number type attributes for mathematical operations.<br/>
+    // If number precision is important, you should pass numbers to DynamoDB using strings that you convert from the number type.<br/>
+    // DynamoDB collates and compares strings using the bytes of the underlying UTF-8 string encoding.<br/>
+    // A list is similar to a JSON array. There are no restrictions on the data types that can be stored in a list element, and the elements in a list element do not have to be of the same type.<br/>
+    // A map is similar to a JSON object. There are no restrictions on the data types that can be stored in a map element, and the elements in a map do not have to be of the same type.<br/>
+    // Each value within a set must be unique. The order of the values within a set is not preserved.<br/>
   </div>
 </div>
 

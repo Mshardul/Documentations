@@ -14,7 +14,7 @@
   </ul>
 
   <div class="notes">
-    <span class="subtopic">//</span> DynamoDB is optimized for uniform distribution of items across a table's partitions, no matter how many partitions there may be. We recommend that you choose a partition key that can have a large number of distinct values relative to the number of items in the table.
+    // DynamoDB is optimized for uniform distribution of items across a table's partitions, no matter how many partitions there may be. We recommend that you choose a partition key that can have a large number of distinct values relative to the number of items in the table.
   </div>
 </div>
 
@@ -25,13 +25,13 @@
   <p>DynamoDB calculates the hash value of the partition key in the same way. However, it stores all the items with the same partition key value physically close together, ordered by sort key value.</p>
 
   <ul>
-    <li>To <span class="subtopic">write an item</span> to the table, DynamoDB calculates the hash value of the partition key to determine which partition should contain the item. In that partition, several items could have the same partition key value. So DynamoDB stores the item among the others with the same partition key, in ascending order by sort key.</li>
-    <li>To <span class="subtopic">read an item</span> from the table, you must specify its partition key value and sort key value. DynamoDB calculates the partition key's hash value, yielding the partition in which the item can be found.</li>
+    <li>To <span class="point">write an item</span> to the table, DynamoDB calculates the hash value of the partition key to determine which partition should contain the item. In that partition, several items could have the same partition key value. So DynamoDB stores the item among the others with the same partition key, in ascending order by sort key.</li>
+    <li>To <span class="point">read an item</span> from the table, you must specify its partition key value and sort key value. DynamoDB calculates the partition key's hash value, yielding the partition in which the item can be found.</li>
     <li>You can read multiple items from the table in a single operation (Query) if the items you want have the same partition key value. DynamoDB returns all of the items with that partition key value. Optionally, you can apply a condition to the sort key so that it returns only the items within a certain range of values.</li>
   </ul>
 
   <div class="notes">
-    <span class="subtopic">//</span> In a DynamoDB table, there is no upper limit on the number of distinct sort key values per partition key value
+    // In a DynamoDB table, there is no upper limit on the number of distinct sort key values per partition key value
   </div>
 </div>
 

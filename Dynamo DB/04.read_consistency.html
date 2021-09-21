@@ -7,8 +7,8 @@
 <div class="topic">
   <h2 id="ReadConstistency">Read Consistency</h2>
   <ul>
-    <li><span class="subtopic">AWS Regions</span>: Amazon DynamoDB is available in multiple AWS Regions around the world. Each Region is independent and isolated from other AWS Regions.</li>
-    <li><span class="subtopic">Availability Zones</span>: Every AWS Region consists of multiple distinct locations called Availability Zones. Each Availability Zone is isolated from failures in other Availability Zones, and provides inexpensive, low-latency network connectivity to other Availability Zones in the same Region.</li>
+    <li><span class="point">AWS Regions</span>: Amazon DynamoDB is available in multiple AWS Regions around the world. Each Region is independent and isolated from other AWS Regions.</li>
+    <li><span class="point">Availability Zones</span>: Every AWS Region consists of multiple distinct locations called Availability Zones. Each Availability Zone is isolated from failures in other Availability Zones, and provides inexpensive, low-latency network connectivity to other Availability Zones in the same Region.</li>
     <li>When your application writes data to a DynamoDB table and receives an HTTP 200 response (OK), the write has occurred and is durable. The data is eventually consistent across all storage locations, usually within one second or less.</li>
     <li>DynamoDB supports eventually consistent and strongly consistent reads.</li>
   </ul>
@@ -26,7 +26,7 @@
   </ul>
 
   <div class="notes">
-    <span class="subtopic">//</span>  DynamoDB uses eventually consistent reads, unless you specify otherwise. Read operations (such as GetItem, Query, and Scan) provide a ConsistentRead parameter. If you set this parameter to true, DynamoDB uses strongly consistent reads during the operation.
+    // DynamoDB uses eventually consistent reads, unless you specify otherwise. Read operations (such as GetItem, Query, and Scan) provide a ConsistentRead parameter. If you set this parameter to true, DynamoDB uses strongly consistent reads during the operation.
   </div>
 </div>
 

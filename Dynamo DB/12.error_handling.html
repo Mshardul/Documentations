@@ -1,0 +1,103 @@
+<link rel="stylesheet" href="styles.css">
+
+<div class="navbar">
+  <h1><a href="./00.main.html">Dynamo DB</a></h1>
+</div>
+
+<div class="topic">
+  <h2 id="ErrorComponent">Error Component</h2>
+  Each error has three components:
+  <ul>
+    <li>An HTTP status code</li>
+    <li>An exception name </li>
+    <li>An error message</li>
+  </ul>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="ErrorMessagesAndCodes">Error Messages and Codes</h2>
+  
+  <h3>Status Code 400</h3>
+  
+  <h4>AccessDeniedException</h4>
+  Access denied: The client did not correctly sign the request.
+
+  <h4>ConditionalCheckFailedException</h4>
+  The conditional request failed: You specified a condition that evaluated to false
+
+  <h4>IncompleteSignatureException</h4>
+  The request signature does not conform to AWS standards: The request signature did not include all of the required components.
+
+  <h4>ItemCollectionSizeLimitExceededException</h4>
+  Collection size exceeded: For a table with a local secondary index, a group of items with the same partition key value has exceeded the maximum size limit of 10 GB
+
+  <h4>LimitExceededException</h4>
+  Too many operations for a given subscriber: There are too many concurrent control plane operations. The cumulative number of tables and indexes in the CREATING, DELETING, or UPDATING state cannot exceed 50.
+
+  <h4>MissingAuthenticationTokenException</h4>
+  Request must contain a valid (registered) AWS Access Key ID: The request did not include the required authorization header, or it was malformed.
+
+  <h4>ProvisionedThroughputExceededException</h4>
+  You exceeded your maximum allowed provisioned throughput for a table or for one or more global secondary indexes. To view performance metrics for provisioned throughput vs. consumed throughput, open the Amazon CloudWatch console.
+
+  <h4>RequestLimitExceeded</h4>
+  Throughput exceeds the current throughput limit for your account.
+
+  <h4>ResourceInUseException</h4>
+  The resource which you are attempting to change is in use.
+
+  <h4>ResourceNotFoundException</h4>
+  Requested resource not found.
+
+  <h4>ThrottlingException</h4>
+  Rate of requests exceeds the allowed throughput: This exception is returned as an AmazonServiceException response with a THROTTLING_EXCEPTION status code. This exception might be returned if you perform control plane API operations too rapidly.
+
+  <h4>UnrecognizedClientException</h4>
+  The Access Key ID or security token is invalid.: The request signature is incorrect. The most likely cause is an invalid AWS access key ID or secret key.
+
+  <h4>ValidationException</h4>
+  Varies, depending upon the specific error(s) encountered: This error can occur for several reasons, such as a required parameter that is missing, a value that is out of range, or mismatched data types. The error message contains details about the specific part of the request that caused the error.
+
+  <h3>HTTP Status Code 5xx</h3>
+  <p>An HTTP 5xx status code indicates a problem that must be resolved by AWS.</p>
+
+  <h4>Internal Server Error (HTTP 500)</h4>
+  DynamoDB could not process your request.
+
+  <h4>Service Unavailable (HTTP 503)</h4>
+  DynamoDB is currently unavailable. (This should be a temporary state.)
+
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="ErrorHandlingTheApplication">Error Handling the Application</h2>
+  <p>the <span class="code">try-catch</span> construct handles two different kinds of exceptions:</p>
+  <ul>
+    <li><span class="point">AmazonServiceException</span>: Thrown if the client request was correctly transmitted to DynamoDB, but DynamoDB could not process the request and returned an error response instead.</li>
+    <li><span class="point">AmazonClientException</span>: Thrown if the client could not get a response from a service, or if the client could not parse the response from a service.</li>
+  </ul>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="ErrorRetriesAndExponentialBackoff">Error Retries and Exponential Backoff</h2>
+  <ul>
+    <li>The usual technique for dealing with these error responses in a networked environment is to implement retries in the client application. This technique increases the reliability of the application.</li>
+    <li>Each AWS SDK implements retry logic automatically. You can modify the retry parameters to your needs.</li>
+    <li>If you're not using an AWS SDK, you should retry original requests that receive server errors (5xx). However, client errors (4xx, other than a ThrottlingException or a ProvisionedThroughputExceededException) indicate that you need to revise the request itself to correct the problem before trying again.</li>
+    <li>In addition to simple retries, each AWS SDK implements an exponential backoff algorithm for better flow control.</li>
+  </ul>
+  <div class="notes">
+    // Dynamo DB's batch operations (<span class="code">BatchGetItem</span> and <span class="code">BatchWriteItem</span>) are implemented as wrappers around other non-batch DynamoDB operations. The batch operations return information about individual requests that fail so that you can diagnose the problem and retry the operation.
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./11.programming_with_dynamo_db.html">11. Programming with DynamoDB</a></span>
+  <!-- <span class="next"><a href="./02.dynamo_api.html">02. Dynamo API</a></span> -->
+</div>

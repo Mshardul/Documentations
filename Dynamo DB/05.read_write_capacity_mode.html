@@ -29,14 +29,14 @@
 
   <p>DynamoDB charges you for the reads and writes that your application performs on your tables in terms of read request units and write request units.</p>
   <ul>
-    <li>One <span class="subtopic">read request</span> unit represents one strongly consistent read request, or two eventually consistent read requests, for an item up to 4 KB in size. Two read request units represent one transactional read for items up to 4 KB.</li>
-    <li>One <span class="subtopic">write request</span> unit represents one write for an item up to 1 KB in size</li>
+    <li>One <span class="point">read request</span> unit represents one strongly consistent read request, or two eventually consistent read requests, for an item up to 4 KB in size. Two read request units represent one transactional read for items up to 4 KB.</li>
+    <li>One <span class="point">write request</span> unit represents one write for an item up to 1 KB in size</li>
   </ul>
 
   <p>Initial Throughput for On-Demand Capacity Mode</p>
   <ul>
-    <li><span class="subtopic">Newly created table with on-demand capacity mode</span>: The previous peak is 2,000 write request units or 6,000 read request units.</li>
-    <li><span class="subtopic">Existing table switched to on-demand capacity mode</span>: The previous peak is half the maximum write capacity units and read capacity units provisioned since the table was created, or the settings for a newly created table with on-demand capacity mode, whichever is higher.</li>
+    <li><span class="point">Newly created table with on-demand capacity mode</span>: The previous peak is 2,000 write request units or 6,000 read request units.</li>
+    <li><span class="point">Existing table switched to on-demand capacity mode</span>: The previous peak is half the maximum write capacity units and read capacity units provisioned since the table was created, or the settings for a newly created table with on-demand capacity mode, whichever is higher.</li>
   </ul>
 
   <h3>Provisioned (default, free-tier eligible)</h3>
@@ -52,18 +52,18 @@
 
   <p>specify throughput capacity in terms of read capacity units (RCUs) and write capacity units (WCUs):</p>
   <ul>
-    <li>One <span class="subtopic">read capacity unit</span> represents one strongly consistent read per second, or two eventually consistent reads per second, for an item up to 4 KB in size. Transactional read requests require two read capacity units to perform one read per second for items up to 4 KB. </li>
-    <li>One <span class="subtopic">write capacity unit</span> represents one write per second for an item up to 1 KB in size. Transactional write requests require 2 write capacity units to perform one write per second for items up to 1 KB.</li>
+    <li>One <span class="point">read capacity unit</span> represents one strongly consistent read per second, or two eventually consistent reads per second, for an item up to 4 KB in size. Transactional read requests require two read capacity units to perform one read per second for items up to 4 KB. </li>
+    <li>One <span class="point">write capacity unit</span> represents one write per second for an item up to 1 KB in size. Transactional write requests require 2 write capacity units to perform one write per second for items up to 1 KB.</li>
   </ul>
 
-  <p><span class="subtopic">Provisioned throughput</span> is the maximum amount of capacity that an application can consume from a table or index. If your application exceeds your provisioned throughput capacity on a table or index, it is subject to request throttling.</p>
+  <p><span class="point">Provisioned throughput</span> is the maximum amount of capacity that an application can consume from a table or index. If your application exceeds your provisioned throughput capacity on a table or index, it is subject to request throttling.</p>
 
-  <p>you can purchase <span class="subtopic">reserved capacity</span> in advance, where you pay a one-time upfront fee and commit to a minimum provisioned usage level over a period of time.</p>
+  <p>you can purchase <span class="point">reserved capacity</span> in advance, where you pay a one-time upfront fee and commit to a minimum provisioned usage level over a period of time.</p>
   <div class="notes">
-    <span class="subtopic">//</span> When you switch a table from provisioned capacity mode to on-demand capacity mode, DynamoDB makes several changes to the structure of your table and partitions. This process can take several minutes. During the switching period, your table delivers throughput that is consistent with the previously provisioned write capacity unit and read capacity unit amounts. When switching from on-demand capacity mode back to provisioned capacity mode, your table delivers throughput consistent with the previous peak reached when the table was set to on-demand capacity mode.<br/>
-    <span class="subtopic">//</span> Throttling prevents your application from consuming too many capacity units. When a request is throttled, it fails with an HTTP 400 code (Bad Request) and a <span class="code">ProvisionedThroughputExceededException</span>. The AWS SDKs have built-in support for retrying throttled requests<br/>
-    <span class="subtopic">//</span> With DynamoDB auto scaling, a table or a global secondary index can increase its provisioned read and write capacity to handle sudden increases in traffic, without request throttling. When the workload decreases, DynamoDB auto scaling can decrease the throughput so that you don't pay for unused provisioned capacity.<br/>
-    <span class="subtopic">//</span> If you use the AWS Management Console to create a table or a global secondary index, DynamoDB auto scaling is enabled by default.<br/>
+    // When you switch a table from provisioned capacity mode to on-demand capacity mode, DynamoDB makes several changes to the structure of your table and partitions. This process can take several minutes. During the switching period, your table delivers throughput that is consistent with the previously provisioned write capacity unit and read capacity unit amounts. When switching from on-demand capacity mode back to provisioned capacity mode, your table delivers throughput consistent with the previous peak reached when the table was set to on-demand capacity mode.<br/>
+    // Throttling prevents your application from consuming too many capacity units. When a request is throttled, it fails with an HTTP 400 code (Bad Request) and a <span class="code">ProvisionedThroughputExceededException</span>. The AWS SDKs have built-in support for retrying throttled requests<br/>
+    // With DynamoDB auto scaling, a table or a global secondary index can increase its provisioned read and write capacity to handle sudden increases in traffic, without request throttling. When the workload decreases, DynamoDB auto scaling can decrease the throughput so that you don't pay for unused provisioned capacity.<br/>
+    // If you use the AWS Management Console to create a table or a global secondary index, DynamoDB auto scaling is enabled by default.<br/>
   </div>
 </div>
 

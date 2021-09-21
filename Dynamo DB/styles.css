@@ -40,6 +40,14 @@ h2 {
   border-bottom: 5px solid black;
 }
 
+h3 {
+  text-decoration: underline;
+}
+
+img {
+  margin: 10px;
+}
+
 /* special classes */
 .notes {
   border-radius: 10px;
@@ -54,7 +62,7 @@ h2 {
   padding: 5px;
 }
 
-.subtopic {
+.point {
   font-weight: bold;
 }
 

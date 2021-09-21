@@ -4,14 +4,16 @@
   <h1><a href="./00.main.html">Dynamo DB</a></h1>
 </div>
 
-<div class="notes"><span class="subtopic">//</span> Indexes give you access to alternate query patterns, and can speed up queries.</div>
+<div class="notes">
+  // Indexes give you access to alternate query patterns, and can speed up queries.
+</div>
 <div class="topic">
   <h2 id="CreatingAnIndex">Creating an Index</h2>
     <p>Indexes in DynamoDB are different from their relational counterparts. When you create a secondary index, you must specify its key attributes—a partition key and a sort key. After you create the secondary index, you can Query it or Scan it just as you would with a table.</p>
     <p>Dynamo DB supports 2 kinds of Indices</p>
     <ul>
-      <li><span class="subtopic">Global secondary indexes</span> – The primary key of the index can be any two attributes from its table.</li>
-      <li><span class="subtopic">Local secondary indexes</span> – The partition key of the index must be the same as the partition key of its table. However, the sort key can be any other attribute.
+      <li><span class="point">Global secondary indexes</span> – The primary key of the index can be any two attributes from its table.</li>
+      <li><span class="point">Local secondary indexes</span> – The partition key of the index must be the same as the partition key of its table. However, the sort key can be any other attribute.
     </ul>
     <p>Add a global secondary index to an existing table, using the <span class="code">UpdateTable</span> action and specifying <span class="code">GlobalSecondaryIndexUpdatesFollowing</span>. Following params are required</p>
     <ul>
@@ -40,8 +42,8 @@
       }
     </pre>
     <div class="notes">
-      <span class="subtopic">//</span> DynamoDB does not have a query optimizer, so a secondary index is only used when you Query it or Scan it.<br/>
-      <span class="subtopic">//</span> You can request strongly consistent Query or Scan actions on a table or a local secondary index. However, global secondary indexes support only eventual consistency.<br/>
+      // DynamoDB does not have a query optimizer, so a secondary index is only used when you Query it or Scan it.<br/>
+      // You can request strongly consistent Query or Scan actions on a table or a local secondary index. However, global secondary indexes support only eventual consistency.<br/>
     </div>
   </div>
 </div>

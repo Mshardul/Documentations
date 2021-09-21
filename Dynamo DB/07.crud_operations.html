@@ -67,8 +67,8 @@
   </pre>
 
   <div class="notes">
-    <span class="subtopic">//</span> Most SQL databases are transaction oriented. When you issue an <span class="code">INSERT</span> statement, the data modifications are not permanent until you issue a <span class="code">COMMIT</span> statement. With Amazon DynamoDB, the effects of a PutItem action are permanent when DynamoDB replies with an HTTP 200 status code (OK).<br/>
-    <span class="subtopic">//</span> In addition to <span class="code">PutItem</span>, DynamoDB supports a <span class="code">BatchWriteItem</span> action for writing multiple items at the same time.<br/>
+    // Most SQL databases are transaction oriented. When you issue an <span class="code">INSERT</span> statement, the data modifications are not permanent until you issue a <span class="code">COMMIT</span> statement. With Amazon DynamoDB, the effects of a PutItem action are permanent when DynamoDB replies with an HTTP 200 status code (OK).<br/>
+    // In addition to <span class="code">PutItem</span>, DynamoDB supports a <span class="code">BatchWriteItem</span> action for writing multiple items at the same time.<br/>
   </div>
 </div>
 
@@ -85,8 +85,8 @@
   </ul>
 
   <div class="notes">
-    <span class="subtopic">//</span> This is the most efficient way to read a single item because it provides direct access to the physical location of the item.<br/>
-    <span class="subtopic">//</span> DynamoDB is a non-relational NoSQL database that does not support table joins. Instead, applications read data from one table at a time.<br/>
+    // This is the most efficient way to read a single item because it provides direct access to the physical location of the item.<br/>
+    // DynamoDB is a non-relational NoSQL database that does not support table joins. Instead, applications read data from one table at a time.<br/>
   </div>
 
   <h3>PartiQL</h3>
@@ -125,8 +125,8 @@
     }
   </pre>
   <div class="notes">
-    <span class="subtopic">//</span> You can use an optional <span class="code">FilterExpression</span> to remove certain items from the results before they are returned to you.<br/>
-    <span class="subtopic">//</span>  you must use <span class="code">ExpressionAttributeValues</span> as placeholders in expression parameters (such as <span class="code">KeyConditionExpression</span> and <span class="code">FilterExpression</span>). This is analogous to the use of bind variables in relational databases, where you substitute the actual values into the <span class="code">SELECT</span> statement at runtime.<br/>
+    // You can use an optional <span class="code">FilterExpression</span> to remove certain items from the results before they are returned to you.<br/>
+    //  you must use <span class="code">ExpressionAttributeValues</span> as placeholders in expression parameters (such as <span class="code">KeyConditionExpression</span> and <span class="code">FilterExpression</span>). This is analogous to the use of bind variables in relational databases, where you substitute the actual values into the <span class="code">SELECT</span> statement at runtime.<br/>
   </div>
 
   <p><span class="code">Scan</span></p>
@@ -134,8 +134,8 @@
     { TableName:  "Music" }
   </pre>
   <div class="notes">
-    <span class="subtopic">//</span> <span class="code">ProjectionExpression</span> can be used to get certain attributes.<br/>
-    <span class="subtopic">//</span> The <span class="code">Scan</span> action also provides a <span class="code">FilterExpression</span> parameter, which you can use to discard items that you do not want to appear in the results. A <span class="code">FilterExpression</span> is applied after the scan is performed, but before the results are returned to you.<br/>
+    // <span class="code">ProjectionExpression</span> can be used to get certain attributes.<br/>
+    // The <span class="code">Scan</span> action also provides a <span class="code">FilterExpression</span> parameter, which you can use to discard items that you do not want to appear in the results. A <span class="code">FilterExpression</span> is applied after the scan is performed, but before the results are returned to you.<br/>
   </div>
 </div>
 
@@ -152,7 +152,7 @@
     <li><span class="code">ReturnValues</span>(optional): to return a value</li>
   </ul>
   <div class="notes">
-    <span class="subtopic">//</span> UpdateItem behaves like an "upsert" operation: The item is updated if it exists in the table, but if not, a new item is added (inserted).<br/>
+    // UpdateItem behaves like an "upsert" operation: The item is updated if it exists in the table, but if not, a new item is added (inserted).<br/>
   </div>
   <pre class="code">
     /* update label and price, when certain conditions are met */
@@ -181,7 +181,7 @@
   <h2 class="DeleteDataFromATable">Delete Data from a Table</h2>
   <p>use <span class="code">DeleteItem</span> to delete data from a table, one at a time.</p>
   <div class="notes">
-    <span class="subtopic">//</span> DynamoDB supports a <span class="code">BatchWriteItem</span> action for deleting multiple items at the same time.<br/>
+    // DynamoDB supports a <span class="code">BatchWriteItem</span> action for deleting multiple items at the same time.<br/>
   </div>
   <p>Following params are required:</p>
   <ul>

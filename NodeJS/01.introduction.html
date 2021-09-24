@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">Dynamo DB</a></span>
+  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
+  <div id="sidebar_topics" class="sidebar sidebar-right sidebar_topics" style="width:25%; right:0; display: none;">
+    <ul>
+      <li><a href="#V8JavaScriptEngine">V8 JavaScript Engine</a></li>
+      <li><a href="#UsingCommandLine">Using Command Line</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="notes">
+  // Node.js uses the CommonJS module system, while in the browser we are starting to see the ES Modules standard being implemented.<br/>
+</div>
+
+<div class="topic">
+  <h2 id="V8JavaScriptEngine">V8 JavaScript Engine</h2>
+  <table>
+    <tr><th>Browsers</th><th>JS engines</th></tr>
+    <tr><td>Google Chrome</td><td>V8</td></tr>
+    <tr><td>Mozilla Firefox</td><td>SpiderMonkey</td></tr>
+    <tr><td>Safari</td><td>JavaScriptCore (also called Nitro)</td></tr>
+    <tr><td>Edge</td><td>V8, earlier built on Chakra</td></tr>
+  </table>
+  <p>All these engines implement the ECMA ES-262 standard, also called ECMAScript, the standard used by JavaScript.</p>
+  <p>Node uses v8, which is written in C++</p>
+  <div class="notes">
+    // JavaScript is generally considered an interpreted language, but modern JavaScript engines no longer just interpret JavaScript, they compile it.<br/>
+  </div>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="UsingCommandLine">Using Command Line</h2>
+  
+  <h3>Running JS file</h3>
+  <p>Run the main Node JS application file using the command <span class="code">node {file_name.js}</span><br/></p>
+  
+  <h3>REPL mode</h3>
+  <p>Alternatively omit the filename, to use Node JS in REPL (Read Evaluate Print Loop) mode</p>
+  <p>REPL is a programming language environment (basically a console window) that takes single expression as user input and returns the result back to the console after execution.</p>
+  <ul>
+    <li>className.&lt;tab&gt; will show all the available methods of that particular class in REPL mode.</li>
+    <li>global.&lt;tab&gt; will show all the global objects.</li>
+    <li>'_' prints the result of the last operation.</li>
+    <li>REPL has some special commands (starting with '.'): .help, .editor, .break, .clear, .load, .save, .exit</li>
+  </ul>
+
+  <h3>Command line args</h3>
+  <ul>
+    <li>Pass command line args after the file name, and retrieve them from <span class="code">process.argv</span> or use <a href="https://www.npmjs.com/package/minimist">minimist</a> library.</li>
+    <li>use readline module and <a href="https://www.npmjs.com/package/readline-sync">readline-sync</a> package to read input from the command line. A more complete and abstract solution is provided by the <a href="https://github.com/SBoudrias/Inquirer.js">Inquirer</a> package.</li>
+  </ul>
+
+  <h3>Command line output</h3>
+  <ul>
+    <li>use <span class="code">console.log()</span> and <span class="code">console.err()</span> to print, <span class="code">console.clear()</span> to clear</li>
+    <li><span class="code">console.count()</span> and <span class="code">console.counterReset()</span> to count and reset number of times a particular string is print.</li>
+    <li><span class="code">console.trace()</span> to print the error trace.</li>
+    <li>use <span class="code">time()</span> and <span class="code">timeEnd()</span> to calculate time</li>
+    <li>use escape sequences to color the output of the text. Alternatively, use <a href="https://github.com/chalk/chalk">chalk</a> library.</li>
+    <li>create a progress bar using <a href="https://www.npmjs.com/package/progress">progress</a> library.</li>
+  </ul>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./00.main.html">00. Index Page</a></span>
+  <!-- <span class="next"><a href="./02.dynamo_api.html">02. Dynamo API</a></span> -->
+</div>

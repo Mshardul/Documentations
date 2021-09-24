@@ -5,27 +5,69 @@
   --topic-border-color: #8181F5;
   --note-background-color: lavender;
   --code-background-color: #f2f3f3;
+  --sidebar-background-color: rgb(192, 192, 247, 0.9);
 }
 
-/* header */
+body {
+  /* margin: 0 auto; */
+}
+
+/* header and footer */
 .navbar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
   background-color: var(--navbar-background-color);
   overflow: hidden;
   text-align: center;
-  margin: 10px;
+  margin-bottom: 10px;
+  font-size: xx-large;
+  padding: 10px;
 }
 
-/* footer */
 .footer {
   background-color: var(--footer-background-color);
   overflow: hidden;
-  margin: 10px;
+  margin-top: 10px;
   font-size: x-large;
   padding: 10px;
 }
-.prev, .next {display:inline}
+
+.prev, .next, .center {display:inline}
 .prev {float: left}
 .next {float: right}
+.center {float: none;}
+
+/* sidebar */
+.sidebar {
+  text-align: left;
+  height:100%;
+  max-width:200px;
+  position:fixed!important;
+  z-index:100;
+  overflow:auto;
+  background-color: var(--sidebar-background-color);
+}
+
+.sidebar-right {
+  margin-right: 8px;
+}
+
+.sidebar_topics {
+  font-size: 16px;
+}
+
+.sidebar_topics li {
+
+  padding: 5px;
+}
+
+.sidebar-icon {
+  height: 32px;
+  width: 32px;
+  background-color: transparent;
+  border: none;
+}
 
 /* page-wise */
 ul {
@@ -53,13 +95,15 @@ img {
   border-radius: 10px;
   padding: 5px;
   background-color: var(--note-background-color);
-  margin: 2px
+  margin: 2px;
 }
 
 .topic {
   border: 5px solid var(--topic-border-color);
   border-radius: 15px;
   padding: 5px;
+  /* checkMe: this was supposed to stop the div from going beneath the navbar; but isn't working */
+  scroll-margin-top: 100px;
 }
 
 .point {
@@ -69,5 +113,14 @@ img {
 .code {
   background-color: var(--code-background-color);
   font-family: American Typewriter;
+}
+
+.show_toc {
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  display: inline-flex;
+  visibility: visible;
+  opacity: 1;
 }
 

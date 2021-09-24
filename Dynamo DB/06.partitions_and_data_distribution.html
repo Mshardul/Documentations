@@ -1,7 +1,16 @@
 <link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
 
 <div class="navbar">
-  <h1><a href="./00.main.html">Dynamo DB</a></h1>
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">Dynamo DB</a></span>
+  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
+  <div id="sidebar_topics" class="sidebar sidebar-right sidebar_topics" style="width:25%; right:0; display: none;">
+    <ul>
+      <li><a href="#DataDistributionPartitionKey">Data Distribution: Partition Key</a></li>
+      <li><a href="#DataDistributionPartitionKeyAndSortKey">Data Distribution: Partition Key and Sort Key</a></li>
+    </ul>
+  </div>
 </div>
 
 <div class="topic">

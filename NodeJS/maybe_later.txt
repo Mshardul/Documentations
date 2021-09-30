@@ -1,15 +1,52 @@
 Topics that will be covered sometime later.
 
-cover in process module
+cover in 'process'
   process.exit()
     https://nodejs.dev/learn/how-to-exit-from-a-nodejs-program
   "process does not require a "require", it's automatically available."
-  
-cover in Express
-  "Express is a framework that uses the http module under the hood, app.listen() returns an instance of http. You would use https.createServer if you needed to serve your app using HTTPS, as app.listen only uses the http module."
-  
-
-cover in process module
   env property
     https://nodejs.dev/learn/how-to-read-environment-variables-from-nodejs
+  
+cover in 'Express'
+  "Express is a framework that uses the http module under the hood, app.listen() returns an instance of http. You would use https.createServer if you needed to serve your app using HTTPS, as app.listen only uses the http module."
+  
+cover in 'module'
+  module.exports
+    https://nodejs.dev/learn/expose-functionality-from-a-nodejs-file-using-exports
+
+    <h3>Exports</h3>
+    <p>functionality must be exposed before it can be imported by other files. Any other object or variable defined in the file by default is private</p>
+    <table>
+      <tr><th>Module.exports</th><th>exports</th></tr>
+      <tr><td>exposes the object it points to.</td><td>exposes the properties of the object it points to</td></tr>
+      <tr>
+        <td>
+          <pre class="code">
+            const car = { brand: 'Ford', model: 'Fiesta' }
+            module.exports = car
+          </pre>
+      </td>
+      <td>
+        <pre class="code">
+          const car = { brand: 'Ford', model: 'Fiesta' }
+          exports.car = car
+        </pre>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <pre class="code">
+          const car = require('./car')
+        </pre>
+      </td>
+      <td>
+        <pre class="code">
+          const car = require('./items').car
+        </pre>
+      </td>
+    </tr>
+    </table>
+
+npx
+  https://nodejs.dev/learn/the-npx-nodejs-package-runner
   

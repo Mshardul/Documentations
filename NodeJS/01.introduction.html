@@ -9,6 +9,9 @@
     <ul>
       <li><a href="#V8JavaScriptEngine">V8 JavaScript Engine</a></li>
       <li><a href="#UsingCommandLine">Using Command Line</a></li>
+      <li><a href="#NpmPackageManager">NPM Package Manager</a></li>
+      <li><a href="PackageJsonGuide">package.json guide</a></li>
+      <li><a href="PackageLockJsonGuide">package-lock.json guide</li>
     </ul>
   </div>
 </div>
@@ -45,8 +48,8 @@
   <p>Alternatively omit the filename, to use Node JS in REPL (Read Evaluate Print Loop) mode</p>
   <p>REPL is a programming language environment (basically a console window) that takes single expression as user input and returns the result back to the console after execution.</p>
   <ul>
-    <li>className.&lt;tab&gt; will show all the available methods of that particular class in REPL mode.</li>
-    <li>global.&lt;tab&gt; will show all the global objects.</li>
+    <li><span class="code">className + &lt;tab&gt;</span> will show all the available methods of that particular class in REPL mode.</li>
+    <li><span class="code">global + &lt;tab&gt;</span> will show all the global objects.</li>
     <li>'_' prints the result of the last operation.</li>
     <li>REPL has some special commands (starting with '.'): .help, .editor, .break, .clear, .load, .save, .exit</li>
   </ul>
@@ -66,9 +69,113 @@
     <li>use escape sequences to color the output of the text. Alternatively, use <a href="https://github.com/chalk/chalk">chalk</a> library.</li>
     <li>create a progress bar using <a href="https://www.npmjs.com/package/progress">progress</a> library.</li>
   </ul>
+
 </div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="NpmPackageManager">NPM Package Manager</h2>
+
+  <h3>install / update</h3>
+  <ul>
+    <li><span class="code">npm install [package_name [@ version]]</span> to install npm packages.</li>
+    <li><span class="code">npm update [package_name]</span> to install npm packages.</li>
+  </ul>
+  <div class="notes">
+    // [package_name] is optional. If not provided, all the packages in package.json file are installed / updated<br/>
+    // a particular version can be installed by adding the version in the command<br/>
+    // local npm packages are stored in the node_modules folder<br/>
+    // global npm packages are stored in a pre-defined path, which can be found using <span class="code">npm root -g</span> command<br/>
+  </div>
+
+  <p>Following flags can be used</p>
+  <ul>
+    <li><span class="code">--save-dev</span> installs and adds the entry to the package.json file devDependencies</li>
+    <li><span class="code">--no-save</span> installs but does not add the entry to the package.json file dependencies</li>
+    <li><span class="code">--save-optional</span> installs and adds the entry to the package.json file optionalDependencies</li>
+    <li><span class="code">--no-optional</span> will prevent optional dependencies from being installed</li>
+    <li><span class="code">-g</span> installs the npm package globally</li>
+  </ul>
+  <div class="notes">
+    // The difference between devDependencies and dependencies is that the former contains development tools, like a testing library, while the latter is bundled with the app in production.<br/>
+    // As for the optionalDependencies the difference is that build failure of the dependency will not cause installation to fail.<br/>
+  </div>
+
+  <h3>run task</h3>
+  <ul>
+    <li><span class="code">npm run {task-name}</span> can be used to run a specific task. Task names are provided in the 'scripts' object in package.json file</li>
+  </ul>
+
+  <h3>uninstall</h3>
+  <ul>
+    <li><span class="code">npm uninstall {package-name}</span></li>
+  </ul>
+
+  <h3>Other Important Commands</h3>
+  <ul>
+    <li><span class="code">npm list</span> lists the version of all installed npm packages, including their dependencies</li>
+    <li><span class="code">npm list [package_name]</span></li>
+    <li><span class="code">npm view [package_name] version</span> to see the latest available version of the package on the npm repository,</li>
+  </ul>
+
+  <h3>Versioning Symbols</h3>
+  <li><span class="code">^</span>: It will only do updates that do not change the leftmost non-zero number i.e there can be changes in minor version or patch version but not in major version. If you write <span class="code">^13.1.0</span>, when running npm update, it can update to <span class="code">13.2.0</span>, <span class="code">13.3.0</span> even <span class="code">13.3.1</span>, <span class="code">13.3.2</span> and so on, but not to <span class="code">14.0.0</span> or above.
+  <li><span class="code">~</span>: if you write <span class="code">~0.13.0</span> when running npm update it can update to patch releases: <span class="code">0.13.1</span> is ok, but <span class="code">0.14.0</span> is not.
+  <li><span class="code">&gt;</span>: you accept any version higher than the one you specify
+  <li><span class="code">&gt;=</span>: you accept any version equal to or higher than the one you specify
+  <li><span class="code">&lt;=</span>: you accept any version equal or lower to the one you specify
+  <li><span class="code">&lt;</span>: you accept any version lower than the one you specify
+  <li><span class="code">=</span>: you accept that exact version
+  <li><span class="code">-</span>: you accept a range of versions. Example: <span class="code">2.1.0 - 2.6.2</span>
+  <li><span class="code">||</span>: you combine sets. Example: <span class="code">&lt; 2.1 || > 2.6</span>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="PackageJsonGuide">package.json guide</h2>
+
+  <h3>Useful keys</h3>
+  <ul>
+    <li><span class="code">name</span> sets the application/package name</li>
+    <li><span class="code">author</span> lists the package author name</li>
+    <li><span class="code">contributors</span> is an array that lists all the contributors.</li>
+    <li><span class="code">bugs</span> links to the package issue tracker, most likely a GitHub issues page.</li>
+    <li><span class="code">homepage</span>Sets the package homepage</li>
+    <li><span class="code">version</span> indicates the current version</li>
+    <li><span class="code">license</span> indicates the license of the package</li>
+    <li><span class="code">keywords</span> contains an array of keywords that associate with what your package does.</li>
+    <li><span class="code">description</span> is a brief description of the app/package</li>
+    <li><span class="code">repository</span> specifies where this package repository is located.</li>
+    <li><span class="code">main</span> set the entry point for the application</li>
+    <li><span class="code">private</span> if set to true prevents the app/package to be accidentally published on npm</li>
+    <li><span class="code">scripts</span> defines a set of node scripts you can run</li>
+    <li><span class="code">dependencies</span> sets a list of npm packages installed as dependencies</li>
+    <li><span class="code">devDependencies</span> sets a list of npm packages installed as development dependencies</li>
+    <li><span class="code">engines</span> sets which versions of Node.js this package/app works on</li>
+    <li><span class="code">browserslist</span> is used to tell which browsers (and their versions) you want to support</li>
+  </ul>
+  
+  <div class="notes">
+    // The name must be less than 214 characters, must not have spaces, it can only contain lowercase letters, hyphens (-) or underscores (_). <br/>
+    // This property follows the semantic versioning (semver) notation for versions, which means the version is always expressed with 3 numbers: x.x.x. The first number is the major version, the second the minor version and the third is the patch version.<br/>
+  </div>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="PackageLockJsonGuide">package-lock.json guide</h2>
+  <ul>
+    <li>The goal of package-lock.json file is to keep track of the exact version of every package that is installed so that a product is 100% reproducible in the same way even if packages are updated by their maintainers.</li>
+    <li>The package-lock.json sets your currently installed version of each package in stone, and npm will use those exact versions when running npm install</li>
+    <li>The dependencies versions will be updated in the package-lock.json file when you run npm update</li>
+  <h3></h3>
+</div>
+
 
 <div class="footer">
   <span class="prev"><a href="./00.main.html">00. Index Page</a></span>
-  <!-- <span class="next"><a href="./02.dynamo_api.html">02. Dynamo API</a></span> -->
+  <span class="next"><a href="./02.event_loop.html">02. Event Loop</a></span>
 </div>

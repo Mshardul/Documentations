@@ -100,11 +100,11 @@
   <ul>
     <li>The usual technique for dealing with these error responses in a networked environment is to implement retries in the client application. This technique increases the reliability of the application.</li>
     <li>Each AWS SDK implements retry logic automatically. You can modify the retry parameters to your needs.</li>
-    <li>If you're not using an AWS SDK, you should retry original requests that receive server errors (5xx). However, client errors (4xx, other than a ThrottlingException or a ProvisionedThroughputExceededException) indicate that you need to revise the request itself to correct the problem before trying again.</li>
+    <li>If you&#39;re not using an AWS SDK, you should retry original requests that receive server errors (5xx). However, client errors (4xx, other than a ThrottlingException or a ProvisionedThroughputExceededException) indicate that you need to revise the request itself to correct the problem before trying again.</li>
     <li>In addition to simple retries, each AWS SDK implements an exponential backoff algorithm for better flow control.</li>
   </ul>
   <div class="notes">
-    // Dynamo DB's batch operations (<span class="code">BatchGetItem</span> and <span class="code">BatchWriteItem</span>) are implemented as wrappers around other non-batch DynamoDB operations. The batch operations return information about individual requests that fail so that you can diagnose the problem and retry the operation.
+    // Dynamo DB&#39;s batch operations (<span class="code">BatchGetItem</span> and <span class="code">BatchWriteItem</span>) are implemented as wrappers around other non-batch DynamoDB operations. The batch operations return information about individual requests that fail so that you can diagnose the problem and retry the operation.
   </div>
 </div>
 

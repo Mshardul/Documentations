@@ -65,7 +65,7 @@
   <div class="notes">
     // When you switch a table from provisioned capacity mode to on-demand capacity mode, DynamoDB makes several changes to the structure of your table and partitions. This process can take several minutes. During the switching period, your table delivers throughput that is consistent with the previously provisioned write capacity unit and read capacity unit amounts. When switching from on-demand capacity mode back to provisioned capacity mode, your table delivers throughput consistent with the previous peak reached when the table was set to on-demand capacity mode.<br/>
     // Throttling prevents your application from consuming too many capacity units. When a request is throttled, it fails with an HTTP 400 code (Bad Request) and a <span class="code">ProvisionedThroughputExceededException</span>. The AWS SDKs have built-in support for retrying throttled requests<br/>
-    // With DynamoDB auto scaling, a table or a global secondary index can increase its provisioned read and write capacity to handle sudden increases in traffic, without request throttling. When the workload decreases, DynamoDB auto scaling can decrease the throughput so that you don't pay for unused provisioned capacity.<br/>
+    // With DynamoDB auto scaling, a table or a global secondary index can increase its provisioned read and write capacity to handle sudden increases in traffic, without request throttling. When the workload decreases, DynamoDB auto scaling can decrease the throughput so that you don&#39;t pay for unused provisioned capacity.<br/>
     // If you use the AWS Management Console to create a table or a global secondary index, DynamoDB auto scaling is enabled by default.<br/>
   </div>
 </div>

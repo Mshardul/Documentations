@@ -1,0 +1,88 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">React JS</a></span>
+  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
+</div>
+
+<div class="topic">
+  <h3 id="Basics">Basics</h3>
+  Components let you split the UI into independent, reusable pieces, and think about each piece in isolation. <br/>
+  Conceptually, components are like JavaScript functions. They accept arbitrary inputs (called <span class="code">props</span>) and return React elements describing what should appear on the screen.
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="DefiningAComponent">Defining a component</h2>
+
+  <h3>JS function</h3>
+  <pre class="code">
+    function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
+  </pre>
+
+  <h3>ES6 class</h3>
+  <pre class="code">
+    class Welcome extends React.Component {
+      render() { return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;; }
+    }
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="RenderingAnElement">Rendering an Element</h2>
+
+  <h3>Passing a user-defined component</h3>
+  <pre class="code">
+    const element = &lt;Welcome name="Sara" /&gt;;
+  </pre>
+
+  translates to
+
+  <pre class="code">
+    function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
+    
+    const element = &lt;Welcome name="Sara" /&gt;;
+    ReactDOM.render( element, document.getElementById('root') );
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="NestedComponents">Nested Components</h2>
+  <pre class="code">
+    function Avatar(props) { 
+      return ( &lt;img className="Avatar" src={props.user.avatarUrl} alt={props.user.name} /&gt; ); 
+    }
+
+    function UserInfo(props) {
+      return ( &lt;div className="UserInfo"&gt; &lt;Avatar user={props.user} /&gt; &lt;div className="UserInfo-name"&gt; {props.user.name} &lt;/div&gt; &lt;/div&gt; );
+    }
+
+    function Comment(props) {
+      return (
+        &lt;div className="Comment"&gt; 
+            &lt;UserInfo user={props.author} /&gt;
+            &lt;div className="Comment-text"&gt; {props.text} &lt;/div&gt;
+            &lt;div className="Comment-date"&gt; {formatDate(props.date)} &lt;/div&gt;
+        &lt;/div&gt;
+      );
+    }
+  </pre>
+</div>
+
+<div class="notes">
+  // React treats components starting with lowercase letters as DOM tags. For example, &lt;div /&gt; represents an HTML div tag, but &lt;Welcome /&gt; represents a component and requires Welcome to be in scope.<br/>
+  // Components can refer to other components in their output. This lets us use the same component abstraction for any level of detail.<br/>
+  // All React components must act like <span class="code">pure functions</span> (ie should not change its own props) with respect to their props.<br/>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./01.jsx.html">01. JSX</a></span>
+  <span class="next"><a href="./03.components_and_props.html">02. Event Loop</a></span>
+</div>

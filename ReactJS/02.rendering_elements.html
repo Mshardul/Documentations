@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">React JS</a></span>
+  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
+  <div id="sidebar_topics" class="sidebar sidebar-right sidebar_topics" style="width:25%; right:0; display: none;">
+    <ul>
+      <li><a href="#RenderingAnElementIntoTheDOM">Rendering an element into the DOM</a></li>
+      <li><a href="#UpdatingTheRenderedElement">Updating the Rendered Element</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="topic">
+  <h2 id="RenderingAnElementIntoTheDOM">Rendering an element into the DOM</h2>
+  Applications built with just React usually have a single root DOM node. If you are integrating React into an existing app, you may have as many isolated root DOM nodes as you like. To render a React element into a root DOM node, pass both to ReactDOM.render(): 
+  <pre class="code">
+    const element = &lt;h1&gt;Hello, world&lt;/h1&gt;;
+    ReactDOM.render(element, document.getElementById('root'));
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="UpdatingTheRenderedElement">Updating the Rendered Element</h2>
+  React elements are immutable. Once you create an element, you can’t change its children or attributes. The only way to update the UI is to create a new element, and pass it to ReactDOM.render().
+  <pre class="code">
+    function tick() {
+      const element = (
+        &lt;div&gt; &lt;h1&gt;Hello, world!&lt;/h1&gt; &lt;h2&gt;It is {new Date().toLocaleTimeString()}.&lt;/h2&gt; &lt;/div&gt;
+      );
+      ReactDOM.render(element, document.getElementById('root'));
+    }
+    
+    setInterval(tick, 1000);
+  </pre>
+
+  <div class="notes">
+    // React DOM compares the element and its children to the previous one, and only applies the DOM updates necessary to bring the DOM to the desired state.<br/>
+    // only the node whose contents have changed gets updated by React DOM.<br/>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./01.jsx.html">01. JSX</a></span>
+  <span class="next"><a href="./03.components_and_props.html">02. Event Loop</a></span>
+</div>

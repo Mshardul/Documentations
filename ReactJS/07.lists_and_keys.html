@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">React JS</a></span>
+  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
+</div>
+
+<div class="topic">
+  <h2 id="ListsAndKeys">Lists and Keys</h2>
+  <pre class="code">
+    function ListItem(props) { return &lt;li&gt;{props.value}&lt;/li&gt;; }
+    
+    function NumberList(props) {
+      const numbers = props.numbers;
+      const listItems = numbers.map((number) => <ListItem key={number.toString()} value={number} /> );
+      return ( &lt;ul&gt;{listItems}&lt;/ul&gt; );
+    }
+    
+    const numbers = [1, 2, 3, 4, 5];
+    ReactDOM.render( &lt;NumberList numbers={numbers} /&gt;, document.getElementById('root') );
+  </pre>
+
+  <div class="notes">
+    // Keys should be given to the elements inside the array to give the elements a stable identity<br/>
+    // The best way to pick a key is to use a string that uniquely identifies a list item among its siblings.<br/>
+    // When you don’t have stable IDs for rendered items, you may use the item index as a key as a last resort<br/>
+    // A good rule of thumb is that elements inside the map() call need keys.<br/>
+    // Keys Must Only Be Unique Among Siblings <br/>
+    // Keys serve as a hint to React but they don’t get passed to your components. If you need the same value in your component, pass it explicitly as a prop with a different name<br/>
+  </div>
+
+  <h3>Embedding in JSX</h3>
+  <pre class="code">
+    function ListItem(props) { return &lt;li&gt;{props.value}&lt;/li&gt;; }
+    function NumberList(props) {
+      const numbers = props.numbers;
+      return ( &lt;ul&gt; {numbers.map((number) => &lt;ListItem key={number.toString()} value={number} /&gt; )} </ul> ); 
+    }
+  </pre>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./06.conditional_rendering.html">06. Conditional Rendering</a></span>
+  <span class="next"><a href="./08.forms.html">08. Forms</a></span>
+</div>

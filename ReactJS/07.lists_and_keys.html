@@ -8,14 +8,14 @@
 </div>
 
 <div class="topic">
-  <h2 id="ListsAndKeys">Lists and Keys</h2>
+  <h2 id="BasicExample">Basic Example</h2>
   <pre class="code">
     function ListItem(props) { return &lt;li&gt;{props.value}&lt;/li&gt;; }
     
     function NumberList(props) {
-      const numbers = props.numbers;
-      const listItems = numbers.map((number) => <ListItem key={number.toString()} value={number} /> );
-      return ( &lt;ul&gt;{listItems}&lt;/ul&gt; );
+        const numbers = props.numbers;
+        const listItems = numbers.map((number) => <ListItem key={number.toString()} value={number} /> );
+        return ( &lt;ul&gt;{listItems}&lt;/ul&gt; );
     }
     
     const numbers = [1, 2, 3, 4, 5];
@@ -35,8 +35,8 @@
   <pre class="code">
     function ListItem(props) { return &lt;li&gt;{props.value}&lt;/li&gt;; }
     function NumberList(props) {
-      const numbers = props.numbers;
-      return ( &lt;ul&gt; {numbers.map((number) => &lt;ListItem key={number.toString()} value={number} /&gt; )} </ul> ); 
+        const numbers = props.numbers;
+        return ( &lt;ul&gt; {numbers.map((number) => &lt;ListItem key={number.toString()} value={number} /&gt; )} </ul> ); 
     }
   </pre>
 </div>

@@ -117,25 +117,27 @@
   <pre class="code">
     /* optional param 'ProjectionExpression' to return only some attributes */
 
-    { TableName: "Music",
-      Key: { "Artist": "No One You Know", "SongTitle": "Call Me Today" },
-      "ProjectionExpression": "AlbumTitle, Year, Price"
+    { 
+        TableName: "Music",
+        Key: { "Artist": "No One You Know", "SongTitle": "Call Me Today" },
+        "ProjectionExpression": "AlbumTitle, Year, Price"
     }
   </pre>
 
   <p><span class="code">Query</span>: You must specify an equality condition for the partition key, and you can optionally provide another condition for the sort key.</p>
   <pre class="code">
     /* Return a single song, by primary key */
-    { TableName: "Music",
-      KeyConditionExpression: "Artist = :a and SongTitle = :t",
-      ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call Me Today" }
+    { 
+        TableName: "Music",
+        KeyConditionExpression: "Artist = :a and SongTitle = :t",
+        ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call Me Today" }
     }
 
     /* Return all of the songs by an artist, matching first part of title */
     {
-      TableName: "Music",
-      KeyConditionExpression: "Artist = :a and begins_with(SongTitle, :t)",
-      ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call" }
+        TableName: "Music",
+        KeyConditionExpression: "Artist = :a and begins_with(SongTitle, :t)",
+        ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call" }
     }
   </pre>
   <div class="notes">
@@ -180,11 +182,11 @@
 
     /* increment nof plays */
     {
-      TableName: "Music",
-      Key: { "Artist":"No One You Know", "SongTitle":"Call Me Today" },
-      UpdateExpression: "SET Plays = Plays + :incr",
-      ExpressionAttributeValues: { ":incr": 1 },
-      ReturnValues: "UPDATED_NEW"
+        TableName: "Music",
+        Key: { "Artist":"No One You Know", "SongTitle":"Call Me Today" },
+        UpdateExpression: "SET Plays = Plays + :incr",
+        ExpressionAttributeValues: { ":incr": 1 },
+        ReturnValues: "UPDATED_NEW"
     }
   </pre>
 </div>

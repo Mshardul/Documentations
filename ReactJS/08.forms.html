@@ -9,9 +9,64 @@
 
 <div class="topic">
   <h2 id="ControlledComponents">Controlled Components</h2>
+  <p>In HTML, form elements such as &lt;input&gt;, &lt;textarea&gt;, and &lt;select&gt; typically maintain their own state and update it based on user input. In React, mutable state is typically kept in the state property of components, and only updated with setState(). We can combine the two by making the React state be the &quot;single source of truth&quot;. Then the React component that renders a form also controls what happens in that form on subsequent user input. An input form element whose value is controlled by React in this way is called a <span class="code">controlled component</span>.</p>
+  <p>With a controlled component, the input’s value is always driven by the React state.</p>
+  <pre class="code">
+    class NameForm extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { nameValue: '', essayValue: '', genderValue: 'male', isGoing: true, numberOfGuests: 2 };
+            this.handleNameChange = this.handleNameChange.bind(this);
+            this.handleEssayChange = this.handleEssayChange.bind(this);
+            this.handleGenderChange = this.handleGenderChange.bind(this);
+            this.handleInputChange = this.handleInputChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+    
+        handleNameChange(event) { this.setState({nameValue: event.target.value}); }
+        handleEssayChange(event) { this.setState({essayValue: event.target.value}); }
+        handleGenderChange(event) { this.setState({value: event.target.value}); }
+        handleInputChange(event) {
+          const target = event.target;
+          const value = target.type === 'checkbox' ? target.checked : target.value;
+          const name = target.name;
+          this.setState({ [name]: value }); 
+        }
+      
+        handleSubmit(event) { event.preventDefault(); }
+    
+        render() {
+            return (
+                &lt;form onSubmit={this.handleSubmit}&gt;
+                    &lt;label&gt; Name: &lt;input type="text" value={this.state.nameValue} onChange={this.handleNameChange} /&gt; &lt;/label&gt;
+                    &lt;label&gt; Essay: &lt;textarea value={this.state.essayValue} onChange={this.handleEssayChange} /&gt; &lt;/label&gt;
+                    &lt;label&gt;
+                        Gender: &lt;select value={this.state.genderValue} onChange={this.handleGenderChange}&gt; &lt;option value="male"&gt;Male&lt;/option&gt; &gt;option value="female">Female&lt;/option&gt; &lt;/select&gt;
+                    &lt;/label&gt;
+                    &lt;input type="submit" value="Submit" /&gt;
+                    &lt;label&gt;
+                        Is going:
+                        &lt;input name="isGoing" type="checkbox" checked={this.state.isGoing} onChange={this.handleInputChange} /&gt;
+                    &lt;/label&gt;
+                    &lt;label&gt;
+                        Number of guests:
+                        &lt;input name="numberOfGuests" type="number" value={this.state.numberOfGuests} onChange={this.handleInputChange} /&gt;
+                    &lt;/label&gt;
+                &lt;/form&gt;
+          );
+        }
+    }
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="UncontrolledComponents">Uncontrolled Components</h2>
+  // will learn later
 </div>
 
 <div class="footer">
   <span class="prev"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
-  <!-- <span class="next"><a href="./06.conditional_rendering.html">06. Conditional Rendering</a></span> -->
+  <span class="next"><a href="./09.composition_vs_inheirtance.html">09. Composition vs Inheritance</a></span>
 </div>

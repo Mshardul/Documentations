@@ -101,6 +101,10 @@ td, th {
   padding: 1px;
 }
 
+pre {
+  overflow:auto
+}
+
 /* special classes */
 .notes {
   border-radius: 10px;

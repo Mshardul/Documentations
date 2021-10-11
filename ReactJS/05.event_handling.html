@@ -12,14 +12,14 @@
   you cannot return false to prevent default behavior in React. You must call <span class="code">preventDefault</span>
   instead of
   <pre class="code">
-    &lt;form onsubmit="console.log('You clicked submit.'); return false"&gt;&lt;button type="submit"&gt;Submit&lt;/button&gt;&lt;/form&gt;
+      &lt;form onsubmit="console.log('You clicked submit.'); return false"&gt;&lt;button type="submit"&gt;Submit&lt;/button&gt;&lt;/form&gt;
   </pre>
   write
   <pre class="code">
-    function Form() {
-      function handleSubmit(e) { e.preventDefault(); console.log('You clicked submit.'); }
-      return ( &lt;form onSubmit={handleSubmit}&gt;&lt;button type="submit"&gt;Submit&lt;/button&gt;&lt;/form&gt; );
-    }
+      function Form() {
+          function handleSubmit(e) { e.preventDefault(); console.log('You clicked submit.'); }
+          return ( &lt;form onSubmit={handleSubmit}&gt;&lt;button type="submit"&gt;Submit&lt;/button&gt;&lt;/form&gt; );
+      }
   </pre>
 
 </div>
@@ -33,32 +33,32 @@
   When you define a component using an ES6 class, a common pattern is for an event handler to be a method on the class. <br/>
   <pre class="code">
     class Toggle extends React.Component {
-      constructor(props) {
-        super(props); this.state = {isToggleOn: true};
-        this.handleClick = this.handleClick.bind(this); // This binding is necessary to make `this` work in the callback
-      }
+        constructor(props) {
+            super(props); this.state = {isToggleOn: true};
+            this.handleClick = this.handleClick.bind(this); // This binding is necessary to make `this` work in the callback
+        }
     
-      handleClick() {
-        this.setState(prevState => ({ isToggleOn: !prevState.isToggleOn }));
-      }
+        handleClick() {
+            this.setState(prevState => ({ isToggleOn: !prevState.isToggleOn }));
+        }
     
-      render() {
-        return ( &lt;button onClick={this.handleClick}&gt; {this.state.isToggleOn ? 'ON' : 'OFF'} &lt;/button&gt; );
-      }
+        render() {
+            return ( &lt;button onClick={this.handleClick}&gt; {this.state.isToggleOn ? 'ON' : 'OFF'} &lt;/button&gt; );
+        }
     }
     
     ReactDOM.render( &lt;Toggle /&gt;, document.getElementById('root') );
   </pre>
   If you aren’t using class fields syntax, you can use an arrow function in the callback:
   <pre class="code">
-    class LoggingButton extends React.Component {
-      handleClick() { console.log('this is:', this); }
-    
-      render() {
-        // This syntax ensures `this` is bound within handleClick
-        return ( &lt;button onClick={() => this.handleClick()}&gt; Click me &lt;/button&gt; );
+      class LoggingButton extends React.Component {
+          handleClick() { console.log('this is:', this); }
+      
+          render() {
+              // This syntax ensures `this` is bound within handleClick
+              return ( &lt;button onClick={() => this.handleClick()}&gt; Click me &lt;/button&gt; );
+          }
       }
-    }
   </pre>
 
 </div>

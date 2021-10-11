@@ -6,6 +6,7 @@
   --note-background-color: lavender;
   --code-background-color: #f2f3f3;
   --sidebar-background-color: rgb(192, 192, 247, 0.9);
+  --table-cell-border: rgb(192, 192, 200);
 }
 
 body {
@@ -88,6 +89,20 @@ h3 {
 
 img {
   margin: 10px;
+}
+
+table {
+  width: 100%;
+}
+
+td, th {
+  border: 2px solid var(--table-cell-border);
+  text-align: center;
+  padding: 1px;
+}
+
+pre {
+  overflow:auto
 }
 
 /* special classes */

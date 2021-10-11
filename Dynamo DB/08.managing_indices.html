@@ -32,7 +32,7 @@
       <li><span class="code">ProvisionedThroughput</span>(for provisioned tables): number of reads and writes per second that you need for this index.</li>
     </ul>
     <pre class="code">
-      {
+    {
         TableName: "Music",
         AttributeDefinitions:[
             {AttributeName: "Genre", AttributeType: "S"},
@@ -48,7 +48,7 @@
                 Projection: { "ProjectionType": "ALL" },
                 ProvisionedThroughput: { "ReadCapacityUnits": 1,"WriteCapacityUnits": 1 } // Only specified if using provisioned mode
             } } ] 
-      }
+    }
     </pre>
     <div class="notes">
       // DynamoDB does not have a query optimizer, so a secondary index is only used when you Query it or Scan it.<br/>

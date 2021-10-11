@@ -8,10 +8,65 @@
 </div>
 
 <div class="topic">
+  <h2 id="Containtment">Containtment</h2>
+  Some components don’t know their children ahead of time. (eg. components like Sidebar or Dialog that represent generic “boxes”). It is recommend that such components use the special <span class="code">children prop</span> to pass children elements directly into their output.
+
+  <pre class="code">
+    function FancyBorder(props) {
+        return ( &lt;div className={'FancyBorder FancyBorder-' + props.color}&gt; {props.children} &lt;/div&gt; ); 
+    }
+
+    function WelcomeDialog() {
+        return (
+            &lt;FancyBorder color="blue"&gt; 
+                &lt;h1 className="Dialog-title"&gt; Welcome &lt;/h1&gt;
+                &lt;p className="Dialog-message"&gt; Thank you for visiting our spacecraft! &lt;/p&gt;
+            &lt;/FancyBorder&gt;
+        );
+    }
+  </pre>
+
+  While this is less common, sometimes you might need multiple &quot;holes&quot; in a component. In such cases you may come up with your own convention instead of using <span class="code">children</span>
+
+  <pre class="code">
+    function SplitPane(props) {
+        return (
+          &lt;div className="SplitPane"&gt;
+            &lt;div className="SplitPane-left"&gt; {props.left} &lt;/div&gt;
+            &lt;div className="SplitPane-right"&gt; {props.right} &lt;/div&gt;
+          &lt;/div&gt;
+        );
+    }
+    
+    function App() {
+        return ( &lt;SplitPane left={ &lt;Contacts /&gt; } right={ &lt;Chat /&gt; } /> );
+    }
+  </pre>
 
 </div>
 
+<hr/>
+
+<div class="topic">
+  <h2 id="Specialization">Specialization</h2>
+
+  <pre class="code">
+    function Dialog(props) {
+        return (
+            &lt;FancyBorder color="blue"&gt;
+                &lt;h1 className="Dialog-title"&gt; {props.title} &lt;/h1&gt;
+                &lt;p className="Dialog-message"&gt; {props.message} &lt;/p&gt;
+            &lt;/FancyBorder&gt;
+        );
+    }
+    
+    function WelcomeDialog() {
+        return ( &lt;Dialog title="Welcome" message="Thank you for visiting!" /&gt; );
+    }
+  </pre>
+</div>
+
 <div class="footer">
-  <span class="prev"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
-  <span class="next"><a href="./09.composition_vs_inheirtance.html">09. Composition vs Inheritance</a></span>
+  <span class="prev"><a href="./08.forms.html">08. Forms</a></span>
+  <span class="next"><a href="./10.accessibility.html">10. Accessibility</a></span>
 </div>

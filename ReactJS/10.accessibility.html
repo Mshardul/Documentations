@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">React JS</a></span>
+  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
+</div>
+
+<div class="notes">
+  // Web accessibility (also referred to as a11y) is the design and creation of websites that can be used by everyone. Accessibility support is necessary to allow assistive technology to interpret web pages.<br/>
+</div>
+
+<div class="topic">
+  <h2 id="WAIARIA">WAI-ARIA</h2>
+  <p>The Web Accessibility Initiative - Accessible Rich Internet Applications document contains techniques for building fully accessible JavaScript widgets.</p>
+  <p>All <span class="code">aria-*</span> HTML attributes are fully supported in JSX. Whereas most DOM properties and attributes in React are camelCased, these attributes should be hyphen-cased (also known as kebab-case, lisp-case, etc) as they are in plain HTML</p>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="SemanticHTML">Semantic HTML</h2>
+  <p>Sometimes we break HTML semantics when we add &lt;div&gt; elements to our JSX to make our React code work, especially when working with lists (&lt;ol&gt;, &lt;ul&gt; and &lt;dl&gt;) and the HTML &lt;table&gt;. In these cases we should rather use React Fragments to group together multiple elements.</p>
+  <pre class="code">
+    function Glossary(props) {
+        return (
+            &lt;dl&gt;
+                { props.items.map(item => (
+                  // Fragments should also have a `key` prop when mapping collections
+                  &lt;Fragment key={item.id}&gt; &lt;dt&gt;{item.term}&lt;/dt&gt; &lt;dd&gt;{item.description}&lt;/dd&gt; &lt;/Fragment&gt;
+                ))}
+            &lt;/dl&gt;
+        );
+    }
+  </pre>
+  <p>When you don’t need any props on the Fragment tag you can use the short syntax, if your tooling supports it</p>
+  <pre class="code">
+    function ListItem({ item }) {
+        return (
+            &lt;&gt;
+                &lt;dt&gt;{item.term}&lt;/dt&gt;
+                &lt;dd&gt;{item.description}&lt;/dd&gt;
+            &lt;/&gt;
+        );
+    }
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="AccessibleForms">Accessible Forms</h2>
+
+  <h3>Labeling</h3>
+  <p>Although these standard HTML practices can be directly used in <span class="code">React</span>, note that the <span class="code">for</span> attribute is written as <span class="code">htmlFor</span> in JSX</p>
+  <pre class="code">
+    &lt;label htmlFor="namedInput"&gt;Name:&lt;/label&gt;
+    &lt;input id="namedInput" type="text" name="name"/&gt;
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="FocusControl">Focus Control</h2>
+  
+  <h3>Programmatically managing focus</h3>
+  <p>For example, by resetting keyboard focus to a button that opened a modal window after that modal window is closed.</p>
+  <pre class="code">
+    function CustomTextInput(props) {
+      return ( &lt;div&gt;&lt;input ref={props.inputRef} /&gt;&lt;/div&gt; );
+    }
+    
+    class Parent extends React.Component {
+      constructor(props) { super(props); this.inputElement = React.createRef(); }
+      render() {
+        return ( &lt;CustomTextInput inputRef={this.inputElement} /&gt; );
+      }
+    }
+    
+    this.inputElement.current.focus(); // set focus when required.
+  </pre>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./09.composition_vs_inheirtance.html">09. Composition vs Inheritance</a></span>
+  <span class="next"><a href="./11.code_splitting.html">11. Code Splitting</a></span>
+</div>

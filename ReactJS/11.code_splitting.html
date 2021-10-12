@@ -1,0 +1,85 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">React JS</a></span>
+  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
+</div>
+
+<div class="topic">
+  <h2 id="BundlingAndCodeSplitting">Bundling and Code-splitting</h2>
+  
+  <h3>Bundling</h3>
+  Bundling is the process of following imported files and merging them into a single file: a &quot;bundle&quot;. This bundle can then be included on a webpage to load an entire app at once.
+
+  <h3>Code Splitting</h3>
+  To avoid winding up with a large bundle, it’s good to get ahead of the problem and start “splitting” your bundle. Code-Splitting is a feature supported by bundlers like Webpack, Rollup and Browserify (via factor-bundle) which can create multiple bundles that can be dynamically loaded at runtime.<br/>
+  Code-splitting your app can help you “lazy-load” just the things that are currently needed by the user, which can dramatically improve the performance of your app.
+
+  <p>instead of</p>
+  <pre class="code">
+    import { add } from './math';
+    console.log(add(16, 26));
+  </pre>
+
+  <p>use</p>
+  <pre class="code">
+    import("./math").then(math => {
+        console.log(math.add(16, 26));
+    });
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="LazyLoading">Lazy Loading</h2>
+  <p>Automatically load the bundle containing the component when this component is first rendered.</p>
+
+  <div class="notes">
+    // <span class="code">React.lazy</span> takes a function that must call a dynamic <span class="code">import()</span>. This must return a Promise which resolves to a module with a default export containing a React component.<br/>
+    // The lazy component should then be rendered inside a <span class="code">Suspense</span> component, which allows us to show some <span class="code">fallback</span> content (such as a loading indicator) while we’re waiting for the lazy component to load.<br/>
+    // You can even wrap multiple lazy components with a single <span class="code">Suspense</span> component.
+    // If the other module fails to load (for example, due to network failure), it will trigger an error. You can handle these errors to show a nice user experience and manage recovery with <span class="code">Error Boundaries</span>.
+  </div>
+  <pre class="code">
+    import React, { Suspense } from 'react';
+    import MyErrorBoundary from './MyErrorBoundary';
+    const OtherComponent = React.lazy(() => import('./OtherComponent'));
+
+    function MyComponent() {
+        return (
+            &lt;div&gt;
+                &lt;MyErrorBoundary&gt;&lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt; &lt;OtherComponent /&gt; &lt;/Suspense&gt;&lt;/MyErrorBoundary&gt;
+            &lt;/div&gt;
+        );
+    }
+  </pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="RouteBasedCodeSplitting">Route-based code splitting</h2>
+  <pre class="code">
+    import React, { Suspense, lazy } from 'react';
+    import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+    const Home = lazy(() => import('./routes/Home'));
+    const About = lazy(() => import('./routes/About'));
+
+    const App = () => (
+        &lt;Router&gt;
+            &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
+                &lt;Switch&gt;&lt;Route exact path="/" component={Home}/&gt;&lt;Route path="/about" component={About}/&gt;&lt;/Switch&gt;
+            &lt;/Suspense&gt;
+        &lt;/Router&gt;
+    );
+  </pre>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./10.accessibility.html">10. Accessibility</a></span>
+  <span class="next"><a href="./12.context.html">12. Context</a></span>
+</div>

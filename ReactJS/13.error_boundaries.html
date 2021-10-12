@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">React JS</a></span>
+  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
+</div>
+
+<div class="topic">
+  <h2 id="Introduction">Introduction</h2>
+  <p>Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering, in lifecycle methods, and in constructors of the whole tree below them.</p>
+  <div class="notes">
+    // Error boundaries do not catch errors for:
+    <ul>
+      <li>Event handlers (learn more)</li>
+      <li>Asynchronous code (e.g. setTimeout or requestAnimationFrame callbacks)</li>
+      <li>Server side rendering</li>
+      <li>Errors thrown in the error boundary itself (rather than its children)</li>
+    </ul>
+    // As of React 16, errors that were not caught by any error boundary will result in unmounting of the whole React component tree.
+  </div>
+  <p>A class component becomes an error boundary if it defines either (or both) of the lifecycle methods static <span class="code">getDerivedStateFromError()</span> or <span class="code">componentDidCatch()</span>. Use static <span class="code">getDerivedStateFromError()</span> to render a fallback UI after an error has been thrown. Use <span class="code">componentDidCatch()</span> to log error information.</p>
+  <pre class="code">
+    class ErrorBoundary extends React.Component {
+        constructor(props) { super(props); this.state = { hasError: false }; }
+      
+        // Update state so the next render will show the fallback UI.
+        static getDerivedStateFromError(error) { return { hasError: true }; }
+      
+        // You can also log the error to an error reporting service
+        componentDidCatch(error, errorInfo) { logErrorToMyService(error, errorInfo); }
+      
+        render() {
+            if (this.state.hasError) { return &lt;h1&gt;Something went wrong.&lt;/h1&gt;; }
+            return this.props.children; 
+        }
+    }
+
+    /* call as regular React component */
+    &lt;ErrorBoundary&gt; &lt;MyWidget /&gt; &lt;/ErrorBoundary&gt;
+  </pre>
+
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="HowAboutTryCatch">How about try/catch?</h2>
+    <p>try/catch is great but it only works for imperative code. However, React components are declarative and specify what should be rendered</p>
+    <pre class="code">
+      try { showButton(); } 
+      catch (error) { ... }
+    </pre>
+    <p>Error boundaries preserve the declarative nature of React, and behave as you would expect.</p>
+    <p>try/catch can (read, should) be used inside an event handler.</p>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./12.context.html">12. Context</a></span>
+  <!-- <span class="next"><a href="./13.error_boundaries.html">13. Error Boundaries</a></span> -->
+</div>

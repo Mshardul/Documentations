@@ -12,7 +12,7 @@
   <p>provides a way to pass data through the component tree without having to pass props down manually at every level.</p>
   <p>Context is designed to share data that can be considered &quot;global&quot; for a tree of React components, such as the current authenticated user, theme, or preferred language. </p>
   <p>Use a <span class="code">Provider</span> to pass the current theme to the tree below. Any component can read it, no matter how deep it is.</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     const ThemeContext = React.createContext('light');
 
     class App extends React.Component {
@@ -32,7 +32,7 @@
         static contextType = ThemeContext;
         render() { return &lt;Button theme={this.context} /&gt;; }
     }
-  </pre>
+  </code></pre>
   <div class="notes">
     // If you only want to avoid passing some props through many levels, <span class="code">component composition</span> is often a simpler solution than <span class="code">context</span>.<br/>
     // Alternatively, instead of passing down the props 9 levels to be used only by the component in the 10th level, we can create the 10th level element in the 1st level and pass it down to 10th level. Here, the mid-9 components need not worry about the props. But having such complexity in the higher level may make the app more complex as it may contain multiple children<br/>
@@ -47,21 +47,21 @@
   <h3>React.createContext</h3>
   <p>Creates a Context object. When React renders a component that subscribes to this Context object it will read the current context value from the closest matching Provider above it in the tree.</p>
   <p>The <span class="code">defaultValue</span> argument is only used when a component does not have a matching Provider above it in the tree.</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     const MyContext = React.createContext(defaultValue);
-  </pre>
+  </code></pre>
 
   <h3>Context.Provider</h3>
   <p>Every Context object comes with a Provider React component that allows consuming components to subscribe to context changes</p>
   <p>The Provider component accepts a value prop to be passed to consuming components that are descendants of this Provider. One Provider can be connected to many consumers. Providers can be nested to override values deeper within the tree.</p>
   <p>All consumers that are descendants of a Provider will re-render whenever the Provider’s value prop changes.</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     &lt;MyContext.Provider value={/* some value */}&gt;
-  </pre>
+  </code></pre>
 
   <h3>Class.contextType</h3>
   <p>The <span class="code">contextType</span> property on a class can be assigned a Context object created by <span class="code">React.createContext()</span>. Using this property lets you consume the nearest current value of that Context type using <span class="code">this.context</span></p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     class MyClass extends React.Component {
         static contextType = MyContext; // either this way
         componentDidMount() { let value = this.context; }
@@ -70,7 +70,7 @@
         render() { let value = this.context; }
     }
     MyClass.contextType = MyContext; // or this way
-  </pre>
+  </code></pre>
   <div class="notes">
     // You can only subscribe to a single context using this API. <br/>
   </div>
@@ -78,19 +78,19 @@
   <h3>Context.Consumer</h3>
   <p>A React component that subscribes to context changes. Using this component lets you subscribe to a context within a function component.</p>
   <p>Requires a function as a child. The function receives the current context value and returns a React node. The <span class="code">value</span> argument passed to the function will be equal to the <span class="code">value</span> prop of the closest <span class="code">Provider</span> for this context above in the tree. If there is no <span class="code">Provider</span> for this context above, the value argument will be equal to the <span class="code">defaultValue</span> that was passed to <span class="code">createContext()</span>.</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     &lt;MyContext.Consumer&gt; {value => /* render something based on the context value */} &lt;/MyContext.Consumer&gt;
-  </pre>
+  </code></pre>
 
   <h3>Context.displayName</h3>
   <p>Context object accepts a <span class="code">displayName</span> string property. React <span class="code">DevTools</span> uses this string to determine what to display for the context.</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     const MyContext = React.createContext(/* some value */);
     MyContext.displayName = 'MyDisplayName';
 
     &lt;MyContext.Provider&gt; // "MyDisplayName.Provider" in DevTools
     &lt;MyContext.Consumer&gt; // "MyDisplayName.Consumer" in DevTools
-  </pre>
+  </code></pre>
 
 </div>
 
@@ -100,7 +100,7 @@
   <h2 id="Examples">Examples</h2>
 
   <h3>Dynamic Context</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     /* theme-context.js */
     export const themes = {
       light: { foreground: '#000000', background: '#eeeeee' },
@@ -152,10 +152,10 @@
     }
 
     ReactDOM.render(&lt;App /&gt;, document.root);
-  </pre>
+  </code></pre>
 
   <h3>Updating Context from a Nested Component</h2>
-  <pre class="code">
+  <pre><code class="language-javascript">
     /* theme-context.js */
     // Make sure the shape of the default value passed to createContext matches the shape that the consumers expect!
     export const ThemeContext = React.createContext({ theme: themes.dark, toggleTheme: () => {} });
@@ -193,10 +193,10 @@
     function Content() { return ( &lt;div&gt; &lt;ThemeTogglerButton /&gt; &lt;/div&gt; ); }
 
     ReactDOM.render(&lt;App /&gt;, document.root);
-  </pre>
+  </code></pre>
 
   <h3>Multiple Contexts</h2>
-  <pre class="code">
+  <pre><code class="language-javascript">
     const ThemeContext = React.createContext('light');
     const UserContext = React.createContext({ name: 'Guest' });
 
@@ -221,7 +221,7 @@
             &lt;/ThemeContext.Consumer&gt;
         );
     }
-  </pre>
+  </code></pre>
 </div>
 
 <hr/>
@@ -230,15 +230,15 @@
   <h2 id="Caveats">Caveats</h2>
   <p>Because context uses reference identity to determine when to re-render, there are some gotchas that could trigger unintentional renders in consumers when a provider’s parent re-renders.</p>
   <p>instead of</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     class App extends React.Component {
         render() {
             return ( &lt;MyContext.Provider value={{something: 'something'}}&gt; &lt;Toolbar /&gt; &lt;/MyContext.Provider&gt; );
         }
     }
-  </pre>
+  </code></pre>
   <p>do</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     class App extends React.Component {
         constructor(props) {
             super(props); this.state = { value: {something: 'something'} };
@@ -248,7 +248,7 @@
             return ( &lt;MyContext.Provider value={this.state.value}&gt; &lt;Toolbar /&gt; &lt;/MyContext.Provider&gt; );
         }
     }
-  </pre>
+  </code></pre>
 </div>
 
 <div class="footer">

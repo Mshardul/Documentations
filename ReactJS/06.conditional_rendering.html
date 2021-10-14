@@ -11,7 +11,7 @@
   <h2 id="BasicExample">Basic Example</h2>
 
   <h3>Basic Example</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
       function Greeting(props) {
           const isLoggedIn = props.isLoggedIn;
           if (isLoggedIn) { return &lt;UserGreeting /&gt;; }
@@ -21,10 +21,10 @@
       ReactDOM.render(
           &lt;Greeting isLoggedIn={false} /&gt;, document.getElementById('root')
       );
-  </pre>
+  </code></pre>
 
   <h3>Stateful Component</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     class LoginControl extends React.Component {
         constructor(props) {
             super(props); this.handleLoginClick = this.handleLoginClick.bind(this); this.handleLogoutClick = this.handleLogoutClick.bind(this); this.state = {isLoggedIn: false};
@@ -43,25 +43,25 @@
     }
     
     ReactDOM.render( &lt;LoginControl /&gt;, document.getElementById('root') );
-  </pre>
+  </code></pre>
 
   <h3>&& operator</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     render() { const count = 0; return ( &lt;div&gt; { count && &lt;h1&gt;Messages: {count}&lt;/h1&gt;} &lt;/div&gt; ); }
-  </pre>
+  </code></pre>
 
   <h3>Ternary operator</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     render() { const isLoggedIn = this.state.isLoggedIn; return ( &lt;div&gt; The user is &lt;b&gt;{isLoggedIn ? 'currently' : 'not'}&lt;/b&gt; logged in. &lt;/div&gt; ); }
-  </pre>
+  </code></pre>
 
   <h3>Preventing component from rendering</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     function WarningBanner(props) {
         if (!props.warn) { return null; }
         return ( &lt;div className="warning"&gt; Warning! &lt;/div&gt; ); 
     }
-  </pre>
+  </code></pre>
 </div>
 
 <div class="footer">

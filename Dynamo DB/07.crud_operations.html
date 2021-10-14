@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="styles.css">
 <script src="./script.js"></script>
+<!-- <script src="../shared/highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();</script> -->
 
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
@@ -28,7 +30,7 @@
     <li><span class="code">ProvisionedThroughput: object</span> = {Number of reads and writes per second that you need for this table}</li>
   </ul>
 
-  <pre class="code">
+  <pre><code class="language-json">
     {
         TableName : "Music",
         KeySchema: [ 
@@ -41,7 +43,7 @@
         ],
         ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 } // Only specified if using provisioned mode
     }
-  </pre>
+  </code></pre>
 </div>
 
 <hr/>
@@ -53,11 +55,9 @@
     <li><span class="code">TableName: string</span> = {name of the table}</li>
   </ul>
 
-  <pre class="code">
-    {
-        TableName: "Music"
-    }
-  </pre>
+  <pre><code class="language-json">
+    { TableName: "Music" }
+  </code></pre>
 </div>
 
 <hr/>
@@ -67,18 +67,18 @@
 
   <h3>PartiQL</h3>
   <p>use the ExecuteStatement action to add an item to a table, using the Insert PartiQL statement.</p>
-  <pre class="code">
+  <pre><code class="language-json">
     INSERT INTO Music VALUE { 'Artist': 'No One You Know', 'SongTitle': 'Call Me Today' }
-  </pre>
+  </code></pre>
 
   <h3>Classic APIs</h3>
   <p>use the PutItem action to add an item to a table.</p>
-  <pre class="code">
+  <pre><code class="language-json">
     { 
         TableName: "Music",
         Item: { "Artist":"No One You Know", "SongTitle":"Call Me Today" }
     }
-  </pre>
+  </code></pre>
 
   <div class="notes">
     // Most SQL databases are transaction oriented. When you issue an <span class="code">INSERT</span> statement, the data modifications are not permanent until you issue a <span class="code">COMMIT</span> statement. With Amazon DynamoDB, the effects of a PutItem action are permanent when DynamoDB replies with an HTTP 200 status code (OK).<br/>
@@ -106,15 +106,15 @@
   <h3>PartiQL</h3>
   <p>use <span class="code">ExecuteStatement</span> to retrieve the items with statement similar to that of SQL</p>
 
-  <pre class="code">
+  <pre><code class="language-json">
     SELECT * FROM Music WHERE Artist='No One You Know';
-  </pre>
+  </code></pre>
 
 
   <h3>Classic APIs</h3>
 
   <p><span class="code">GetItem</span></p>
-  <pre class="code">
+  <pre><code class="language-json">
     /* optional param 'ProjectionExpression' to return only some attributes */
 
     { 
@@ -122,10 +122,10 @@
         Key: { "Artist": "No One You Know", "SongTitle": "Call Me Today" },
         "ProjectionExpression": "AlbumTitle, Year, Price"
     }
-  </pre>
+  </code></pre>
 
   <p><span class="code">Query</span>: You must specify an equality condition for the partition key, and you can optionally provide another condition for the sort key.</p>
-  <pre class="code">
+  <pre><code class="language-json">
     /* Return a single song, by primary key */
     { 
         TableName: "Music",
@@ -139,16 +139,16 @@
         KeyConditionExpression: "Artist = :a and begins_with(SongTitle, :t)",
         ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call" }
     }
-  </pre>
+  </code></pre>
   <div class="notes">
     // You can use an optional <span class="code">FilterExpression</span> to remove certain items from the results before they are returned to you.<br/>
     //  you must use <span class="code">ExpressionAttributeValues</span> as placeholders in expression parameters (such as <span class="code">KeyConditionExpression</span> and <span class="code">FilterExpression</span>). This is analogous to the use of bind variables in relational databases, where you substitute the actual values into the <span class="code">SELECT</span> statement at runtime.<br/>
   </div>
 
   <p><span class="code">Scan</span></p>
-  <pre class="code">
+  <pre><code class="language-json">
     { TableName:  "Music" }
-  </pre>
+  </code></pre>
   <div class="notes">
     // <span class="code">ProjectionExpression</span> can be used to get certain attributes.<br/>
     // The <span class="code">Scan</span> action also provides a <span class="code">FilterExpression</span> parameter, which you can use to discard items that you do not want to appear in the results. A <span class="code">FilterExpression</span> is applied after the scan is performed, but before the results are returned to you.<br/>
@@ -170,7 +170,7 @@
   <div class="notes">
     // UpdateItem behaves like an "upsert" operation: The item is updated if it exists in the table, but if not, a new item is added (inserted).<br/>
   </div>
-  <pre class="code">
+  <pre><code class="language-json">
     /* update label and price, when certain conditions are met */
     {
         TableName: "Music",
@@ -188,7 +188,7 @@
         ExpressionAttributeValues: { ":incr": 1 },
         ReturnValues: "UPDATED_NEW"
     }
-  </pre>
+  </code></pre>
 </div>
 
 <hr/>
@@ -204,13 +204,13 @@
     <li><span class="code">Key</span>: Key attributes of the item to delete.</li>
     <li><span class="code">ConditionExpression</span> (optional): item is deleted only if this expression results to <span class="code">true</span></li>
   </ul>
-  <pre class="code">
+  <pre><code class="language-json">
     {
         TableName: "Music",
         Key: { Artist: "The Acme Band", SongTitle: "Look Out, World" },
         ConditionExpression: "attribute_exists(RecordLabel)"
     }
-  </pre>
+  </code></pre>
 </div>
 
 <hr/>

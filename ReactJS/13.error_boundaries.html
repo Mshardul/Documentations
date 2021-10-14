@@ -21,7 +21,7 @@
     // As of React 16, errors that were not caught by any error boundary will result in unmounting of the whole React component tree.
   </div>
   <p>A class component becomes an error boundary if it defines either (or both) of the lifecycle methods static <span class="code">getDerivedStateFromError()</span> or <span class="code">componentDidCatch()</span>. Use static <span class="code">getDerivedStateFromError()</span> to render a fallback UI after an error has been thrown. Use <span class="code">componentDidCatch()</span> to log error information.</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     class ErrorBoundary extends React.Component {
         constructor(props) { super(props); this.state = { hasError: false }; }
       
@@ -39,7 +39,7 @@
 
     /* call as regular React component */
     &lt;ErrorBoundary&gt; &lt;MyWidget /&gt; &lt;/ErrorBoundary&gt;
-  </pre>
+  </code></pre>
 
 </div>
 
@@ -48,10 +48,10 @@
 <div class="topic">
   <h2 id="HowAboutTryCatch">How about try/catch?</h2>
     <p>try/catch is great but it only works for imperative code. However, React components are declarative and specify what should be rendered</p>
-    <pre class="code">
+    <pre><code class="language-javascript">
       try { showButton(); } 
       catch (error) { ... }
-    </pre>
+    </code></pre>
     <p>Error boundaries preserve the declarative nature of React, and behave as you would expect.</p>
     <p>try/catch can (read, should) be used inside an event handler.</p>
 </div>

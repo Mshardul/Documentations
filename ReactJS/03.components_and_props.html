@@ -20,16 +20,16 @@
   <h2 id="DefiningAComponent">Defining a component</h2>
 
   <h3>JS function</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
-  </pre>
+  </code></pre>
 
   <h3>ES6 class</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     class Welcome extends React.Component {
         render() { return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;; }
     }
-  </pre>
+  </code></pre>
 </div>
 
 <hr/>
@@ -38,25 +38,25 @@
   <h2 id="RenderingAnElement">Rendering an Element</h2>
 
   <h3>Passing a user-defined component</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     const element = &lt;Welcome name="Sara" /&gt;;
-  </pre>
+  </code></pre>
 
   translates to
 
-  <pre class="code">
+  <pre><code class="language-javascript">
     function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
     
     const element = &lt;Welcome name="Sara" /&gt;;
     ReactDOM.render( element, document.getElementById('root') );
-  </pre>
+  </code></pre>
 </div>
 
 <hr/>
 
 <div class="topic">
   <h2 id="NestedComponents">Nested Components</h2>
-  <pre class="code">
+  <pre><code class="language-javascript">
     function Avatar(props) { 
         return ( &lt;img className="Avatar" src={props.user.avatarUrl} alt={props.user.name} /&gt; ); 
     }
@@ -74,7 +74,7 @@
           &lt;/div&gt;
       );
     }
-  </pre>
+  </code></pre>
 </div>
 
 <hr/>

@@ -31,7 +31,7 @@
       <li><span class="code">Projection</span>: Attributes from the table that are copied to the index.</li>
       <li><span class="code">ProvisionedThroughput</span>(for provisioned tables): number of reads and writes per second that you need for this index.</li>
     </ul>
-    <pre class="code">
+    <pre><code class="language-json">
     {
         TableName: "Music",
         AttributeDefinitions:[
@@ -49,11 +49,11 @@
                 ProvisionedThroughput: { "ReadCapacityUnits": 1,"WriteCapacityUnits": 1 } // Only specified if using provisioned mode
             } } ] 
     }
-    </pre>
+    </code></pre>
     <div class="notes">
       // DynamoDB does not have a query optimizer, so a secondary index is only used when you Query it or Scan it.<br/>
       // You can request strongly consistent Query or Scan actions on a table or a local secondary index. However, global secondary indexes support only eventual consistency.<br/>
-    </div>
+    </code></div>
   </div>
 </div>
 
@@ -62,7 +62,7 @@
 <div class="topic">
   <h2 id="QueryingAnIndex">Querying an Index</h2>
   <p>perform Query operations directly on the index, in the same way as on a table. must specify both TableName and IndexName</p>
-  <pre class="code">
+  <pre><code class="language-json">
     {
         TableName: "Music",
         IndexName: "GenreAndPriceIndex",
@@ -72,7 +72,7 @@
             ":price": 0.50
         }
     };
-  </pre>
+  </code></pre>
 </div>
 
 <div class="footer">

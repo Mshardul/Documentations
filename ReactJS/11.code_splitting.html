@@ -18,17 +18,17 @@
   Code-splitting your app can help you “lazy-load” just the things that are currently needed by the user, which can dramatically improve the performance of your app.
 
   <p>instead of</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     import { add } from './math';
     console.log(add(16, 26));
-  </pre>
+  </code></pre>
 
   <p>use</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     import("./math").then(math => {
         console.log(math.add(16, 26));
     });
-  </pre>
+  </code></pre>
 </div>
 
 <hr/>
@@ -43,7 +43,7 @@
     // You can even wrap multiple lazy components with a single <span class="code">Suspense</span> component.
     // If the other module fails to load (for example, due to network failure), it will trigger an error. You can handle these errors to show a nice user experience and manage recovery with <span class="code">Error Boundaries</span>.
   </div>
-  <pre class="code">
+  <pre><code class="language-javascript">
     import React, { Suspense } from 'react';
     import MyErrorBoundary from './MyErrorBoundary';
     const OtherComponent = React.lazy(() => import('./OtherComponent'));
@@ -55,7 +55,7 @@
             &lt;/div&gt;
         );
     }
-  </pre>
+  </code></pre>
   <div class="notes">
     // more on Error Boundaries <a href="./13.error_boundaries.html">here</a>.
   </div>
@@ -65,7 +65,7 @@
 
 <div class="topic">
   <h2 id="RouteBasedCodeSplitting">Route-based code splitting</h2>
-  <pre class="code">
+  <pre><code class="language-javascript">
     import React, { Suspense, lazy } from 'react';
     import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -79,7 +79,7 @@
             &lt;/Suspense&gt;
         &lt;/Router&gt;
     );
-  </pre>
+  </code></pre>
 </div>
 
 <div class="footer">

@@ -22,7 +22,7 @@
 <div class="topic">
   <h2 id="SemanticHTML">Semantic HTML</h2>
   <p>Sometimes we break HTML semantics when we add &lt;div&gt; elements to our JSX to make our React code work, especially when working with lists (&lt;ol&gt;, &lt;ul&gt; and &lt;dl&gt;) and the HTML &lt;table&gt;. In these cases we should rather use React Fragments to group together multiple elements.</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     function Glossary(props) {
         return (
             &lt;dl&gt;
@@ -33,9 +33,9 @@
             &lt;/dl&gt;
         );
     }
-  </pre>
+  </code></pre>
   <p>When you don’t need any props on the Fragment tag you can use the short syntax, if your tooling supports it</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     function ListItem({ item }) {
         return (
             &lt;&gt;
@@ -44,7 +44,7 @@
             &lt;/&gt;
         );
     }
-  </pre>
+  </code></pre>
 </div>
 
 <hr/>
@@ -54,10 +54,10 @@
 
   <h3>Labeling</h3>
   <p>Although these standard HTML practices can be directly used in <span class="code">React</span>, note that the <span class="code">for</span> attribute is written as <span class="code">htmlFor</span> in JSX</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     &lt;label htmlFor="namedInput"&gt;Name:&lt;/label&gt;
     &lt;input id="namedInput" type="text" name="name"/&gt;
-  </pre>
+  </code></pre>
 </div>
 
 <hr/>
@@ -67,7 +67,7 @@
   
   <h3>Programmatically managing focus</h3>
   <p>For example, by resetting keyboard focus to a button that opened a modal window after that modal window is closed.</p>
-  <pre class="code">
+  <pre><code class="language-javascript">
     function CustomTextInput(props) {
       return ( &lt;div&gt;&lt;input ref={props.inputRef} /&gt;&lt;/div&gt; );
     }
@@ -80,7 +80,7 @@
     }
     
     this.inputElement.current.focus(); // set focus when required.
-  </pre>
+  </code></pre>
 </div>
 
 <div class="footer">

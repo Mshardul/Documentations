@@ -9,9 +9,9 @@
 
 <div class="topic">
   <h2 id="Introduction">Introduction</h2>
-  <pre class="code">
+  <pre><code class="language-javascript">
     const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;
-  </pre>
+  </code></pre>
   <ul>
     <li>JSX is a syntax extension to JavaScript.</li>
     <li>use it with React to describe what the UI should look like</li>
@@ -21,59 +21,59 @@
   </ul>
 
   <h3>Embedding Expressions</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     const name = 'Josh Perez';
     const element = &lt;h1&gt;Hello, {name}&lt;/h1&gt;;
     
     ReactDOM.render( element, document.getElementById('root') );
-  </pre>
+  </code></pre>
 
   <h3>Embedding result of calling a function</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     function formatName(user) { return user.firstName + ' ' + user.lastName; }
 
     const user = { firstName: 'Harper', lastName: 'Perez' };    
     const element = ( &lt;h1&gt;Hello, {formatName(user)}!&lt;/h1&gt; );
     
     ReactDOM.render( element, document.getElementById('root') );
-  </pre>
+  </code></pre>
 
   <h3>JSX is an Expression Too</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     function getGreeting(user) {
         if (user) { return &lt;h1&gt;Hello, {formatName(user)}!&lt;/h1&gt;; }
         return &lt;h1&gt;Hello, Stranger.&lt;/h1&gt;;
     }
-  </pre>
+  </code></pre>
 
   OR
 
-  <pre class="code">
+  <pre><code class="language-javascript">
     const element = &lt;img src={user.avatarUrl}&gt;&lt;/img&gt;;
-  </pre>
+  </code></pre>
 
   <h3>Specifying Attributes with JSX</h3>
-  <pre class="code">
+  <pre><code class="language-javascript">
     const element = &lt;div tabIndex="0"&gt;&lt;/div&gt;;
-  </pre>
+  </code></pre>
 
   <h3>JSX Represents Objects</h3>
   Babel compiles JSX down to <span class="code">React.createElement()</span> calls.
-  <pre class="code">
+  <pre><code class="language-javascript">
     const element = ( &lt;h1 className="greeting"&gt;Hello, world!&lt;/h1&gt; );
-  </pre>
+  </code></pre>
 
   compiles to 
   
-  <pre class="code">
+  <pre><code class="language-javascript">
     const element = React.createElement( 'h1', {className: 'greeting'}, 'Hello, world!' );
-  </pre>
+  </code></pre>
 
   React.createElement() performs a few checks to help you write bug-free code but essentially it creates an object like this: //These objects are called <span class="code">React elements</span>.
 
-  <pre class="code">
+  <pre><code class="language-javascript">
     const element = { type: 'h1', props: { className: 'greeting', children: 'Hello, world!' } };
-  </pre>
+  </code></pre>
 
   <div class="notes">
     // You can put any valid JavaScript expression inside the curly braces in JSX. For example, 2 + 2, user.firstName, or formatName(user) are all valid JavaScript expressions.<br/>

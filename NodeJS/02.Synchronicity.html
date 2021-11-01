@@ -1,0 +1,266 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">Dynamo DB</a></span>
+  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
+  <div id="sidebar_topics" class="sidebar sidebar-right sidebar_topics" style="width:25%; right:0; display: none;">
+    <ul>
+      <li><a href="#EventLoop">Event Loop</a></li>
+      <li><a href="#NextTick">Next Tick</a></li>
+      <li><a href="#SetImmediate">Set Immediate</a></li>
+      <li><a href="#SetInterval">Set Interval</a></li>
+      <li><a href="#Callbacks">Callbacks</a></li>
+      <li><a href="#Promises">Promises</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="topic">
+  <h2 id="EventLoop">Event Loop</h2>
+  <ul>
+    <li>it explains how Node.js can be <span class="code">asynchronous</span> and have <span class="code">non-blocking I/O</span></li>
+    <li>In general, in most browsers there is an <span class="code">event loop</span> for every browser tab, to make every process isolated and avoid a web page with infinite loops or heavy processing to block your entire browser.</li>
+    <li>The event loop continuously checks the <span class="code">call stack</span> to see if there's any function that needs to run.</li>
+  </ul>
+
+  <h3>Blocking the event loop</h3>
+  <ul>
+    <li>Any JavaScript code that takes too long to return back control to the event loop will block the execution of any JavaScript code in the page, even block the UI thread, and the user cannot click around, scroll the page, and so on.</li>
+    <li>Almost all the I/O primitives in JavaScript are non-blocking. <span class="code">Network requests</span>, <span class="code">filesystem operations</span>, and so on. Being blocking is the exception, and this is why JavaScript is based so much on <span class="code">callbacks</span>, and more recently on <span class="code">promises</span> and <span class="code">async/await</span>.</li>
+  </ul>
+
+  <h3>The Message Queue</h3>
+  <ul>
+    <li>When <span class="code">setTimeout()</span> is called, the Browser or Node.js starts the timer. Once the timer expires, the callback function is put in the <span class="code">Message Queue</span>.</li>
+    <li>The <span class="code">Message Queue</span> is also where user-initiated events like <span class="code">click</span> or <span class="code">keyboard events</span>, or <span class="code">fetch responses</span> are queued before your code has the opportunity to react to them. Or also <span class="code">DOM events</span></li>
+    <li>The loop gives priority to the call stack, and it first processes everything it finds in the call stack, and once there's nothing in there, it goes to pick up things in the message queue.</li>
+  </ul>
+
+  <h3>ES6 Job Queue</h3>
+  <ul>
+    <li><span class="code">ECMAScript 2015</span> introduced the concept of the <span class="code">Job Queue</span>, which is used by <span class="code">Promises</span> (also introduced in ES6/ES2015). It's a way to execute the result of an <span class="code">async</span> function as soon as possible, rather than being put at the end of the call stack.</li>
+    <li><span class="code">Promises</span> that resolve before the current function ends will be executed right after the current function.</li>
+  </ul>
+
+  <pre><code class="language-javascript">
+    const bar = () => console.log('bar')
+
+    const baz = () => console.log('baz')
+
+    const foo = () => {
+        console.log('foo')                                        // 1
+        setTimeout(bar, 0)                                        // 4
+        new Promise((resolve, reject) =>
+            resolve('should be right after baz, before bar')
+        ).then(resolve => console.log(resolve))                   // 3
+        baz()                                                     // 2
+    }
+
+    foo()
+  </code></pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="NextTick">Next Tick</h2>
+  <ul>
+    <li>Every time the event loop takes a full trip, we call it a <span class="point">tick</span>.</li>
+    <li>When we pass a function to <span class="code">process.nextTick()</span>, we instruct the engine to invoke this function at the end of the current operation, before the next event loop tick starts</li>
+    <li>It's the way we can tell the JS engine to process a function <span class="code">asynchronously</span> (after the current function), but as soon as possible, not queue it</li>
+    <li>Calling <span class="code">setTimeout(() => {}, 0)</span> will execute the function at the end of next tick, much later than when using <span class="code">nextTick()</span> which prioritizes the call and executes it just before the beginning of the next tick.</li>
+    <li>Use <span class="code">nextTick()</span> when you want to make sure that in the next event loop iteration that code is already executed</li>
+  </ul>
+
+  <pre><code class="language-javascript">
+    process.nextTick(() => {
+        //do something
+    });
+  </code></pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="SetImmediate">Set Immediate</h2>
+  <ul>
+    <li>A function passed to process.nextTick() is going to be executed on the current iteration of the event loop, after the current operation ends. This means it will always execute before <span class="code">setTimeout</span> and <span class="code">setImmediate</span>.</li>
+    <li>A <span class="code">setTimeout()</span> callback with a 0ms delay is very similar to <span class="code">setImmediate()</span>. The execution order will depend on various factors, but they will be both run in the next iteration of the event loop.</li>
+  </ul>
+  <pre><code class="language-javascript">
+    setImmediate(() => {
+        //run something
+    })      
+  </code></pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="SetInterval">Set Interval</h2>
+  <ul>
+    <li><span class="code">setInterval</span> is a function similar to <span class="code">setTimeout</span>, with a difference: instead of running the callback function once, it will run it forever, at the specific time interval you specify (in milliseconds)</li>
+  </ul>
+  <pre><code class="language-javascript">
+    setInterval(() => {
+        // runs every 2 seconds
+    }, 2000)
+  </code></pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="Callbacks">Callbacks</h2>
+  <ul>
+    <li>JavaScript is synchronous by default and is single threaded. This means that code cannot create new threads and run in parallel.</li>
+    <li>The browser provides a way to respond to user actions (eg mouse click) by providing a set of APIs that can handle this kind of functionality.</li>
+  </ul><br/>
+  A <span class="point">callback</span> is a simple function that's passed as a value to another function, and will only be executed when the event happens. We can do this because JavaScript has first-class functions, which can be assigned to variables and passed around to other functions (called higher-order functions)
+  <pre><code class="language-javascript">
+    document.getElementById('button').addEventListener('click', () => {
+        //item clicked
+    });    
+  </code></pre>
+  every callback adds a level of nesting, and when you have lots of callbacks, the code starts to be complicated very quickly. Starting with ES6, JavaScript introduced <span class="code">Promises (ES6)</span> and <span class="code">Async/Await (ES2017)</span> as alternatives to Callbacks.
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="Promises">Promises</h2>
+  <ul>
+    <li>A promise is commonly defined as a proxy for a value that will eventually become available</li>
+    <li>one way to deal with asynchronous code, without getting stuck in callback hell.</li>
+    <li>Promises were standardized and introduced in ES2015, and have recently become more integrated, with async and await in ES2017.</li>
+  </ul>
+
+  <h3>How promise work?</h3>
+  <ul>
+    <li>Once a promise has been called, it will start in a pending state. This means that the calling function continues executing, while the promise is pending until it resolves, giving the calling function whatever data was being requested.</li>
+    <li>The created promise will eventually end in a resolved state, or in a rejected state, calling the respective callback functions (passed to then and catch) upon finishing.</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre><code class="language-javascript">
+    const fs = require('fs')
+
+    const getFile = (fileName) => {
+      return new Promise((resolve, reject) => {
+          fs.readFile(fileName, (err, data) => {
+              if (err) {
+                  reject(err)   // calling `reject` will cause the promise to fail with or without the error passed as an argument
+                  return        // and we don't want to go any further
+              }
+              resolve(data)
+          })
+      })
+    }
+
+    getFile('/etc/passwd')
+        .then(data => console.log(data))
+        .catch(err => console.error(err))
+  </code></pre>
+
+  <h3>Chaining promises</h3>
+  <ul>
+    <li>A promise can be returned to another promise, creating a chain of promises.</li>
+  </ul>
+  <pre><code class="language-javascript">
+    const status = response => {
+        if (response.status >= 200 && response.status < 300) {
+            return Promise.resolve(response)
+        }
+        return Promise.reject(new Error(response.statusText))
+    }
+    
+    const json = response => response.json()
+    
+    fetch('/todos.json')
+        .then(status)    // note that the `status` function is actually **called** here, and that it **returns a promise***
+        .then(json)      // likewise, the only difference here is that the `json` function here returns a promise that resolves with `data`
+        .then(data => {  // ... which is why `data` shows up here as the first parameter to the anonymous function
+            console.log('Request succeeded with JSON response', data)
+        })
+        .catch(error => {
+            console.log('Request failed', error)
+        })
+  </code></pre>
+
+  <h3>Errors</h3>
+  <ul>
+    <li>When anything in the chain of promises fails and raises an error or rejects the promise, the control goes to the nearest <span class="code">catch()</span> statement down the chain.</li>
+  </ul>
+  <pre><code class="language-javascript">
+    new Promise((resolve, reject) => {
+        throw new Error('Error') // or reject('Error')
+    }).catch(err => {
+        console.error(err)
+    });    
+  </code></pre>
+
+  <h3>Cascading Errors</h3>
+  <ul>
+    <li>If inside the <span class="code">catch()</span> you raise an error, you can append a second <span class="code">catch()</span> to handle it, and so on.</li>
+  </ul>
+  <pre><code class="language-javascript">
+    new Promise((resolve, reject) => {
+        throw new Error('Error')
+    })
+    .catch(err => {
+        throw new Error('Error')
+    })
+    .catch(err => {
+        console.error(err)
+    })    
+  </code></pre>
+
+  <h3>Waiting for all promises to resolve: Promise.all()</h3>
+  <ul>
+    <li>If you need to synchronize different promises, <span class="code point">Promise.all()</span> helps you define a list of promises, and execute something when they are all resolved</li>
+  </ul>
+  <pre><code class="language-javascript">
+    Promise.all([p1, p2]).then(res => {
+        console.log('Array of results', res)
+    })
+  </code></pre>
+
+  <h3>Waiting for any one of the promises to resolve: Promise.race()</h3>
+  <ul>
+    <li><span class="code point">Promise.race()</span> runs when the first of the promises you pass to it settles (resolves or rejects), and it runs the attached callback just once, with the result of the first promise settled</li>
+  </ul>
+  <pre><code class="language-javascript">
+    Promise.race([p1, p2]).then(result => {
+        console.log('result of first promise resolved', result)
+    })
+  </code></pre>
+
+  <h3>Waiting for any one of the promise to fulfil: Promise.any()</h3>
+  <ul>
+    <li><span class="code point">Promise.any()</span> settles when any of the promises you pass to it fulfill or all of the promises get rejected. It returns a single promise that resolves with the value from the first promise that is fulfilled. If all promises are rejected, then the returned promise is rejected with an AggregateError.</li>
+  </ul>
+  <pre><code class="language-javascript">
+    Promise.any([first, second])
+        .then(resp => {
+            console.log(resp);
+        })
+        .catch(error => {
+            console.log(error) // AggregateError
+        })
+    
+  </code></pre>
+</div>
+
+<hr/>
+
+<div class="topic">
+  <h2 id="AsyncAwait">Async/Await</h2>
+</div>
+
+
+<div class="footer">
+  <span class="prev"><a href="./01.introduction.html">01. Introduction</a></span>
+  <!-- <span class="next"><a href="./02.event_loop.html">02. Event Loop</a></span> -->
+</div>

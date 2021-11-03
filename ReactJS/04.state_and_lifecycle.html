@@ -4,160 +4,168 @@
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
   <span class="center"><a href="./00.main.html">React JS</a></span>
-  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
 </div>
 
-<div class="topic">
-  <h2 id="ConvertingAFunctionToAClass">Converting a function to a class</h2>
-  <ol>
-    <li>Create an ES6 class, with the same name, that extends <span class="code">React.Component</span>.</li>
-    <li>Add a single empty method to it called <span class="code">render()</span>.</li>
-    <li>Move the body of the function into the <span class="code">render()</span> method.</li>
-    <li>Replace props with <span class="code">this.props</span> in the <span class="code">render()</span> body.</li>
-    <li>Delete the remaining empty function declaration.</li>
-  </ol>
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="ConvertingAFunctionToAClass">Converting a function to a class</h2>
+      <ol>
+        <li>Create an ES6 class, with the same name, that extends <span class="code">React.Component</span>.</li>
+        <li>Add a single empty method to it called <span class="code">render()</span>.</li>
+        <li>Move the body of the function into the <span class="code">render()</span> method.</li>
+        <li>Replace props with <span class="code">this.props</span> in the <span class="code">render()</span> body.</li>
+        <li>Delete the remaining empty function declaration.</li>
+      </ol>
 
-  <pre><code class="language-javascript">
-    function Clock(props) {
-        return ( &lt;div&gt; &lt;h1&gt;Hello, world!&lt;/h1&gt; &lt;h2&gt;It is {props.date.toLocaleTimeString()}.&lt;/h2&gt; &lt;/div&gt; );
-    }
-  </code></pre>
-
-  changes to 
-
-  <pre><code class="language-javascript">
-    class Clock extends React.Component {
-        render() {
-            return ( &lt;div&gt; &lt;h1&gt;Hello, world!&lt;/h1&gt; &lt;h2&gt;It is {this.props.date.toLocaleTimeString()}.&lt;/h2&gt; &lt;/div&gt; ); 
-        } 
-    }
-  </code></pre>
-</div>
-
-<hr/>
-
-<div class="topic">
-  <h2 id="LifecycleOfComponents">Lifecycle of components</h2>
-  There are 3 phases: Mounting, Updating, and Unmounting
-
-  <h3>Mounting</h3>
-  means putting elements into the DOM<br/>
-  4 built-in methods are called, in this order
-  <ol>
-    <li><span class="code">constructor()</span> is called before anything else, when the component is initiated, and it is the natural place to set up the initial state and other initial values. This method is called with the <span class="code">props</span>, as arguments, and you should always start by calling the <span class="code">super(props)</span> before anything else, this will initiate the parent's constructor method and allows the component to inherit methods from its parent <span class="code">(React.Component)</span>.</li>
-    <li><span class="code">getDerivedStateFromProps()</span> is called right before rendering the element(s) in the DOM. This is the natural place to set the state object based on the initial props. It takes <span class="code">state</span> as an argument, and returns an object with changes to the state.</li>
-    <li><span class="code">render()</span> is required, and is the method that actually outputs the HTML to the DOM.</li>
-    <li><span class="code">componentDidMount()</span> is called after the component is rendered. This is where you run statements that requires that the component is already placed in the DOM.</li>
-  </ol>
-
-  <h3>Updating</h3>
-  A component is updated whenever there is a change in the component's state or props.<br/>
-  5 built-in methods are called, in this order
-  <ol>
-    
-    <li><span class="code">getDerivedStateFromProps()</span> still the natural place to set the state object based on the initial props.</li>
-    <li><span class="code">shouldComponentUpdate()</span> you can return a Boolean value that specifies whether React should continue with the rendering or not. The default value is true.</li>
-    <li><span class="code">render()</span> when a component gets updated, it has to re-render the HTML to the DOM, with the new changes.</li>
-    <li><span class="code">getSnapshotBeforeUpdate()</span> you have access to the <span class="code">props</span> and <span class="code">state</span> before the update, meaning that even after the update, you can check what the values were before the update. If this method is present, you should also include the <span class="code">componentDidUpdate()</span> method, otherwise you will get an error.</li>
-    <li><span class="code">componentDidUpdate()</span> is called after the component is updated in the DOM. </li>
-  </ol>
-
-  <h3>Unmounting</h3>
-  when a component is removed from the DOM<br/>
-  only 1 built-in method
-  <ol>
-    <li><span class="code">componentWillUnmount()</span> is called when the component is about to be removed from the DOM.</li>
-  </ol>
-</div>
-
-<hr/>
-
-<div class="topic">
-  <h2 id="State">State</h2>
-  <ul>
-    <li>use <span class="code">setState()</span> instead of <span class="code">this.state=</span></li>
-    <li>React may batch multiple <span class="code">setState()</span> calls into a single update for performance. Because <span class="code">this.props</span> and <span class="code">this.state</span> may be updated asynchronously, you should not rely on their values for calculating the next state. Use a different form of <span class="code">setState()</span> that accepts a function rather than an object, to overcome this issue.</li>
       <pre><code class="language-javascript">
-          this.setState({ counter: this.state.counter + this.props.increment, }); // accepts object
-          this.setState((state, props) => ({ counter: state.counter + props.increment })); // accepts function
+        function Clock(props) {
+            return ( &lt;div&gt; &lt;h1&gt;Hello, world!&lt;/h1&gt; &lt;h2&gt;It is {props.date.toLocaleTimeString()}.&lt;/h2&gt; &lt;/div&gt; );
+        }
       </code></pre>
-    <li>State Updates are merged ie <span class="code">setState({a: b})</span> will add <span class="code">{a:b}</span>, and still keeping all other objects the same. It will, however replace the old value of <span class="code">a</span></li>
-  </ul>
-</div>
 
-<hr/>
+      changes to 
 
-<div class="topic">
-  <h2 id="DataInNestedComponents">Data in Nested Components</h2>
-  Neither parent nor child components can know if a certain component is stateful or stateless, and they shouldn’t care whether it is defined as a function or a class. This is why state is often called <span class="point">local</span> or <span class="point">encapsulated</span>. It is not accessible to any component other than the one that owns and sets it.<br/>
-  A component may choose to pass its state down as props to its child components. This is commonly called a <span class="point">top-down</span> or <span class="point">unidirectional</span> data flow.
-  <pre><code class="language-javascript">
-      &lt;FormattedDate date={this.state.date} /&gt;
-  </code></pre>
-</div>
-
-<hr/>
-
-<div class="topic">
-  <h2 id="LiftingStateUp">Lifting State Up</h2>
-  Often, several components need to reflect the same changing data. We recommend lifting the shared state up to their closest common ancestor
-  <pre><code class="language-javascript">
-    function BoilingVerdict(props) {
-        if (props.celsius >= 100) { return &lt;p&gt;The water would boil.&lt;/p&gt;; }
-        return &lt;p&gt;The water would not boil.&lt;/p&gt;;
-    }
-
-    class TemperatureInput extends React.Component {
-        constructor(props) {
-            super(props);
-            this.handleChange = this.handleChange.bind(this);
+      <pre><code class="language-javascript">
+        class Clock extends React.Component {
+            render() {
+                return ( &lt;div&gt; &lt;h1&gt;Hello, world!&lt;/h1&gt; &lt;h2&gt;It is {this.props.date.toLocaleTimeString()}.&lt;/h2&gt; &lt;/div&gt; ); 
+            } 
         }
-    
-        handleChange(e) { this.props.onTemperatureChange(e.target.value); }
-      
-        render() {
-            const temperature = this.props.temperature;
-            const scale = this.props.scale;
-            return (
-              &lt;fieldset&gt;
-                &lt;legend&gt;Enter temperature in {scaleNames[scale]}:&lt;/legend&gt;
-                &lt;input value={temperature} onChange={this.handleChange} /&gt;
-              &lt;/fieldset&gt;
-            );
-        }
-    }
+      </code></pre>
+    </div>
 
-    class Calculator extends React.Component {
-        constructor(props) {
-            super(props);
-            this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
-            this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
-            this.state = {temperature: '', scale: 'c'};
-        }
-    
-        handleCelsiusChange(temperature) { this.setState({scale: 'c', temperature}); }
-        handleFahrenheitChange(temperature) { this.setState({scale: 'f', temperature}); }
-      
-        render() {
-            const scale = this.state.scale;
-            const temperature = this.state.temperature;
-            const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
-            const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+    <hr/>
+
+    <div class="topic">
+      <h2 id="LifecycleOfComponents">Lifecycle of components</h2>
+      There are 3 phases: Mounting, Updating, and Unmounting
+
+      <h3>Mounting</h3>
+      means putting elements into the DOM<br/>
+      4 built-in methods are called, in this order
+      <ol>
+        <li><span class="code">constructor()</span> is called before anything else, when the component is initiated, and it is the natural place to set up the initial state and other initial values. This method is called with the <span class="code">props</span>, as arguments, and you should always start by calling the <span class="code">super(props)</span> before anything else, this will initiate the parent's constructor method and allows the component to inherit methods from its parent <span class="code">(React.Component)</span>.</li>
+        <li><span class="code">getDerivedStateFromProps()</span> is called right before rendering the element(s) in the DOM. This is the natural place to set the state object based on the initial props. It takes <span class="code">state</span> as an argument, and returns an object with changes to the state.</li>
+        <li><span class="code">render()</span> is required, and is the method that actually outputs the HTML to the DOM.</li>
+        <li><span class="code">componentDidMount()</span> is called after the component is rendered. This is where you run statements that requires that the component is already placed in the DOM.</li>
+      </ol>
+
+      <h3>Updating</h3>
+      A component is updated whenever there is a change in the component's state or props.<br/>
+      5 built-in methods are called, in this order
+      <ol>
         
-            return (
-              &lt;div&gt;
-                  &lt;TemperatureInput scale="c" temperature={celsius} onTemperatureChange={this.handleCelsiusChange} /&gt;
-                  &lt;TemperatureInput scale="f" temperature={fahrenheit} onTemperatureChange={this.handleFahrenheitChange} /&gt;
-                  &lt;BoilingVerdict celsius={parseFloat(celsius)} /&gt;
-              &lt;/div&gt;
-            );
-        }
-    }
-  </code></pre>
+        <li><span class="code">getDerivedStateFromProps()</span> still the natural place to set the state object based on the initial props.</li>
+        <li><span class="code">shouldComponentUpdate()</span> you can return a Boolean value that specifies whether React should continue with the rendering or not. The default value is true.</li>
+        <li><span class="code">render()</span> when a component gets updated, it has to re-render the HTML to the DOM, with the new changes.</li>
+        <li><span class="code">getSnapshotBeforeUpdate()</span> you have access to the <span class="code">props</span> and <span class="code">state</span> before the update, meaning that even after the update, you can check what the values were before the update. If this method is present, you should also include the <span class="code">componentDidUpdate()</span> method, otherwise you will get an error.</li>
+        <li><span class="code">componentDidUpdate()</span> is called after the component is updated in the DOM. </li>
+      </ol>
 
-  <div class="notes">
-    // Instead of trying to sync the state between different components, you should rely on the top-down data flow.<br/>
-    // If something can be derived from either props or state, it probably shouldn’t be in the state.<br/>
+      <h3>Unmounting</h3>
+      when a component is removed from the DOM<br/>
+      only 1 built-in method
+      <ol>
+        <li><span class="code">componentWillUnmount()</span> is called when the component is about to be removed from the DOM.</li>
+      </ol>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="State">State</h2>
+      <ul>
+        <li>use <span class="code">setState()</span> instead of <span class="code">this.state=</span></li>
+        <li>React may batch multiple <span class="code">setState()</span> calls into a single update for performance. Because <span class="code">this.props</span> and <span class="code">this.state</span> may be updated asynchronously, you should not rely on their values for calculating the next state. Use a different form of <span class="code">setState()</span> that accepts a function rather than an object, to overcome this issue.</li>
+          <pre><code class="language-javascript">
+              this.setState({ counter: this.state.counter + this.props.increment, }); // accepts object
+              this.setState((state, props) => ({ counter: state.counter + props.increment })); // accepts function
+          </code></pre>
+        <li>State Updates are merged ie <span class="code">setState({a: b})</span> will add <span class="code">{a:b}</span>, and still keeping all other objects the same. It will, however replace the old value of <span class="code">a</span></li>
+      </ul>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="DataInNestedComponents">Data in Nested Components</h2>
+      Neither parent nor child components can know if a certain component is stateful or stateless, and they shouldn’t care whether it is defined as a function or a class. This is why state is often called <span class="point">local</span> or <span class="point">encapsulated</span>. It is not accessible to any component other than the one that owns and sets it.<br/>
+      A component may choose to pass its state down as props to its child components. This is commonly called a <span class="point">top-down</span> or <span class="point">unidirectional</span> data flow.
+      <pre><code class="language-javascript">
+          &lt;FormattedDate date={this.state.date} /&gt;
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="LiftingStateUp">Lifting State Up</h2>
+      Often, several components need to reflect the same changing data. We recommend lifting the shared state up to their closest common ancestor
+      <pre><code class="language-javascript">
+        function BoilingVerdict(props) {
+            if (props.celsius >= 100) { return &lt;p&gt;The water would boil.&lt;/p&gt;; }
+            return &lt;p&gt;The water would not boil.&lt;/p&gt;;
+        }
+
+        class TemperatureInput extends React.Component {
+            constructor(props) {
+                super(props);
+                this.handleChange = this.handleChange.bind(this);
+            }
+        
+            handleChange(e) { this.props.onTemperatureChange(e.target.value); }
+          
+            render() {
+                const temperature = this.props.temperature;
+                const scale = this.props.scale;
+                return (
+                  &lt;fieldset&gt;
+                    &lt;legend&gt;Enter temperature in {scaleNames[scale]}:&lt;/legend&gt;
+                    &lt;input value={temperature} onChange={this.handleChange} /&gt;
+                  &lt;/fieldset&gt;
+                );
+            }
+        }
+
+        class Calculator extends React.Component {
+            constructor(props) {
+                super(props);
+                this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+                this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+                this.state = {temperature: '', scale: 'c'};
+            }
+        
+            handleCelsiusChange(temperature) { this.setState({scale: 'c', temperature}); }
+            handleFahrenheitChange(temperature) { this.setState({scale: 'f', temperature}); }
+          
+            render() {
+                const scale = this.state.scale;
+                const temperature = this.state.temperature;
+                const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+                const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+            
+                return (
+                  &lt;div&gt;
+                      &lt;TemperatureInput scale="c" temperature={celsius} onTemperatureChange={this.handleCelsiusChange} /&gt;
+                      &lt;TemperatureInput scale="f" temperature={fahrenheit} onTemperatureChange={this.handleFahrenheitChange} /&gt;
+                      &lt;BoilingVerdict celsius={parseFloat(celsius)} /&gt;
+                  &lt;/div&gt;
+                );
+            }
+        }
+      </code></pre>
+
+      <div class="notes">
+        // Instead of trying to sync the state between different components, you should rely on the top-down data flow.<br/>
+        // If something can be derived from either props or state, it probably shouldn’t be in the state.<br/>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
   </div>
 </div>
 

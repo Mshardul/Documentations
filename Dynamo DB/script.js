@@ -8,16 +8,20 @@ window.addEventListener('DOMContentLoaded', function() {
   
 window.addEventListener('load', function() {
   hljs.highlightAll();
+  const headingDivs = document.getElementsByClassName('topic');
+  const toc = [];
+  const noOfHeadingDivs = headingDivs.length;
+  for (let i=0; i<noOfHeadingDivs; i++) {
+    const heading = headingDivs[i].getElementsByTagName('h2')[0];
+    toc.push(heading);
+  }
+  let tocElement = '<ul>'
+  toc.forEach((content) => {
+    const id = content.id;
+    const innerHTML = content.innerHTML;
+    tocElement += `<li><a href='#${id}'>${innerHTML}</a></li>`
+  });
+  tocElement += '</ul>';
+  console.log(tocElement);
+  document.getElementById('menu-content').innerHTML = tocElement;
 });
-
-/* sidebar functions */
-function toggle_sidebar_topics() {
-  const sidebar_topics = document.getElementById("sidebar_topics");
-  if (sidebar_topics.style.display === 'none') {
-    document.getElementById("sidebar_topics_icon").innerHTML = "&times;";
-    sidebar_topics.style.display = "block";
-  } else {
-    document.getElementById("sidebar_topics_icon").innerHTML = "&#9776;";
-    document.getElementById("sidebar_topics").style.display = "none";
-  } 
-}

@@ -4,64 +4,72 @@
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
   <span class="center"><a href="./00.main.html">React JS</a></span>
-  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
 </div>
 
-<div class="topic">
-  <h2 id="BasicExample">Basic Example</h2>
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="BasicExample">Basic Example</h2>
 
-  <h3>Basic Example</h3>
-  <pre><code class="language-javascript">
-      function Greeting(props) {
-          const isLoggedIn = props.isLoggedIn;
-          if (isLoggedIn) { return &lt;UserGreeting /&gt;; }
-          return &lt;GuestGreeting /&gt;;
-      }
-    
-      ReactDOM.render(
-          &lt;Greeting isLoggedIn={false} /&gt;, document.getElementById('root')
-      );
-  </code></pre>
+      <h3>Basic Example</h3>
+      <pre><code class="language-javascript">
+          function Greeting(props) {
+              const isLoggedIn = props.isLoggedIn;
+              if (isLoggedIn) { return &lt;UserGreeting /&gt;; }
+              return &lt;GuestGreeting /&gt;;
+          }
+        
+          ReactDOM.render(
+              &lt;Greeting isLoggedIn={false} /&gt;, document.getElementById('root')
+          );
+      </code></pre>
 
-  <h3>Stateful Component</h3>
-  <pre><code class="language-javascript">
-    class LoginControl extends React.Component {
-        constructor(props) {
-            super(props); this.handleLoginClick = this.handleLoginClick.bind(this); this.handleLogoutClick = this.handleLogoutClick.bind(this); this.state = {isLoggedIn: false};
+      <h3>Stateful Component</h3>
+      <pre><code class="language-javascript">
+        class LoginControl extends React.Component {
+            constructor(props) {
+                super(props); this.handleLoginClick = this.handleLoginClick.bind(this); this.handleLogoutClick = this.handleLogoutClick.bind(this); this.state = {isLoggedIn: false};
+            }
+        
+            handleLoginClick() { this.setState({isLoggedIn: true}); }
+          
+            handleLogoutClick() { this.setState({isLoggedIn: false}); }
+        
+            render() {
+                const isLoggedIn = this.state.isLoggedIn; let button;
+                if (isLoggedIn) { button = &lt;LogoutButton onClick={this.handleLogoutClick} /&gt;; }
+                else { button = &lt;LoginButton onClick={this.handleLoginClick} /&gt;; }
+                return ( &lt;div&gt; &lt;Greeting isLoggedIn={isLoggedIn} /&gt; {button} &lt;/div&gt; );
+            }
         }
-    
-        handleLoginClick() { this.setState({isLoggedIn: true}); }
-      
-        handleLogoutClick() { this.setState({isLoggedIn: false}); }
-    
-        render() {
-            const isLoggedIn = this.state.isLoggedIn; let button;
-            if (isLoggedIn) { button = &lt;LogoutButton onClick={this.handleLogoutClick} /&gt;; }
-            else { button = &lt;LoginButton onClick={this.handleLoginClick} /&gt;; }
-            return ( &lt;div&gt; &lt;Greeting isLoggedIn={isLoggedIn} /&gt; {button} &lt;/div&gt; );
+        
+        ReactDOM.render( &lt;LoginControl /&gt;, document.getElementById('root') );
+      </code></pre>
+
+      <h3>&& operator</h3>
+      <pre><code class="language-javascript">
+        render() { const count = 0; return ( &lt;div&gt; { count && &lt;h1&gt;Messages: {count}&lt;/h1&gt;} &lt;/div&gt; ); }
+      </code></pre>
+
+      <h3>Ternary operator</h3>
+      <pre><code class="language-javascript">
+        render() { const isLoggedIn = this.state.isLoggedIn; return ( &lt;div&gt; The user is &lt;b&gt;{isLoggedIn ? 'currently' : 'not'}&lt;/b&gt; logged in. &lt;/div&gt; ); }
+      </code></pre>
+
+      <h3>Preventing component from rendering</h3>
+      <pre><code class="language-javascript">
+        function WarningBanner(props) {
+            if (!props.warn) { return null; }
+            return ( &lt;div className="warning"&gt; Warning! &lt;/div&gt; ); 
         }
-    }
-    
-    ReactDOM.render( &lt;LoginControl /&gt;, document.getElementById('root') );
-  </code></pre>
+      </code></pre>
+    </div>
+  </div>
 
-  <h3>&& operator</h3>
-  <pre><code class="language-javascript">
-    render() { const count = 0; return ( &lt;div&gt; { count && &lt;h1&gt;Messages: {count}&lt;/h1&gt;} &lt;/div&gt; ); }
-  </code></pre>
-
-  <h3>Ternary operator</h3>
-  <pre><code class="language-javascript">
-    render() { const isLoggedIn = this.state.isLoggedIn; return ( &lt;div&gt; The user is &lt;b&gt;{isLoggedIn ? 'currently' : 'not'}&lt;/b&gt; logged in. &lt;/div&gt; ); }
-  </code></pre>
-
-  <h3>Preventing component from rendering</h3>
-  <pre><code class="language-javascript">
-    function WarningBanner(props) {
-        if (!props.warn) { return null; }
-        return ( &lt;div className="warning"&gt; Warning! &lt;/div&gt; ); 
-    }
-  </code></pre>
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
 </div>
 
 <div class="footer">

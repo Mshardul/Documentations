@@ -24,7 +24,7 @@ body {
   overflow: hidden;
   text-align: center;
   margin-bottom: 10px;
-  font-size: xx-large;
+  font-size: xx-large; /* 32px */
   padding: 10px;
 }
 
@@ -32,7 +32,7 @@ body {
   background-color: var(--footer-background-color);
   overflow: hidden;
   margin-top: 10px;
-  font-size: x-large;
+  font-size: x-large; /* 24px */
   padding: 10px;
 }
 
@@ -41,35 +41,39 @@ body {
 .next {float: right}
 .center {float: none;}
 
-/* sidebar */
-.sidebar {
-  text-align: left;
-  height:100%;
-  max-width:200px;
-  position:fixed!important;
-  z-index:100;
-  overflow:auto;
-  background-color: var(--sidebar-background-color);
+/* index body div */
+.index-content {
+  overflow: hidden;
+  height: calc(100% - 126px);
+  width: 100%;
+  overflow-y: auto;
 }
 
-.sidebar-right {
-  margin-right: 8px;
+/* body div */
+.main-content {
+  overflow: hidden;
+  height: calc(100% - 126px);
 }
-
-.sidebar_topics {
-  font-size: 16px;
+.content { /* content */
+  float: left;
+  margin: 0 .5%;
+  width: 85%;
+  overflow-y: auto;
+  height: 100%;
 }
-
-.sidebar_topics li {
-
-  padding: 5px;
+.sidebar-right { /* right sidebar */
+  float: right;
+  margin: 0 .5%;
+  width: 12%;
+  overflow-y: auto;
+  height: 100%;
 }
-
-.sidebar-icon {
-  height: 32px;
-  width: 32px;
-  background-color: transparent;
-  border: none;
+.menu-header {
+  font-size: 20px;
+}
+.menu-content li {
+  font-size: 18px;
+  padding: 8px;
 }
 
 /* page-wise */

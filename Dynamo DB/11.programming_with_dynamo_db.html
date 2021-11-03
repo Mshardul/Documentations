@@ -4,80 +4,81 @@
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
   <span class="center"><a href="./00.main.html">Dynamo DB</a></span>
-  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
-  <div id="sidebar_topics" class="sidebar sidebar-right sidebar_topics" style="width:25%; right:0; display: none;">
-    <ul>
-      <li><a href="#DynamoDBApplicationProgrammingUsingAWSSDKs">DynamoDB application programming using AWS SDKs</a></li>
-      <li><a href="#Interfaces">Interfaces</a></li>
-      <li><a href="#LowLevelAPIs">Low Level APIs</a></li>
-    </ul>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="DynamoDBApplicationProgrammingUsingAWSSDKs">DynamoDB application programming using AWS SDKs</h2>
+      <p>following diagram provides a high-level overview of Amazon DynamoDB application programming using the AWS SDKs.</p>
+      <img src="./static/images/SDKSupport.png">
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Interfaces">Interfaces</h2>
+
+      <p><span class="point">Low-Level Interfaces</span>: methods that closely resemble low-level DynamoDB API requests.</p>
+
+      <p><span class="point">Document Interfaces</span>: allows you to perform data plane operations (create, read, update, delete) on tables and indexes.</p>
+
+      <p><span class="point">Object Persistence Interface</span>: Instead of performing data plane operations, you create objects that represent items in Amazon DynamoDB tables and indexes, and interact only with those objects. This allows you to write object-centric code, rather than database-centric code.</p>
+
+      <div class="notes">
+        // A low-level interface is available in every language-specific AWS SDK.<br/>
+        // Document Interfaces also provide methods to easily convert JSON documents to and from native Amazon DynamoDB data types.<br/>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="LowLevelAPIs">Low level APIs</h2>
+      <p>The Amazon DynamoDB low-level API is the protocol-level interface for DynamoDB. At this level, every HTTP(S) request must be correctly formatted and carry a valid digital signature.</p>
+      <p>The low-level DynamoDB API uses JavaScript Object Notation (JSON) as a wire protocol format.</p>
+      <p>DynamoDB uses JSON only as a transport protocol, not as a storage format. The AWS SDKs use JSON to send data to DynamoDB, and DynamoDB responds with JSON. DynamoDB does not store data persistently in JSON format.</p>
+      
+      <h3>Data Type Descriptors</h3>
+      <p>The low-level DynamoDB API protocol requires each attribute to be accompanied by a data type descriptor. </p>
+      <ul>
+        <li>S – String</li>
+        <li>N – Number</li>
+        <li>B – Binary</li>
+        <li>BOOL – Boolean</li>
+        <li>NULL – Null</li>
+        <li>M – Map</li>
+        <li>L – List</li>
+        <li>SS – String Set</li>
+        <li>NS – Number Set</li>
+        <li>BS – Binary Set</li>
+      </ul>
+
+      <h3>Low level APIs for Table management</h3>
+      <span class="point">CreateTable</span>: This spawns a table and includes throughput set by the user. It requires you to set a primary key, whether composite or simple. It also allows one or multiple secondary indexes.<br/>
+      <span class="point">ListTables</span>: This provides a list of all tables in the current AWS user&#39;s account and tied to their endpoint.<br/>
+      <span class="point">UpdateTable</span>: This alters throughput, and global secondary index throughput.<br/>
+      <span class="point">DescribeTable</span>: This provides table metadata; for example, state, size, and indices.<br/>
+      <span class="point">DeleteTable</span>: This simply erases the table and its indices.<br/>
+
+      <h3>Low level APIs for data reading</h3>
+      <span class="point">GetItem</span>: It accepts a primary key and returns attributes of the associated item. It permits changes to its default eventually consistent read setting.<br/>
+      <span class="point">BatchGetItem</span>: It executes several GetItem requests on multiple items through primary keys, with the option of one or multiple tables. Its returns no more than 100 items and must remain under 16MB. It permits eventually consistent and strongly consistent reads.<br/>
+      <span class="point">Scan</span>: It reads all the table items and produces an eventually consistent result set. You can filter results through conditions. It avoids the use of an index and scans the entire table, so do not use it for queries requiring predictability.<br/>
+      <span class="point">Query</span>: It returns a single or multiple table items or secondary index items. It uses a specified value for the partition key, and permits the use of comparison operators to narrow scope. It includes support for both types of consistency, and each response obeys a 1MB limit in size.<br/>
+
+      <h3>Low level APIs for data modification</h3>
+      <span class="point">PutItem</span>: This spawns a new item or replaces existing items. On discovery of identical primary keys, by default, it replaces the item. Conditional operators allow you to work around the default, and only replace items under certain conditions.<br/>
+      <span class="point">BatchWriteItem</span>: This executes both multiple PutItem and DeleteItem requests, and over several tables. If one request fails, it does not impact the entire operation. Its cap sits at 25 items, and 16MB in size.<br/>
+      <span class="point">UpdateItem</span> It changes the existing item attributes, and permits the use of conditional operators to execute updates only under certain conditions.<br/>
+      <span class="point">DeleteItem</span>: It uses the primary key to erase an item, and also allows the use of conditional operators to specify the conditions for deletion.<br/>
+    </div>
   </div>
-</div>
 
-<div class="topic">
-  <h2 id="DynamoDBApplicationProgrammingUsingAWSSDKs">DynamoDB application programming using AWS SDKs</h2>
-  <p>following diagram provides a high-level overview of Amazon DynamoDB application programming using the AWS SDKs.</p>
-  <img src="./static/images/SDKSupport.png">
-</div>
-
-<hr/>
-
-<div class="topic">
-  <h2 id="Interfaces">Interfaces</h2>
-
-  <p><span class="point">Low-Level Interfaces</span>: methods that closely resemble low-level DynamoDB API requests.</p>
-
-  <p><span class="point">Document Interfaces</span>: allows you to perform data plane operations (create, read, update, delete) on tables and indexes.</p>
-
-  <p><span class="point">Object Persistence Interface</span>: Instead of performing data plane operations, you create objects that represent items in Amazon DynamoDB tables and indexes, and interact only with those objects. This allows you to write object-centric code, rather than database-centric code.</p>
-
-  <div class="notes">
-    // A low-level interface is available in every language-specific AWS SDK.<br/>
-    // Document Interfaces also provide methods to easily convert JSON documents to and from native Amazon DynamoDB data types.<br/>
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
   </div>
-</div>
-
-<hr/>
-
-<div class="topic">
-  <h2 id="LowLevelAPIs">Low level APIs</h2>
-  <p>The Amazon DynamoDB low-level API is the protocol-level interface for DynamoDB. At this level, every HTTP(S) request must be correctly formatted and carry a valid digital signature.</p>
-  <p>The low-level DynamoDB API uses JavaScript Object Notation (JSON) as a wire protocol format.</p>
-  <p>DynamoDB uses JSON only as a transport protocol, not as a storage format. The AWS SDKs use JSON to send data to DynamoDB, and DynamoDB responds with JSON. DynamoDB does not store data persistently in JSON format.</p>
-  
-  <h3>Data Type Descriptors</h3>
-  <p>The low-level DynamoDB API protocol requires each attribute to be accompanied by a data type descriptor. </p>
-  <ul>
-    <li>S – String</li>
-    <li>N – Number</li>
-    <li>B – Binary</li>
-    <li>BOOL – Boolean</li>
-    <li>NULL – Null</li>
-    <li>M – Map</li>
-    <li>L – List</li>
-    <li>SS – String Set</li>
-    <li>NS – Number Set</li>
-    <li>BS – Binary Set</li>
-  </ul>
-
-  <h3>Low level APIs for Table management</h3>
-  <span class="point">CreateTable</span>: This spawns a table and includes throughput set by the user. It requires you to set a primary key, whether composite or simple. It also allows one or multiple secondary indexes.<br/>
-  <span class="point">ListTables</span>: This provides a list of all tables in the current AWS user&#39;s account and tied to their endpoint.<br/>
-  <span class="point">UpdateTable</span>: This alters throughput, and global secondary index throughput.<br/>
-  <span class="point">DescribeTable</span>: This provides table metadata; for example, state, size, and indices.<br/>
-  <span class="point">DeleteTable</span>: This simply erases the table and its indices.<br/>
-
-  <h3>Low level APIs for data reading</h3>
-  <span class="point">GetItem</span>: It accepts a primary key and returns attributes of the associated item. It permits changes to its default eventually consistent read setting.<br/>
-  <span class="point">BatchGetItem</span>: It executes several GetItem requests on multiple items through primary keys, with the option of one or multiple tables. Its returns no more than 100 items and must remain under 16MB. It permits eventually consistent and strongly consistent reads.<br/>
-  <span class="point">Scan</span>: It reads all the table items and produces an eventually consistent result set. You can filter results through conditions. It avoids the use of an index and scans the entire table, so do not use it for queries requiring predictability.<br/>
-  <span class="point">Query</span>: It returns a single or multiple table items or secondary index items. It uses a specified value for the partition key, and permits the use of comparison operators to narrow scope. It includes support for both types of consistency, and each response obeys a 1MB limit in size.<br/>
-
-  <h3>Low level APIs for data modification</h3>
-  <span class="point">PutItem</span>: This spawns a new item or replaces existing items. On discovery of identical primary keys, by default, it replaces the item. Conditional operators allow you to work around the default, and only replace items under certain conditions.<br/>
-  <span class="point">BatchWriteItem</span>: This executes both multiple PutItem and DeleteItem requests, and over several tables. If one request fails, it does not impact the entire operation. Its cap sits at 25 items, and 16MB in size.<br/>
-  <span class="point">UpdateItem</span> It changes the existing item attributes, and permits the use of conditional operators to execute updates only under certain conditions.<br/>
-  <span class="point">DeleteItem</span>: It uses the primary key to erase an item, and also allows the use of conditional operators to specify the conditions for deletion.<br/>
 </div>
 
 <div class="footer">

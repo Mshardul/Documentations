@@ -4,122 +4,130 @@
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
   <span class="center"><a href="./00.main.html">React JS</a></span>
-  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
 </div>
 
-<div class="topic">
-  <h3 id="Basics">Basics</h3>
-  Components let you split the UI into independent, reusable pieces, and think about each piece in isolation. <br/>
-  Conceptually, components are like JavaScript functions. They accept arbitrary inputs (called <span class="code">props</span>) and return React elements describing what should appear on the screen.<br/>
-  React is all about one-way data flow down the component hierarchy.
-</div>
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="Basics">Basics</h2>
+      Components let you split the UI into independent, reusable pieces, and think about each piece in isolation. <br/>
+      Conceptually, components are like JavaScript functions. They accept arbitrary inputs (called <span class="code">props</span>) and return React elements describing what should appear on the screen.<br/>
+      React is all about one-way data flow down the component hierarchy.
+    </div>
 
-<hr/>
+    <hr/>
 
-<div class="topic">
-  <h2 id="DefiningAComponent">Defining a component</h2>
+    <div class="topic">
+      <h2 id="DefiningAComponent">Defining a component</h2>
 
-  <h3>JS function</h3>
-  <pre><code class="language-javascript">
-    function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
-  </code></pre>
+      <h3>JS function</h3>
+      <pre><code class="language-javascript">
+        function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
+      </code></pre>
 
-  <h3>ES6 class</h3>
-  <pre><code class="language-javascript">
-    class Welcome extends React.Component {
-        render() { return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;; }
-    }
-  </code></pre>
-</div>
+      <h3>ES6 class</h3>
+      <pre><code class="language-javascript">
+        class Welcome extends React.Component {
+            render() { return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;; }
+        }
+      </code></pre>
+    </div>
 
-<hr/>
+    <hr/>
 
-<div class="topic">
-  <h2 id="RenderingAnElement">Rendering an Element</h2>
+    <div class="topic">
+      <h2 id="RenderingAnElement">Rendering an Element</h2>
 
-  <h3>Passing a user-defined component</h3>
-  <pre><code class="language-javascript">
-    const element = &lt;Welcome name="Sara" /&gt;;
-  </code></pre>
+      <h3>Passing a user-defined component</h3>
+      <pre><code class="language-javascript">
+        const element = &lt;Welcome name="Sara" /&gt;;
+      </code></pre>
 
-  translates to
+      translates to
 
-  <pre><code class="language-javascript">
-    function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
-    
-    const element = &lt;Welcome name="Sara" /&gt;;
-    ReactDOM.render( element, document.getElementById('root') );
-  </code></pre>
-</div>
+      <pre><code class="language-javascript">
+        function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
+        
+        const element = &lt;Welcome name="Sara" /&gt;;
+        ReactDOM.render( element, document.getElementById('root') );
+      </code></pre>
+    </div>
 
-<hr/>
+    <hr/>
 
-<div class="topic">
-  <h2 id="NestedComponents">Nested Components</h2>
-  <pre><code class="language-javascript">
-    function Avatar(props) { 
-        return ( &lt;img className="Avatar" src={props.user.avatarUrl} alt={props.user.name} /&gt; ); 
-    }
+    <div class="topic">
+      <h2 id="NestedComponents">Nested Components</h2>
+      <pre><code class="language-javascript">
+        function Avatar(props) { 
+            return ( &lt;img className="Avatar" src={props.user.avatarUrl} alt={props.user.name} /&gt; ); 
+        }
 
-    function UserInfo(props) {
-        return ( &lt;div className="UserInfo"&gt; &lt;Avatar user={props.user} /&gt; &lt;div className="UserInfo-name"&gt; {props.user.name} &lt;/div&gt; &lt;/div&gt; );
-    }
+        function UserInfo(props) {
+            return ( &lt;div className="UserInfo"&gt; &lt;Avatar user={props.user} /&gt; &lt;div className="UserInfo-name"&gt; {props.user.name} &lt;/div&gt; &lt;/div&gt; );
+        }
 
-    function Comment(props) {
-      return (
-          &lt;div className="Comment"&gt; 
-              &lt;UserInfo user={props.author} /&gt;
-              &lt;div className="Comment-text"&gt; {props.text} &lt;/div&gt;
-              &lt;div className="Comment-date"&gt; {formatDate(props.date)} &lt;/div&gt;
-          &lt;/div&gt;
-      );
-    }
-  </code></pre>
-</div>
+        function Comment(props) {
+          return (
+              &lt;div className="Comment"&gt; 
+                  &lt;UserInfo user={props.author} /&gt;
+                  &lt;div className="Comment-text"&gt; {props.text} &lt;/div&gt;
+                  &lt;div className="Comment-date"&gt; {formatDate(props.date)} &lt;/div&gt;
+              &lt;/div&gt;
+          );
+        }
+      </code></pre>
+    </div>
 
-<hr/>
+    <hr/>
 
-<div class="topic">
-  <h2 id="StateVsProps">State vs Props</h2>
-  <span class="code">props</span> get passed to the component (similar to function parameters) whereas <span class="code">state</span> is managed within the component (similar to variables declared within a function).<br/><br/>
+    <div class="topic">
+      <h2 id="StateVsProps">State vs Props</h2>
+      <span class="code">props</span> get passed to the component (similar to function parameters) whereas <span class="code">state</span> is managed within the component (similar to variables declared within a function).<br/><br/>
 
-  operlaps:
-  <ul>
-    <li>Both props and state are plain JS objects</li>
-    <li>Both props and state changes trigger a render update</li>
-    <li>Both props and state are deterministic. If your Component generates different outputs for the same combination of props and state then you're doing something wrong.</li>
-  </ul>
+      operlaps:
+      <ul>
+        <li>Both props and state are plain JS objects</li>
+        <li>Both props and state changes trigger a render update</li>
+        <li>Both props and state are deterministic. If your Component generates different outputs for the same combination of props and state then you're doing something wrong.</li>
+      </ul>
 
-  <br/>
+      <br/>
 
-  If a Component needs to alter one of its attributes at some point in time, that attribute should be part of its state, otherwise it should just be a prop for that Component.
-  <table>
-    <tr><th></th><th>props</th><th>state</th></tr>
-    <tr><td>Can get initial value from parent Component?</td><td>Yes</td><td>Yes</td></tr>
-    <tr><td>Can be changed by parent Component?</td><td>Yes</td><td>No</td></tr>
-    <tr><td>Can set default values inside Component?*</td><td>Yes</td><td>Yes</td></tr>
-    <tr><td>Can change inside Component?</td><td>No</td><td>Yes</td></tr>
-    <tr><td>Can set initial value for child Components?</td><td>Yes</td><td>Yes</td></tr>
-    <tr><td>Can change in child Components?</td><td>Yes</td><td>No</td></tr>
-  </table>
-  <div class="notes">
-    // Note that both props and state initial values received from parents override default values defined inside a Component.<br/>
+      If a Component needs to alter one of its attributes at some point in time, that attribute should be part of its state, otherwise it should just be a prop for that Component.
+      <table>
+        <tr><th></th><th>props</th><th>state</th></tr>
+        <tr><td>Can get initial value from parent Component?</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Can be changed by parent Component?</td><td>Yes</td><td>No</td></tr>
+        <tr><td>Can set default values inside Component?*</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Can change inside Component?</td><td>No</td><td>Yes</td></tr>
+        <tr><td>Can set initial value for child Components?</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Can change in child Components?</td><td>Yes</td><td>No</td></tr>
+      </table>
+      <div class="notes">
+        // Note that both props and state initial values received from parents override default values defined inside a Component.<br/>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="notes">
+      // React treats components starting with lowercase letters as DOM tags. For example, &lt;div /&gt; represents an HTML div tag, but &lt;Welcome /&gt; represents a component and requires Welcome to be in scope.<br/>
+      // Components can refer to other components in their output. This lets us use the same component abstraction for any level of detail.<br/>
+      // All React components must act like <span class="code">pure functions</span> (ie should not change its own props) with respect to their props.<br/>
+    </div>
+
+    <hr/>
+
+    <ul>
+      <li><a href="https://github.com/uberVU/react-guide/blob/master/props-vs-state.md">Github (@uberVU): props-vs-state</a></li>
+    </ul>
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
   </div>
 </div>
-
-<hr/>
-
-<div class="notes">
-  // React treats components starting with lowercase letters as DOM tags. For example, &lt;div /&gt; represents an HTML div tag, but &lt;Welcome /&gt; represents a component and requires Welcome to be in scope.<br/>
-  // Components can refer to other components in their output. This lets us use the same component abstraction for any level of detail.<br/>
-  // All React components must act like <span class="code">pure functions</span> (ie should not change its own props) with respect to their props.<br/>
-</div>
-
-<hr/>
-
-<ul>
-  <li><a href="https://github.com/uberVU/react-guide/blob/master/props-vs-state.md">Github (@uberVU): props-vs-state</a></li>
-</ul>
 
 <div class="footer">
   <span class="prev"><a href="./02.rendering_elements.html">02. Rendering Elements</a></span>

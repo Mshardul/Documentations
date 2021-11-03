@@ -4,64 +4,64 @@
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
   <span class="center"><a href="./00.main.html">Dynamo DB</a></span>
-  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
-  <div id="sidebar_topics" class="sidebar sidebar-right sidebar_topics" style="width:25%; right:0; display: none;">
-    <ul>
-      <li><a href="#UsingConsole">Using Console</a></li>
-      <li><a href="#UsingAWSCLI">Using AWS CLI</a></li>
-      <li><a href="#UsingTheAPIs">Using The APIs</a></li>
-      <li><a href="#UsingNoSQLWorkbench">Using NoSQL Workbench</a></li>
-    </ul>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="UsingConsole">Using Console</h2>
+      <p>use the console to do the following in DynamoDB:</p>
+      <ul>
+        <li>Monitor recent alerts, total capacity, service health, and the latest DynamoDB news on the DynamoDB dashboard.</li>
+        <li>Create, update, and delete tables. The capacity calculator provides estimates of how many capacity units to request based on the usage information you provide.</li>
+        <li>Manage streams.</li>
+        <li>View, add, update, and delete items that are stored in tables. Manage Time to Live (TTL) to define when items in a table expire so that they can be automatically deleted from the database.</li>
+        <li>Query and scan a table.</li>
+        <li>Set up and view alarms to monitor your table&#39;s capacity usage. View your table&#39;s top monitoring metrics on real-time graphs from CloudWatch.</li>
+        <li>Modify a table&#39;s provisioned capacity.</li>
+        <li>Create and delete global secondary indexes.</li>
+        <li>Create triggers to connect DynamoDB streams to AWS Lambda functions.</li>
+        <li>Apply tags to your resources to help organize and identify them.</li>
+        <li>Purchase reserved capacity</li>
+      </ul>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="UsingAWSCLI">Using AWS CLI</h2>
+      <pre><code class="language-bash">
+        /* pass a JSON file */
+        $ aws dynamodb query --table-name Music --key-conditions file://key-conditions.json
+
+        /* pass key-conditions (or req body) in the CLI with '\' denoting the command is not over yet */
+        aws dynamodb put-item \
+        --table-name Music \
+        --item \
+            '{"Artist": {"S": "No One You Know"}, "SongTitle": {"S": "Call Me Today"} }' \
+        --return-consumed-capacity TOTAL 
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="UsingTheAPIs">Using the APIs</h2>
+      <p>The AWS SDKs provide broad support for DynamoDB in Java, JavaScript in the browser, .NET, Node.js, PHP, Python, Ruby, C++, Go, Android, and iOS</p>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="UsingNoSQLWorkbench">Using NoSQL Workbench</h2>
+      <p>NoSQL Workbench provides tool to access DynamoDB</p>
+    </div>
   </div>
-</div>
 
-<div class="topic">
-  <h2 id="UsingConsole">Using Console</h2>
-  <p>use the console to do the following in DynamoDB:</p>
-  <ul>
-    <li>Monitor recent alerts, total capacity, service health, and the latest DynamoDB news on the DynamoDB dashboard.</li>
-    <li>Create, update, and delete tables. The capacity calculator provides estimates of how many capacity units to request based on the usage information you provide.</li>
-    <li>Manage streams.</li>
-    <li>View, add, update, and delete items that are stored in tables. Manage Time to Live (TTL) to define when items in a table expire so that they can be automatically deleted from the database.</li>
-    <li>Query and scan a table.</li>
-    <li>Set up and view alarms to monitor your table&#39;s capacity usage. View your table&#39;s top monitoring metrics on real-time graphs from CloudWatch.</li>
-    <li>Modify a table&#39;s provisioned capacity.</li>
-    <li>Create and delete global secondary indexes.</li>
-    <li>Create triggers to connect DynamoDB streams to AWS Lambda functions.</li>
-    <li>Apply tags to your resources to help organize and identify them.</li>
-    <li>Purchase reserved capacity</li>
-  </ul>
-</div>
-
-<hr/>
-
-<div class="topic">
-  <h2 id="UsingAWSCLI">Using AWS CLI</h2>
-  <pre><code class="language-bash">
-    /* pass a JSON file */
-    $ aws dynamodb query --table-name Music --key-conditions file://key-conditions.json
-
-    /* pass key-conditions (or req body) in the CLI with '\' denoting the command is not over yet */
-    aws dynamodb put-item \
-    --table-name Music \
-    --item \
-        '{"Artist": {"S": "No One You Know"}, "SongTitle": {"S": "Call Me Today"} }' \
-    --return-consumed-capacity TOTAL 
-  </code></pre>
-</div>
-
-<hr/>
-
-<div class="topic">
-  <h2 id="UsingTheAPIs">Using the APIs</h2>
-  <p>The AWS SDKs provide broad support for DynamoDB in Java, JavaScript in the browser, .NET, Node.js, PHP, Python, Ruby, C++, Go, Android, and iOS</p>
-</div>
-
-<hr/>
-
-<div class="topic">
-  <h2 id="UsingNoSQLWorkbench">Using NoSQL Workbench</h2>
-  <p>NoSQL Workbench provides tool to access DynamoDB</p>
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
 </div>
 
 <div class="footer">

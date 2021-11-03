@@ -4,66 +4,74 @@
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
   <span class="center"><a href="./00.main.html">React JS</a></span>
-  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
 </div>
 
-<div class="topic">
-  <h2 id="Containtment">Containtment</h2>
-  Some components don’t know their children ahead of time. (eg. components like Sidebar or Dialog that represent generic “boxes”). It is recommend that such components use the special <span class="code">children prop</span> to pass children elements directly into their output.
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="Containtment">Containtment</h2>
+      Some components don’t know their children ahead of time. (eg. components like Sidebar or Dialog that represent generic “boxes”). It is recommend that such components use the special <span class="code">children prop</span> to pass children elements directly into their output.
 
-  <pre><code class="language-javascript">
-    function FancyBorder(props) {
-        return ( &lt;div className={'FancyBorder FancyBorder-' + props.color}&gt; {props.children} &lt;/div&gt; ); 
-    }
+      <pre><code class="language-javascript">
+        function FancyBorder(props) {
+            return ( &lt;div className={'FancyBorder FancyBorder-' + props.color}&gt; {props.children} &lt;/div&gt; ); 
+        }
 
-    function WelcomeDialog() {
-        return (
-            &lt;FancyBorder color="blue"&gt; 
-                &lt;h1 className="Dialog-title"&gt; Welcome &lt;/h1&gt;
-                &lt;p className="Dialog-message"&gt; Thank you for visiting our spacecraft! &lt;/p&gt;
-            &lt;/FancyBorder&gt;
-        );
-    }
-  </code></pre>
+        function WelcomeDialog() {
+            return (
+                &lt;FancyBorder color="blue"&gt; 
+                    &lt;h1 className="Dialog-title"&gt; Welcome &lt;/h1&gt;
+                    &lt;p className="Dialog-message"&gt; Thank you for visiting our spacecraft! &lt;/p&gt;
+                &lt;/FancyBorder&gt;
+            );
+        }
+      </code></pre>
 
-  While this is less common, sometimes you might need multiple &quot;holes&quot; in a component. In such cases you may come up with your own convention instead of using <span class="code">children</span>
+      While this is less common, sometimes you might need multiple &quot;holes&quot; in a component. In such cases you may come up with your own convention instead of using <span class="code">children</span>
 
-  <pre><code class="language-javascript">
-    function SplitPane(props) {
-        return (
-          &lt;div className="SplitPane"&gt;
-            &lt;div className="SplitPane-left"&gt; {props.left} &lt;/div&gt;
-            &lt;div className="SplitPane-right"&gt; {props.right} &lt;/div&gt;
-          &lt;/div&gt;
-        );
-    }
-    
-    function App() {
-        return ( &lt;SplitPane left={ &lt;Contacts /&gt; } right={ &lt;Chat /&gt; } /> );
-    }
-  </code></pre>
+      <pre><code class="language-javascript">
+        function SplitPane(props) {
+            return (
+              &lt;div className="SplitPane"&gt;
+                &lt;div className="SplitPane-left"&gt; {props.left} &lt;/div&gt;
+                &lt;div className="SplitPane-right"&gt; {props.right} &lt;/div&gt;
+              &lt;/div&gt;
+            );
+        }
+        
+        function App() {
+            return ( &lt;SplitPane left={ &lt;Contacts /&gt; } right={ &lt;Chat /&gt; } /> );
+        }
+      </code></pre>
 
-</div>
+    </div>
 
-<hr/>
+    <hr/>
 
-<div class="topic">
-  <h2 id="Specialization">Specialization</h2>
+    <div class="topic">
+      <h2 id="Specialization">Specialization</h2>
 
-  <pre><code class="language-javascript">
-    function Dialog(props) {
-        return (
-            &lt;FancyBorder color="blue"&gt;
-                &lt;h1 className="Dialog-title"&gt; {props.title} &lt;/h1&gt;
-                &lt;p className="Dialog-message"&gt; {props.message} &lt;/p&gt;
-            &lt;/FancyBorder&gt;
-        );
-    }
-    
-    function WelcomeDialog() {
-        return ( &lt;Dialog title="Welcome" message="Thank you for visiting!" /&gt; );
-    }
-  </code></pre>
+      <pre><code class="language-javascript">
+        function Dialog(props) {
+            return (
+                &lt;FancyBorder color="blue"&gt;
+                    &lt;h1 className="Dialog-title"&gt; {props.title} &lt;/h1&gt;
+                    &lt;p className="Dialog-message"&gt; {props.message} &lt;/p&gt;
+                &lt;/FancyBorder&gt;
+            );
+        }
+        
+        function WelcomeDialog() {
+            return ( &lt;Dialog title="Welcome" message="Thank you for visiting!" /&gt; );
+        }
+      </code></pre>
+    </div>
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
 </div>
 
 <div class="footer">

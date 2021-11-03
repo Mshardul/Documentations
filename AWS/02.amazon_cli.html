@@ -4,36 +4,44 @@
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
   <span class="center"><a href="./00.main.html">AWS</a></span>
-  <button class="next sidebar-icon sidebar-right-icon" id="sidebar_topics_icon" onclick="toggle_sidebar_topics()">&#9776;</button>
 </div>
 
-<div class="topic">
-  <h2 id="Basics">Basics</h2>
-  The AWS Command Line Interface (AWS CLI) is an open source tool that enables you to interact with AWS services using commands in your command-line shell.<br/>
-  the AWS CLI enables you to start running commands that implement functionality equivalent to that provided by the browser-based AWS Management Console from the command prompt in your terminal program:<br/>
-  <ul>
-    <li><span class="point">Linux shells</span>: Use common shell programs such as bash, zsh, and tcsh to run commands in Linux or macOS.</li>
-    <li><span class="point">Windows command line</span>: On Windows, run commands at the Windows command prompt or in PowerShell.</li>
-    <li><span class="point">Remotely</span>: Run commands on Amazon Elastic Compute Cloud (Amazon EC2) instances through a remote terminal program such as PuTTY or SSH, or with AWS Systems Manager.</li>
-  </ul>
-</div>
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="Basics">Basics</h2>
+      The AWS Command Line Interface (AWS CLI) is an open source tool that enables you to interact with AWS services using commands in your command-line shell.<br/>
+      the AWS CLI enables you to start running commands that implement functionality equivalent to that provided by the browser-based AWS Management Console from the command prompt in your terminal program:<br/>
+      <ul>
+        <li><span class="point">Linux shells</span>: Use common shell programs such as bash, zsh, and tcsh to run commands in Linux or macOS.</li>
+        <li><span class="point">Windows command line</span>: On Windows, run commands at the Windows command prompt or in PowerShell.</li>
+        <li><span class="point">Remotely</span>: Run commands on Amazon Elastic Compute Cloud (Amazon EC2) instances through a remote terminal program such as PuTTY or SSH, or with AWS Systems Manager.</li>
+      </ul>
+    </div>
 
-<div class="topic">
-  <h2 id="Installation">Installation</h2>
-  <p>visit <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html">this page</a> and <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html">this page</a> of the official documentation to get the steps on how to install the AWS CLI v2 and v1 respectively on your machine.</p>
-  <pre><code class="language-json">
-    aws --version
-  </code></pre>
-</div>
+    <div class="topic">
+      <h2 id="Installation">Installation</h2>
+      <p>visit <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html">this page</a> and <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html">this page</a> of the official documentation to get the steps on how to install the AWS CLI v2 and v1 respectively on your machine.</p>
+      <pre><code class="language-json">
+        aws --version
+      </code></pre>
+    </div>
 
-<div class="topic">
-  <h2 id="Configuration">Configuration</h2>
+    <div class="topic">
+      <h2 id="Configuration">Configuration</h2>
 
-  <h3>AWS Configure</h3>
-  The AWS CLI stores this information in a <span class="code">profile</span> (a collection of settings) named <span class="code">default</span> in the <span class="code">credentials</span> file
-  <pre><code class="language-json">
-    $aws configure
-  </code></pre>
+      <h3>AWS Configure</h3>
+      The AWS CLI stores this information in a <span class="code">profile</span> (a collection of settings) named <span class="code">default</span> in the <span class="code">credentials</span> file
+      <pre><code class="language-json">
+        $aws configure
+      </code></pre>
+    </div>
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
 </div>
 
 <div class="footer">

@@ -24,27 +24,27 @@
       <h2 id="SemanticHTML">Semantic HTML</h2>
       <p>Sometimes we break HTML semantics when we add &lt;div&gt; elements to our JSX to make our React code work, especially when working with lists (&lt;ol&gt;, &lt;ul&gt; and &lt;dl&gt;) and the HTML &lt;table&gt;. In these cases we should rather use React Fragments to group together multiple elements.</p>
       <pre><code class="language-javascript">
-        function Glossary(props) {
-            return (
-                &lt;dl&gt;
-                    { props.items.map(item => (
-                      // Fragments should also have a `key` prop when mapping collections
-                      &lt;Fragment key={item.id}&gt; &lt;dt&gt;{item.term}&lt;/dt&gt; &lt;dd&gt;{item.description}&lt;/dd&gt; &lt;/Fragment&gt;
-                    ))}
-                &lt;/dl&gt;
-            );
-        }
+    function Glossary(props) {
+        return (
+            &lt;dl&gt;
+                { props.items.map(item => (
+                  // Fragments should also have a `key` prop when mapping collections
+                  &lt;Fragment key={item.id}&gt; &lt;dt&gt;{item.term}&lt;/dt&gt; &lt;dd&gt;{item.description}&lt;/dd&gt; &lt;/Fragment&gt;
+                ))}
+            &lt;/dl&gt;
+        );
+    }
       </code></pre>
       <p>When you don’t need any props on the Fragment tag you can use the short syntax, if your tooling supports it</p>
       <pre><code class="language-javascript">
-        function ListItem({ item }) {
-            return (
-                &lt;&gt;
-                    &lt;dt&gt;{item.term}&lt;/dt&gt;
-                    &lt;dd&gt;{item.description}&lt;/dd&gt;
-                &lt;/&gt;
-            );
-        }
+    function ListItem({ item }) {
+        return (
+            &lt;&gt;
+                &lt;dt&gt;{item.term}&lt;/dt&gt;
+                &lt;dd&gt;{item.description}&lt;/dd&gt;
+            &lt;/&gt;
+        );
+    }
       </code></pre>
     </div>
 
@@ -56,8 +56,8 @@
       <h3>Labeling</h3>
       <p>Although these standard HTML practices can be directly used in <span class="code">React</span>, note that the <span class="code">for</span> attribute is written as <span class="code">htmlFor</span> in JSX</p>
       <pre><code class="language-javascript">
-        &lt;label htmlFor="namedInput"&gt;Name:&lt;/label&gt;
-        &lt;input id="namedInput" type="text" name="name"/&gt;
+    &lt;label htmlFor="namedInput"&gt;Name:&lt;/label&gt;
+    &lt;input id="namedInput" type="text" name="name"/&gt;
       </code></pre>
     </div>
 
@@ -69,18 +69,18 @@
       <h3>Programmatically managing focus</h3>
       <p>For example, by resetting keyboard focus to a button that opened a modal window after that modal window is closed.</p>
       <pre><code class="language-javascript">
-        function CustomTextInput(props) {
-          return ( &lt;div&gt;&lt;input ref={props.inputRef} /&gt;&lt;/div&gt; );
-        }
-        
-        class Parent extends React.Component {
-          constructor(props) { super(props); this.inputElement = React.createRef(); }
-          render() {
-            return ( &lt;CustomTextInput inputRef={this.inputElement} /&gt; );
-          }
-        }
-        
-        this.inputElement.current.focus(); // set focus when required.
+    function CustomTextInput(props) {
+      return ( &lt;div&gt;&lt;input ref={props.inputRef} /&gt;&lt;/div&gt; );
+    }
+    
+    class Parent extends React.Component {
+      constructor(props) { super(props); this.inputElement = React.createRef(); }
+      render() {
+        return ( &lt;CustomTextInput inputRef={this.inputElement} /&gt; );
+      }
+    }
+    
+    this.inputElement.current.focus(); // set focus when required.
       </code></pre>
     </div>
 

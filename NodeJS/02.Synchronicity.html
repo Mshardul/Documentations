@@ -36,20 +36,20 @@
       </ul>
 
       <pre><code class="language-javascript">
-        const bar = () => console.log('bar')
+    const bar = () => console.log('bar')
 
-        const baz = () => console.log('baz')
+    const baz = () => console.log('baz')
 
-        const foo = () => {
-            console.log('foo')                                        // 1
-            setTimeout(bar, 0)                                        // 4
-            new Promise((resolve, reject) =>
-                resolve('should be right after baz, before bar')
-            ).then(resolve => console.log(resolve))                   // 3
-            baz()                                                     // 2
-        }
+    const foo = () => {
+        console.log('foo')                                        // 1
+        setTimeout(bar, 0)                                        // 4
+        new Promise((resolve, reject) =>
+            resolve('should be right after baz, before bar')
+        ).then(resolve => console.log(resolve))                   // 3
+        baz()                                                     // 2
+    }
 
-        foo()
+    foo()
       </code></pre>
     </div>
 
@@ -66,9 +66,9 @@
       </ul>
 
       <pre><code class="language-javascript">
-        process.nextTick(() => {
-            //do something
-        });
+    process.nextTick(() => {
+        //do something
+    });
       </code></pre>
     </div>
 
@@ -81,9 +81,9 @@
         <li>A <span class="code">setTimeout()</span> callback with a 0ms delay is very similar to <span class="code">setImmediate()</span>. The execution order will depend on various factors, but they will be both run in the next iteration of the event loop.</li>
       </ul>
       <pre><code class="language-javascript">
-        setImmediate(() => {
-            //run something
-        })      
+    setImmediate(() => {
+        //run something
+    })      
       </code></pre>
     </div>
 
@@ -95,9 +95,9 @@
         <li><span class="code">setInterval</span> is a function similar to <span class="code">setTimeout</span>, with a difference: instead of running the callback function once, it will run it forever, at the specific time interval you specify (in milliseconds)</li>
       </ul>
       <pre><code class="language-javascript">
-        setInterval(() => {
-            // runs every 2 seconds
-        }, 2000)
+    setInterval(() => {
+        // runs every 2 seconds
+    }, 2000)
       </code></pre>
     </div>
 
@@ -111,9 +111,9 @@
       </ul><br/>
       A <span class="point">callback</span> is a simple function that's passed as a value to another function, and will only be executed when the event happens. We can do this because JavaScript has first-class functions, which can be assigned to variables and passed around to other functions (called higher-order functions)
       <pre><code class="language-javascript">
-        document.getElementById('button').addEventListener('click', () => {
-            //item clicked
-        });    
+    document.getElementById('button').addEventListener('click', () => {
+        //item clicked
+    });    
       </code></pre>
       every callback adds a level of nesting, and when you have lots of callbacks, the code starts to be complicated very quickly. Starting with ES6, JavaScript introduced <span class="code">Promises (ES6)</span> and <span class="code">Async/Await (ES2017)</span> as alternatives to Callbacks.
     </div>
@@ -136,23 +136,23 @@
 
       <h3>Example</h3>
       <pre><code class="language-javascript">
-        const fs = require('fs')
+    const fs = require('fs')
 
-        const getFile = (fileName) => {
-          return new Promise((resolve, reject) => {
-              fs.readFile(fileName, (err, data) => {
-                  if (err) {
-                      reject(err)   // calling `reject` will cause the promise to fail with or without the error passed as an argument
-                      return        // and we don't want to go any further
-                  }
-                  resolve(data)
-              })
+    const getFile = (fileName) => {
+      return new Promise((resolve, reject) => {
+          fs.readFile(fileName, (err, data) => {
+              if (err) {
+                  reject(err)   // calling `reject` will cause the promise to fail with or without the error passed as an argument
+                  return        // and we don't want to go any further
+              }
+              resolve(data)
           })
-        }
+      })
+    }
 
-        getFile('/etc/passwd')
-            .then(data => console.log(data))
-            .catch(err => console.error(err))
+    getFile('/etc/passwd')
+        .then(data => console.log(data))
+        .catch(err => console.error(err))
       </code></pre>
 
       <h3>Chaining promises</h3>
@@ -160,24 +160,24 @@
         <li>A promise can be returned to another promise, creating a chain of promises.</li>
       </ul>
       <pre><code class="language-javascript">
-        const status = response => {
-            if (response.status >= 200 && response.status < 300) {
-                return Promise.resolve(response)
-            }
-            return Promise.reject(new Error(response.statusText))
+    const status = response => {
+        if (response.status >= 200 && response.status < 300) {
+            return Promise.resolve(response)
         }
-        
-        const json = response => response.json()
-        
-        fetch('/todos.json')
-            .then(status)    // note that the `status` function is actually **called** here, and that it **returns a promise***
-            .then(json)      // likewise, the only difference here is that the `json` function here returns a promise that resolves with `data`
-            .then(data => {  // ... which is why `data` shows up here as the first parameter to the anonymous function
-                console.log('Request succeeded with JSON response', data)
-            })
-            .catch(error => {
-                console.log('Request failed', error)
-            })
+        return Promise.reject(new Error(response.statusText))
+    }
+    
+    const json = response => response.json()
+    
+    fetch('/todos.json')
+        .then(status)    // note that the `status` function is actually **called** here, and that it **returns a promise***
+        .then(json)      // likewise, the only difference here is that the `json` function here returns a promise that resolves with `data`
+        .then(data => {  // ... which is why `data` shows up here as the first parameter to the anonymous function
+            console.log('Request succeeded with JSON response', data)
+        })
+        .catch(error => {
+            console.log('Request failed', error)
+        })
       </code></pre>
 
       <h3>Errors</h3>
@@ -185,11 +185,11 @@
         <li>When anything in the chain of promises fails and raises an error or rejects the promise, the control goes to the nearest <span class="code">catch()</span> statement down the chain.</li>
       </ul>
       <pre><code class="language-javascript">
-        new Promise((resolve, reject) => {
-            throw new Error('Error') // or reject('Error')
-        }).catch(err => {
-            console.error(err)
-        });    
+    new Promise((resolve, reject) => {
+        throw new Error('Error') // or reject('Error')
+    }).catch(err => {
+        console.error(err)
+    });    
       </code></pre>
 
       <h3>Cascading Errors</h3>
@@ -197,15 +197,15 @@
         <li>If inside the <span class="code">catch()</span> you raise an error, you can append a second <span class="code">catch()</span> to handle it, and so on.</li>
       </ul>
       <pre><code class="language-javascript">
-        new Promise((resolve, reject) => {
-            throw new Error('Error')
-        })
-        .catch(err => {
-            throw new Error('Error')
-        })
-        .catch(err => {
-            console.error(err)
-        })    
+    new Promise((resolve, reject) => {
+        throw new Error('Error')
+    })
+    .catch(err => {
+        throw new Error('Error')
+    })
+    .catch(err => {
+        console.error(err)
+    })    
       </code></pre>
 
       <h3>Waiting for all promises to resolve: Promise.all()</h3>
@@ -213,9 +213,9 @@
         <li>If you need to synchronize different promises, <span class="code point">Promise.all()</span> helps you define a list of promises, and execute something when they are all resolved</li>
       </ul>
       <pre><code class="language-javascript">
-        Promise.all([p1, p2]).then(res => {
-            console.log('Array of results', res)
-        })
+    Promise.all([p1, p2]).then(res => {
+        console.log('Array of results', res)
+    })
       </code></pre>
 
       <h3>Waiting for any one of the promises to resolve: Promise.race()</h3>
@@ -223,9 +223,9 @@
         <li><span class="code point">Promise.race()</span> runs when the first of the promises you pass to it settles (resolves or rejects), and it runs the attached callback just once, with the result of the first promise settled</li>
       </ul>
       <pre><code class="language-javascript">
-        Promise.race([p1, p2]).then(result => {
-            console.log('result of first promise resolved', result)
-        })
+    Promise.race([p1, p2]).then(result => {
+        console.log('result of first promise resolved', result)
+    })
       </code></pre>
 
       <h3>Waiting for any one of the promise to fulfil: Promise.any()</h3>
@@ -233,14 +233,13 @@
         <li><span class="code point">Promise.any()</span> settles when any of the promises you pass to it fulfill or all of the promises get rejected. It returns a single promise that resolves with the value from the first promise that is fulfilled. If all promises are rejected, then the returned promise is rejected with an AggregateError.</li>
       </ul>
       <pre><code class="language-javascript">
-        Promise.any([first, second])
-            .then(resp => {
-                console.log(resp);
-            })
-            .catch(error => {
-                console.log(error) // AggregateError
-            })
-        
+    Promise.any([first, second])
+        .then(resp => {
+            console.log(resp);
+        })
+        .catch(error => {
+            console.log(error) // AggregateError
+        })
       </code></pre>
     </div>
 
@@ -248,6 +247,38 @@
 
     <div class="topic">
       <h2 id="AsyncAwait">Async/Await</h2>
+
+      <h3>vs Promise</h3>
+      <ul>
+        <li>is built on promises</li>
+        <li>reduces the boilerplate around promises, and the "don't break the chain" limitation of chaining promises.</li>
+        <li>Promises were introduced to solve the famous callback hell problem, but they introduced complexity on their own, and syntax complexity.</li>
+        <li>Prepending the <span class="code">async</span> keyword to any function means that the function will return a <span class="code">promise</span>. Even if it's not doing so explicitly, it will internally make it return a <span class="code">promise</span>.</li>
+      </ul>
+      <pre><code class="language-javascript">
+    const aFunction = async () => { return 'test' }
+
+    // is similar to
+
+    const aFunction = () => { return Promise.resolve('test') }
+      </code></pre>
+
+      <h3>Working</h3>
+      <ul>
+        <li>An <span class="code">async</span> function returns a <span class="code">Promise</span>.</li>
+        <li>When you want to call this function you prepend <span class="code">await</span>, and the calling code will stop until the <span class="code">promise</span> is <span class="code">resolved</span> or <span class="code">rejected</span>. One caveat: the client function must be defined as <span class="code">async</span></li>
+      </ul>
+      <pre><code class="language-javascript">
+    const doSomethingAsync = () => {
+        return new Promise(resolve => { setTimeout(() => resolve('I did something'), 3000) })
+    }
+    
+    const doSomething = async () => { console.log(await doSomethingAsync()) }
+    
+    console.log('Before')
+    doSomething()
+    console.log('After')
+      </code></pre>
     </div>
 
 

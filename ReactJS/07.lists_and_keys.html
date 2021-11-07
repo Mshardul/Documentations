@@ -11,16 +11,16 @@
     <div class="topic">
       <h2 id="BasicExample">Basic Example</h2>
       <pre><code class="language-javascript">
-        function ListItem(props) { return &lt;li&gt;{props.value}&lt;/li&gt;; }
-        
-        function NumberList(props) {
-            const numbers = props.numbers;
-            const listItems = numbers.map((number) => <ListItem key={number.toString()} value={number} /> );
-            return ( &lt;ul&gt;{listItems}&lt;/ul&gt; );
-        }
-        
-        const numbers = [1, 2, 3, 4, 5];
-        ReactDOM.render( &lt;NumberList numbers={numbers} /&gt;, document.getElementById('root') );
+    function ListItem(props) { return &lt;li&gt;{props.value}&lt;/li&gt;; }
+    
+    function NumberList(props) {
+        const numbers = props.numbers;
+        const listItems = numbers.map((number) => <ListItem key={number.toString()} value={number} /> );
+        return ( &lt;ul&gt;{listItems}&lt;/ul&gt; );
+    }
+    
+    const numbers = [1, 2, 3, 4, 5];
+    ReactDOM.render( &lt;NumberList numbers={numbers} /&gt;, document.getElementById('root') );
       </code></pre>
 
       <div class="notes">
@@ -34,11 +34,11 @@
 
       <h3>Embedding in JSX</h3>
       <pre><code class="language-javascript">
-        function ListItem(props) { return &lt;li&gt;{props.value}&lt;/li&gt;; }
-        function NumberList(props) {
-            const numbers = props.numbers;
-            return ( &lt;ul&gt; {numbers.map((number) => &lt;ListItem key={number.toString()} value={number} /&gt; )} </ul> ); 
-        }
+    function ListItem(props) { return &lt;li&gt;{props.value}&lt;/li&gt;; }
+    function NumberList(props) {
+        const numbers = props.numbers;
+        return ( &lt;ul&gt; {numbers.map((number) => &lt;ListItem key={number.toString()} value={number} /&gt; )} </ul> ); 
+    }
       </code></pre>
     </div>
   </div>

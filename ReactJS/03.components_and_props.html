@@ -22,14 +22,14 @@
 
       <h3>JS function</h3>
       <pre><code class="language-javascript">
-        function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
+    function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
       </code></pre>
 
       <h3>ES6 class</h3>
       <pre><code class="language-javascript">
-        class Welcome extends React.Component {
-            render() { return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;; }
-        }
+    class Welcome extends React.Component {
+        render() { return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;; }
+    }
       </code></pre>
     </div>
 
@@ -40,16 +40,16 @@
 
       <h3>Passing a user-defined component</h3>
       <pre><code class="language-javascript">
-        const element = &lt;Welcome name="Sara" /&gt;;
+    const element = &lt;Welcome name="Sara" /&gt;;
       </code></pre>
 
       translates to
 
       <pre><code class="language-javascript">
-        function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
-        
-        const element = &lt;Welcome name="Sara" /&gt;;
-        ReactDOM.render( element, document.getElementById('root') );
+    function Welcome(props) { return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;; }
+    
+    const element = &lt;Welcome name="Sara" /&gt;;
+    ReactDOM.render( element, document.getElementById('root') );
       </code></pre>
     </div>
 
@@ -58,23 +58,23 @@
     <div class="topic">
       <h2 id="NestedComponents">Nested Components</h2>
       <pre><code class="language-javascript">
-        function Avatar(props) { 
-            return ( &lt;img className="Avatar" src={props.user.avatarUrl} alt={props.user.name} /&gt; ); 
-        }
+    function Avatar(props) { 
+        return ( &lt;img className="Avatar" src={props.user.avatarUrl} alt={props.user.name} /&gt; ); 
+    }
 
-        function UserInfo(props) {
-            return ( &lt;div className="UserInfo"&gt; &lt;Avatar user={props.user} /&gt; &lt;div className="UserInfo-name"&gt; {props.user.name} &lt;/div&gt; &lt;/div&gt; );
-        }
+    function UserInfo(props) {
+        return ( &lt;div className="UserInfo"&gt; &lt;Avatar user={props.user} /&gt; &lt;div className="UserInfo-name"&gt; {props.user.name} &lt;/div&gt; &lt;/div&gt; );
+    }
 
-        function Comment(props) {
-          return (
-              &lt;div className="Comment"&gt; 
-                  &lt;UserInfo user={props.author} /&gt;
-                  &lt;div className="Comment-text"&gt; {props.text} &lt;/div&gt;
-                  &lt;div className="Comment-date"&gt; {formatDate(props.date)} &lt;/div&gt;
-              &lt;/div&gt;
-          );
-        }
+    function Comment(props) {
+      return (
+          &lt;div className="Comment"&gt; 
+              &lt;UserInfo user={props.author} /&gt;
+              &lt;div className="Comment-text"&gt; {props.text} &lt;/div&gt;
+              &lt;div className="Comment-date"&gt; {formatDate(props.date)} &lt;/div&gt;
+          &lt;/div&gt;
+      );
+    }
       </code></pre>
     </div>
 

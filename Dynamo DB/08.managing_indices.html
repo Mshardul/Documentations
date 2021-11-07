@@ -27,23 +27,23 @@
           <li><span class="code">ProvisionedThroughput</span>(for provisioned tables): number of reads and writes per second that you need for this index.</li>
         </ul>
         <pre><code class="language-json">
-        {
-            TableName: "Music",
-            AttributeDefinitions:[
-                {AttributeName: "Genre", AttributeType: "S"},
-                {AttributeName: "Price", AttributeType: "N"}
-            ],
-            GlobalSecondaryIndexUpdates: [{
-                Create: {
-                    IndexName: "GenreAndPriceIndex",
-                    KeySchema: [
-                        {AttributeName: "Genre", KeyType: "HASH"}, //Partition key
-                        {AttributeName: "Price", KeyType: "RANGE"}, //Sort key
-                    ],
-                    Projection: { "ProjectionType": "ALL" },
-                    ProvisionedThroughput: { "ReadCapacityUnits": 1,"WriteCapacityUnits": 1 } // Only specified if using provisioned mode
-                } } ] 
-        }
+    {
+        TableName: "Music",
+        AttributeDefinitions:[
+            {AttributeName: "Genre", AttributeType: "S"},
+            {AttributeName: "Price", AttributeType: "N"}
+        ],
+        GlobalSecondaryIndexUpdates: [{
+            Create: {
+                IndexName: "GenreAndPriceIndex",
+                KeySchema: [
+                    {AttributeName: "Genre", KeyType: "HASH"}, //Partition key
+                    {AttributeName: "Price", KeyType: "RANGE"}, //Sort key
+                ],
+                Projection: { "ProjectionType": "ALL" },
+                ProvisionedThroughput: { "ReadCapacityUnits": 1,"WriteCapacityUnits": 1 } // Only specified if using provisioned mode
+            } } ] 
+    }
         </code></pre>
         <div class="notes">
           // DynamoDB does not have a query optimizer, so a secondary index is only used when you Query it or Scan it.<br/>
@@ -58,15 +58,15 @@
       <h2 id="QueryingAnIndex">Querying an Index</h2>
       <p>perform Query operations directly on the index, in the same way as on a table. must specify both TableName and IndexName</p>
       <pre><code class="language-json">
-        {
-            TableName: "Music",
-            IndexName: "GenreAndPriceIndex",
-            KeyConditionExpression: "Genre = :genre and Price < :price",
-            ExpressionAttributeValues: {
-                ":genre": "Country",
-                ":price": 0.50
-            }
-        };
+    {
+        TableName: "Music",
+        IndexName: "GenreAndPriceIndex",
+        KeyConditionExpression: "Genre = :genre and Price < :price",
+        ExpressionAttributeValues: {
+            ":genre": "Country",
+            ":price": 0.50
+        }
+    };
       </code></pre>
     </div>
   </div>

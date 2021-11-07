@@ -23,23 +23,23 @@
       </div>
       <p>A class component becomes an error boundary if it defines either (or both) of the lifecycle methods static <span class="code">getDerivedStateFromError()</span> or <span class="code">componentDidCatch()</span>. Use static <span class="code">getDerivedStateFromError()</span> to render a fallback UI after an error has been thrown. Use <span class="code">componentDidCatch()</span> to log error information.</p>
       <pre><code class="language-javascript">
-        class ErrorBoundary extends React.Component {
-            constructor(props) { super(props); this.state = { hasError: false }; }
-          
-            // Update state so the next render will show the fallback UI.
-            static getDerivedStateFromError(error) { return { hasError: true }; }
-          
-            // You can also log the error to an error reporting service
-            componentDidCatch(error, errorInfo) { logErrorToMyService(error, errorInfo); }
-          
-            render() {
-                if (this.state.hasError) { return &lt;h1&gt;Something went wrong.&lt;/h1&gt;; }
-                return this.props.children; 
-            }
+    class ErrorBoundary extends React.Component {
+        constructor(props) { super(props); this.state = { hasError: false }; }
+      
+        // Update state so the next render will show the fallback UI.
+        static getDerivedStateFromError(error) { return { hasError: true }; }
+      
+        // You can also log the error to an error reporting service
+        componentDidCatch(error, errorInfo) { logErrorToMyService(error, errorInfo); }
+      
+        render() {
+            if (this.state.hasError) { return &lt;h1&gt;Something went wrong.&lt;/h1&gt;; }
+            return this.props.children; 
         }
+    }
 
-        /* call as regular React component */
-        &lt;ErrorBoundary&gt; &lt;MyWidget /&gt; &lt;/ErrorBoundary&gt;
+    /* call as regular React component */
+    &lt;ErrorBoundary&gt; &lt;MyWidget /&gt; &lt;/ErrorBoundary&gt;
       </code></pre>
 
     </div>
@@ -50,8 +50,8 @@
       <h2 id="HowAboutTryCatch">How about try/catch?</h2>
         <p>try/catch is great but it only works for imperative code. However, React components are declarative and specify what should be rendered</p>
         <pre><code class="language-javascript">
-          try { showButton(); } 
-          catch (error) { ... }
+    try { showButton(); } 
+    catch (error) { ... }
         </code></pre>
         <p>Error boundaries preserve the declarative nature of React, and behave as you would expect.</p>
         <p>try/catch can (read, should) be used inside an event handler.</p>

@@ -20,15 +20,15 @@
 
       <p>instead of</p>
       <pre><code class="language-javascript">
-        import { add } from './math';
-        console.log(add(16, 26));
+    import { add } from './math';
+    console.log(add(16, 26));
       </code></pre>
 
       <p>use</p>
       <pre><code class="language-javascript">
-        import("./math").then(math => {
-            console.log(math.add(16, 26));
-        });
+    import("./math").then(math => {
+        console.log(math.add(16, 26));
+    });
       </code></pre>
     </div>
 
@@ -45,17 +45,17 @@
         // If the other module fails to load (for example, due to network failure), it will trigger an error. You can handle these errors to show a nice user experience and manage recovery with <span class="code">Error Boundaries</span>.
       </div>
       <pre><code class="language-javascript">
-        import React, { Suspense } from 'react';
-        import MyErrorBoundary from './MyErrorBoundary';
-        const OtherComponent = React.lazy(() => import('./OtherComponent'));
+    import React, { Suspense } from 'react';
+    import MyErrorBoundary from './MyErrorBoundary';
+    const OtherComponent = React.lazy(() => import('./OtherComponent'));
 
-        function MyComponent() {
-            return (
-                &lt;div&gt;
-                    &lt;MyErrorBoundary&gt;&lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt; &lt;OtherComponent /&gt; &lt;/Suspense&gt;&lt;/MyErrorBoundary&gt;
-                &lt;/div&gt;
-            );
-        }
+    function MyComponent() {
+        return (
+            &lt;div&gt;
+                &lt;MyErrorBoundary&gt;&lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt; &lt;OtherComponent /&gt; &lt;/Suspense&gt;&lt;/MyErrorBoundary&gt;
+            &lt;/div&gt;
+        );
+    }
       </code></pre>
       <div class="notes">
         // more on Error Boundaries <a href="./13.error_boundaries.html">here</a>.
@@ -67,19 +67,19 @@
     <div class="topic">
       <h2 id="RouteBasedCodeSplitting">Route-based code splitting</h2>
       <pre><code class="language-javascript">
-        import React, { Suspense, lazy } from 'react';
-        import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+    import React, { Suspense, lazy } from 'react';
+    import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-        const Home = lazy(() => import('./routes/Home'));
-        const About = lazy(() => import('./routes/About'));
+    const Home = lazy(() => import('./routes/Home'));
+    const About = lazy(() => import('./routes/About'));
 
-        const App = () => (
-            &lt;Router&gt;
-                &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
-                    &lt;Switch&gt;&lt;Route exact path="/" component={Home}/&gt;&lt;Route path="/about" component={About}/&gt;&lt;/Switch&gt;
-                &lt;/Suspense&gt;
-            &lt;/Router&gt;
-        );
+    const App = () => (
+        &lt;Router&gt;
+            &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
+                &lt;Switch&gt;&lt;Route exact path="/" component={Home}/&gt;&lt;Route path="/about" component={About}/&gt;&lt;/Switch&gt;
+            &lt;/Suspense&gt;
+        &lt;/Router&gt;
+    );
       </code></pre>
     </div>
   </div>

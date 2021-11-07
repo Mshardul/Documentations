@@ -21,18 +21,18 @@
       </ul>
 
       <pre><code class="language-json">
-        {
-            TableName : "Music",
-            KeySchema: [ 
-                { AttributeName: "Artist", KeyType: "HASH" }, //Partition key
-                { AttributeName: "SongTitle", KeyType: "RANGE" } //Sort key
-            ],
-            AttributeDefinitions: [
-                { AttributeName: "Artist", AttributeType: "S" },
-                { AttributeName: "SongTitle", AttributeType: "S" }
-            ],
-            ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 } // Only specified if using provisioned mode
-        }
+    {
+        TableName : "Music",
+        KeySchema: [ 
+            { AttributeName: "Artist", KeyType: "HASH" }, //Partition key
+            { AttributeName: "SongTitle", KeyType: "RANGE" } //Sort key
+        ],
+        AttributeDefinitions: [
+            { AttributeName: "Artist", AttributeType: "S" },
+            { AttributeName: "SongTitle", AttributeType: "S" }
+        ],
+        ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 } // Only specified if using provisioned mode
+    }
       </code></pre>
     </div>
 
@@ -46,7 +46,7 @@
       </ul>
 
       <pre><code class="language-json">
-        { TableName: "Music" }
+    { TableName: "Music" }
       </code></pre>
     </div>
 
@@ -64,10 +64,10 @@
       <h3>Classic APIs</h3>
       <p>use the PutItem action to add an item to a table.</p>
       <pre><code class="language-json">
-        { 
-            TableName: "Music",
-            Item: { "Artist":"No One You Know", "SongTitle":"Call Me Today" }
-        }
+    { 
+        TableName: "Music",
+        Item: { "Artist":"No One You Know", "SongTitle":"Call Me Today" }
+    }
       </code></pre>
 
       <div class="notes">
@@ -97,7 +97,7 @@
       <p>use <span class="code">ExecuteStatement</span> to retrieve the items with statement similar to that of SQL</p>
 
       <pre><code class="language-json">
-        SELECT * FROM Music WHERE Artist='No One You Know';
+    SELECT * FROM Music WHERE Artist='No One You Know';
       </code></pre>
 
 
@@ -105,30 +105,30 @@
 
       <p><span class="code">GetItem</span></p>
       <pre><code class="language-json">
-        /* optional param 'ProjectionExpression' to return only some attributes */
+    /* optional param 'ProjectionExpression' to return only some attributes */
 
-        { 
-            TableName: "Music",
-            Key: { "Artist": "No One You Know", "SongTitle": "Call Me Today" },
-            "ProjectionExpression": "AlbumTitle, Year, Price"
-        }
+    { 
+        TableName: "Music",
+        Key: { "Artist": "No One You Know", "SongTitle": "Call Me Today" },
+        "ProjectionExpression": "AlbumTitle, Year, Price"
+    }
       </code></pre>
 
       <p><span class="code">Query</span>: You must specify an equality condition for the partition key, and you can optionally provide another condition for the sort key.</p>
       <pre><code class="language-json">
-        /* Return a single song, by primary key */
-        { 
-            TableName: "Music",
-            KeyConditionExpression: "Artist = :a and SongTitle = :t",
-            ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call Me Today" }
-        }
+    /* Return a single song, by primary key */
+    { 
+        TableName: "Music",
+        KeyConditionExpression: "Artist = :a and SongTitle = :t",
+        ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call Me Today" }
+    }
 
-        /* Return all of the songs by an artist, matching first part of title */
-        {
-            TableName: "Music",
-            KeyConditionExpression: "Artist = :a and begins_with(SongTitle, :t)",
-            ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call" }
-        }
+    /* Return all of the songs by an artist, matching first part of title */
+    {
+        TableName: "Music",
+        KeyConditionExpression: "Artist = :a and begins_with(SongTitle, :t)",
+        ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call" }
+    }
       </code></pre>
       <div class="notes">
         // You can use an optional <span class="code">FilterExpression</span> to remove certain items from the results before they are returned to you.<br/>
@@ -137,7 +137,7 @@
 
       <p><span class="code">Scan</span></p>
       <pre><code class="language-json">
-        { TableName:  "Music" }
+    { TableName:  "Music" }
       </code></pre>
       <div class="notes">
         // <span class="code">ProjectionExpression</span> can be used to get certain attributes.<br/>
@@ -161,23 +161,23 @@
         // UpdateItem behaves like an "upsert" operation: The item is updated if it exists in the table, but if not, a new item is added (inserted).<br/>
       </div>
       <pre><code class="language-json">
-        /* update label and price, when certain conditions are met */
-        {
-            TableName: "Music",
-            Key: { "Artist":"No One You Know", "SongTitle":"Call Me Today" },
-            UpdateExpression: "SET RecordLabel = :label",
-            ConditionExpression: "Price >= :p",
-            ExpressionAttributeValues: { ":label": "Global Records", ":p": 2.00 }
-        }
+    /* update label and price, when certain conditions are met */
+    {
+        TableName: "Music",
+        Key: { "Artist":"No One You Know", "SongTitle":"Call Me Today" },
+        UpdateExpression: "SET RecordLabel = :label",
+        ConditionExpression: "Price >= :p",
+        ExpressionAttributeValues: { ":label": "Global Records", ":p": 2.00 }
+    }
 
-        /* increment nof plays */
-        {
-            TableName: "Music",
-            Key: { "Artist":"No One You Know", "SongTitle":"Call Me Today" },
-            UpdateExpression: "SET Plays = Plays + :incr",
-            ExpressionAttributeValues: { ":incr": 1 },
-            ReturnValues: "UPDATED_NEW"
-        }
+    /* increment nof plays */
+    {
+        TableName: "Music",
+        Key: { "Artist":"No One You Know", "SongTitle":"Call Me Today" },
+        UpdateExpression: "SET Plays = Plays + :incr",
+        ExpressionAttributeValues: { ":incr": 1 },
+        ReturnValues: "UPDATED_NEW"
+    }
       </code></pre>
     </div>
 
@@ -195,11 +195,11 @@
         <li><span class="code">ConditionExpression</span> (optional): item is deleted only if this expression results to <span class="code">true</span></li>
       </ul>
       <pre><code class="language-json">
-        {
-            TableName: "Music",
-            Key: { Artist: "The Acme Band", SongTitle: "Look Out, World" },
-            ConditionExpression: "attribute_exists(RecordLabel)"
-        }
+    {
+        TableName: "Music",
+        Key: { Artist: "The Acme Band", SongTitle: "Look Out, World" },
+        ConditionExpression: "attribute_exists(RecordLabel)"
+    }
       </code></pre>
     </div>
 

@@ -12,8 +12,8 @@
       <h2 id="RenderingAnElementIntoTheDOM">Rendering an element into the DOM</h2>
       Applications built with just React usually have a single root DOM node. If you are integrating React into an existing app, you may have as many isolated root DOM nodes as you like. To render a React element into a root DOM node, pass both to ReactDOM.render(): 
       <pre><code class="language-javascript">
-        const element = &lt;h1&gt;Hello, world&lt;/h1&gt;;
-        ReactDOM.render(element, document.getElementById('root'));
+    const element = &lt;h1&gt;Hello, world&lt;/h1&gt;;
+    ReactDOM.render(element, document.getElementById('root'));
       </code></pre>
     </div>
 
@@ -23,14 +23,14 @@
       <h2 id="UpdatingTheRenderedElement">Updating the Rendered Element</h2>
       React elements are immutable. Once you create an element, you can’t change its children or attributes. The only way to update the UI is to create a new element, and pass it to ReactDOM.render().
       <pre><code class="language-javascript">
-        function tick() {
-            const element = (
-                &lt;div&gt; &lt;h1&gt;Hello, world!&lt;/h1&gt; &lt;h2&gt;It is {new Date().toLocaleTimeString()}.&lt;/h2&gt; &lt;/div&gt;
-            );
-            ReactDOM.render(element, document.getElementById('root'));
-        }
-        
-        setInterval(tick, 1000);
+    function tick() {
+        const element = (
+            &lt;div&gt; &lt;h1&gt;Hello, world!&lt;/h1&gt; &lt;h2&gt;It is {new Date().toLocaleTimeString()}.&lt;/h2&gt; &lt;/div&gt;
+        );
+        ReactDOM.render(element, document.getElementById('root'));
+    }
+    
+    setInterval(tick, 1000);
       </code></pre>
 
       <div class="notes">

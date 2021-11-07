@@ -9,6 +9,8 @@
   --code-background-color: #f2f3f3;
   --sidebar-background-color: rgb(192, 192, 247, 0.9);
   --table-cell-border: rgb(192, 192, 200);
+  --link-color: #5121F5;
+  --link-visited-color: #5121F5;
 }
 
 body {
@@ -109,6 +111,14 @@ td, th {
 
 pre {
   overflow:auto
+}
+
+a {
+  color: var(--link-color);
+}
+
+a :visited {
+  color: var(--link-visited-color);
 }
 
 /* special classes */

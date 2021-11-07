@@ -1,7 +1,8 @@
 :root{
   --main-link-color: #5121F5;
   --subject-border-color: #8181F5;
-  --navbar-background-color: #8181F5
+  --navbar-background-color: #8181F5;
+  --main-link-visited-color: #5121F5;
 }
 
 li {
@@ -10,6 +11,9 @@ li {
 }
 a {
   color: var(--main-link-color);
+}
+a {
+  color: var(--main-link-visited-color);
 }
 h2 {
   border-bottom: 5px solid black;

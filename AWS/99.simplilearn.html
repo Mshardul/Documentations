@@ -1,0 +1,150 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">AWS</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="ServicesOffered">Services Offered</h2>
+      
+      <h3>Amazon S3</h3>
+      An object storage that can store and retrieve data from anywhere.
+      <ul>
+        <li>great tool for Internet backup option</li>
+        <li>cheapest option for object storage category</li>
+        <li>data is retrievable from the Internet</li>
+      </ul>
+
+      <h3>AWS Data Transfer</h3>
+      <ul>
+        <li>not only helps in collecting data, but monitoring and analyzing it in real time.</li>
+        <li>number of data transfer services are available eg. Kinesis, import/export Snowball, and Direct Connect</li>
+      </ul>
+
+      <h3>Amazon EC2 (Elastic Compute Cloud)</h3>
+      Provides secure and resizable compute capacity, designed to make web-scale cloud computing easier.
+      <ul>
+        <li>is a resizable computer.</li>
+        <li>can be resized anytime as per the requirement.</li>
+      </ul>
+
+      <h3>Amazon SNS (Simple Notification Service)</h3>
+      Enables messages to be delivered across a large number of subscribers, systems and services and mobile devices.
+      <ul>
+        <li>update user with notification through email or sms</li>
+        <li>can send anything</li>
+      </ul>
+
+      <h3>Amazon KMS (Key Management System)</h3>
+      A service integrated into most other AWS services, it helps create and control the encryption keys used to encrypt the user's data.
+      <ul>
+        <li>to encrypt the data</li>
+      </ul>
+
+      <h3>Amazon Lambda</h3>
+      A compute service that executes the code only when needed and scales automatically.
+      <ul>
+        <li>service for wnich we pay only for the seconds it uses to execute.</li>
+        <li>no need to pay for the infrastructure.</li>
+      </ul>
+
+      <h3>Route 53</h3>
+      The DNS web service is designed to give developers and businesses a reliable and cost effective method to route users to internet applications.
+      <ul>
+        <li>DNS service in the cloud</li>
+      </ul>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="EC2">EC2</h2>
+      EC2 is a web-service which aims to make life easier for developers by providing secure and resizable compute capacity in the cloud.
+      <ul>
+        <li>ease in scaling up/down</li>
+        <li>can be integrated into several other services.</li>
+        <li>pay only for what you use.</li>
+      </ul>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="CaseStudyNewsletter">Case study: Newsletter</h2>
+      
+      <h3>Requirement</h3>
+      <ul>
+        <li>AWS account</li>
+        <li>EC2 instance for compute capacity
+          <ul>
+            <li>choose an AMI (Amazon Machine Image) - is the softwares and application packages that we would need to run the application
+              <ul>
+                <li>it is a template that is used to create an instance/machine based on user requirement.</li>
+                <li>it contains: Software information, OS information, Volume information, Access permissions, etc</li>
+                <li>2 types: Predefined (Amazon provided from AMI Marketplace) or Custom</li>
+              </ul>
+            </li>
+            <li>choose an instance type - choose h/w depending on the workload, and choose size of the h/w depending on the intensity of the workload.
+              <ul>
+                <li>specifies hardware specifications that are required in the machine form the previous step.</li>
+                <li>categorized into 5 main families: Compute optimized (for high processing power), Memory optimized (for in-memory caching), GPU optimized (large graphical requirement), Storage optimized (storage servers), General purpose</li>
+                <li>instance types are fixed and can not be altered.</li>
+              </ul>
+            </li>
+            <li>configure instance - eg. no of instances, which subnet do we want them in, what's going to be the terminate behaviour of the instances, do we need to update any package when instance starts running, etc
+              <ul>
+                <li>specify the number of instances, purchasing options, kind of network, subnet, when to assign public IP, IAM role, shutdown behaviour, add bootstrap scripts when VM starts, etc</li>
+                <li>multiple payment options are available: on-demand instance, reserved instance, spot instance</li>
+              </ul>
+            </li>
+            <li>adding additional storage - to EC2 instance
+              <ul>
+                <li>deciding type of storage: Ephemeral (temporary and free), Amazon Elastic Block Store (permanant and paid), Amazon S3</li>
+              </ul>
+            <li>add tags - to easily identify the EC2 instance at a later point.</li>
+            <li>configure security group (aka firewall) - to allow/deny connection to/from the outside world.
+              <ul>this is where user can finetune the access to the EC2 instance based on port number and IP address</ul>
+            </li>
+            <li>review and launch
+              <ul>
+                <li>Before launching, Amazon gives us option to create a key pair (public and private). Private key (.pem file) is downloaded by the user, and kept secret. The public key is kept by Amazon to identify the user.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Create a topic in SNS
+          <ul>
+            <li>Simple Notification Service is a service in Amazon that helps us notify the customer through email.</li>
+            <li>Create a topic and make it public.</li>
+            <li>Add subscribers to the topic.</li>
+          </ul>
+        </li>
+        <li>Create a bucket in S3
+          <ul>
+            <li>store the content in this bucket.</li>
+            <li>Create an event in the bucket relating it with SNS.</li>
+          </ul>
+        </li>
+        <li> Sync the S3 bucket and AWS instance.</li>
+      </ul>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="VPC">Amazon's Virtual Private Cloud</h2>
+    </div>
+  </div>
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./02.amazon_cli.html">02. Amazon CLI</a></span>
+</div>

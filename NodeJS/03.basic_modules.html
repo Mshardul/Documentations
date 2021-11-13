@@ -1,0 +1,156 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">Dynamo DB</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="process">Process</h2>
+      <div class="notes">
+        // Process does not require a "require", it's automatically available. 
+      </div>
+
+      <h3>Exit from a Node program</h3>
+      syntax:
+      <pre><code class="language-javascript">
+    process.exit(&lt;exit_code&gt;)
+      </code></pre>
+      Exit codes are as follows:
+      <ul>
+        <li>0: Success</li>
+        <li>1: Uncaught Fatal Exception</li>
+        <li>2 (Unused) - reserved for bash</li>
+        <li>3: Internal JavaScript Parse Error</li>
+        <li>4: Internal JavaScript Evaluation Failure</li>
+        <li>5: Fatal Error</li>
+        <li>6: Non-function Internal Exception Handler</li>
+        <li>7: Internal Exception Handler Run-Time Failure</li>
+        <li>8 (Unused)</li>
+        <li>9: Invalid Argument</li>
+        <li>10: Internal JavaScript Run-Time Failure</li>
+        <li>12: Invalid Debug Argument</li>
+        <li>13: Unfinished Top-Level Await</li>
+        <li>>128: Signal Exits</li>
+      </ul>
+
+      <div class="notes">
+        // calling process.exit(), results in aborigin any currently pending or running request
+      </div>
+      Alternatively,
+      <pre><code class="language-javascript">
+    const server = app.listen(3000, () => console.log('Server ready'))
+
+    process.on('SIGTERM', () => {
+        server.close(() => {
+            console.log('Process terminated')
+        })
+    })
+      </code></pre>
+
+      <h3>Environment Variables</h3>
+      <pre><code class="language-javascript">
+        process.env.&ltenv_var&gt
+      </code></pre>
+    </div>
+
+    <hr/>
+    
+    <div class="topic">
+      <h2 id="Express">Express</h2>
+      Express is a framework that uses the http module under the hood, app.listen() returns an instance of http. You would use https.createServer if you needed to serve your app using HTTPS, as app.listen only uses the http module.
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Module">Module</h2>
+      <h3>Exports</h3>
+      <p>functionality must be exposed before it can be imported by other files. Any other object or variable defined in the file by default is private</p>
+      <p>There are 2 ways to export property.</p>
+      <table>
+        <tr><th>Module.exports</th><th>exports</th></tr>
+        <tr><td>exposes the object it points to.</td><td>exposes the properties of the object it points to</td></tr>
+        <tr>
+          <td>
+            <pre><code class="language-javascript">
+    const car = { brand: 'Ford', model: 'Fiesta' }
+    module.exports = car
+            </code></pre>
+        </td>
+        <td>
+          <pre><code class="language-javascript">
+    const car = { brand: 'Ford', model: 'Fiesta' }
+    exports.car = car
+          </code></pre>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <pre><code class="language-javascript">
+    const car = require('./car')
+          </code></pre>
+        </td>
+        <td>
+          <pre><code class="language-javascript">
+    const car = require('./items').car
+          </code></pre>
+        </td>
+      </tr>
+      </table>
+    </div>
+
+    <hr/>
+    
+    <div class="topic">
+      <h2 id="Events">Events</h2>
+
+      <h3>Event Emitter</h3>
+      <pre><code class="language-javascript">
+    /* initialization */
+    const EventEmitter = require('events')
+    const eventEmitter = new EventEmitter()
+
+    /* callback */
+    eventEmitter.on('start', () => {
+        console.log('started')
+    })
+
+    /* trigger event */
+    eventEmitter.emit('start')
+
+      </code></pre>
+
+      <p>Other methods exposed by EventEmitter</p>
+      <ul>
+        <li><span class="point code">once()</span>: add a one-time listener</li>
+        <li><span class="point code">removeListener()</span> / <span class="point code">off()</span>: remove an event listener from an event</li>
+        <li><span class="point code">removeAllListeners()</span>: remove all listeners for an event</li>
+      </ul>
+
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="HTTP">HTTP</h2>
+      <h3>Building an HTTP Server</h3>
+    </div>
+
+
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+  
+  
+<div class="footer">
+  <span class="prev"><a href="./02.synchronicity.html">02. Synchronicity</a></span>
+  <!-- <span class="next"><a href="./02.event_loop.html">02. Event Loop</a></span> -->
+</div>

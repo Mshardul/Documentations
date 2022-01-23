@@ -1,0 +1,362 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">Learning Go</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="BuiltInTypes">Built-in types</h2>
+
+      <h3>Types</h3>
+      <ul>
+        <li>
+          <span class="point">The Zero Value</span>: assigns a default zero value to any variable that is declared but not assigned a value          
+        </li>
+
+        <li>
+          <span class="point">Literals</span>: refers to writing out a number, character, or string. They are of following 3 types
+          <ul>
+            <li><span class="point">Integer Literals</span>: with prefixes (0b for binary, 0o for octal, 0x for hexadecimal) or without prefix (decimal)
+              <ul>
+                <li>To make them more readable, underscores are allowed in the middle of the literal</li>
+              </ul>
+            </li>
+            <li><span class="point">Floating-point Literals</span></li>
+            <li><span class="point">Rune Literals</span>: represent characters and are surrounded by single quotes.
+              <ul>
+                <li>Use a raw string literal (delimited with backquotes (`)) to include backslashes, double quotes, or newlines in the string</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <span class="point">Booleans</span>
+        </li>
+
+        <li>
+          <span class="point">Numerical Types</span>: 12 different types (and a few special names) are grouped into 3 categories.
+          <ul>
+            <li><span class="point">Integer types</span>: int8, int16, int32, int64, uint8, uint16, uint32, uint64</li>
+            <li><span class="point">Special Integer types</span>: byte (alias for uint8), int (alias for int32 in 32-bit CPU and int64 for 64-bit CPU), uint (follows the same rules as 'int'), rune, uintptr.</li>
+            <li><span class="point">Floating point types</span>: float32, float64</li>
+          </ul>
+        </li>
+
+        <li>
+          <span class="point">Complex Types</span>
+          <ul>
+            <li><span class="point">Types</span>: complex64 (uses float32), complex128 (uses float64)</span></li>
+            <li><span class="point">eg</span>: x := complex(2.5, 3.1)</li>
+            <li><a href="https://www.gonum.org/">Gonum package</a> can be used to write numercial computing applications in Go</li>
+          </ul>
+        </li>
+
+        <li>
+          <span class="point">Strings</span>
+          <ul>
+            <li>Go supports Unicode: so you can put any Unicode character into a string.</li>
+            <li>operators: ==, !=, &gt;, &gt;=, &lt;, &lt;=, +</li>
+            <li><span class="point">Special type</span>: rune (alias for int32)</li>
+          </ul>
+        </li>
+
+        <div class="notes">
+          // If you are referring to a character, use the rune type, not the int32 type. They might be the same to the compiler, but you want to use the type that clarifies the intent of your code.
+        </div>
+
+      </ul>
+
+      <h3>Variable declaration</h3>
+
+      <pre><code class="language-go">
+  /* var keyword with data type */
+  var x int = 10
+
+  /* var keyword with implicit data type */
+  var x = 10 // guesses x to be of type 'int' by default, but actually has no type of its own (so conversion is easy)
+
+  /* default value */
+  var x int // sets default value as 0
+
+
+  /* multiple declaration inline with same data type */
+  var x, y int = 10, 20
+
+
+  /* multiple declaration inline without data type */
+  var x, y = 10, "hi"
+
+
+  /* multiple declaration block */
+  var (
+      x int
+      y = 10
+      z, a = 20, "hi"
+  )
+
+  /* shorthand declaration */
+  x, y := 10, "hi"
+      </code></pre>
+    
+      <div class="notes">
+        // There are some situations within functions where you should avoid :=<br/>
+          <ul>
+            <li>When initializing a variable to its zero value, use var x int. This makes it clear that the zero value is intended.</li>
+            <li>When assigning an untyped constant or a literal to a variable and the default type for the constant or literal isn't the type you want for the variable, use the long var form with the type specified.</li>
+            <li>Because := allows you to assign to both new and existing variables, it sometimes creates new variables when you think you are reusing existing one</li>
+          </ul>
+        // const declaration is also similar to 'var' declaration. Multiple declarations (inline or in a block) are also allowed. Can be typed or untyped.<br/>
+        // unused variables are not allowed, result in compile-time error. However, unread package-level variables are allowed.<br/>
+      </div>    
+
+  </div>
+
+  <hr/>
+
+  <div class="topic">
+    <h2 id="CompositeTypes">Composite Types</h2>
+
+    <h3>Arrays</h3>
+    collection of elements of similar data types.
+    <ul>
+      <li>
+        <span class="point">Declaration</span>
+
+        <pre><code class="language-go">
+  /* array with size specified */
+  var x[3]int
+
+  /* array with size and values specified */
+  var x = [3]int{1,2,3}
+
+  /* sparse array, mostly 0 unless specified */
+  var x = [12]int{1,5:4,6,10:100,15} // [1,0,0,0,0,4,6,0,0,0,100,15]
+
+
+  /* using values to deduce the size */
+  var x = [...]int{1,2,3}
+
+  /* multi-dimensional array */
+  var x[2][3]int
+        </code></pre>
+      </li>
+      <li>
+        <span class="point">Important methods</span>
+        <pre><code class="language-go">
+  len(x) // size of array 'x'
+  cap(x) // same as len(x). is useful for slice
+  slicing // slicing an array returns a slice
+  copy(y, x[:]) // can be used, but only after converting arry to slice
+        </code></pre>
+      </li>
+
+      <div class="notes">
+        // Go considers the size of the array to be part of the type of the array (ie an array that's declared to be [3]int a different type from an array that's declared to be [4]int)<br/>
+        // you can't use a type conversion to convert arrays of different sizes to identical types. Because you can't convert arrays of different sizes into each other, you can't write a function that works with arrays of any size and you can't assign arrays of different sizes to the same variable.<br/>
+        // Due to these restrictions, don't use arrays unless you know the exact length you need ahead of time.<br/>
+      </div>
+    </ul>
+
+    <h3>Slices</h3>
+    similar to array except that the length is not part of the type for a slice.
+    <ul>
+      <li>
+        <span class="point">Declaration</span>
+        <pre><code class="language-go">
+  /* using values */
+  var x = []int{1,2,3}
+
+  /* without using values - nil values */
+  var x []int
+
+  /* empty slice literal */
+  var x = []int{}
+
+  /* using make: allows to specify type, length, and optionally, the capacity */
+  x := make([]int, 5, 10)
+        </code></pre>
+
+      </li>
+      <li>
+        <span class="point">Important methods</span>
+        <pre><code class="language-go">
+  len(x) // size of array 'x'
+  x = append(x, y) // append y into x and assign it back to x
+  cap(x) // returns the current capacity of array 'x'
+  y := x[starting_index:ending_index:capacity_of_subslice] // 2 variables sharing same memory
+    // capacity is optional and if not provided, subslice's capacity is set to the capacity of the original slice
+  copy (y, x) // copies elements of 'x' into 'y' and returns the length of the source slice
+    // both source and destination can be sliced eg. num =  copy(x[:3], x[1:])
+        </code></pre>
+      </li>
+      <div class="notes">
+        // as slice has no type, default value for slice element is nil<br/>
+        // it isn't comparable. using '==' or '!=' with slice results in a compile-time error.<br/>
+        <ul><li>Alternatively, DeepEqual() of 'reflect' package can be used to compare slices (among almost anything)</li></ul>
+        // The rules as of Go 1.14 are to double the size of the slice when the capacity is less than 1,024 and then grow by at least 25% afterward.<br/>
+      </div>
+    </ul>
+
+    <h3>Strings</h3>
+    <ul>
+      <li>
+        <span class="point">Properties</span>
+        <ul>
+          <li>Under the cover, Go uses a sequence of bytes to represent a string.</li>
+          <li>are immutable</li>
+          <li>bracket syntax can be used to read a substring</li>
+          <li>slicing is allowed</li>
+        </ul>
+      </li>
+      <li>
+        <span class="point">Type conversion</span>
+        <ul>
+          <li>single rune or byte can be converted to a string: string(x)</li>
+          <li>string() won't work with int. eg string(65) gives 'A', and not '65'</li>
+          <li>string to slices
+            <pre><code class="language-go">
+  var y []byte = []byte(x)
+  var z []rune = []rune(x)
+            </code></pre>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>Maps</h3>
+    for association of one value to another.
+
+    <ul>
+      <li>
+        <span class="point">Declaration</span>
+        <pre><code class="language-go">
+  /* set to its zero value (ie nil) */
+  var x map[string]int
+
+  /* shorthand notation to create a map var by assigning it a map literal */
+  x := map[string]int{}
+
+  /* map with known size // although this size can grow if required */
+  x := make(map[string]int, 10)
+        </code></pre>
+      </li>
+      <li>
+        <span class="point">Important Methods</span>
+        <pre><code class="language-go">
+  len(x) // number of key-value pairs in the map
+  x, ok := m["hi"] // The comma ok idiom
+    // If ok is true, the key is present in the map. If ok is false, the key is not present.
+  delete(m, "hello") // deletes key-value pair with key "hello" in map "m"
+        </code></pre>
+      </li>
+
+      <div class="notes">
+        // maps are not comparable. although you can check if they are equal to nil<br/>
+        // keys of a map need to be of comparable types, ie you cannot use a slice of a map as the key for a map.<br/>
+        // doesn't follow ordering.<br/>
+      </div>
+    </ul>
+
+    <h3>Structs</h3>
+    <ul>
+      <li>
+        <span class="point">Declaration</span>
+        <pre><code class="language-go">
+  type person struct {
+    name string
+    age int
+  }
+
+  /* var declaration */
+  var fred person
+
+  /* := declaration with empty struct literal */
+  bob := person{}
+
+  /* declaration with non-empty struct literal */
+  julia := person{
+      "Julia",
+      40
+  }
+
+  /* declaration with map-style literal */
+  beth := person{
+      name: "beth",
+      age: 50
+  }
+        </code></pre>
+      </li>
+      <li>
+        <span class="point">Anonymous structs</span>: 2 common usages
+        <ul>
+          <li>marshalling and unmarshalling data (conversion to and from external data (like JSON or protocol buffers))</li>
+          <li>writing tests</li>
+        </ul>
+        <pre><code class="language-go">
+  pet := struct {
+      name string
+      kind string
+  }{
+      name: "Tommy",
+      kind: "dog",
+  }
+        </code></pre>
+      </li>
+      <li>
+        <span class="point">Struct conversion</span>: One struct can be converted into another if all the 3 conditions are met:
+        <ul>
+          <li>the number of fields are same.</li>
+          <li>name of all the fields are same.</li>
+          <li>data type of all teh fields are same.</li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+
+  <hr/>
+
+  <div class="topic">
+    <h2 id="NamingConvention">Naming convention</h2>
+    <ul>
+      <li>Though unicodes are allowed, we should avoid them</li>
+      <li>Go prefers camel case over snake case</li>
+      <li>Go uses the case of the first letter in the name of a package-level declaration to determine if the item is accessible outside the package.</li>
+        <ul>
+          <li>upper case means exported, and lower case means not exported</li>
+        </ul>
+      <li>The smaller the scope for a variable, the shorter the name that's used for it</li>
+      <li>When naming variables and constants in the package block, use more descriptive names. The type should still be excluded from the name, but since the scope is wider, you need a more complete name to make it clear what the value represents.</li>
+    </ul>
+  </div>
+
+  <hr/>
+
+  <div class="topic">
+    <h2 id="ShadowingVariables">Shadowing Variables</h2>
+    <ul>
+    <li>A shadowing variable is a variable that has the same name as a variable in a containing block. For as long as the shadowing variable exists, you cannot access a shadowed variable.</li>
+    <li>This is one of the reasons to avoid using <span class="code">:=</span>, because it reinitialises as well as creates a new variable.</li>
+      <ul>
+        <li>When using <span class="code">:=</span>, make sure that you don't have any variables from an outer scope on the lefthand side, unless you intend to shadow them.</li>
+      </ul>
+    <li>Add shadow detection to your build process by installing the shadow linter on your machine ($ go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest)</li>
+    <li>The built-in types (like int and string), constants (like true and false), and functions (like make or close) or nil aren't included in the list of keywords. Instead Go considers these predeclared identifiers and defines them in the universe block. Because these names are declared in the universe block, it means that they can be shadowed in other scopes.</li>
+  </div>
+</div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+<span class="prev"><a href="./01.introduction.html">01. Introduction</a></span>
+<span class="next"><a href="./03.control_structures.html">03. Control Structures</a></span>
+</div>

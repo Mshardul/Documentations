@@ -1,0 +1,12 @@
+@import "../shared/css/main.css";
+
+:root {
+  --example-background-color: #add8e6;
+}
+
+.example {
+  border-radius: 10px;
+  padding: 5px;
+  background-color: var(--example-background-color);
+  margin: 2px;
+}

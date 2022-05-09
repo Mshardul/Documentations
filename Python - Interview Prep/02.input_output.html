@@ -56,7 +56,55 @@
 
     <div class="topic">
       <h2 id="Output">Output</h2>
+      <span class="code">print()</span> function prints the message to the screen or any other standard output device.
+      <pre><code class="language-python">
+    print(value(s), sep= ' ', end = '\n', file=file, flush=flush) # syntax
+
+    ''' params
+        value(s) : Any value(s). Will be converted to string before printed.
+        sep(Optional): Specify how to separate the objects, if more than one. Default : ' '
+        end(Optional): Specify what to print at the end. Default : '\n'
+        file(Optional): An object with a write method. Default : sys.stdout
+        flush(Optional): A Boolean, specifying if the output is flushed (True) or buffered (False). Default: False
+    '''
+      </code></pre>
+      The print statement accepts multiple objects separated by ","
+      <pre><code class="language-python">
+    name = input("enter your name.")
+    print("hi", name)
+      </code></pre>
+
+      <h3>Output Formatting</h3>
+      There are several ways to format output.
+      <ul>
+        <li>To use <span class="point">formatted string literals</span>, begin a string with <span class="code">f</span> or <span class="code">F</span> before the opening quotation mark or triple quotation mark.</li>
+        <li>The string method <span class="code">str.format()</span> helps a user create a fancier output.</li>
+      </ul>
+      <pre><code class="language-python">
+      ''' using String modulo operator(%) '''
+      # integer, float, octal, exponential
+      print("Students: %2d, Marks: %5.2f, Grades: %7.3o, percentile: %10.3E" % (100, 05.333, 25, 356.08977)) # Students: 100, Marks: 5.33, Grades: 031, percentile: 3.561E+02
+      # the general syntax here is %[flags][width][.precision]type 
+
+      ''' using the format method '''
+      # without using indexing
+      print('Hi {}, and hello {}!'.format('abc', 'def'))                                                     # Hi abc, and hello def!
+      # using indexing
+      print('{1} and {0}'.format('abc', 'def'))                                                              # def and abc
+      # using format fields
+      print("Second argument: {1:3d}, first one: {0:7.2f}".format(47.42, 11))                                # Second argument: 11, first one: 47.42
+      # using format in dictionary
+      data = dict(a ="abc", b ="def")
+      print("Hi {a}, hello {b}!".format(**data))                                                             # Hi abc, and hello def!
+
+      ''' using the String method '''
+      name = "abcd"
+      print (cstr.center(10, '#'))                                                                           # ###abcd###
+      print (cstr.ljust(10, '-'))                                                                            # abcd------
+      print (cstr.rjust(10, '-'))                                                                            # ------abcd
+      </code></pre>
     </div>
+
   </div>
 
   <div class="sidebar-right">

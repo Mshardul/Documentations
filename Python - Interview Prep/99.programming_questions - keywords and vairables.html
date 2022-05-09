@@ -77,6 +77,25 @@
     fun()
       </code></pre>
     </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="==VsIs">== vs is</h2>
+      What is the difference between <span class="code">==</span> and <span class="code">is</span>
+      <span class="code">==</span> compares the values of both the operands and checks for value equality. Whereas the <span class="code">is</span> operator checks whether both the operands refer to the same object or not (present in the same memory location)
+      <pre><code class="language-python">
+    list1 = []
+    list2 = []
+    list3=list1
+    print(list1 == list2)      # True
+    print(list1 is list2)      # False
+    print(list1 is list3)      # True
+    list3 = list3 + list2
+    print(list1 is list3)      # False
+      </code></pre>
+    </div>
+
   </div>
 
   <div class="sidebar-right">

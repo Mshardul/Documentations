@@ -1,0 +1,91 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="BooleanAndNone">Boolean And None</h2>
+      <pre><code class="language-python">
+    print(False == 0) # True
+    print(True == 1) # True
+      
+    print(True + True + True) # 3
+    print(True + False + False) # 1
+      
+    print(None == 0) # False
+    print(None == []) # False
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="IsAndIn">Is and In</h2>
+      <pre><code class="language-python">
+    print("a" in "apple") # True
+    for i in "apple": 
+        print(i) # "a", "p", "p", "l", "e"
+    print(' ' is ' ') # True: string is immutable
+    print({} is {}) # False: dictionary is mutable
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="ReturnAndYield">Return and Yield</h2>
+      <pre><code class="language-python">
+    def fun():
+        S = 0
+        for i in range(10):
+            S += i
+        return S
+    print(fun()) # 45
+      
+    def fun():
+        S = 0
+        for i in range(10):
+            S += i
+            yield S
+    for i in fun():
+        print(i) # 0, 1, 3, 6, 10, 15, 21, 28, 36, 45
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="GlobalAndNonlocal">Global and nonlocal</h2>
+      <pre><code class="language-python">
+    # global variable
+    x = 15
+    
+    # nonlocal keyword
+    def fun():
+      var1 = 25
+      def gun():
+        nonlocal var1 # tells python explicitly to use var1 initialize in fun()
+        global x # tells python explicitly to use x initialized globally
+        var1 = var1 + x
+        print(var1) # 40
+      gun()
+    fun()
+      </code></pre>
+    </div>
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

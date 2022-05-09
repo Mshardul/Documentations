@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="Input">Input</h2>
+      Python provides 2 inbuilt functions to read input from keyboard.
+      <ul>
+        <li>input(prompt)</li>
+        <li>raw_input(prompt)</li>
+      </ul>
+
+      <table>
+        <tr><th>Property</th><th>input</th><th>raw_input</th></tr>
+        <tr><td>Syntax</td><td>input(prompt)</td><td>raw_input(prompt)</td></tr>
+        <tr>
+          <td>Functioning</td>
+          <td>tells the program to stop and wait for the user to input the values</td>
+          <td>tells the program to stop and wait for the user to input the values</td>
+        </tr>
+        <tr>
+          <td>Python versions supported</td>
+          <td>both Python 2.x and Python 3.x</td>
+          <td>only in Python 2.x</td>
+        </tr>
+        <tr>
+          <td>input type</td>
+          <td>In Python 3.x, the input function explicitly converts the input you give to type string. But Python 2.x input function takes the value and type of the input you enter as it is without modifying the type</td>
+          <td>Type is always string. We need to typecase it, if required.</td>
+        </tr>
+        <tr>
+          <td>Example</td>
+          <td><pre><code class="language-python">
+      v = input("Enter the name: ")
+          </code></pre></td>
+          <td><pre><code class="language-python">
+      v = raw_input("Enter the name: ")
+          </code></pre></td>
+        </tr>
+      </table>
+      <div class="notes">
+        <ul>
+          <li>Developers are recommended to use raw_input function in Python 2.x. Because there is a vulnerability in input function in Python 2.x version.</li>
+          <li>For taking multiple inputs at once, take the input as string and split it into multiple variables using <span class="code">split()</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Output">Output</h2>
+    </div>
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

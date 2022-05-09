@@ -1,0 +1,113 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="PropertiesOfPython">Properties Of Python</h2>
+      <ul>
+        <li>High level language</li>
+        <li>Interpreted language</li>
+        <li>Open source and community development</li>
+        <li>Dynamically typed</li>
+        <li>Oject Oriented language</li>
+      </ul>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Keywords">Keywords</h2>
+      <ul>
+        <li>and, or, is, in, not</li>
+        <li>break, continue, return, yield</li>
+        <li>class, def, lambda, with</li>
+        <li>if, elif, else, for, while, pass</li>
+        <li>try, except, raise, finally, assert</li>
+        <li>True, False, None</li>
+        <li>from, import, as</li>
+        <li>global, nonlocal, del</li>
+      </ul>
+      Can be printed using
+      <pre><code class="language-python">
+    import keyword
+    print(keyword.kwlist)
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="NamespaceAndScope">Namespace and Scope</h2>
+      <span class="point">Types of Namespaces</span>: When Python interpreter runs solely without any user-defined modules, methods, classes, etc. Some functions like print(), id() are always present, these are built-in namespaces. When a user creates a module, a global namespace gets created, later the creation of local functions creates the local namespace. The built-in namespace encompasses the global namespace and the global namespace encompasses the local namespace.
+      <br/><br/>
+      A <span class="point">lifetime of a namespace</span> depends upon the scope of objects, if the scope of an object ends, the lifetime of that namespace comes to an end.
+      <br/><br/>
+      But in some cases, one might be interested in updating or processing global variables only. That can be done using <span class="code">global</span> and <span class="code">nonlocal</span> keywords
+      <br/><br/>
+      <span class="point">Scope</span> refers to the coding region from which a particular Python object is accessible. Hence one cannot access any particular object from anywhere from the code, the accessing has to be allowed by the scope of the object.
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="StatementsIndentationAndComments">Statements, Indentation and Comments</h2>
+      <span class="point">Multi-Line Statements</span>: Statements in Python can be extended to one or more lines using parentheses <span class="code">()</span>, braces <span class="code">{}</span>, square brackets <span class="code">[]</span>, semi-colon <span class="code">;</span>, continuation character slash <span class="code">/</span>.
+      <pre><code class="language-python">
+    # Declared using Continuation Character (\)
+    s = 1 + 2 + 3 + \
+        4 + 5 + 6 + \
+        7 + 8 + 9
+
+    # Declared using parentheses ()
+    n = (1 * 2 * 3 + 7 + 8 + 9)
+
+    # Declared using square brackets []
+    footballer = ['MESSI',
+                  'NEYMAR',
+                  'SUAREZ']
+
+    # Declared using braces {}
+    x = {1 + 2 + 3 + 4 + 5 + 6 +
+         7 + 8 + 9}
+
+    # Declared using semicolons(;)
+    flag = 2; ropes = 3; pole = 4
+      </code></pre>
+
+      A <span class="point">block</span> is a combination of all these statements. Block can be regarded as the grouping of statements for a specific purpose. Most of the programming languages like C, C++, Java use braces { } to define a block of code. Python uses indentation instead.
+      <br/><br/>
+      <span class="point">Comments</span>
+      <ul>
+        <li>Single line using <span class="code">#</span></li>
+        <li>Multi line using triple quotes, either single <span class="code">'''</span> or double <span class="code">"""</span></li>
+      </ul>
+      
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="ConditionalOperator">Conditional Operator</h2>
+      Conditional operator doesn't exist in Python. Instead, we can make use of inline if-else
+      <pre><code class="language-python">
+    a = 1 if 20 > 10 else 0
+      </code></pre>
+    </div>
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

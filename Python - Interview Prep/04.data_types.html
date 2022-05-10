@@ -1,0 +1,471 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="String">String</h2>
+      <ul>
+        <li><span class="point">Strings</span> are arrays of bytes representing Unicode characters</li>
+        <li>However, Python does not have a character data type, a single character is simply a string with a length of 1</li>
+        <li>Square brackets can be used to access elements of the string.</li>
+      </ul>
+      <h3>Basic Operations</h3>
+      <pre><code class="language-python">
+    ''' string initialization '''
+    # using single quote
+    s1 = 'Hi. How are you?'
+    # using double quote
+    s2 = "Hello. How are you?"
+    # using triple quote (multi-line)
+    s3 = '''How
+            are
+            your?'''
+    
+    ''' accessing characters '''
+    # using positive indexing
+    print(s1[0])                                                          # H
+    # using negative indexing
+    print(s1[-2])                                                         # u
+
+    ''' string slicing '''
+    # [start:end] -> end not included
+    print(s2[1:9])                                                        # ello. Ho
+    print(s2[1:-1])                                                       # ello. How are you
+
+    ''' update/delete character or string '''
+    # string can be reinitialized or deleted, but characters cannot be updated/deleted
+    s2[0] = "Y"                                                           # TypeError: 'str' object does not support item assignment
+    del s2[0]                                                             # TypeError: 'str' object does not support item assignment
+    s2 = "Yello. How are your?"                                           # works
+    del s2                                                                # works
+
+    ''' escape sequence '''
+    # escaping same quote as in string initialization
+    s4 = 'I\'m a "student"'                                               # I'm a "student"
+    # escaping backquotes
+    s5 = "C:\\Python\\bin\\"                                              # C:\Python\bin
+    # in hex
+    s6 = "This is \x47\x65\x65\x6b\x73 in \x48\x45\x58"                   # This is Geeks in HEX
+    # raw string to ignore escape sequence
+    s7 = r"This is \x47\x65\x65\x6b\x73 in \x48\x45\x58"                  # This is \x47\x65\x65\x6b\x73 in \x48\x45\x58
+
+    ''' string formatting '''
+    # default order
+    s8 = "{} {} {}".format('abc', 'bcd', 'cde')                           # abc bcd cde
+    # postitional formatting
+    s9 = "{1} {0} {2}".format('abc', 'bcd', 'cde')                        # bcd abc cde
+    # keyword formatting
+    s10 = "{b} {a} {c}".format(a='abc', b='bcd', c='cde')                 # bcd abc cde
+
+    ''' number formatting '''
+    # integer formatting
+    s11 = "{0:b}".format(16)                                              # 10000
+    i = 12.3456789
+    print('%3.2f' % i)                                                    # 12.35
+    print('%3.4f' % i)                                                    # 12.3457
+    # float formatting
+    s12 = "{0:e}".format(165.6458)                                        # 1.656458e+02
+    # rounding off integer
+    s13 = "{0:.2f}".format(1/6)                                           # 0.17
+    # aligning - left, right and center
+    s14 = "|{:<10}|{:^10}|{:>10}|".format('abcd', 'abcd', 'abcd')         # |abcd      |   abcd   |      abcd|
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="List">List</h2>
+      <ul>
+        <li>similar to dynamically sized arrays, declared in other languages (vector in C++ and ArrayList in Java).</li>
+        <li>A single list may contain DataTypes like Integers, Strings, as well as Objects.</li>
+        <li>Lists are mutable, and hence, they can be altered even after their creation.</li>
+      </ul>
+      <h3>Basic Operations</h3>
+      <pre><code class="language-python">
+      # initialization
+      l1 = [10, "abc", 9.5, ["math", "science", "english"]]                            # [10, 'abc', 9.5, ['math', 'science', 'english']]
+      # size of a list using len()
+      print(len(l1))                                                                   # 4
+      # adding elements to a list using append(element)
+      l1.append("A")                                                                   # [10, 'abc', 9.5, ['math', 'science', 'english'], 'A']
+      # adding elements to a list using insert(index, element)
+      l1.insert(2, "def")                                                              # [10, 'abc', 'def', 9.5, ['math', 'science', 'english'], 'A']
+      # adding elements of one list into another using extend(newList)
+      l1[4].extend(["economics", "hindi"])                                             # [10, 'abc', 'def', 9.5, ['math', 'science', 'english', 'economics', 'hindi'], 'A']
+      # accessing elements using index operator
+      print(l1[2])                                                                     # def
+      print(l1[-2])                                                                    # ['math', 'science', 'english', 'economics', 'hindi']
+      # remove elements using remove(element) - doesn't return the element
+      l1.remove("def")                                                                 # [10, 'abc', 9.5, ['math', 'science', 'english', 'economics', 'hindi'], 'A']
+      # remove elements using pop(index) - returns the element; index is optional
+      l1.pop()                                                                         # [10, 'abc', 9.5, ['math', 'science', 'english', 'economics', 'hindi']]
+      l1.pop(3)                                                                        # [10, 'abc', 9.5]
+      # slicing a list - [start:end:step] - default values: {start: 0, end: len(list); step: 1}
+      l1[1:2]                                                                          # ['abc', 9.5]
+      # list comprehension
+      odd_square = [x ** 2 for x in range(1, 11) if x % 2 == 1]                        # [1, 9, 25, 49, 81]
+      </code></pre>
+
+      <h3>Methods applicable on lists</h3>
+      for 
+      <pre><code class="language-python">
+    l1 = [10,5,9,3,7]
+    l2 = [10,5,9]
+    l3 = [True, True, False]
+      </code></pre>
+      <table>
+        <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+        <tr><th colspan="3">Built-in Methods</th></tr>
+        <tr>
+          <td>append()</td><td>Add an element to the end of the list.</td>
+          <td><pre><code class="language-python">l1.append(1) # [10,5,9,3,7,1]</code></pre></td>
+        </tr>
+        <tr>
+          <td>extend()</td><td>Add all elements of a list to another list</td>
+          <td><pre><code class="language-python">l1.extend([1,2]) # [10,5,9,3,7,1,2]</code></pre></td>
+        </tr>
+        <tr>
+          <td>insert()</td><td>Insert an item at the defined index</td>
+          <td><pre><code class="language-python">l1.insert(1,8) # [10,8,5,9,3,7]</code></pre></td>
+        </tr>
+        <tr>
+          <td>remove()</td><td>Removes an item from the list</td>
+          <td><pre><code class="language-python">l1.remove(5) # [10,9,3,7]</code></pre></td>
+        </tr>
+        <tr>
+          <td>pop()</td><td>Removes and returns an element at the given index</td>
+          <td><pre><code class="language-python">l1.pop(2) # [10,5,3,7]</code></pre></td>
+        </tr>
+        <tr>
+          <td>clear()</td><td>Removes all items from the list</td>
+          <td><pre><code class="language-python">l1.clear() # []</code></pre></td>
+        </tr>
+        <tr>
+          <td>index()</td><td>Returns the index of the first matched item</td>
+          <td><pre><code class="language-python">l1.index(10) # 0</code></pre></td>
+        </tr>
+        <tr>
+          <td>count()</td><td>Returns the count of the number of items passed as an argument</td>
+          <td><pre><code class="language-python">l1.count(10) # 1</code></pre></td>
+        </tr>
+        <tr>
+          <td>sort()</td><td>Sort items in a list in ascending order</td>
+          <td><pre><code class="language-python">l1.sort() # [3,5,7,9,10]</code></pre></td>
+        </tr>
+        <tr>
+          <td>reverse()</td><td>Reverse the order of items in the list</td>
+          <td><pre><code class="language-python">l1.reverse() # [7,3,9,5,10]</code></pre></td>
+        </tr>
+        <tr>
+          <td>copy()</td><td>Returns a copy of the list</td>
+          <td><pre><code class="language-python">l1.copy() # [10,5,9,3,7]</code></pre></td>
+        </tr>
+
+        <tr><th colspan="3">Built-in Functions</th></tr>
+        <tr>
+          <td>reduce()</td><td>Applies a particular function to all of the list elements and only returns the final summation value</td>
+          <td><pre><code class="language-python">print(functools.reduce(lambda x, y: x+y, l1)) # 34</code></pre></td>
+        </tr>
+        <tr>
+          <td>sum()</td><td>Sums up the numbers in the list</td>
+          <td><pre><code class="language-python">sum(l1, 0) # 34; 2nd arg: initial value of sum</code></pre></td>
+        </tr>
+        <tr>
+          <td>ord()</td><td>Returns an integer representing the Unicode code point of the given Unicode character</td>
+          <td><pre><code class="language-python"></code></pre></td>
+        </tr>
+        <tr>
+          <td>cmp()</td><td>Returns 1 if the first list is greater than the second list</td>
+          <td><pre><code class="language-python">cmp(l1, l2) # 1; l1 > l2</code></pre></td>
+        </tr>
+        <tr>
+          <td>max()</td><td>return maximum element of a given list</td>
+          <td><pre><code class="language-python">max(l1) # 10</code></pre></td>
+        </tr>
+        <tr>
+          <td>min()</td><td>Return minimum element of a given list</td>
+          <td><pre><code class="language-python">min(l1) # 3</code></pre></td>
+        </tr>
+        <tr>
+          <td>all()</td><td>Returns true if all elements of the list are true</td>
+          <td><pre><code class="language-python">all(l3) # False</code></pre></td>
+        </tr>
+        <tr>
+          <td>any()</td><td>Return true if any element of the list is true.</td>
+          <td><pre><code class="language-python">any(l3) # True</code></pre></td>
+        </tr>
+        <tr>
+          <td>len()</td><td>Returns length of the list or size of the list</td>
+          <td><pre><code class="language-python">len(l1) # 5</code></pre></td>
+        </tr>
+        <tr>
+          <td>enumerate()</td><td>Returns enumerate object of the list</td>
+          <td><pre><code class="language-python">list(enumerate(l2, 0)) # [(0,10),(1,5),(2,9)]; 2nd arg: initial value of index</code></pre></td>
+        </tr>
+        <tr>
+          <td>accumulate()</td><td>Applies a particular function to all of the list elements returns a list containing intermediate results</td>
+          <td><pre><code class="language-python"></code></pre></td>
+        </tr>
+        <tr>
+          <td>filter()</td><td>Tests if each element of a list is true or not</td>
+          <td><pre><code class="language-python">filter(lambda x: x % 2 != 0, l1) # [5,9,3,7]</code></pre></td>
+        </tr>
+        <tr>
+          <td>map()</td><td>Returns a list of the results after applying the given function to each item of a given iterable</td>
+          <td><pre><code class="language-python">map(lambda x: x + x, l1) # [20,10,18,6,14]</code></pre></td>
+        </tr>
+        <tr>
+          <td>lambda()</td><td>Function with any number of arguments but only one expression</td>
+          <td><pre><code class="language-python">[lambda x=x: x*10 for x in range(1, 6)] # [10,20,30,40,50]</code></pre></td>
+        </tr>
+      </table>
+
+      <h3>Logical operations of List</h3>
+      <ul>
+        <li>Python considers empty strings as having a boolean value of the <span class="code">false</span> and non-empty strings as having a boolean value of <span class="code">True</span>.</li>
+        <li>For the <span class="code">and</span> operator if the left value is true, then the right value is checked and returned. If the left value is false, then it is returned</li>
+        <li>For the <span class="code">or</span> operator if the left value is true, then it is returned, otherwise, if the left value is false, then the right value is returned.</li>
+      </ul>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Tuple">Tuple</h2>
+      <ul>
+        <li>The sequence of values stored in a tuple can be of any type, and they are indexed by integers.</li>
+        <li>tuples are created by placing a sequence of values separated by 'comma' with or without the use of parentheses for grouping the data sequence.</li>
+      </ul>
+      <pre><code class="language-python">
+    ''' initialization '''
+    # empty tuple
+    t1 = ()
+    # non-empty tuple
+    t2 = (10, 'abc')
+    # tuple with repetition
+    t3 = (0,) * 5              # (0,0,0,0,0)
+
+    ''' accessing tuple elements '''
+    # using indexing
+    t2[0]                      # 10
+    # using tuple unpacking
+    a, b = t2                  # a = 10, b = 'abc'
+
+    ''' concatenation '''
+    # using +
+    t4 = t2 + t3               # (10,'abc',0,0,0,0,0)
+
+    ''' slicing '''
+    # similar to list, [start,end,step] - default values: {start: 0, end: len(list); step: 1}
+    t4[1,4]                    # ('abc',0,0)
+
+    ''' deleting a tuple '''
+    del t1
+      </code></pre>
+
+      <h3>Methods applicable on lists</h3>
+      for
+      <pre><code class="language-python">
+    t1 = (10,5,1,1,7,1)
+    t2 = (True, True, False)
+    l1 = [10,5,1]
+      </code></pre>
+
+      <table>
+        <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+        <tr><th colspan="3">Built-in Methods</th></tr>
+        <tr>
+          <td>index()</td><td>Returns the index of the first matched item</td>
+          <td><pre><code class="language-python">l1.index(1) # 2</code></pre></td>
+        </tr>
+        <tr>
+          <td>count()</td><td>Returns the count of the number of items passed as an argument</td>
+          <td><pre><code class="language-python">l1.count(1) # 3</code></pre></td>
+        </tr>
+
+        <tr><th colspan="3">Built-in Functions</th></tr>
+        <tr>
+          <td>all()</td><td>Returns true if all elements of the tuple are true</td>
+          <td><pre><code class="language-python">all(t2) # False</code></pre></td>
+        </tr>
+        <tr>
+          <td>any()</td><td>Return true if any element of the tuple is true</td>
+          <td><pre><code class="language-python">any(t1) # True</code></pre></td>
+        </tr>
+        <tr>
+          <td>len()</td><td>Returns length of the tuple or size of the tuple</td>
+          <td><pre><code class="language-python">len(t1) # 6</code></pre></td>
+        </tr>
+        <tr>
+          <td>enumerate()</td><td>Returns enumerate object of the tuple</td>
+          <td><pre><code class="language-python"></code></pre></td>
+        </tr>
+        <tr>
+          <td>max()</td><td>return maximum element of a given tuple</td>
+          <td><pre><code class="language-python">max(t1) # 10</code></pre></td>
+        </tr>
+        <tr>
+          <td>min()</td><td>return minimum element of a given lituplest</td>
+          <td><pre><code class="language-python">min(t1) # 1</code></pre></td>
+        </tr>
+        <tr>
+          <td>sum()</td><td>Sums up the numbers in the tuple</td>
+          <td><pre><code class="language-python">sum(t1, 0) # 25; 2nd arg: initial value of sum</code></pre></td>
+        </tr>
+        <tr>
+          <td>sorted()</td><td>returns a sorted list from the tuple</td>
+          <td><pre><code class="language-python">sorted(t1, reverse=True) # (10,7,5,1,1,1)</code></pre></td>
+        </tr>
+        <tr>
+          <td>tuple()</td><td>Convert an iterable to a tuple.</td>
+          <td><pre><code class="language-python">tuple(l1) # (10,5,1)</code></pre></td>
+        </tr>
+      </table>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Set">Set</h2>
+      <ul>
+        <li>an unordered collection of data type that is iterable, mutable and has no duplicate elements.</li>
+        <li>The major advantage of using a set, as opposed to a list, is that it has a highly optimized method for checking whether a specific element is contained in the set.</li>
+        <li>Lists cannot be added to a set as elements because Lists are not hashable whereas Tuples can be added because tuples are immutable and hence Hashable.</li>
+      </ul>
+      <pre><code class="language-python">
+    ''' initialization '''
+    # empty set
+    set1 = set()
+    # using a list
+    s1 = set([1, "abc", 9.5])            # {1,'abc',9.5}
+
+    ''' adding elements '''
+    # single element using add()
+    s1.add(95)                           # {1, 'abc', 9.5, 95}
+    s1.add([1,2,3])                      # not allowed
+    s1.add((1,2,3))                      # {1, 9.5, (1, 2, 3), 'abc', 95}
+    # multiple elements using update()
+    s1.update([10, 11])                  # {1, 9.5, 10, (1, 2, 3), 11, 'abc', 95}
+
+    ''' removing elements '''
+    # single element using remove() - KeyError, if key doesn't exist
+    s1.remove(11)                        # {1, 9.5, 10, (1, 2, 3), 'abc', 95}
+    # single element using discard()
+    s1.discard(10)                       # {1, 9.5, (1, 2, 3), 'abc', 95}
+    # last element (which cannot be determined if set is unordered) using pop() - returns the element popped
+    s1.pop()                             # {1, 9.5, (1, 2, 3), 'abc'}
+    # remove all elements using clear()
+    s1.clear()                           # {}
+      </code></pre>
+
+      <h3>Methods applicable on set</h3>
+      for 
+      <pre><code class="language-python">
+    s1 = set([10,5,9,3,7])
+    s2 = set([10,11,12])
+    s3 = set([10,7,4])
+      </code></pre>
+      <table>
+        <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+        <tr><th colspan="3">Built-in Methods</th></tr>
+        <tr>
+          <td>add()</td><td>Add an element to the set.</td>
+          <td><pre><code class="language-python">s1.add(1) # {1,3,5,7,9,10}</code></pre></td>
+        </tr>
+        <tr>
+          <td>remove()</td><td>Removes an element from a set. KeyError, if element is not preset.</td>
+          <td><pre><code class="language-python">s1.remove(9) # {3,5,7,10}</code></pre></td>
+        </tr>
+        <tr>
+          <td>clear()</td><td>Removes all items from the set</td>
+          <td><pre><code class="language-python">s1.clear() # {}</code></pre></td>
+        </tr>
+        <tr>
+          <td>copy()</td><td>Returns a copy of the set</td>
+          <td><pre><code class="language-python">s1.copy() # {3,5,7,9,10}</code></pre></td>
+        </tr>
+        <tr>
+          <td>pop()</td><td>Removes and returns last element of the set.</td>
+          <td><pre><code class="language-python">s1.pop() # {5,7,9,10}</code></pre></td>
+        </tr>
+        <tr>
+          <td>update()</td><td>Updates a set with the union of itself and others</td>
+          <td><pre><code class="language-python">s1.update([10,11,12]) # {3,5,7,9,10,11,12}</code></pre></td>
+        </tr>
+        <tr>
+          <td>union()</td><td>Returns the union of sets in a new set</td>
+          <td><pre><code class="language-python">s1.union(s2) # {3,5,7,9,10,11,12}</code></pre></td>
+        </tr>
+        <tr>
+          <td>difference()</td><td>Returns the difference of two or more sets as a new set</td>
+          <td><pre><code class="language-python">s1.difference(s2) # {9,3,5,7}</code></pre></td>
+        </tr>
+        <tr>
+          <td>difference_update()</td><td>Removes all elements of another set from this set</td>
+          <td><pre><code class="language-python">s1.difference_update(s2) # s1 = {3,5,7,9}</code></pre></td>
+        </tr>
+        <tr>
+          <td>discard()</td><td>Removes an element from set if it is a member, no error if it's not.</td>
+          <td><pre><code class="language-python">s1.discard(10) # [3,5,7,9]</code></pre></td>
+        </tr>
+        <tr>
+          <td>intersection()</td><td>Returns the intersection of two sets as a new set</td>
+          <td><pre><code class="language-python">s1.intersection(s3) # {10,7}</code></pre></td>
+        </tr>
+        <tr>
+          <td>intersection_update()</td><td>Updates the set with the intersection of itself and another</td>
+          <td><pre><code class="language-python">s1.append(s3) # s1 = {10,7}</code></pre></td>
+        </tr>
+        <tr>
+          <td>isdisjoint()</td><td>Returns True if two sets have a null intersection</td>
+          <td><pre><code class="language-python">s1.isdisjoint(s2) # False</code></pre></td>
+        </tr>
+        <tr>
+          <td>issubset()</td><td>Returns True if another set contains this set</td>
+          <td><pre><code class="language-python">s1.issubset(s2) # False</code></pre></td>
+        </tr>
+        <tr>
+          <td>issuperset()</td><td>Returns True if this set contains another set</td>
+          <td><pre><code class="language-python">s1.issuperset(s2) # False</code></pre></td>
+        </tr>
+        <tr>
+          <td>symmetric_difference()</td><td>Returns the symmetric difference of two sets as a new set</td>
+          <td><pre><code class="language-python">s1.symmetric_difference(s2) # {3,5,7,9,11,12}</code></pre></td>
+        </tr>
+        <tr>
+          <td>symmetric_difference_update()</td><td>Updates a set with the symmetric difference of itself and another</td>
+          <td><pre><code class="language-python">s1.symmetric_difference_update(s2) # s1 = {3,5,7,9,11,12}</code></pre></td>
+        </tr>
+      </table>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Dictionary">Dictionary</h2>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Array">Array</h2>
+    </div>
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

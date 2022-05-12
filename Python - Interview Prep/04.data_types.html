@@ -450,12 +450,155 @@
 
     <div class="topic">
       <h2 id="Dictionary">Dictionary</h2>
+      <ul>
+        <li><span class="point">Dictionary</span> is an unordered collection of data values, which, unlike other Data Types that hold only a single value as an element, Dictionary holds key:value pair.</li>
+        <li>Keys in a dictionary don't allow Polymorphism.</li>
+        <li>Dictionaries have been modified to maintain insertion order with the release of Python 3.7, so they are now ordered collection of data values.</li>
+      </ul>
+      <pre><code class="language-python">
+    ''' initialization '''
+    # with mixed keys and values
+    d1 = {"name": "abc", : "marks": [100, 92, 93], 1: "A"}
+    # using dict method
+    d2 = dict({1: "hi", 2: "hello"})
+    
+    ''' accessing dictionary elements '''
+    # using indexing
+    d1["name"]                                 # abc
+    # using get()
+    d1.get("name")                             # abc
+
+    ''' updating/adding key value pairs '''
+    d1["name"] = "xyz"                         # {"name": "xyz", "marks": [100, 92, 93], 1: "A"}
+    d1["grade"] = "A"                          # {"name": "xyz", "marks": [100, 92, 93], 1: "A", "grade": "A"}
+
+    ''' removing an element from a dict '''
+    # using del keyword
+    del d1[1]                                  # {"name": "xyz", "marks": [100, 92, 93], "grade": "A"}
+    del d1["marks"][0]                         # {"name": "xyz", "marks": [92, 93], "grade": "A"}
+    # using pop() method
+    ele = d1.pop("grade")                      # ele = "A", d1 = {"name": "xyz", "marks": [92, 93], "grade": "A"}
+    # using popitem() method
+    item = d1.popitem()                        # item = ("name": "xyz"), d1 = {"marks": [92, 93], "grade": "A"}
+    # using clear() method
+    d1.clear()                                 # {}
+      </code></pre>
+
+      <h3>Methods applicable on lists</h3>
+      for
+      <pre><code class="language-python">
+    d1 = {'name': 'abc', 'subjects': ['english', 'maths', 'science'], 'grade': 'A'}
+    d2 = {'name': 'bcd', 'marks': 95}
+      </code></pre>
+
+      <table>
+        <tr><th>Function</th><th>Description</th><th>Example</th></tr>
+        <tr><th colspan="3">Built-in Methods</th></tr>
+        <tr>
+          <td>copy()</td><td>Returns a shallow copy of the dictionary</td>
+          <td><pre><code class="language-python">d2 = d1.copy() # {'name': 'abc', 'subjects': ['english', 'maths', 'science'], 'grade': 'A'}</code></pre></td>
+        </tr>
+        <tr>
+          <td>clear()</td><td>Removes all items from the dictionary</td>
+          <td><pre><code class="language-python">d1.clear() # {}</code></pre></td>
+        </tr>
+        <tr>
+          <td>pop()</td><td>Removes and returns an element from a dictionary having the given key</td>
+          <td><pre><code class="language-python">val = d1.pop("name") # val = 'abc', d1 = {'subjects': ['english', 'maths', 'science'], 'grade': 'A'}</code></pre></td>
+        </tr>
+        <tr>
+          <td>popitem()</td><td>Removes and returns the arbitrary key-value pair (as tuple) from the dictionary</td>
+          <td><pre><code class="language-python">val = d1.popitem() # val = ('grade', 'A') d1 = {'name': 'abc', 'subjects': ['english', 'maths', 'science']}</code></pre></td>
+        </tr>
+        <tr>
+          <td>get()</td><td>To access a value for a key</td>
+          <td><pre><code class="language-python">val = d1.get('name') # val = 'abc'</code></pre></td>
+        </tr>
+        <tr>
+          <td>values()</td><td>Returns a list of all the values available in a given dictionary</td>
+          <td><pre><code class="language-python">d1.values() # ['abc', ['english', 'maths', 'science'], 'A']</code></pre></td>
+        </tr>
+        <tr>
+          <td>str()</td><td>Produces a printable string representation of a dictionary</td>
+          <td><pre><code class="language-python">str(d1) # "{'name': 'abc', 'subjects': ['english', 'maths', 'science'], 'grade': 'A'}"</code></pre></td>
+        </tr>
+        <tr>
+          <td>update()</td><td>Adds new dictionary's key-values pairs to current dictionary</td>
+          <td><pre><code class="language-python">d1.update(d2) # {'name': 'bcd', 'subjects': ['english', 'maths', 'science'], 'grade': 'A', 'marks': 95}</code></pre></td>
+        </tr>
+        <tr>
+          <td>setdefault()</td><td>If key is not already in dict, sets its value as default value provided.</td>
+          <td><pre><code class="language-python"></code></pre></td>
+        </tr>
+        <tr>
+          <td>keys()</td><td>Returns list of dictionary keys</td>
+          <td><pre><code class="language-python">d1.keys() # ['name', 'subjects', 'grade']</code></pre></td>
+        </tr>
+        <tr>
+          <td>items()</td><td>Returns a list of dictionary (key, value) tuple pairs</td>
+          <td><pre><code class="language-python">d1.items() # [('name', 'abc'), ('subjects', ['english', 'maths', 'science']), ('grade', 'A')]</code></pre></td>
+        </tr>
+        <tr>
+          <td>fromkeys()</td><td>Create a new dictionary with keys from sequence</td>
+          <td><pre><code class="language-python">dict.fromkeys(["a", "b", "c"]) # {"a": None, "b": None, "c": None}</code></pre></td>
+        </tr>
+        <tr>
+          <td>type()</td><td>Returns the type of the passed variable</td>
+          <td><pre><code class="language-python">type(d1) # &lt;class 'dict'&gt;</code></pre></td>
+        </tr>
+        <tr>
+          <td>cmp()</td><td>Compares elements of both dict</td>
+          <td><pre><code class="language-python"></code></pre></td>
+        </tr>
+        <tr>
+          <td>len()</td><td>Count of key entities of the dictionary elements</td>
+          <td><pre><code class="language-python">len(d1) # 3</code></pre></td>
+        </tr>
+      </table>
     </div>
 
     <hr/>
 
     <div class="topic">
       <h2 id="Array">Array</h2>
+      <ul>
+        <li>An <span class="point">Array</span> is a collection of items stored at contiguous memory locations.</li>
+        <li>The idea is to store multiple items of the same type together. This makes it easier to calculate the position of each element by simply adding an offset to a base value</li>
+        <li>If you create arrays using the array module, all elements of the array must be of the same type. </li>
+      </ul>
+      <pre><code class="language-python">
+    # importing library
+    import array as arr
+
+    ''' initialization '''
+    a = arr.array('i', [1, 2, 3])                       # i: integer
+    b = arr.array('d', [2.5, 3.2, 3.3])                 # d: decimal
+
+    ''' adding elements to an array '''
+    # using insert()
+    a.insert(1, 4)                                      # [1, 4, 2, 3]
+    # using append()
+    b.append(4.4)                                       # [2.5, 3.2, 3.3, 4.4]
+
+    ''' accessing elements '''
+    # using indexing
+    a[0]                                                # 1
+
+    ''' removing elements from the array '''
+    # using pop()
+    val = a.pop(2)                                      # val = 4, a = [1, 2, 3]
+
+    ''' slicing an array '''
+    b[1:3]                                              # array('d', [3.2, 3.3])
+
+    ''' searching an element in an array '''
+    b.index(3.2)                                        # 1
+
+    ''' updating elements '''
+    b[1] = 5.5                                          # [2.5, 5.5, 3.3, 4.4]
+
+
+      </code></pre>
     </div>
   </div>
 

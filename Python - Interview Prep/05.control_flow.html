@@ -10,6 +10,141 @@
   <div class="content">
     <div class="topic">
       <h2 id="IfElse">if-else</h2>
+    if - elif - ... - else
+    <ul>
+      <li>There can be zero or more <span class="code">elif</span>.</li>
+      <li>There can be nesting to suit given conditions.</li>
+    </ul>
+      <pre><code class="language-python">
+    # example
+    if num > 0 :
+        print("postitive")
+    elif num < 0 :
+        print("negative")
+    else:
+        print("zero")
+
+    # shorthand if-else (can be used as ternary operator)
+    even = True if i%2 else False
+      </code></pre>
+
+      <h3>Chaining comparison operator</h3>
+      <span class="code">a op1 b op2 c</span> is equivalent to <span class="code">a op1 b and b op2 c</span>
+      <pre><code class="language-python">
+    if a < b < c : # equivalent to if a < b and b < c
+        pass
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Loop">Loop</h2>
+
+      <h3>For Loop</h3>
+      <pre><code class="language-python">
+    ''' syntax '''
+    for var in iterable:
+        pass
+      
+    ''' example '''
+    l1 = [1, 2.3, "hi"]
+    for ele in l1:
+        print(ele)    
+    
+      </code></pre>
+
+      <h3>While loop</h3>
+      <pre><code class="language-python">
+    ''' example with list '''
+    l1 = [1, 2.3, "hi"]
+    while a:
+        print(a.pop())
+
+    ''' single statement while block '''
+    count = 0
+    while (count &lt; 5): count += 1; print("Hello!!")
+
+    ''' sentinel controlled while loop '''
+    a = int(input('Enter a number (-1 to quit): '))
+    while a != -1: # no need of couter
+        a = int(input('Enter a number (-1 to quit): '))
+      </code></pre>
+
+      <h3>Loop control statements</h3>
+      Controlling loops
+
+      <pre><code class="language-python">
+    ''' examples are with for, but can also be acheived using while '''
+
+    # continue, break, pass
+    moves = ["start", "straight", "left", "straight", "skip", "right", "end", "left", "straight"]
+    for move in moves:
+        if move == "skip":
+            continue # skips execution from here and moves to next loop
+        elif move == "end":
+            break # breaks the loop
+        else:
+            print(move)
+    for move in moves:
+        pass # passes the entire execution
+    
+    # with else
+    alphabets = ["x", "y", "z"]
+    for alphabet in alphabets:
+        if isVowel(alphabet):
+            break
+    else: # executes when no break statement is called in the for loop
+        print("the loop didn't break immaturely")
+      </code></pre>
+
+      <h3>Looping techniques</h3>
+
+      Using <span class="point">enumerate()</span>: index number along with value present in that index
+      <pre><code class="language-python">
+    for key, value in enumerate(l1):
+        print(key, value)
+      </code></pre>
+
+      <span class="point">zip()</span> is used to combine 2 similar containers(list-list or dict-dict) printing the values sequentially.
+      <pre><code class="language-python">
+    questions = ['name', 'colour', 'shape']
+    answers = ['apple', 'red', 'a circle']
+    for question, answer in zip(questions, answers):
+        print('What is your {0}?  I am {1}.'.format(question, answer))
+      </code></pre>
+
+      <span class="point">iteritem()</span> is used to loop through the dictionary printing the dictionary key-value pair sequentially which is used before Python 3 version.
+      <pre><code class="language-python">
+    d = {"name": "apple", "colour": "red", "shape": "a circle"}
+    for i, j in d.iteritem():
+        print(i, j)
+      </code></pre>
+
+      <span class="point">items()</span> performs the similar task on dictionary as iteritems() but have certain disadvantages when compared with iteritems().
+      <ul>
+        <li>It is very time-consuming. Calling it on large dictionaries consumes quite a lot of time.</li>
+        <li>It takes a lot of memory. Sometimes takes double the memory when called on a dictionary.</li>
+      </ul>
+      <pre><code class="language-python">
+    d = {"name": "apple", "colour": "red", "shape": "a circle"}
+    for i, j in d.items():
+        print(i, j)
+      </code></pre>
+
+      <span class="point">sorted()</span> is used to print the container is sorted order. It doesn't sort the original list, just returns one in sorted order.
+      <pre><code class="language-python">
+    lis = [1, 3, 5, 6, 2, 1, 3]
+    for i in sorted(lis):
+        print(i)
+      </code></pre>
+
+      <span class="point">reversed()</span> is used to print the values of the container in the reversed order
+      <pre><code class="language-python">
+    lis = [1, 3, 5, 6, 2, 1, 3]
+    for i in reversed(lis):
+        print(i)
+      </code></pre>
     </div>
   </div>
 
@@ -20,6 +155,6 @@
 </div>
 
 <div class="footer">
-  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
-  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+  <span class="prev"><a href="./04.data_types.html">04. Data Types</a></span>
+  <span class="next"><a href="./06.functions.html">06. Functions</a></span>
 </div>

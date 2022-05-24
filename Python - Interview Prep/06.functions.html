@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="Basics">Basics</h2>
+      <h3>Properties</h3>
+      <ul>
+        <li>Python allows docstring for functions using three double-quotes(""").</li>
+        <li>Python allows default arguments, but they should not be followed by non-default arguments.</li>
+        <li>Python allows functions to return multiple values.</li>
+        <li>Python allows functions to have variable length of arguments (using *args for non-keywords arguments and **kwargs for keyword arguments).</li>
+        <li>Python allows anonymous functions.</li>
+        <li>Python allows functions within functions.</li>
+      </ul>
+
+      <h3>Syntax and example</h3>
+      <pre><code class="language-python">
+    ''' syntax '''
+    def function_name(parameters):
+        """docstring"""
+        statement(s)
+        return expression
+    
+    ''' defining and calling a function '''
+    def fun():
+        print("Welcome to GFG")
+    fun()
+      </code></pre>
+
+      <h3>Arguments</h3>
+      <pre><code class="language-python">
+    def print_double(x):
+        print(x*2)
+    print_double(10)
+
+    ''' default arguments '''
+    def multiply(x, y=2):
+        print(x*y)
+    multiply(5, 10) # 50
+    multiply(5) # 10
+
+    ''' keyword arguments '''
+    def multiply(multiplier1, multiplier2):
+        print(multiplier1 * multiplier2)
+    multiply(multiplier2=10, multiplier1=5)
+
+    ''' variable length non-keywords argument using argv '''
+    def myFun(*argv):
+        for arg in argv:
+            print(arg)
+    myFun('Hello', 'Welcome', 'to', 'GeeksforGeeks')
+
+    ''' variable length keywords argument using argv '''
+    def myFun(**kwargs):
+        for key, value in kwargs.items():
+            print("%s == %s" % (key, value))
+    myFun(first='Geeks', mid='for', last='Geeks')
+
+    ''' args and kwargs '''
+    def myFun(*args,**kwargs):
+        print("args: ", args) # args: ('a', 'b', 'c')
+        print("kwargs: ", kwargs) # kwargs {'first': 'abc', 'mid': 'def', 'last': 'xyz'}
+    myFun('a','b','c',first="abc",mid="def",last="xyz")
+      </code></pre>
+
+      <h3>Docstring</h3>
+      <pre><code class="language-python">
+    def evenOdd(x):
+        """Function to check if the number is even or odd"""
+        if (x % 2 == 0):
+            print("even")
+        else:
+            print("odd")
+    print(evenOdd.__doc__) # Function to check if the number is even or odd
+      </code></pre>
+
+      <h3>Anonymous functions</h3>
+      <pre><code class="language-python">
+    def cube(x): return x*x*x
+    cube_v2 = lambda x : x*x*x
+    print(cube(7)) # 343
+    print(cube_v2(7)) # 343
+      </code></pre>
+
+      <h3>Functions within functions</h3>
+      <pre><code class="language-python">
+    def f1(name):
+        s = 'Hi ' + name
+        def f2():
+            print(s) # Hi abc
+        f2()
+    f1("abc")
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Generators">Generators</h2>
+    </div>
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./05.control_flow.html">05. Control Flow</a></span>
+  <!-- <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span> -->
+</div>

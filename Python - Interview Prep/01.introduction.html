@@ -33,6 +33,7 @@
         <li>from, import, as</li>
         <li>global, nonlocal, del</li>
       </ul>
+      <br/>
       Can be printed using
       <pre><code class="language-python">
     import keyword
@@ -51,6 +52,15 @@
       But in some cases, one might be interested in updating or processing global variables only. That can be done using <span class="code">global</span> and <span class="code">nonlocal</span> keywords
       <br/><br/>
       <span class="point">Scope</span> refers to the coding region from which a particular Python object is accessible. Hence one cannot access any particular object from anywhere from the code, the accessing has to be allowed by the scope of the object.
+      <br/><br/>
+      Rules of <span class="point">global</span> keyword
+      <ul>
+        <li>If a variable is assigned a value anywhere within the function's body, it's assumed to be a local unless explicitly declared as <span class="code">global</span>.</li>
+        <li>Variables that are only referenced inside a function are implicitly global.</li>
+        <li>We Use <span class="code">global</span> keyword to use a global variable inside a function.</li>
+        <li>There is no need to use <span class="code">global</span> keyword outside a function.</li>
+        </li>
+      </ul>
     </div>
 
     <hr/>

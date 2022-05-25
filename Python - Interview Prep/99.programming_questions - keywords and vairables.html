@@ -60,6 +60,77 @@
     <hr/>
 
     <div class="topic">
+      <h2 id="LocalAndGlobalVariables">Local and Global variables</h2>
+      <pre><code class="language-python">
+    ''' accessing local variable in global scope '''
+    def f():
+        s = "abc"
+        print("Hi", s) # Hi abc
+    f()
+    print(s) # NameError: name 's' is not defined
+
+    ''' local variable with same name as that of global variable '''
+    def f():
+        s = "Hello"
+        print(s) # Hello
+    s = "Hi there"
+    f()
+    print(s) # Hi there
+
+    ''' trying to access global variable in local scope '''
+    def f():
+        s += " there" # UnboundLocalError: local variable 's' referenced before assignment
+        print("Inside Function", s)
+    s = "Hi"
+    f()
+
+    ''' accessing global variable in local scope using global keyword '''
+    def f():
+        global s
+        s += ' there'
+        print(s) # Hi there
+        s = "Hello"
+        print(s) # Hello
+    s = "Hi"
+    f()
+    print(s) # Hello
+
+    ''' global keyword '''
+    a = 1
+    def f(): # Uses global because there is no local 'a'
+        print(a) # 1
+    def g(): # Variable 'a' is redefined as a local
+        a = 2
+        print(a) # 2
+    def h(): # Uses global keyword to modify global 'a'
+        global a
+        a = 3
+        print(a) # 3
+    print(a) # 1
+    f()
+    print(a) # 1
+    g()
+    print(a) # 1
+    h()
+    print(a) # 3
+
+    ''' global in nested functions '''
+    def add():
+        x = 15
+        def change():
+            global x
+            x = 20
+        print(x) # 15
+        change()
+        print(x) # 15
+    add()
+    print(x) # 20
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
       <h2 id="GlobalAndNonlocal">Global and nonlocal</h2>
       <pre><code class="language-python">
     # global variable

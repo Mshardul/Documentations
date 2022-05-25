@@ -1,0 +1,141 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="LambdaInsideFunction">Lambda inside function</h2>
+      <pre><code class=""language-python>
+    def power(n):
+        return lambda a : a ** n
+    base = power(2)
+    print("8 powerof 2 = ", base(8)) # 8 powerof 2 = 64
+    base = power(5)
+    print("8 powerof 5 = ", base(8)) # 8 powerof 5 = 32768
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id=""></h2>
+      <pre><code class="language-python">
+    
+    a = [100, 2, 8, 60, 5, 4, 3, 31, 10, 11]
+
+    filtered = filter (lambda x: x % 2 == 0, a) # [100, 2, 8, 60, 4, 10]
+
+    mapped = map (lambda x: x % 2 == 0, a) # [True, True, True, True, False, True, False, False, True, False]
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Decorators">Decorators</h2>
+      <pre><code class="language-python">
+    def hello_decorator(func):
+	      def inner1(*args, **kwargs):
+            print("before Execution")
+		        returned_value = func(*args, **kwargs)
+            print("after Execution")
+            return returned_value
+        return inner1
+    @hello_decorator
+    def sum_two_numbers(a, b):
+        print("Inside the function")
+        return a + b
+
+    a, b = 1, 2
+    print("Sum =", sum_two_numbers(a, b)) # Sum = 3
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="ChainingDecorators">Chaining Decorators</h2>
+      <pre><code class="language-python">
+    def decor1(func):
+        def inner():
+            x = func()
+            return x * x
+        return inner
+
+    def decor(func):
+        def inner():
+            x = func()
+            return 2 * x
+        return inner
+
+    @decor1
+    @decor
+    def num():
+        return 10
+    print(num()) # 400
+      </code></pre>
+    </div>
+
+    <hr/>
+    
+    <div class="topic">
+      <h2 id="DecoratorWithParameters">Decorators with parameters</h2>
+      <pre><code class="language-python">
+    ''' example1 '''
+    def decorator(*args, **kwargs):
+	      print("Inside decorator")
+	      def inner(func):
+            print("Hi", kwargs["name"])
+            func()
+	      return inner
+
+    @decorator(name = "abc")
+    def my_func():
+	      print("Inside actual function")
+
+    ''' example2 '''
+    def decodecorator(dataType, message1, message2):
+        def decorator(fun):
+            def wrapper(*args, **kwargs):
+                if all([type(arg) == dataType for arg in args]):
+                    return fun(*args, **kwargs)
+                return "Invalid Input"
+            return wrapper
+        return decorator
+
+    @decodecorator(str, "Decorator for 'stringJoin'", "stringJoin started ...")
+    def stringJoin(*args):
+        st = ''
+        for i in args:
+            st += i
+        return st
+
+    @decodecorator(int, "Decorator for 'summation'\n", "summation started ...")
+    def summation(*args):
+        summ = 0
+        for arg in args:
+            summ += arg
+        return summ
+
+    print(stringJoin("Hi ", "there. ", "How ", "are ", "you?")) # Hi there. How are you?
+    print()
+    print(summation(19, 2, 8, 533, 67, 981, 119)) # 1729
+      </code></pre>
+    </div>
+  </div>
+    
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+    
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

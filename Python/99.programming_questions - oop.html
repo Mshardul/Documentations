@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Programming questions - Input / Output</a></span>
+  <span class="next"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic">
+      <h2 id="EndParamInPrint">Destructor with circular reference</h2>
+      <pre><code class="language-python">
+    class A:
+        def __init__(self, bb):
+            self.b = bb
+    class B:
+        def __init__(self):
+          self. a = A(self)
+        def __del__(self):
+          print ("die")
+    
+    def fun():
+        b = B()
+    
+    fun() # die
+
+    '''
+    when fun() is called, it creates an instance of class B which passes itself to class A, which then sets a reference to class B and resulting in a circular reference.
+    Generally, Python's garbage collector which is used to detect these types of cyclic references would remove it but in this example the use of custom destructor marks this item as “uncollectable”.
+    Simply, it doesn't know the order in which to destroy the objects, so it leaves them.
+    Therefore, if your instances are involved in circular references they will live in memory for as long as the application run.
+    '''
+      </code></pre>
+    </div>
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>
+

@@ -94,6 +94,105 @@
 
     <div class="topic">
       <h2 id="Inheritance">Inheritance</h2>
+      <ul>
+        <li>"object" class is root of all classes. So, even when a class is inheriting from no other class, it is actully inheriting from "object" class.</li>
+        <li>If you forget to invoke the __init__() of the parent class then its instance variables would not be available to the child class. </li>
+        <li>Private members of parent class are not accessible to the child class.</li>
+      </ul>
+      <pre><code class="language-python">
+    class Person(object): # parent class
+        def __init__(self, name):
+            self.name = name
+        def display(self):
+            print(self.name)
+
+    class Employee(Person):	# child class
+        def __init__(self, name, designation):
+            self.designation = designation
+            Person.__init__(self, name) # invoking the __init__ of the parent class
+
+    a = Employee("abc", "Intern") # creation of an object variable or an instance
+    a.display() # calling a function of the class Person using its instance
+      </code></pre>
+
+      <h3>Different forms of inheritance</h3>
+      There are 2 forms of Inheritance
+      <ol>
+        <li><span class="point">Single inheritance</span>: When a child class inherits from only one parent class.</li>
+        <li><span class="point">Multiple inheritance</span>: When a child class inherits from multiple parent classes.</li>
+        <li><span class="point">Multilevel inheritance</span>: When we have a child and grandchild relationship.</li>
+        <li><span class="point">Hierarchical inheritance</span>: More than one derived classes are created from a single base.</li>
+        <li><span class="point">Hybrid inheritance</span>: This form combines more than one form of inheritance.</li>
+      </ol>
+      <pre><code class="language-python">
+    '''
+    Single Inheritance
+    P1
+    |
+    C1
+    '''
+    class C1(P1): # 
+        pass
+
+    ''' 
+    Multiple Inheritance
+    P1    P2
+      \  /
+       C1
+    '''
+    class C1(P1, P2)
+        pass
+
+    '''
+    Multilevel Inheritance
+    G1
+    |
+    P1
+    |
+    C1
+    '''
+    class P1(G1):
+        pass
+    class C1(P1):
+        pass
+
+    '''
+    Hierarchical Inheritance
+        P1
+      /  |  \
+    C1  C2  C3
+    '''
+    class C1(P1):
+        pass
+    class C2(P1):
+        pass
+    class C3(P1):
+        pass
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Encapsulation">Encapsulation</h2>
+      <span class="point">Encapsulation</span> is the idea of wrapping data and the methods that work on data within one unit. This puts restrictions on accessing variables and methods directly and can prevent the accidental modification of data
+      <h3>Types of Members</h3>
+      <ul>
+        <li><span class="point">Protected Members</span>: cannot be accessed outside the class but can be accessed from within the class and its subclasses. Prefix the name of the member by a single underscore <span class="code">"_"</span></li>
+        <li><span class="point">Private Members</span>: are similar to protext except they should neither be accessed outside the class nor by any base class.Prefix the name of the member by double underscore <span class="code">"__"</span></li>
+      </ul>
+      <div class="notes">
+        <ul>
+          <li>Although the protected variable can be accessed out of the class as well as in the derived class(modified too in derived class), it is customary(convention not a rule) to not access the protected out the class body.</li>
+        </ul>
+      </div>
+      <a href="./99.programming_questions - oop.html#ProtectedAndPrivateMembers">example</a>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="Polymorphism">Polymorphism</h2>
     </div>
   </div>
 

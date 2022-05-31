@@ -34,6 +34,92 @@
     '''
       </code></pre>
     </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="AccessingParentsVariableWithoutInvokingParentsInit">Accessing Parents Variable Without Invoking Parents __init__</h2>
+      <pre><code class="language-python">
+    class A:
+        def __init__(self, n = 'Rahul'):
+            self.name = n
+    class B(A):
+        def __init__(self, roll):
+            self.roll = roll
+    object = B(23)
+    print (object.name) # AttributeError: 'B' object has no attribute 'name'
+    ''' need to invoke __init__() of A in B'
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="ParentsPrivateVariable">Parent's private variable</h2>
+      <pre><code class="language-python">
+    class C(object):
+        def __init__(self):
+            self.c = 21
+            self.__d = 42   
+    class D(C):
+        def __init__(self):
+            self.e = 84
+            C.__init__(self)
+    object1 = D()
+    print(object1.d) # AttributeError: type object 'D' has no attribute 'd'
+    ''' Parent's private variables are not accessible to Child '''
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="InheritancePrecedence">Inheritance precedence</h2>
+      <pre><code class="language-python">
+    class A():
+        def __init__(self):
+            self.name = "A"
+        def reply(self):
+            print("Hi! I am A")
+    class B():
+        def __init__(self):
+            self.name = "B"
+        def reply(self):
+            print("Hi! I am B")
+    class C(A, B):
+        def __init__(self):
+            B.__init__(self)
+            A.__init__(self)
+    c = C()
+    c.reply() # Hi! I am A
+    ''' inheritance starts from left to right '''
+    ''' class C(B, A) would have executed B's reply() '''
+    ''' doesn't matter on the sequence of init calls '''
+      </code></pre>
+    </div>
+
+    <hr/>
+
+    <div class="topic">
+      <h2 id="ProtectedAndPrivateMembers">Protected and Private members</h2>
+      <pre><code class="language-python">
+    class Base():
+        def __init__(self):
+            self._name = "abc"
+            self.__aadhar = 1234
+    class Derived(Base):
+        def __init__(self):
+            Base.__init__(self)
+            print(self._name) #3 abc
+            print(self.__aadhar) #4 AttributeError: 'Derived' object has no attribute '_Derived__aadhar'
+    b = Base()
+    print(b._name) #1 abc
+    print(b.__aadhar) #2 AttributeError: 'Base' object has no attribute '__aadhar'
+    d = Derived()
+    print(d._name) #5 abc
+    print(d.__aadhar) #6 AttributeError: 'Derived' object has no attribute '__aadhar'
+      </code></pre>
+    </div>
   </div>
 
   <div class="sidebar-right">

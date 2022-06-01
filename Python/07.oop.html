@@ -9,27 +9,28 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="ClassesAndObjects">Classes and Objects</h2>
-      <span class="point">Definition</span>
-      <ul>
-        <li>A <span class="code">Class</span> is a user-defined blueprint or prototype from which objects are created. Classes provide a means of bundling data and functionality together.</li>
-        <li>Each class instance or <span class="code">Object</span> can have attributes attached to it for maintaining its state. Objects can also have methods (defined by their class) for modifying their state.</li>
-        <li>A class is like a blueprint while an instance is a copy of the class with actual values</li>
-      </ul>
-      <span class="point">Properties</span>
-      <ul>
-        <li>Classes are created by keyword class.</li>
-        <li>Attributes are the variables that belong to a class.</li>
-        <li>Attributes are always public and can be accessed using the dot (.) operator.</li>
-      </ul>
-      <span class="point">An object consists of</span>
-      <ul>
-        <li><span class="point">State</span>: It is represented by the attributes of an object. It also reflects the properties of an object.</li>
-        <li><span class="point">Behavior</span>: It is represented by the methods of an object. It also reflects the response of an object to other objects.</li>
-        <li><span class="point">Identity</span>: It gives a unique name to an object and enables one object to interact with other objects.</li>
-      </ul>
-      <pre><code class="language-python">
+    <div class="topic" id="ClassesAndObjects">
+      <div class="topic-heading"><h2>Classes and Objects</h2></div>
+      <div class="topic-body">
+        <span class="point">Definition</span>
+        <ul>
+          <li>A <span class="code">Class</span> is a user-defined blueprint or prototype from which objects are created. Classes provide a means of bundling data and functionality together.</li>
+          <li>Each class instance or <span class="code">Object</span> can have attributes attached to it for maintaining its state. Objects can also have methods (defined by their class) for modifying their state.</li>
+          <li>A class is like a blueprint while an instance is a copy of the class with actual values</li>
+        </ul>
+        <span class="point">Properties</span>
+        <ul>
+          <li>Classes are created by keyword class.</li>
+          <li>Attributes are the variables that belong to a class.</li>
+          <li>Attributes are always public and can be accessed using the dot (.) operator.</li>
+        </ul>
+        <span class="point">An object consists of</span>
+        <ul>
+          <li><span class="point">State</span>: It is represented by the attributes of an object. It also reflects the properties of an object.</li>
+          <li><span class="point">Behavior</span>: It is represented by the methods of an object. It also reflects the response of an object to other objects.</li>
+          <li><span class="point">Identity</span>: It gives a unique name to an object and enables one object to interact with other objects.</li>
+        </ul>
+        <pre><code class="language-python">
     class Dog:
         def __init__(self, name): # constructor
             self.name = name # class attribute
@@ -38,40 +39,40 @@
     Rodger = Dog("Rogder") # Object instantiation
     print(Rodger.name) # Rogder
     Rodger.fun() # My name is Rogder
-      </code></pre>
+        </code></pre>
 
-      <h3>self</h3>
-      <ul>
-        <li>Class methods must have an extra first parameter in the method definition. We do not give a value for this parameter when we call the method, Python provides it.</li>
-        <li>If we have a method that takes no arguments, then we still have to have one argument (ie self)</li>
-        <li>This is similar to this pointer in C++ and this reference in Java.</li>
-      </ul>
-      <br/><br/>
-      <div class="notes">
+        <h3>self</h3>
         <ul>
-          <li>When we call a method of this object as myobject.method(arg1, arg2), this is automatically converted by Python into MyClass.method(myobject, arg1, arg2)</li>
+          <li>Class methods must have an extra first parameter in the method definition. We do not give a value for this parameter when we call the method, Python provides it.</li>
+          <li>If we have a method that takes no arguments, then we still have to have one argument (ie self)</li>
+          <li>This is similar to this pointer in C++ and this reference in Java.</li>
         </ul>
-      </div>
+        <br/><br/>
+        <div class="notes">
+          <ul>
+            <li>When we call a method of this object as myobject.method(arg1, arg2), this is automatically converted by Python into MyClass.method(myobject, arg1, arg2)</li>
+          </ul>
+        </div>
 
-      <h3>__init__ ()</h3>
-      <ul>
-        <li><span class="point">The __init__ method</span> is similar to constructors in C++ and Java. Constructors are used to initializing the object's state.</li>
-        <li>It runs as soon as an object of a class is instantiated. The method is useful to do any initialization you want to do with your object.</li>
-        <li>Constructor can be <span class="point">Default (no parameters except self)</span> or <span class="point">Parameterized (multiple parameters)</span></li>
-      </ul>
+        <h3>__init__ ()</h3>
+        <ul>
+          <li><span class="point">The __init__ method</span> is similar to constructors in C++ and Java. Constructors are used to initializing the object's state.</li>
+          <li>It runs as soon as an object of a class is instantiated. The method is useful to do any initialization you want to do with your object.</li>
+          <li>Constructor can be <span class="point">Default (no parameters except self)</span> or <span class="point">Parameterized (multiple parameters)</span></li>
+        </ul>
 
-      <h3>__del__ ()</h3>
-      <ul>
-        <li><span class="point">The __del__ method</span> is similar to destructors in C++ and Java. It is called when all references to the object have been deleted i.e when an object is garbage collected.</li>
-        <li>In Python, destructors are not needed as much as in C++ because Python has a garbage collector that handles memory management automatically.</li>
-      </ul>
+        <h3>__del__ ()</h3>
+        <ul>
+          <li><span class="point">The __del__ method</span> is similar to destructors in C++ and Java. It is called when all references to the object have been deleted i.e when an object is garbage collected.</li>
+          <li>In Python, destructors are not needed as much as in C++ because Python has a garbage collector that handles memory management automatically.</li>
+        </ul>
 
 
-      <h3>Class and instance variable</h3>
-      <ul>
-        <li><span class="point">Instance variables</span> are variables whose value is assigned inside a constructor or method with self whereas <span class="point">class variables</span> are variables whose value is assigned in the class.</li>
-      </ul>
-      <pre><code class="language-python">
+        <h3>Class and instance variable</h3>
+        <ul>
+          <li><span class="point">Instance variables</span> are variables whose value is assigned inside a constructor or method with self whereas <span class="point">class variables</span> are variables whose value is assigned in the class.</li>
+        </ul>
+        <pre><code class="language-python">
     class Dog:
         animal = "dog"
         def __init__(self, name): # set instance variable through constructor
@@ -86,20 +87,21 @@
     Rodger.fun() # My name is Rodger
     Rodger.changeName("Sam")
     Rodger.fun() # My name is Sam
-      </code></pre>
-
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Inheritance">Inheritance</h2>
-      <ul>
-        <li>"object" class is root of all classes. So, even when a class is inheriting from no other class, it is actully inheriting from "object" class.</li>
-        <li>If you forget to invoke the __init__() of the parent class then its instance variables would not be available to the child class. </li>
-        <li>Private members of parent class are not accessible to the child class.</li>
-      </ul>
-      <pre><code class="language-python">
+    <div class="topic" id="Inheritance">
+      <div class="topic-heading"><h2>Inheritance</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>"object" class is root of all classes. So, even when a class is inheriting from no other class, it is actully inheriting from "object" class.</li>
+          <li>If you forget to invoke the __init__() of the parent class then its instance variables would not be available to the child class. </li>
+          <li>Private members of parent class are not accessible to the child class.</li>
+        </ul>
+        <pre><code class="language-python">
     class Person(object): # parent class
         def __init__(self, name):
             self.name = name
@@ -113,18 +115,18 @@
 
     a = Employee("abc", "Intern") # creation of an object variable or an instance
     a.display() # calling a function of the class Person using its instance
-      </code></pre>
+        </code></pre>
 
-      <h3>Different forms of inheritance</h3>
-      There are 2 forms of Inheritance
-      <ol>
-        <li><span class="point">Single inheritance</span>: When a child class inherits from only one parent class.</li>
-        <li><span class="point">Multiple inheritance</span>: When a child class inherits from multiple parent classes.</li>
-        <li><span class="point">Multilevel inheritance</span>: When we have a child and grandchild relationship.</li>
-        <li><span class="point">Hierarchical inheritance</span>: More than one derived classes are created from a single base.</li>
-        <li><span class="point">Hybrid inheritance</span>: This form combines more than one form of inheritance.</li>
-      </ol>
-      <pre><code class="language-python">
+        <h3>Different forms of inheritance</h3>
+        There are 2 forms of Inheritance
+        <ol>
+          <li><span class="point">Single inheritance</span>: When a child class inherits from only one parent class.</li>
+          <li><span class="point">Multiple inheritance</span>: When a child class inherits from multiple parent classes.</li>
+          <li><span class="point">Multilevel inheritance</span>: When we have a child and grandchild relationship.</li>
+          <li><span class="point">Hierarchical inheritance</span>: More than one derived classes are created from a single base.</li>
+          <li><span class="point">Hybrid inheritance</span>: This form combines more than one form of inheritance.</li>
+        </ol>
+        <pre><code class="language-python">
     '''
     Single Inheritance
     P1
@@ -168,31 +170,35 @@
         pass
     class C3(P1):
         pass
-      </code></pre>
-    </div>
-
-    <hr/>
-
-    <div class="topic">
-      <h2 id="Encapsulation">Encapsulation</h2>
-      <span class="point">Encapsulation</span> is the idea of wrapping data and the methods that work on data within one unit. This puts restrictions on accessing variables and methods directly and can prevent the accidental modification of data
-      <h3>Types of Members</h3>
-      <ul>
-        <li><span class="point">Protected Members</span>: cannot be accessed outside the class but can be accessed from within the class and its subclasses. Prefix the name of the member by a single underscore <span class="code">"_"</span></li>
-        <li><span class="point">Private Members</span>: are similar to protext except they should neither be accessed outside the class nor by any base class.Prefix the name of the member by double underscore <span class="code">"__"</span></li>
-      </ul>
-      <div class="notes">
-        <ul>
-          <li>Although the protected variable can be accessed out of the class as well as in the derived class(modified too in derived class), it is customary(convention not a rule) to not access the protected out the class body.</li>
-        </ul>
+        </code></pre>
       </div>
-      <a href="./99.programming_questions - oop.html#ProtectedAndPrivateMembers">example</a>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Polymorphism">Polymorphism</h2>
+    <div class="topic" id="Encapsulation">
+      <div class="topic-heading"><h2>Encapsulation</h2></div>
+      <div class="topic-body">
+        <span class="point">Encapsulation</span> is the idea of wrapping data and the methods that work on data within one unit. This puts restrictions on accessing variables and methods directly and can prevent the accidental modification of data
+        <h3>Types of Members</h3>
+        <ul>
+          <li><span class="point">Protected Members</span>: cannot be accessed outside the class but can be accessed from within the class and its subclasses. Prefix the name of the member by a single underscore <span class="code">"_"</span></li>
+          <li><span class="point">Private Members</span>: are similar to protext except they should neither be accessed outside the class nor by any base class.Prefix the name of the member by double underscore <span class="code">"__"</span></li>
+        </ul>
+        <div class="notes">
+          <ul>
+            <li>Although the protected variable can be accessed out of the class as well as in the derived class(modified too in derived class), it is customary(convention not a rule) to not access the protected out the class body.</li>
+          </ul>
+        </div>
+        <a href="./99.programming_questions - oop.html#ProtectedAndPrivateMembers">example</a>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="Polymorphism">
+      <div class="topic-heading"><h2>Polymorphism</h2></div>
+      <div class="topic-body"></div>
     </div>
   </div>
 

@@ -9,111 +9,119 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="If">If</h2>
-      <pre><code class="language-go">
-  /* general syntax */
-  if &lt;condition-1&gt; {
-      &lt;then-block-1&gt;
-  } else if &lt;condition-2&gt; {
-      &lt;then-block-2&gt;
-  } else {
-      &lt;then-block-3&gt;
-  }
+    <div class="topic" id="If">
+      <div class="topic-heading"><h2>If</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-go">
+    /* general syntax */
+    if &lt;condition-1&gt; {
+        &lt;then-block-1&gt;
+    } else if &lt;condition-2&gt; {
+        &lt;then-block-2&gt;
+    } else {
+        &lt;then-block-3&gt;
+    }
 
-  /* Scoping a variable to an if statement */
-  if n:=rand.Intn(10); n==0 {
-      fmt.Println("is 0")
-  } else if n>5 {
-      fmt.Println("&gt;5")
-  } else {
-      fmt.Println("&lt;5")
-  }
-  fmt.Println(n) // undefined
-      </code></pre>
+    /* Scoping a variable to an if statement */
+    if n:=rand.Intn(10); n==0 {
+        fmt.Println("is 0")
+    } else if n>5 {
+        fmt.Println("&gt;5")
+    } else {
+        fmt.Println("&lt;5")
+    }
+    fmt.Println(n) // undefined
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
     
-    <div class="topic">
-      <h2 id="ForLoop">For Loop</h2>
-      <pre><code class="language-go">
-  /* c-style */
-  for i:=0; i&lt;10; i++ {}
+    <div class="topic" id="ForLoop">
+      <div class="topic-heading"><h2>For Loop</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-go">
+    /* c-style */
+    for i:=0; i&lt;10; i++ {}
 
-  /* condition-only */
-  i:=1
-  for i&lt;100 { i*= 2 }
+    /* condition-only */
+    i:=1
+    for i&lt;100 { i*= 2 }
 
-  /* infinite */
-  for {}
+    /* infinite */
+    for {}
 
-  /* break and continue */
-  for { if i&gt;100 {break}}
+    /* break and continue */
+    for { if i&gt;100 {break}}
 
-  /* for-range with index */
-  evenVals:=[]int{2,4,6,8,10}
-  for index, value := range evenVals {}
+    /* for-range with index */
+    evenVals:=[]int{2,4,6,8,10}
+    for index, value := range evenVals {}
 
-  /* for-range without index */
-  evenVals:=[]int{2,4,6,8,10}
-  for _, value := range evenVals {}
+    /* for-range without index */
+    evenVals:=[]int{2,4,6,8,10}
+    for _, value := range evenVals {}
 
-  // for-range value is actually a copy, modifying it won't modify the actual array/map/string
-      </code></pre>
+    // for-range value is actually a copy, modifying it won't modify the actual array/map/string
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Switch">Switch</h2>
-      <pre><code class="language-go">
-  /* syntax */
-  switch character {
-    case a, e, i, o, u:
-      fmt.Println("it's a vowel");
-      fmt.Println("that's it")
-    default:
-      fmt.Println("it's a consonant")
-      fmt.Println("please try again")
-  }
+    <div class="topic" id="Switch">
+      <div class="topic-heading"><h2>Switch</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-go">
+    /* syntax */
+    switch character {
+      case a, e, i, o, u:
+        fmt.Println("it's a vowel");
+        fmt.Println("that's it")
+      default:
+        fmt.Println("it's a consonant")
+        fmt.Println("please try again")
+    }
 
-  /* missing label: without a label, switch case be used as if-else */
-  switch {
-    case i%2 == 0:
-      fmt.Println("even")
-    case i%3 == 0:
-      fmt.Println("divisible by 3 and not by 2")
-    case i%7 ==0:
-      fmt.Println("divisible by 7 and neither by 2 nor 3")
-    default:
-      fmt.Println("not what i wanted")
-  }
-      </code></pre>
+    /* missing label: without a label, switch case be used as if-else */
+    switch {
+      case i%2 == 0:
+        fmt.Println("even")
+      case i%3 == 0:
+        fmt.Println("divisible by 3 and not by 2")
+      case i%7 ==0:
+        fmt.Println("divisible by 7 and neither by 2 nor 3")
+      default:
+        fmt.Println("not what i wanted")
+    }
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Goto">Goto</h2>
-      Go forbids jumps that skip over variable declarations and jumps that go into an inner or parallel block.
-      <pre><code class="language-go">
-  func main() {
-    a := 10
-    goto skip // illegal
-    b := 20
-    skip:
-      c := 30
-      fmt.Println(a, b, c)
-      if c > a {
-        goto inner // illegal
-      }
-      if a &lt; b {
-      inner:
-        fmt.Println("a is less than b")
-      }
-  }
-      </code></pre>
+    <div class="topic" id="Goto">
+      <div class="topic-heading"><h2>Goto</h2></div>
+      <div class="topic-body">  
+        Go forbids jumps that skip over variable declarations and jumps that go into an inner or parallel block.
+        <pre><code class="language-go">
+    func main() {
+      a := 10
+      goto skip // illegal
+      b := 20
+      skip:
+        c := 30
+        fmt.Println(a, b, c)
+        if c > a {
+          goto inner // illegal
+        }
+        if a &lt; b {
+        inner:
+          fmt.Println("a is less than b")
+        }
+    }
+        </code></pre>
+      </div>
     </div>
   </div>
 

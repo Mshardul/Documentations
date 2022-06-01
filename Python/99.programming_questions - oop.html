@@ -9,9 +9,10 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="EndParamInPrint">Destructor with circular reference</h2>
-      <pre><code class="language-python">
+    <div class="topic" id="EndParamInPrint">
+      <div class="topic-heading"><h2>Destructor with circular reference</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
     class A:
         def __init__(self, bb):
             self.b = bb
@@ -32,14 +33,16 @@
     Simply, it doesn't know the order in which to destroy the objects, so it leaves them.
     Therefore, if your instances are involved in circular references they will live in memory for as long as the application run.
     '''
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="AccessingParentsVariableWithoutInvokingParentsInit">Accessing Parents Variable Without Invoking Parents __init__</h2>
-      <pre><code class="language-python">
+    <div class="topic" id="AccessingParentsVariableWithoutInvokingParentsInit">
+      <div class="topic-heading"><h2>Accessing Parents Variable Without Invoking Parents __init__</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
     class A:
         def __init__(self, n = 'Rahul'):
             self.name = n
@@ -49,14 +52,16 @@
     object = B(23)
     print (object.name) # AttributeError: 'B' object has no attribute 'name'
     ''' need to invoke __init__() of A in B'
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="ParentsPrivateVariable">Parent's private variable</h2>
-      <pre><code class="language-python">
+    <div class="topic" id="ParentsPrivateVariable">
+      <div class="topic-heading"><h2>Parent's private variable</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
     class C(object):
         def __init__(self):
             self.c = 21
@@ -68,14 +73,16 @@
     object1 = D()
     print(object1.d) # AttributeError: type object 'D' has no attribute 'd'
     ''' Parent's private variables are not accessible to Child '''
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="InheritancePrecedence">Inheritance precedence</h2>
-      <pre><code class="language-python">
+    <div class="topic" id="InheritancePrecedence">
+      <div class="topic-heading"><h2>Inheritance precedence</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
     class A():
         def __init__(self):
             self.name = "A"
@@ -95,14 +102,16 @@
     ''' inheritance starts from left to right '''
     ''' class C(B, A) would have executed B's reply() '''
     ''' doesn't matter on the sequence of init calls '''
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="ProtectedAndPrivateMembers">Protected and Private members</h2>
-      <pre><code class="language-python">
+    <div class="topic" id="ProtectedAndPrivateMembers">
+      <div class="topic-heading"><h2>Protected and Private members</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
     class Base():
         def __init__(self):
             self._name = "abc"
@@ -118,7 +127,8 @@
     d = Derived()
     print(d._name) #5 abc
     print(d.__aadhar) #6 AttributeError: 'Derived' object has no attribute '__aadhar'
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
   </div>
 

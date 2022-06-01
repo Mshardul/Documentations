@@ -9,31 +9,33 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="DefaultEventHandler">Default Event Handler</h2>
-      you cannot return false to prevent default behavior in React. You must call <span class="code">preventDefault</span>
-      instead of
-      <pre><code class="language-javascript">
+    <div class="topic" id="DefaultEventHandler">
+      <div class="topic-heading"><h2>Default Event Handler</h2></div>
+      <div class="topic-body">
+        you cannot return false to prevent default behavior in React. You must call <span class="code">preventDefault</span>
+        instead of
+        <pre><code class="language-javascript">
     &lt;form onsubmit="console.log('You clicked submit.'); return false"&gt;&lt;button type="submit"&gt;Submit&lt;/button&gt;&lt;/form&gt;
-      </code></pre>
-      write
-      <pre><code class="language-javascript">
+        </code></pre>
+        write
+        <pre><code class="language-javascript">
     function Form() {
         function handleSubmit(e) { e.preventDefault(); console.log('You clicked submit.'); }
         return ( &lt;form onSubmit={handleSubmit}&gt;&lt;button type="submit"&gt;Submit&lt;/button&gt;&lt;/form&gt; );
     }
-      </code></pre>
+        </code></pre>
+      </div>
 
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="EventHandlingInES6Class">Event Handling in ES6 Class</h2>
-      
-      <h3>in ES6 Class</h3>
-      When you define a component using an ES6 class, a common pattern is for an event handler to be a method on the class. <br/>
-      <pre><code class="language-javascript">
+    <div class="topic" id="EventHandlingInES6Class">
+      <div class="topic-heading"><h2>Event Handling in ES6 Class</h2></div>
+      <div class="topic-body">
+        <h3>in ES6 Class</h3>
+        When you define a component using an ES6 class, a common pattern is for an event handler to be a method on the class. <br/>
+        <pre><code class="language-javascript">
     class Toggle extends React.Component {
         constructor(props) {
             super(props); this.state = {isToggleOn: true};
@@ -50,9 +52,9 @@
     }
     
     ReactDOM.render( &lt;Toggle /&gt;, document.getElementById('root') );
-      </code></pre>
-      If you aren’t using class fields syntax, you can use an arrow function in the callback:
-      <pre><code class="language-javascript">
+        </code></pre>
+        If you aren't using class fields syntax, you can use an arrow function in the callback:
+        <pre><code class="language-javascript">
     class LoggingButton extends React.Component {
         handleClick() { console.log('this is:', this); }
     
@@ -61,7 +63,8 @@
             return ( &lt;button onClick={() => this.handleClick()}&gt; Click me &lt;/button&gt; );
         }
     }
-      </code></pre>
+        </code></pre>
+      </div>
 
     </div>
   </div>

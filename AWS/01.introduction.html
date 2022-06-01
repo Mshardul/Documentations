@@ -9,51 +9,55 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="CloudComputingModels">Cloud Computing Models</h2>
+    <div class="topic" id="CloudComputingModels">
+      <div class="topic-heading"><h2>Cloud Computing Models</h2></div>
+      <div class="topic-body">
+        <h3>Infrastructure as a Service (IaaS)</h3>
+        contains the basic building blocks for cloud IT and typically provides access to networking features, computers (virtual or on dedicated hardware), and data storage space.
 
-      <h3>Infrastructure as a Service (IaaS)</h3>
-      contains the basic building blocks for cloud IT and typically provides access to networking features, computers (virtual or on dedicated hardware), and data storage space.
+        <h3>Platform as a Service (PaaS)</h3>
+        removes the need for your organization to manage the underlying infrastructure (usually hardware and operating systems) and allows you to focus on the deployment and management of your applications. You don’t need to worry about resource procurement, capacity planning, software maintenance, patching, or any of the other undifferentiated heavy lifting involved in running your application.
 
-      <h3>Platform as a Service (PaaS)</h3>
-      removes the need for your organization to manage the underlying infrastructure (usually hardware and operating systems) and allows you to focus on the deployment and management of your applications. You don’t need to worry about resource procurement, capacity planning, software maintenance, patching, or any of the other undifferentiated heavy lifting involved in running your application.
-
-      <h3>Software as a Service (SaaS)</h3>
-      provides you with a completed product that is run and managed by the service provider. you do not have to think about how the service is maintained or how the underlying infrastructure is managed; you only need to think about how you will use that particular piece of software.
+        <h3>Software as a Service (SaaS)</h3>
+        provides you with a completed product that is run and managed by the service provider. you do not have to think about how the service is maintained or how the underlying infrastructure is managed; you only need to think about how you will use that particular piece of software.
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="CloudComputingDeploymentModels">Cloud Computing Deployment Models</h2>
+    <div class="topic" id="CloudComputingDeploymentModels">
+      <div class="topic-heading"><h2>Cloud Computing Deployment Models</h2></div>
+      <div class="topic-body">
+        <h3>Cloud</h3>
+        A cloud-based application is fully deployed in the cloud and all parts of the application run in the cloud.
 
-      <h3>Cloud</h3>
-      A cloud-based application is fully deployed in the cloud and all parts of the application run in the cloud.
+        <h3>On-premise</h3>
+        On-premises deployment doesn’t provide many of the benefits of cloud computing but is sometimes sought for its ability to provide dedicated resources.
 
-      <h3>On-premise</h3>
-      On-premises deployment doesn’t provide many of the benefits of cloud computing but is sometimes sought for its ability to provide dedicated resources.
+        <h3>Hybrid</h3>
+        A hybrid deployment is a way to connect infrastructure and applications between cloud-based resources and existing resources that are not located in the cloud. 
 
-      <h3>Hybrid</h3>
-      A hybrid deployment is a way to connect infrastructure and applications between cloud-based resources and existing resources that are not located in the cloud. 
-
-      <div class="notes">
-        // The deployment of resources on-premises, using virtualization and resource management tools, is sometimes called the “private cloud.”<br/>
+        <div class="notes">
+          // The deployment of resources on-premises, using virtualization and resource management tools, is sometimes called the “private cloud.”<br/>
+        </div>
       </div>
 
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="GlobalInfrastructure">Global Infrastructure</h2>
-      The AWS Cloud infrastructure is built around AWS Regions and Availability Zones. 
-      An <span class="point">AWS Region</span> is a physical location in the world where we have multiple Availability Zones. 
-      <span class="point">Availability Zones</span> consist of one or more discrete data centers, each with redundant power, networking, and connectivity, housed in separate facilities.
+    <div class="topic" id="GlobalInfrastructure">
+      <div class="topic-heading"><h2>Global Infrastructure</h2></div>
+      <div class="topic-body">
+        The AWS Cloud infrastructure is built around AWS Regions and Availability Zones. 
+        An <span class="point">AWS Region</span> is a physical location in the world where we have multiple Availability Zones. 
+        <span class="point">Availability Zones</span> consist of one or more discrete data centers, each with redundant power, networking, and connectivity, housed in separate facilities.
 
-      <div class="notes">
-        // Each Amazon Region is designed to be completely isolated from the other Amazon Regions. This achieves the greatest possible fault tolerance and stability.<br/>
-        // Each Availability Zone is isolated, but the Availability Zones in a Region are connected through low-latency links.  Each Availability Zone is designed as an independent failure zone. This means that Availability Zones are physically separated within a typical metropolitan region and are located in lower risk flood plains (specific flood zone categorization varies by AWS Region).<br/>
-        // AWS provides you with the flexibility to place instances and store data within multiple geographic regions as well as across multiple Availability Zones within each AWS Region<br/>
+        <div class="notes">
+          // Each Amazon Region is designed to be completely isolated from the other Amazon Regions. This achieves the greatest possible fault tolerance and stability.<br/>
+          // Each Availability Zone is isolated, but the Availability Zones in a Region are connected through low-latency links.  Each Availability Zone is designed as an independent failure zone. This means that Availability Zones are physically separated within a typical metropolitan region and are located in lower risk flood plains (specific flood zone categorization varies by AWS Region).<br/>
+          // AWS provides you with the flexibility to place instances and store data within multiple geographic regions as well as across multiple Availability Zones within each AWS Region<br/>
+        </div>
       </div>
     </div>
   </div>

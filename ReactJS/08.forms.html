@@ -9,11 +9,12 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="ControlledComponents">Controlled Components</h2>
-      <p>In HTML, form elements such as &lt;input&gt;, &lt;textarea&gt;, and &lt;select&gt; typically maintain their own state and update it based on user input. In React, mutable state is typically kept in the state property of components, and only updated with setState(). We can combine the two by making the React state be the &quot;single source of truth&quot;. Then the React component that renders a form also controls what happens in that form on subsequent user input. An input form element whose value is controlled by React in this way is called a <span class="code">controlled component</span>.</p>
-      <p>With a controlled component, the input’s value is always driven by the React state.</p>
-      <pre><code class="language-javascript">
+    <div class="topic" id="ControlledComponents">
+      <div class="topic-heading"><h2>Controlled Components</h2></div>
+      <div class="topic-body">
+        <p>In HTML, form elements such as &lt;input&gt;, &lt;textarea&gt;, and &lt;select&gt; typically maintain their own state and update it based on user input. In React, mutable state is typically kept in the state property of components, and only updated with setState(). We can combine the two by making the React state be the &quot;single source of truth&quot;. Then the React component that renders a form also controls what happens in that form on subsequent user input. An input form element whose value is controlled by React in this way is called a <span class="code">controlled component</span>.</p>
+        <p>With a controlled component, the input’s value is always driven by the React state.</p>
+        <pre><code class="language-javascript">
     class NameForm extends React.Component {
         constructor(props) {
             super(props);
@@ -58,14 +59,17 @@
           );
         }
     }
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="UncontrolledComponents">Uncontrolled Components</h2>
-      // will learn later
+    <div class="topic" id="UncontrolledComponents">
+      <div class="topic-heading"><h2>Uncontrolled Components</h2></div>
+      <div class="topic-body">
+        // will learn later
+      </div>
     </div>
   </div>
 

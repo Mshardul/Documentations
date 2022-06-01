@@ -9,86 +9,94 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="ControlPlane">Control Plane</h2>
-      <p>lets you create and manage DynamoDB tables. They also let you work with indexes, streams, and other objects that are dependent on tables.</p>
-      <ul>
-        <li><span class="point">CreateTable</span>: Creates a new table. Optionally, you can create one or more secondary indexes, and enable DynamoDB Streams for the table.</li>
-        <li><span class="point">DescribeTable</span>: Returns information about a table, such as its primary key schema, throughput settings, and index information.</li>
-        <li><span class="point">ListTables</span>: Returns the names of all of your tables in a list.</li>
-        <li><span class="point">UpdateTable</span>: Modifies the settings of a table or its indexes, creates or removes new indexes on a table, or modifies DynamoDB Streams settings for a table.</li>
-        <li><span class="point">DeleteTable</span>: Removes a table and all of its dependent objects from DynamoDB.</li>
-      </ul>
+    <div class="topic" id="ControlPlane">
+      <div class="topic-heading"><h2>Control Plane</h2></div>
+      <div class="topic-body">
+        <p>lets you create and manage DynamoDB tables. They also let you work with indexes, streams, and other objects that are dependent on tables.</p>
+        <ul>
+          <li><span class="point">CreateTable</span>: Creates a new table. Optionally, you can create one or more secondary indexes, and enable DynamoDB Streams for the table.</li>
+          <li><span class="point">DescribeTable</span>: Returns information about a table, such as its primary key schema, throughput settings, and index information.</li>
+          <li><span class="point">ListTables</span>: Returns the names of all of your tables in a list.</li>
+          <li><span class="point">UpdateTable</span>: Modifies the settings of a table or its indexes, creates or removes new indexes on a table, or modifies DynamoDB Streams settings for a table.</li>
+          <li><span class="point">DeleteTable</span>: Removes a table and all of its dependent objects from DynamoDB.</li>
+        </ul>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="DataPlane">Data Plane</h2>
-      <p>Data plane operations let you perform create, read, update, and delete (also called CRUD) actions on data in a table. Some of the data plane operations also let you read data from a secondary index.</p>
-      <p>There are 2 ways to perform CRUD operations</p>
-      <ol>
-        <li>PartiQL - A SQL-Compatible Query Language</li>
-        <li>classic CRUD APIs</li>
-      </ol>
+    <div class="topic" id="DataPlane">
+      <div class="topic-heading"><h2>Data Plane</h2></div>
+      <div class="topic-body">
+        <p>Data plane operations let you perform create, read, update, and delete (also called CRUD) actions on data in a table. Some of the data plane operations also let you read data from a secondary index.</p>
+        <p>There are 2 ways to perform CRUD operations</p>
+        <ol>
+          <li>PartiQL - A SQL-Compatible Query Language</li>
+          <li>classic CRUD APIs</li>
+        </ol>
 
-      <h3>PartiQL - A SQL-Compatible Query Language</h3>
-      <ul>
-        <li><span class="code">ExecuteStatement</span>: Reads multiple items from a table. You can also write or update a single item from a table. When writing or updating a single item, you must specify the primary key attributes.</li>
-        <li><span class="code">BatchExecuteStatement</span>: Writes, updates or reads multiple items from a table. This is more efficient than ExecuteStatement because your application only needs a single network round trip to write or read the items.</li>
-      </ul>
+        <h3>PartiQL - A SQL-Compatible Query Language</h3>
+        <ul>
+          <li><span class="code">ExecuteStatement</span>: Reads multiple items from a table. You can also write or update a single item from a table. When writing or updating a single item, you must specify the primary key attributes.</li>
+          <li><span class="code">BatchExecuteStatement</span>: Writes, updates or reads multiple items from a table. This is more efficient than ExecuteStatement because your application only needs a single network round trip to write or read the items.</li>
+        </ul>
 
-      <h3>classic CRUD APIs</h3>
-      <h4>Create</h4>
-      <ul>
-        <li><span class="code">PutItem</span>: Writes a single item to a table. You must specify the primary key attributes, but you don&#39;t have to specify other attributes.</li>
-        <li><span class="code">BatchWriteItem</span>: Writes up to 25 items to a table. This is more efficient than calling PutItem multiple times because your application only needs a single network round trip to write the items. You can also use BatchWriteItem for deleting multiple items from one or more tables.</li>
-      </ul>
-      <h4>Read</h4>
-      <ul>
-        <li><span class="code">GetItem</span>: Retrieves a single item from a table. You must specify the primary key for the item that you want.</li>
-        <li><span class="code">BatchGetItem</span>: Retrieves up to 100 items from one or more tables.</li>
-        <li><span class="code">Query</span>: Retrieves all items that have a specific partition key. You must specify the partition key value. Optionally, you can apply a condition to the sort key values so that you only retrieve a subset of the data that has the same partition key. You can use this operation on a table or an index, provided that it has both a partition key and a sort key.</li>
-        <li><span class="code">Scan</span>: Retrieves all items in the specified table or index. Optionally, you can apply a filtering condition to return only the values that you are interested in and discard the rest.</li>
-      </ul>
-      <h4>Update</h4>
-      <ul>
-        <li><span class="code">UpdateItem</span>: Modifies one or more attributes in an item. You must specify the primary key for the item that you want to modify. You can add new attributes and modify or remove existing attributes. You can also perform conditional updates, so that the update is only successful when a user-defined condition is met. Optionally, you can implement an atomic counter, which increments or decrements a numeric attribute without interfering with other write requests.</li>
-      </ul>
-      <h4>Delete</h4>
-      <ul>
-        <li><span class="code">DeleteItem</span>: Deletes a single item from a table. You must specify the primary key for the item that you want to delete.</li>
-        <li><span class="code">BatchWriteItem</span>: Deletes up to 25 items from one or more tables. This is more efficient than calling DeleteItem multiple times because your application only needs a single network round trip to delete the items. You can also use BatchWriteItem for adding multiple items to one or more tables.</li>
-      </ul>
+        <h3>classic CRUD APIs</h3>
+        <h4>Create</h4>
+        <ul>
+          <li><span class="code">PutItem</span>: Writes a single item to a table. You must specify the primary key attributes, but you don&#39;t have to specify other attributes.</li>
+          <li><span class="code">BatchWriteItem</span>: Writes up to 25 items to a table. This is more efficient than calling PutItem multiple times because your application only needs a single network round trip to write the items. You can also use BatchWriteItem for deleting multiple items from one or more tables.</li>
+        </ul>
+        <h4>Read</h4>
+        <ul>
+          <li><span class="code">GetItem</span>: Retrieves a single item from a table. You must specify the primary key for the item that you want.</li>
+          <li><span class="code">BatchGetItem</span>: Retrieves up to 100 items from one or more tables.</li>
+          <li><span class="code">Query</span>: Retrieves all items that have a specific partition key. You must specify the partition key value. Optionally, you can apply a condition to the sort key values so that you only retrieve a subset of the data that has the same partition key. You can use this operation on a table or an index, provided that it has both a partition key and a sort key.</li>
+          <li><span class="code">Scan</span>: Retrieves all items in the specified table or index. Optionally, you can apply a filtering condition to return only the values that you are interested in and discard the rest.</li>
+        </ul>
+        <h4>Update</h4>
+        <ul>
+          <li><span class="code">UpdateItem</span>: Modifies one or more attributes in an item. You must specify the primary key for the item that you want to modify. You can add new attributes and modify or remove existing attributes. You can also perform conditional updates, so that the update is only successful when a user-defined condition is met. Optionally, you can implement an atomic counter, which increments or decrements a numeric attribute without interfering with other write requests.</li>
+        </ul>
+        <h4>Delete</h4>
+        <ul>
+          <li><span class="code">DeleteItem</span>: Deletes a single item from a table. You must specify the primary key for the item that you want to delete.</li>
+          <li><span class="code">BatchWriteItem</span>: Deletes up to 25 items from one or more tables. This is more efficient than calling DeleteItem multiple times because your application only needs a single network round trip to delete the items. You can also use BatchWriteItem for adding multiple items to one or more tables.</li>
+        </ul>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="DynamoDBStreams">DynamoDB Streams</h2>
-      <p>let you enable or disable a stream on a table, and allow access to the data modification records contained in a stream.</p>
-      <ul>
-        <li><span class="code">ListStreams</span>: Returns a list of all your streams, or just the stream for a specific table.</li>
-        <li><span class="code">DescribeStream</span>: Returns information about a stream, such as its Amazon Resource Name (ARN) and where your application can begin reading the first few stream records.</li>
-        <li><span class="code">GetShardIterator</span>: Returns a shard iterator, which is a data structure that your application uses to retrieve the records from the stream.</li>
-        <li><span class="code">GetRecords</span>: Retrieves one or more stream records, using a given shard iterator.</li>
-      </ul>
+    <div class="topic" id="DynamoDBStreams">
+      <div class="topic-heading"><h2>DynamoDB Streams</h2></div>
+      <div class="topic-body">
+        <p>let you enable or disable a stream on a table, and allow access to the data modification records contained in a stream.</p>
+        <ul>
+          <li><span class="code">ListStreams</span>: Returns a list of all your streams, or just the stream for a specific table.</li>
+          <li><span class="code">DescribeStream</span>: Returns information about a stream, such as its Amazon Resource Name (ARN) and where your application can begin reading the first few stream records.</li>
+          <li><span class="code">GetShardIterator</span>: Returns a shard iterator, which is a data structure that your application uses to retrieve the records from the stream.</li>
+          <li><span class="code">GetRecords</span>: Retrieves one or more stream records, using a given shard iterator.</li>
+        </ul>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Transactions">Transactions</h2>
-      <p>provide ACID properties</p>
-      <h3>PartiQL - A SQL-Compatible Query Language</h3>
-      <ul>
-        <li><span class="code">ExecuteTransaction</span>: A batch operation that allows CRUD operations to multiple items both within and across tables with a guaranteed all-or-nothing result.</li>
-      </ul>
-      <h3>Classic APIs</h3>
-      <ul>
-        <li><span class="code">TransactWriteItems</span>: A batch operation that allows <span class="code">Put</span>, <span class="code">Update</span>, and <span class="code">Delete</span> operations to multiple items both within and across tables with a guaranteed all-or-nothing result.</li>
-        <li><span class="code">TransactGetItems</span>: A batch operation that allows Get operations to retrieve multiple items from one or more tables.</li>
-      </ul>
+    <div class="topic" id="Transactions">
+      <div class="topic-heading"><h2>Transactions</h2></div>
+      <div class="topic-body">
+        <p>provide ACID properties</p>
+        <h3>PartiQL - A SQL-Compatible Query Language</h3>
+        <ul>
+          <li><span class="code">ExecuteTransaction</span>: A batch operation that allows CRUD operations to multiple items both within and across tables with a guaranteed all-or-nothing result.</li>
+        </ul>
+        <h3>Classic APIs</h3>
+        <ul>
+          <li><span class="code">TransactWriteItems</span>: A batch operation that allows <span class="code">Put</span>, <span class="code">Update</span>, and <span class="code">Delete</span> operations to multiple items both within and across tables with a guaranteed all-or-nothing result.</li>
+          <li><span class="code">TransactGetItems</span>: A batch operation that allows Get operations to retrieve multiple items from one or more tables.</li>
+        </ul>
+      </div>
     </div>
   </div>
 

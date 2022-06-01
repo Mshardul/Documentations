@@ -11,17 +11,18 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="CreateTable">Create a table</h2>
-      <p>must provide following parameters to <span class="code">CreateTable</span></p>
-      <ul>
-        <li><span class="code">TableName: string</span> = {name of the table}</li>
-        <li><span class="code">KeySchema: object[]</span> = {attributes that are used for the primary key}</li>
-        <li><span class="code">AttributeDefinitions: object[]</span> = {Data types for the key schema attributes}</li>
-        <li><span class="code">ProvisionedThroughput: object</span> = {Number of reads and writes per second that you need for this table}</li>
-      </ul>
+    <div class="topic" id="CreateTable">
+      <div class="topic-heading"><h2>Create a table</h2></div>
+      <div class="topic-body">
+        <p>must provide following parameters to <span class="code">CreateTable</span></p>
+        <ul>
+          <li><span class="code">TableName: string</span> = {name of the table}</li>
+          <li><span class="code">KeySchema: object[]</span> = {attributes that are used for the primary key}</li>
+          <li><span class="code">AttributeDefinitions: object[]</span> = {Data types for the key schema attributes}</li>
+          <li><span class="code">ProvisionedThroughput: object</span> = {Number of reads and writes per second that you need for this table}</li>
+        </ul>
 
-      <pre><code class="language-json">
+        <pre><code class="language-json">
     {
         TableName : "Music",
         KeySchema: [ 
@@ -34,78 +35,83 @@
         ],
         ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 } // Only specified if using provisioned mode
     }
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="DescribeTable">Describe Table</h2>
-      <p>The only parameter is the table name.</p>
-      <ul>
-        <li><span class="code">TableName: string</span> = {name of the table}</li>
-      </ul>
+    <div class="topic" id="DescribeTable">
+      <div class="topic-heading"><h2>Describe Table</h2></div>
+      <div class="topic-body">
+        <p>The only parameter is the table name.</p>
+        <ul>
+          <li><span class="code">TableName: string</span> = {name of the table}</li>
+        </ul>
 
-      <pre><code class="language-json">
+        <pre><code class="language-json">
     { TableName: "Music" }
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="InsertDataIntoATable">Insert Data into a Table</h2>
+    <div class="topic" id="InsertDataIntoATable">
+      <div class="topic-heading"><h2>Insert Data into a Table</h2></div>
+      <div class="topic-body">
+        <h3>PartiQL</h3>
+        <p>use the ExecuteStatement action to add an item to a table, using the Insert PartiQL statement.</p>
+        <pre><code class="language-json">
+    INSERT INTO Music VALUE { 'Artist': 'No One You Know', 'SongTitle': 'Call Me Today' }
+        </code></pre>
 
-      <h3>PartiQL</h3>
-      <p>use the ExecuteStatement action to add an item to a table, using the Insert PartiQL statement.</p>
-      <pre><code class="language-json">
-        INSERT INTO Music VALUE { 'Artist': 'No One You Know', 'SongTitle': 'Call Me Today' }
-      </code></pre>
-
-      <h3>Classic APIs</h3>
-      <p>use the PutItem action to add an item to a table.</p>
-      <pre><code class="language-json">
+        <h3>Classic APIs</h3>
+        <p>use the PutItem action to add an item to a table.</p>
+        <pre><code class="language-json">
     { 
         TableName: "Music",
         Item: { "Artist":"No One You Know", "SongTitle":"Call Me Today" }
     }
-      </code></pre>
+        </code></pre>
 
-      <div class="notes">
-        // Most SQL databases are transaction oriented. When you issue an <span class="code">INSERT</span> statement, the data modifications are not permanent until you issue a <span class="code">COMMIT</span> statement. With Amazon DynamoDB, the effects of a PutItem action are permanent when DynamoDB replies with an HTTP 200 status code (OK).<br/>
-        // In addition to <span class="code">PutItem</span>, DynamoDB supports a <span class="code">BatchWriteItem</span> action for writing multiple items at the same time.<br/>
+        <div class="notes">
+          // Most SQL databases are transaction oriented. When you issue an <span class="code">INSERT</span> statement, the data modifications are not permanent until you issue a <span class="code">COMMIT</span> statement. With Amazon DynamoDB, the effects of a PutItem action are permanent when DynamoDB replies with an HTTP 200 status code (OK).<br/>
+          // In addition to <span class="code">PutItem</span>, DynamoDB supports a <span class="code">BatchWriteItem</span> action for writing multiple items at the same time.<br/>
+        </div>
       </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="ReadingDataFromATable">Reading Data from a Table</h2>
-      <p>Amazon DynamoDB provides the following operations for reading data:</p>
-      <ul>
-        <li><span class="code">ExecuteStatement</span>: Retrieves a single or multiple items from a table using the PartiQL. DynamoDB also provides the <span class="code">BatchExecuteStatement</span> operation, allowing you to retrieve multiple items from different tables in a single operation.</li>
-        <li><span class="code">GetItem</span>: Retrieves a single item from a table. (DynamoDB also provides the <span class="code">BatchGetItem</span> operation, allowing you to perform up to 100 <span class="code">GetItem</span> calls in a single operation.)</li>
-        <li><span class="code">Query</span>: Retrieves all of the items that have a specific partition key. Within those items, you can apply a condition to the sort key and retrieve only a subset of the data. It provides quick, efficient access to the partitions where the data is stored.</li>
-        <li><span class="code">Scan</span>: Retrieves all of the items in the specified table.</li>
-      </ul>
+    <div class="topic" id="ReadingDataFromATable">
+      <div class="topic-heading"><h2>Reading Data from a Table</h2></div>
+      <div class="topic-body">
+        <p>Amazon DynamoDB provides the following operations for reading data:</p>
+        <ul>
+          <li><span class="code">ExecuteStatement</span>: Retrieves a single or multiple items from a table using the PartiQL. DynamoDB also provides the <span class="code">BatchExecuteStatement</span> operation, allowing you to retrieve multiple items from different tables in a single operation.</li>
+          <li><span class="code">GetItem</span>: Retrieves a single item from a table. (DynamoDB also provides the <span class="code">BatchGetItem</span> operation, allowing you to perform up to 100 <span class="code">GetItem</span> calls in a single operation.)</li>
+          <li><span class="code">Query</span>: Retrieves all of the items that have a specific partition key. Within those items, you can apply a condition to the sort key and retrieve only a subset of the data. It provides quick, efficient access to the partitions where the data is stored.</li>
+          <li><span class="code">Scan</span>: Retrieves all of the items in the specified table.</li>
+        </ul>
 
-      <div class="notes">
-        // This is the most efficient way to read a single item because it provides direct access to the physical location of the item.<br/>
-        // DynamoDB is a non-relational NoSQL database that does not support table joins. Instead, applications read data from one table at a time.<br/>
-      </div>
+        <div class="notes">
+          // This is the most efficient way to read a single item because it provides direct access to the physical location of the item.<br/>
+          // DynamoDB is a non-relational NoSQL database that does not support table joins. Instead, applications read data from one table at a time.<br/>
+        </div>
 
-      <h3>PartiQL</h3>
-      <p>use <span class="code">ExecuteStatement</span> to retrieve the items with statement similar to that of SQL</p>
+        <h3>PartiQL</h3>
+        <p>use <span class="code">ExecuteStatement</span> to retrieve the items with statement similar to that of SQL</p>
 
-      <pre><code class="language-json">
+        <pre><code class="language-json">
     SELECT * FROM Music WHERE Artist='No One You Know';
-      </code></pre>
+        </code></pre>
 
 
-      <h3>Classic APIs</h3>
+        <h3>Classic APIs</h3>
 
-      <p><span class="code">GetItem</span></p>
-      <pre><code class="language-json">
+        <p><span class="code">GetItem</span></p>
+        <pre><code class="language-json">
     /* optional param 'ProjectionExpression' to return only some attributes */
 
     { 
@@ -113,10 +119,10 @@
         Key: { "Artist": "No One You Know", "SongTitle": "Call Me Today" },
         "ProjectionExpression": "AlbumTitle, Year, Price"
     }
-      </code></pre>
+        </code></pre>
 
-      <p><span class="code">Query</span>: You must specify an equality condition for the partition key, and you can optionally provide another condition for the sort key.</p>
-      <pre><code class="language-json">
+        <p><span class="code">Query</span>: You must specify an equality condition for the partition key, and you can optionally provide another condition for the sort key.</p>
+        <pre><code class="language-json">
     /* Return a single song, by primary key */
     { 
         TableName: "Music",
@@ -130,38 +136,40 @@
         KeyConditionExpression: "Artist = :a and begins_with(SongTitle, :t)",
         ExpressionAttributeValues: { ":a": "No One You Know", ":t": "Call" }
     }
-      </code></pre>
-      <div class="notes">
-        // You can use an optional <span class="code">FilterExpression</span> to remove certain items from the results before they are returned to you.<br/>
-        //  you must use <span class="code">ExpressionAttributeValues</span> as placeholders in expression parameters (such as <span class="code">KeyConditionExpression</span> and <span class="code">FilterExpression</span>). This is analogous to the use of bind variables in relational databases, where you substitute the actual values into the <span class="code">SELECT</span> statement at runtime.<br/>
-      </div>
+        </code></pre>
+        <div class="notes">
+          // You can use an optional <span class="code">FilterExpression</span> to remove certain items from the results before they are returned to you.<br/>
+          //  you must use <span class="code">ExpressionAttributeValues</span> as placeholders in expression parameters (such as <span class="code">KeyConditionExpression</span> and <span class="code">FilterExpression</span>). This is analogous to the use of bind variables in relational databases, where you substitute the actual values into the <span class="code">SELECT</span> statement at runtime.<br/>
+        </div>
 
-      <p><span class="code">Scan</span></p>
-      <pre><code class="language-json">
+        <p><span class="code">Scan</span></p>
+        <pre><code class="language-json">
     { TableName:  "Music" }
-      </code></pre>
-      <div class="notes">
-        // <span class="code">ProjectionExpression</span> can be used to get certain attributes.<br/>
-        // The <span class="code">Scan</span> action also provides a <span class="code">FilterExpression</span> parameter, which you can use to discard items that you do not want to appear in the results. A <span class="code">FilterExpression</span> is applied after the scan is performed, but before the results are returned to you.<br/>
+        </code></pre>
+        <div class="notes">
+          // <span class="code">ProjectionExpression</span> can be used to get certain attributes.<br/>
+          // The <span class="code">Scan</span> action also provides a <span class="code">FilterExpression</span> parameter, which you can use to discard items that you do not want to appear in the results. A <span class="code">FilterExpression</span> is applied after the scan is performed, but before the results are returned to you.<br/>
+        </div>
       </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="UpdateDataInATable">Update Table</h2>
-      <p><span class="code">UpdateItem</span> action modifies a single item. In case of modifying multiple items, use multiple <span class="code">UpdateItem</span> operations.</p>
-      <p>Following params are used:</p>
-      <ul>
-        <li><span class="code">Key</span>: Key attributes of the item to be modified</li>
-        <li><span class="code">UpdateExpression</span>: to specify attribute values</li>
-        <li><span class="code">ConditionExpression</span>(optional): similar to 'where' in SQL</li>
-        <li><span class="code">ReturnValues</span>(optional): to return a value</li>
-      </ul>
-      <div class="notes">
-        // UpdateItem behaves like an "upsert" operation: The item is updated if it exists in the table, but if not, a new item is added (inserted).<br/>
-      </div>
-      <pre><code class="language-json">
+    <div class="topic" id="UpdateDataInATable">
+      <div class="topic-heading"><h2>Update Table</h2></div>
+      <div class="topic-body">
+        <p><span class="code">UpdateItem</span> action modifies a single item. In case of modifying multiple items, use multiple <span class="code">UpdateItem</span> operations.</p>
+        <p>Following params are used:</p>
+        <ul>
+          <li><span class="code">Key</span>: Key attributes of the item to be modified</li>
+          <li><span class="code">UpdateExpression</span>: to specify attribute values</li>
+          <li><span class="code">ConditionExpression</span>(optional): similar to 'where' in SQL</li>
+          <li><span class="code">ReturnValues</span>(optional): to return a value</li>
+        </ul>
+        <div class="notes">
+          // UpdateItem behaves like an "upsert" operation: The item is updated if it exists in the table, but if not, a new item is added (inserted).<br/>
+        </div>
+        <pre><code class="language-json">
     /* update label and price, when certain conditions are met */
     {
         TableName: "Music",
@@ -179,36 +187,41 @@
         ExpressionAttributeValues: { ":incr": 1 },
         ReturnValues: "UPDATED_NEW"
     }
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="DeleteDataFromATable">Delete Data from a Table</h2>
-      <p>use <span class="code">DeleteItem</span> to delete data from a table, one at a time.</p>
-      <div class="notes">
-        // DynamoDB supports a <span class="code">BatchWriteItem</span> action for deleting multiple items at the same time.<br/>
-      </div>
-      <p>Following params are required:</p>
-      <ul>
-        <li><span class="code">Key</span>: Key attributes of the item to delete.</li>
-        <li><span class="code">ConditionExpression</span> (optional): item is deleted only if this expression results to <span class="code">true</span></li>
-      </ul>
-      <pre><code class="language-json">
+    <div class="topic" id="DeleteDataFromATable">
+      <div class="topic-heading"><h2>Delete Data from a Table</h2></div>
+      <div class="topic-body">
+        <p>use <span class="code">DeleteItem</span> to delete data from a table, one at a time.</p>
+        <div class="notes">
+          // DynamoDB supports a <span class="code">BatchWriteItem</span> action for deleting multiple items at the same time.<br/>
+        </div>
+        <p>Following params are required:</p>
+        <ul>
+          <li><span class="code">Key</span>: Key attributes of the item to delete.</li>
+          <li><span class="code">ConditionExpression</span> (optional): item is deleted only if this expression results to <span class="code">true</span></li>
+        </ul>
+        <pre><code class="language-json">
     {
         TableName: "Music",
         Key: { Artist: "The Acme Band", SongTitle: "Look Out, World" },
         ConditionExpression: "attribute_exists(RecordLabel)"
     }
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="RemovingATable">Removing a Table</h2>
-      <p>use <span class="code">DeleteTable</span> to permanently remove a table</p>
+    <div class="topic" id="RemovingATable">
+      <div class="topic-heading"><h2>Removing a Table</h2></div>
+      <div class="topic-body">
+        <p>use <span class="code">DeleteTable</span> to permanently remove a table</p>
+      </div>
     </div>
   </div>
 

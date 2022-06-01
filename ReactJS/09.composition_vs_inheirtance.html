@@ -9,11 +9,12 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="Containtment">Containtment</h2>
-      Some components don’t know their children ahead of time. (eg. components like Sidebar or Dialog that represent generic “boxes”). It is recommend that such components use the special <span class="code">children prop</span> to pass children elements directly into their output.
+    <div class="topic" id="Containtment">
+      <div class="topic-heading"><h2>Containtment</h2></div>
+      <div class="topic-body">
+        Some components don't know their children ahead of time. (eg. components like Sidebar or Dialog that represent generic “boxes”). It is recommend that such components use the special <span class="code">children prop</span> to pass children elements directly into their output.
 
-      <pre><code class="language-javascript">
+        <pre><code class="language-javascript">
     function FancyBorder(props) {
         return ( &lt;div className={'FancyBorder FancyBorder-' + props.color}&gt; {props.children} &lt;/div&gt; ); 
     }
@@ -26,11 +27,11 @@
             &lt;/FancyBorder&gt;
         );
     }
-      </code></pre>
+        </code></pre>
 
-      While this is less common, sometimes you might need multiple &quot;holes&quot; in a component. In such cases you may come up with your own convention instead of using <span class="code">children</span>
+        While this is less common, sometimes you might need multiple &quot;holes&quot; in a component. In such cases you may come up with your own convention instead of using <span class="code">children</span>
 
-      <pre><code class="language-javascript">
+        <pre><code class="language-javascript">
     function SplitPane(props) {
         return (
           &lt;div className="SplitPane"&gt;
@@ -43,16 +44,17 @@
     function App() {
         return ( &lt;SplitPane left={ &lt;Contacts /&gt; } right={ &lt;Chat /&gt; } /> );
     }
-      </code></pre>
+        </code></pre>
+      </div>
 
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Specialization">Specialization</h2>
-
-      <pre><code class="language-javascript">
+    <div class="topic" id="Specialization">
+      <div class="topic-heading"><h2>Specialization</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
     function Dialog(props) {
         return (
             &lt;FancyBorder color="blue"&gt;
@@ -65,7 +67,8 @@
     function WelcomeDialog() {
         return ( &lt;Dialog title="Welcome" message="Thank you for visiting!" /&gt; );
     }
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
   </div>
 

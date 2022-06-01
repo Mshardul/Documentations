@@ -9,14 +9,15 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="IfElse">if-else</h2>
-    if - elif - ... - else
-    <ul>
-      <li>There can be zero or more <span class="code">elif</span>.</li>
-      <li>There can be nesting to suit given conditions.</li>
-    </ul>
-      <pre><code class="language-python">
+    <div class="topic" id="IfElse">
+      <div class="topic-heading"><h2>if-else</h2></div>
+      <div class="topic-body">
+        if - elif - ... - else
+        <ul>
+          <li>There can be zero or more <span class="code">elif</span>.</li>
+          <li>There can be nesting to suit given conditions.</li>
+        </ul>
+        <pre><code class="language-python">
     # example
     if num > 0 :
         print("postitive")
@@ -27,23 +28,24 @@
 
     # shorthand if-else (can be used as ternary operator)
     even = True if i%2 else False
-      </code></pre>
+        </code></pre>
 
-      <h3>Chaining comparison operator</h3>
-      <span class="code">a op1 b op2 c</span> is equivalent to <span class="code">a op1 b and b op2 c</span>
-      <pre><code class="language-python">
+        <h3>Chaining comparison operator</h3>
+        <span class="code">a op1 b op2 c</span> is equivalent to <span class="code">a op1 b and b op2 c</span>
+        <pre><code class="language-python">
     if a < b < c : # equivalent to if a < b and b < c
-        pass
-      </code></pre>
+          pass
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Loop">Loop</h2>
-
-      <h3>For Loop</h3>
-      <pre><code class="language-python">
+    <div class="topic" id="Loop">
+      <div class="topic-heading"><h2>Loop</h2></div>
+      <div class="topic-body">
+        <h3>For Loop</h3>
+        <pre><code class="language-python">
     ''' syntax '''
     for var in iterable:
         pass
@@ -53,10 +55,10 @@
     for ele in l1:
         print(ele)    
     
-      </code></pre>
+        </code></pre>
 
-      <h3>While loop</h3>
-      <pre><code class="language-python">
+        <h3>While loop</h3>
+        <pre><code class="language-python">
     ''' example with list '''
     l1 = [1, 2.3, "hi"]
     while a:
@@ -70,12 +72,12 @@
     a = int(input('Enter a number (-1 to quit): '))
     while a != -1: # no need of couter
         a = int(input('Enter a number (-1 to quit): '))
-      </code></pre>
+        </code></pre>
 
-      <h3>Loop control statements</h3>
-      Controlling loops
+        <h3>Loop control statements</h3>
+        Controlling loops
 
-      <pre><code class="language-python">
+        <pre><code class="language-python">
     ''' examples are with for, but can also be acheived using while '''
 
     # continue, break, pass
@@ -97,55 +99,56 @@
             break
     else: # executes when no break statement is called in the for loop
         print("the loop didn't break immaturely")
-      </code></pre>
+        </code></pre>
 
-      <h3>Looping techniques</h3>
+        <h3>Looping techniques</h3>
 
-      Using <span class="point">enumerate()</span>: index number along with value present in that index
-      <pre><code class="language-python">
+        Using <span class="point">enumerate()</span>: index number along with value present in that index
+        <pre><code class="language-python">
     for key, value in enumerate(l1):
         print(key, value)
-      </code></pre>
+        </code></pre>
 
-      <span class="point">zip()</span> is used to combine 2 similar containers(list-list or dict-dict) printing the values sequentially.
-      <pre><code class="language-python">
+        <span class="point">zip()</span> is used to combine 2 similar containers(list-list or dict-dict) printing the values sequentially.
+        <pre><code class="language-python">
     questions = ['name', 'colour', 'shape']
     answers = ['apple', 'red', 'a circle']
     for question, answer in zip(questions, answers):
         print('What is your {0}?  I am {1}.'.format(question, answer))
-      </code></pre>
+        </code></pre>
 
-      <span class="point">iteritem()</span> is used to loop through the dictionary printing the dictionary key-value pair sequentially which is used before Python 3 version.
-      <pre><code class="language-python">
+        <span class="point">iteritem()</span> is used to loop through the dictionary printing the dictionary key-value pair sequentially which is used before Python 3 version.
+        <pre><code class="language-python">
     d = {"name": "apple", "colour": "red", "shape": "a circle"}
     for i, j in d.iteritem():
         print(i, j)
-      </code></pre>
+        </code></pre>
 
-      <span class="point">items()</span> performs the similar task on dictionary as iteritems() but have certain disadvantages when compared with iteritems().
-      <ul>
-        <li>It is very time-consuming. Calling it on large dictionaries consumes quite a lot of time.</li>
-        <li>It takes a lot of memory. Sometimes takes double the memory when called on a dictionary.</li>
-      </ul>
-      <pre><code class="language-python">
+        <span class="point">items()</span> performs the similar task on dictionary as iteritems() but have certain disadvantages when compared with iteritems().
+        <ul>
+          <li>It is very time-consuming. Calling it on large dictionaries consumes quite a lot of time.</li>
+          <li>It takes a lot of memory. Sometimes takes double the memory when called on a dictionary.</li>
+        </ul>
+        <pre><code class="language-python">
     d = {"name": "apple", "colour": "red", "shape": "a circle"}
     for i, j in d.items():
         print(i, j)
-      </code></pre>
+        </code></pre>
 
-      <span class="point">sorted()</span> is used to print the container is sorted order. It doesn't sort the original list, just returns one in sorted order.
-      <pre><code class="language-python">
+        <span class="point">sorted()</span> is used to print the container is sorted order. It doesn't sort the original list, just returns one in sorted order.
+        <pre><code class="language-python">
     lis = [1, 3, 5, 6, 2, 1, 3]
     for i in sorted(lis):
         print(i)
-      </code></pre>
+        </code></pre>
 
-      <span class="point">reversed()</span> is used to print the values of the container in the reversed order
-      <pre><code class="language-python">
+        <span class="point">reversed()</span> is used to print the values of the container in the reversed order
+        <pre><code class="language-python">
     lis = [1, 3, 5, 6, 2, 1, 3]
     for i in reversed(lis):
         print(i)
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
   </div>
 

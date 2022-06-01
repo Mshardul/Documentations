@@ -9,20 +9,21 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="Basics">Basics</h2>
-      <h3>Properties</h3>
-      <ul>
-        <li>Python allows docstring for functions using three double-quotes(""").</li>
-        <li>Python allows default arguments, but they should not be followed by non-default arguments.</li>
-        <li>Python allows functions to return multiple values.</li>
-        <li>Python allows functions to have variable length of arguments (using *args for non-keywords arguments and **kwargs for keyword arguments).</li>
-        <li>Python allows anonymous functions.</li>
-        <li>Python allows functions within functions.</li>
-      </ul>
+    <div class="topic" id="Basics">
+      <div class="topic-heading"><h2>Basics</h2></div>
+      <div class="topic-body">
+        <h3>Properties</h3>
+        <ul>
+          <li>Python allows docstring for functions using three double-quotes(""").</li>
+          <li>Python allows default arguments, but they should not be followed by non-default arguments.</li>
+          <li>Python allows functions to return multiple values.</li>
+          <li>Python allows functions to have variable length of arguments (using *args for non-keywords arguments and **kwargs for keyword arguments).</li>
+          <li>Python allows anonymous functions.</li>
+          <li>Python allows functions within functions.</li>
+        </ul>
 
-      <h3>Syntax and example</h3>
-      <pre><code class="language-python">
+        <h3>Syntax and example</h3>
+        <pre><code class="language-python">
     ''' syntax '''
     def function_name(parameters):
         """docstring"""
@@ -33,10 +34,10 @@
     def fun():
         print("Welcome to GFG")
     fun()
-      </code></pre>
+        </code></pre>
 
-      <h3>Arguments</h3>
-      <pre><code class="language-python">
+        <h3>Arguments</h3>
+        <pre><code class="language-python">
     def print_double(x):
         print(x*2)
     print_double(10)
@@ -69,10 +70,10 @@
         print("args: ", args) # args: ('a', 'b', 'c')
         print("kwargs: ", kwargs) # kwargs {'first': 'abc', 'mid': 'def', 'last': 'xyz'}
     myFun('a','b','c',first="abc",mid="def",last="xyz")
-      </code></pre>
+        </code></pre>
 
-      <h3>Docstring</h3>
-      <pre><code class="language-python">
+        <h3>Docstring</h3>
+        <pre><code class="language-python">
     def evenOdd(x):
         """Function to check if the number is even or odd"""
         if (x % 2 == 0):
@@ -80,45 +81,47 @@
         else:
             print("odd")
     print(evenOdd.__doc__) # Function to check if the number is even or odd
-      </code></pre>
+        </code></pre>
 
-      <h3>Anonymous functions</h3>
-      <pre><code class="language-python">
+        <h3>Anonymous functions</h3>
+        <pre><code class="language-python">
     def cube(x): return x*x*x
     cube_v2 = lambda x : x*x*x
     print(cube(7)) # 343
     print(cube_v2(7)) # 343
-      </code></pre>
+        </code></pre>
 
-      <h3>Functions within functions</h3>
-      <pre><code class="language-python">
+        <h3>Functions within functions</h3>
+        <pre><code class="language-python">
     def f1(name):
         s = 'Hi ' + name
         def f2():
             print(s) # Hi abc
         f2()
     f1("abc")
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Generators">Generators</h2>
-      <h3>Generator Functions</h3>
-      A <span class="point">generator function</span> is defined like a normal function, but whenever it needs to generate a value, it does so with the yield keyword rather than return. If the body of a def contains yield, the function automatically becomes a generator function.
-      <pre><code class="language-python">
+    <div class="topic" id="Generators">
+      <div class="topic-heading"><h2>Generators</h2></div>
+      <div class="topic-body">
+        <h3>Generator Functions</h3>
+        A <span class="point">generator function</span> is defined like a normal function, but whenever it needs to generate a value, it does so with the yield keyword rather than return. If the body of a def contains yield, the function automatically becomes a generator function.
+        <pre><code class="language-python">
     def simpleGeneratorFun():
         yield 1
         yield 2
         yield 3
     for value in simpleGeneratorFun():
         print(value)
-      </code></pre>
+        </code></pre>
 
-      <h3>Generator Object</h3>
-      Generator functions return a generator object. <span class="point">Generator objects</span> are used either by calling the next method on the generator object or using the generator object in a “for in” loop.
-      <pre><code class="language-python">
+        <h3>Generator Object</h3>
+        Generator functions return a generator object. <span class="point">Generator objects</span> are used either by calling the next method on the generator object or using the generator object in a “for in” loop.
+        <pre><code class="language-python">
     def fib(limit):
         a, b = 0, 1 # Initialize first two Fibonacci Numbers 
         while a < limit:
@@ -137,46 +140,51 @@
     ''' or iterable '''
     for i in x: 
         print(i) # 0 1 1 2 3
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Lambda">Lambda</h2>
-      Anonymous function means that a function is without a name. def keyword is used to define the normal functions and the lambda keyword is used to create anonymous functions.
-      <ul>
-        <li>can have any number of arguments but only one expression, which is evaluated and returned.</li>
-        <li>One is free to use lambda functions wherever function objects are required.</li>
-        <li>are syntactically restricted to a single expression.</li>
-        <li>lambda returns a function object</li>
-      </ul>
-      <pre><code class="language-python">
-      ''' syntax '''
-      lambda arguments : expression
+    <div class="topic" id="Lambda">
+      <div class="topic-heading"><h2>Lambda</h2></div>
+      <div class="topic-body">
+        Anonymous function means that a function is without a name. def keyword is used to define the normal functions and the lambda keyword is used to create anonymous functions.
+        <ul>
+          <li>can have any number of arguments but only one expression, which is evaluated and returned.</li>
+          <li>One is free to use lambda functions wherever function objects are required.</li>
+          <li>are syntactically restricted to a single expression.</li>
+          <li>lambda returns a function object</li>
+        </ul>
+        <pre><code class="language-python">
+    ''' syntax '''
+    lambda arguments : expression
 
-      ''' example '''
-      x ="Hi there!"
-      (lambda x : print(x))(x)
+    ''' example '''
+    x ="Hi there!"
+    (lambda x : print(x))(x)
 
-      ''' lambda vs normal function '''
-      # normal function
-      def cube(y):
-          return y*y*y;
-      print(cube(5))
-      # lambda function
-      g = lambda x: x*x*x
-      print(g(7))
-      </code></pre>
+    ''' lambda vs normal function '''
+    # normal function
+    def cube(y):
+        return y*y*y;
+    print(cube(5))
+
+    # lambda function
+    g = lambda x: x*x*x
+    print(g(7))
+        </code></pre>
+      </div>
     </div>
-    
+	
     <hr/>
-    
-    <div class="topic">
-      <h2 id="LocalAndGlobalVariables">Local and Global Variables</h2>
-      <span class="point">local variables</span> are accessible only inside the function in which it was initialized whereas the <span class="point">global variables</span> are accessible throughout the program and inside every function. 
-      to access <span class="point">global variables</span> inside a function we need to re-declare them using the keyword <span class="code">global</span>
-      <pre><code class="language-python">
+	
+    <div class="topic" id="LocalAndGlobalVariables">
+      <div class="topic-heading"><h2>Local and Global Variables</h2></div>
+      <div class="topic-body">
+        <span class="point">local variables</span> are accessible only inside the function in which it was initialized whereas the <span class="point">global variables</span> are accessible throughout the program and inside every function. 
+        to access <span class="point">global variables</span> inside a function we need to re-declare them using the keyword <span class="code">global</span>
+        <pre><code class="language-python">
     def f():
         global s # accesses the global variable 's'
         s += ' there'
@@ -188,22 +196,24 @@
     s = "Python is great!"
     f()
     print(s) # Hello
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="FirstClassFunction">First Class Function</h2>
-      <span class="point">First class objects</span> in a language are handled uniformly throughout. They may be stored in data structures, passed as arguments, or used in control structures. A programming language is said to support <span class="point">first-class functions</span> if it treats functions as first-class objects.
-      <ul>
-        <li>A function is an instance of the Object type.</li>
-        <li>You can store the function in a variable.</li>
-        <li>You can pass the function as a parameter to another function.</li>
-        <li>You can return the function from a function.</li>
-        <li>You can store them in data structures such as hash tables, lists, …</li>
-      </ul>
-      <pre><code class="language-python">
+    <div class="topic" id="FirstClassFunction">
+      <div class="topic-heading"><h2>First Class Function</h2></div>
+      <div class="topic-body">
+        <span class="point">First class objects</span> in a language are handled uniformly throughout. They may be stored in data structures, passed as arguments, or used in control structures. A programming language is said to support <span class="point">first-class functions</span> if it treats functions as first-class objects.
+        <ul>
+          <li>A function is an instance of the Object type.</li>
+          <li>You can store the function in a variable.</li>
+          <li>You can pass the function as a parameter to another function.</li>
+          <li>You can return the function from a function.</li>
+          <li>You can store them in data structures such as hash tables, lists, …</li>
+        </ul>
+        <pre><code class="language-python">
     ''' functions are objects '''
     def shout(text):
         return text.upper()
@@ -229,19 +239,21 @@
         return adder
     add_15 = create_adder(15)
     print (add_15(10)) # 25
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Closures">Closures</h2>
-      A Closure is a function object that remembers values in enclosing scopes even if they are not present in memory.
-      <ul>
-        <li>It is a record that stores a function together with an environment: a mapping associating each free variable of the function (variables that are used locally but defined in an enclosing scope) with the value or reference to which the name was bound when the closure was created.</li>
-        <li>A closure—unlike a plain function—allows the function to access those captured variables through the closure's copies of their values or references, even when the function is invoked outside their scope.</li>
-      </ul>
-      <pre><code class="language-python">
+    <div class="topic" id="Closures">
+      <div class="topic-heading"><h2>Closures</h2></div>
+      <div class="topic-body">
+        A Closure is a function object that remembers values in enclosing scopes even if they are not present in memory.
+        <ul>
+          <li>It is a record that stores a function together with an environment: a mapping associating each free variable of the function (variables that are used locally but defined in an enclosing scope) with the value or reference to which the name was bound when the closure was created.</li>
+          <li>A closure—unlike a plain function—allows the function to access those captured variables through the closure's copies of their values or references, even when the function is invoked outside their scope.</li>
+        </ul>
+        <pre><code class="language-python">
     def outerFunction(text):
         text = text
         def innerFunction():
@@ -251,22 +263,24 @@
         myFunction = outerFunction('Hey!')
         myFunction() # Hey!
     # The function innerFunction has its scope only inside the outerFunction. But with the use of closures, we can easily extend its scope to invoke a function outside its scope.
-      </code></pre>
-      <br/>
-      Why and when to use <span class="code">Closures</span>?
-      <ul>
-        <li>As closures are used as callback functions, they provide some sort of data hiding. This helps us to reduce the use of global variables.</li>
-        <li>When we have few functions in our code, closures prove to be an efficient way. But if we need to have many functions, then go for class (OOP).</li>
-      </ul>
+        </code></pre>
+        <br/>
+        Why and when to use <span class="code">Closures</span>?
+        <ul>
+          <li>As closures are used as callback functions, they provide some sort of data hiding. This helps us to reduce the use of global variables.</li>
+          <li>When we have few functions in our code, closures prove to be an efficient way. But if we need to have many functions, then go for class (OOP).</li>
+        </ul>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Decorators">Decorators</h2>
-      <span class="point">Decorators</span> allow us to wrap another function in order to extend the behaviour of the wrapped function, without permanently modifying it. 
-      <h3>Introduction</h3>
-      <pre><code class="language-python">
+    <div class="topic" id="Decorators">
+      <div class="topic-heading"><h2>Decorators</h2></div>
+      <div class="topic-body">
+        <span class="point">Decorators</span> allow us to wrap another function in order to extend the behaviour of the wrapped function, without permanently modifying it. 
+        <h3>Introduction</h3>
+        <pre><code class="language-python">
     def hello_decorator(func):
         def inner1():
             print("Hello, this is before function execution")
@@ -287,27 +301,27 @@
             print("This is inside the function !!")
         f = hello_decorator(function_to_be_used) # passing 'function_to_be_used' inside the decorator to control its behaviour
         f()
-      </code></pre>
-      <h3>Chained decorators</h3>
-      <pre><code class="language-python">
+        </code></pre>
+        <h3>Chained decorators</h3>
+        <pre><code class="language-python">
     @decor2
     @decor1
     def function_to_be_used():
         pass
     # first function_to_be_used() is passed to decor1, then decor1(function_to_be_used()) is passed to decor2
     # final result: decor2(decor1(function_to_be_used))
-      </code></pre>
-      <h3>Decorators with parameters</h3>
-      <pre><code class="language-python">
+        </code></pre>
+        <h3>Decorators with parameters</h3>
+        <pre><code class="language-python">
     def decorator(*args, **kwargs):
         pass
     @decorator(name = "abc")
     def function_to_be_used():
         pass
-      </code></pre>
-      <h3>Memoization using decorators</h3>
-      <span class="point">Memoization</span> is a technique of recording the intermediate results so that it can be used to avoid repeated calculations and speed up the programs. It can be used to optimize the programs that use recursion.
-      <pre><code class="language-python">
+        </code></pre>
+        <h3>Memoization using decorators</h3>
+        <span class="point">Memoization</span> is a technique of recording the intermediate results so that it can be used to avoid repeated calculations and speed up the programs. It can be used to optimize the programs that use recursion.
+        <pre><code class="language-python">
     memory = {}
     def memoize_factorial(f):
         def inner(num):
@@ -328,13 +342,14 @@
 
     print(facto(5))
     print(facto(5)) # directly coming from saved memory
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
   </div>
 
   <div class="sidebar-right">
-    <div class="menu-header" id="menu-header">Table of Content</div>
-    <div class="menu-content" id="menu-content"></div>
+	<div class="menu-header" id="menu-header">Table of Content</div>
+	<div class="menu-content" id="menu-content"></div>
   </div>
 </div>
 

@@ -9,67 +9,73 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="PropertiesOfPython">Properties Of Python</h2>
-      <ul>
-        <li>High level language</li>
-        <li>Interpreted language</li>
-        <li>Open source and community development</li>
-        <li>Dynamically typed</li>
-        <li>Oject Oriented language</li>
-      </ul>
+    <div class="topic" id="PropertiesOfPython">
+      <div class="topic-heading"><h2>Properties Of Python</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>High level language</li>
+          <li>Interpreted language</li>
+          <li>Open source and community development</li>
+          <li>Dynamically typed</li>
+          <li>Oject Oriented language</li>
+        </ul>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Keywords">Keywords</h2>
-      <ul>
-        <li>and, or, is, in, not</li>
-        <li>break, continue, return, yield</li>
-        <li>class, def, lambda, with</li>
-        <li>if, elif, else, for, while, pass</li>
-        <li>try, except, raise, finally, assert</li>
-        <li>True, False, None</li>
-        <li>from, import, as</li>
-        <li>global, nonlocal, del</li>
-      </ul>
-      <br/>
-      Can be printed using
-      <pre><code class="language-python">
+    <div class="topic" id="Keywords">
+      <div class="topic-heading"><h2>Keywords</h2></div>
+        <ul>
+          <li>and, or, is, in, not</li>
+          <li>break, continue, return, yield</li>
+          <li>class, def, lambda, with</li>
+          <li>if, elif, else, for, while, pass</li>
+          <li>try, except, raise, finally, assert</li>
+          <li>True, False, None</li>
+          <li>from, import, as</li>
+          <li>global, nonlocal, del</li>
+        </ul>
+        <br/>
+        Can be printed using
+        <pre><code class="language-python">
     import keyword
     print(keyword.kwlist)
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="NamespaceAndScope">Namespace and Scope</h2>
-      <span class="point">Types of Namespaces</span>: When Python interpreter runs solely without any user-defined modules, methods, classes, etc. Some functions like print(), id() are always present, these are built-in namespaces. When a user creates a module, a global namespace gets created, later the creation of local functions creates the local namespace. The built-in namespace encompasses the global namespace and the global namespace encompasses the local namespace.
-      <br/><br/>
-      A <span class="point">lifetime of a namespace</span> depends upon the scope of objects, if the scope of an object ends, the lifetime of that namespace comes to an end.
-      <br/><br/>
-      But in some cases, one might be interested in updating or processing global variables only. That can be done using <span class="code">global</span> and <span class="code">nonlocal</span> keywords
-      <br/><br/>
-      <span class="point">Scope</span> refers to the coding region from which a particular Python object is accessible. Hence one cannot access any particular object from anywhere from the code, the accessing has to be allowed by the scope of the object.
-      <br/><br/>
-      Rules of <span class="point">global</span> keyword
-      <ul>
-        <li>If a variable is assigned a value anywhere within the function's body, it's assumed to be a local unless explicitly declared as <span class="code">global</span>.</li>
-        <li>Variables that are only referenced inside a function are implicitly global.</li>
-        <li>We Use <span class="code">global</span> keyword to use a global variable inside a function.</li>
-        <li>There is no need to use <span class="code">global</span> keyword outside a function.</li>
-        </li>
-      </ul>
+    <div class="topic" id="NamespaceAndScope">
+      <div class="topic-heading"><h2>Namespace and Scope</h2></div>
+      <div class="topic-body">
+        <span class="point">Types of Namespaces</span>: When Python interpreter runs solely without any user-defined modules, methods, classes, etc. Some functions like print(), id() are always present, these are built-in namespaces. When a user creates a module, a global namespace gets created, later the creation of local functions creates the local namespace. The built-in namespace encompasses the global namespace and the global namespace encompasses the local namespace.
+        <br/><br/>
+        A <span class="point">lifetime of a namespace</span> depends upon the scope of objects, if the scope of an object ends, the lifetime of that namespace comes to an end.
+        <br/><br/>
+        But in some cases, one might be interested in updating or processing global variables only. That can be done using <span class="code">global</span> and <span class="code">nonlocal</span> keywords
+        <br/><br/>
+        <span class="point">Scope</span> refers to the coding region from which a particular Python object is accessible. Hence one cannot access any particular object from anywhere from the code, the accessing has to be allowed by the scope of the object.
+        <br/><br/>
+        Rules of <span class="point">global</span> keyword
+        <ul>
+          <li>If a variable is assigned a value anywhere within the function's body, it's assumed to be a local unless explicitly declared as <span class="code">global</span>.</li>
+          <li>Variables that are only referenced inside a function are implicitly global.</li>
+          <li>We Use <span class="code">global</span> keyword to use a global variable inside a function.</li>
+          <li>There is no need to use <span class="code">global</span> keyword outside a function.</li>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="StatementsIndentationAndComments">Statements, Indentation and Comments</h2>
-      <span class="point">Multi-Line Statements</span>: Statements in Python can be extended to one or more lines using parentheses <span class="code">()</span>, braces <span class="code">{}</span>, square brackets <span class="code">[]</span>, semi-colon <span class="code">;</span>, continuation character slash <span class="code">/</span>.
-      <pre><code class="language-python">
+    <div class="topic" id="StatementsIndentationAndComments">
+      <div class="topic-heading"><h2>Statements, Indentation and Comments</h2></div>
+      <div class="topic-body">
+        <span class="point">Multi-Line Statements</span>: Statements in Python can be extended to one or more lines using parentheses <span class="code">()</span>, braces <span class="code">{}</span>, square brackets <span class="code">[]</span>, semi-colon <span class="code">;</span>, continuation character slash <span class="code">/</span>.
+        <pre><code class="language-python">
     # Declared using Continuation Character (\)
     s = 1 + 2 + 3 + \
         4 + 5 + 6 + \
@@ -89,16 +95,16 @@
 
     # Declared using semicolons(;)
     flag = 2; ropes = 3; pole = 4
-      </code></pre>
+        </code></pre>
 
-      A <span class="point">block</span> is a combination of all these statements. Block can be regarded as the grouping of statements for a specific purpose. Most of the programming languages like C, C++, Java use braces { } to define a block of code. Python uses indentation instead.
-      <br/><br/>
-      <span class="point">Comments</span>
-      <ul>
-        <li>Single line using <span class="code">#</span></li>
-        <li>Multi line using triple quotes, either single <span class="code">'''</span> or double <span class="code">"""</span></li>
-      </ul>
-      
+        A <span class="point">block</span> is a combination of all these statements. Block can be regarded as the grouping of statements for a specific purpose. Most of the programming languages like C, C++, Java use braces { } to define a block of code. Python uses indentation instead.
+        <br/><br/>
+        <span class="point">Comments</span>
+        <ul>
+          <li>Single line using <span class="code">#</span></li>
+          <li>Multi line using triple quotes, either single <span class="code">'''</span> or double <span class="code">"""</span></li>
+        </ul>
+      </div>
     </div>
   </div>
 

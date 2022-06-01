@@ -12,22 +12,23 @@
     <div class="notes">
       // Indexes give you access to alternate query patterns, and can speed up queries.
     </div>
-    <div class="topic">
-      <h2 id="CreatingAnIndex">Creating an Index</h2>
-        <p>Indexes in DynamoDB are different from their relational counterparts. When you create a secondary index, you must specify its key attributes—a partition key and a sort key. After you create the secondary index, you can Query it or Scan it just as you would with a table.</p>
-        <p>Dynamo DB supports 2 kinds of Indices</p>
-        <ul>
-          <li><span class="point">Global secondary indexes</span> – The primary key of the index can be any two attributes from its table.</li>
-          <li><span class="point">Local secondary indexes</span> – The partition key of the index must be the same as the partition key of its table. However, the sort key can be any other attribute.
-        </ul>
-        <p>Add a global secondary index to an existing table, using the <span class="code">UpdateTable</span> action and specifying <span class="code">GlobalSecondaryIndexUpdatesFollowing</span>. Following params are required</p>
-        <ul>
-          <li><span class="code">IndexName</span>: A name for the index.</li>
-          <li><span class="code">KeySchema</span>: The attributes that are used for the index&#39;s primary key.</li>
-          <li><span class="code">Projection</span>: Attributes from the table that are copied to the index.</li>
-          <li><span class="code">ProvisionedThroughput</span>(for provisioned tables): number of reads and writes per second that you need for this index.</li>
-        </ul>
-        <pre><code class="language-json">
+    <div class="topic" id="CreatingAnIndex">
+      <div class="topic-heading"><h2>Creating an Index</h2></div>
+      <div class="topic-body">
+          <p>Indexes in DynamoDB are different from their relational counterparts. When you create a secondary index, you must specify its key attributes—a partition key and a sort key. After you create the secondary index, you can Query it or Scan it just as you would with a table.</p>
+          <p>Dynamo DB supports 2 kinds of Indices</p>
+          <ul>
+            <li><span class="point">Global secondary indexes</span> – The primary key of the index can be any two attributes from its table.</li>
+            <li><span class="point">Local secondary indexes</span> – The partition key of the index must be the same as the partition key of its table. However, the sort key can be any other attribute.
+          </ul>
+          <p>Add a global secondary index to an existing table, using the <span class="code">UpdateTable</span> action and specifying <span class="code">GlobalSecondaryIndexUpdatesFollowing</span>. Following params are required</p>
+          <ul>
+            <li><span class="code">IndexName</span>: A name for the index.</li>
+            <li><span class="code">KeySchema</span>: The attributes that are used for the index&#39;s primary key.</li>
+            <li><span class="code">Projection</span>: Attributes from the table that are copied to the index.</li>
+            <li><span class="code">ProvisionedThroughput</span>(for provisioned tables): number of reads and writes per second that you need for this index.</li>
+          </ul>
+          <pre><code class="language-json">
     {
         TableName: "Music",
         AttributeDefinitions:[
@@ -45,20 +46,22 @@
                 ProvisionedThroughput: { "ReadCapacityUnits": 1,"WriteCapacityUnits": 1 } // Only specified if using provisioned mode
             } } ] 
     }
-        </code></pre>
-        <div class="notes">
-          // DynamoDB does not have a query optimizer, so a secondary index is only used when you Query it or Scan it.<br/>
-          // You can request strongly consistent Query or Scan actions on a table or a local secondary index. However, global secondary indexes support only eventual consistency.<br/>
-        </code></div>
+          </code></pre>
+          <div class="notes">
+            // DynamoDB does not have a query optimizer, so a secondary index is only used when you Query it or Scan it.<br/>
+            // You can request strongly consistent Query or Scan actions on a table or a local secondary index. However, global secondary indexes support only eventual consistency.<br/>
+          </code></div>
+        </div>
       </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="QueryingAnIndex">Querying an Index</h2>
-      <p>perform Query operations directly on the index, in the same way as on a table. must specify both TableName and IndexName</p>
-      <pre><code class="language-json">
+    <div class="topic" id="QueryingAnIndex">
+      <div class="topic-heading"><h2>Querying an Index</h2></div>
+      <div class="topic-body">
+        <p>perform Query operations directly on the index, in the same way as on a table. must specify both TableName and IndexName</p>
+        <pre><code class="language-json">
     {
         TableName: "Music",
         IndexName: "GenreAndPriceIndex",
@@ -68,7 +71,8 @@
             ":price": 0.50
         }
     };
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
   </div>
 

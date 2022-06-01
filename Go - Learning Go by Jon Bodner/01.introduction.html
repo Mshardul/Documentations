@@ -9,47 +9,54 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="Features">Features</h2>
+    <div class="topic" id="Features">
+      <div class="topic-heading">
+        <h2>Features</h2>
+      </div>
       
-      <ul>
-        <li>doesn't have function overloading</li>
-        <li>doesn't allow truthiness. In fact, no other type can be converted to a bool, implicitly or explicitly.</li>
-        <li>Go runtime provides services like memory allocation and garbage collection, concurrency support, networking, and implementations of built-in types and functions.</li>
-        <li>No classes, and no inheritance</li>
-        <li>functions in Go are values</li>
-    </div>
+      <div class="topic-body">
+        <ul>
+          <li>doesn't have function overloading</li>
+          <li>doesn't allow truthiness. In fact, no other type can be converted to a bool, implicitly or explicitly.</li>
+          <li>Go runtime provides services like memory allocation and garbage collection, concurrency support, networking, and implementations of built-in types and functions.</li>
+          <li>No classes, and no inheritance</li>
+          <li>functions in Go are values</li>
+          </ul>
+        </div>
+      </div>
     
     <hr/>
 
-    <div class="topic">
-      <h2 id="TerminalCommands">Terminal Commands</h2>
-      <h3>Installation for macos</h3>
-      <pre><code class="language-bash">
-        $ brew install go # using brew
-        $ choco install golang # using chocolatey
-        $ go version # verify installation
-      </code></pre>
-      <h3>Other important commands</h3>
-      <pre><code class="language-bash">
-        $ go install &lt;library_name&gt; # for installing libraries
-        $ go run &lt;file_name&gt; # builds the binary, executes the binary from that temporary directory, and then deletes the binary after your program finishes
-        $ go build &lt;file_name&gt; # creates an executable in the current directory. The name of the binary matches the name of the file or package passed.
-      </code></pre>
+    <div class="topic" id="TerminalCommands">
+      <div class="topic-heading"><h2>Terminal Commands</h2></div>
+      <div class="topic-body">
+        <h3>Installation for macos</h3>
+        <pre><code class="language-bash">
+    $ brew install go # using brew
+    $ choco install golang # using chocolatey
+    $ go version # verify installation
+        </code></pre>
+        <h3>Other important commands</h3>
+        <pre><code class="language-bash">
+    $ go install &lt;library_name&gt; # for installing libraries
+    $ go run &lt;file_name&gt; # builds the binary, executes the binary from that temporary directory, and then deletes the binary after your program finishes
+    $ go build &lt;file_name&gt; # creates an executable in the current directory. The name of the binary matches the name of the file or package passed.
+        </code></pre>
 
-      <h3>Code Formatting</h3>
-      <pre><code class="language-bash">
-        $ go fmt # automatically reformats your code to match the standard format
-        $ goimports # cleans up your import statements
-        $ golint ./... # to run the lint program
-          # $ go install golang.org/x/lint/golint@latest to install the lint program
-        $ go vet ./... # to counter the errors that were not what the developer meant to do.
-          # This includes things like passing the wrong number of parameters to formatting methods or assigning values to variables that are never used
-      </code></pre>
+        <h3>Code Formatting</h3>
+        <pre><code class="language-bash">
+    $ go fmt # automatically reformats your code to match the standard format
+    $ goimports # cleans up your import statements
+    $ golint ./... # to run the lint program
+      # $ go install golang.org/x/lint/golint@latest to install the lint program
+    $ go vet ./... # to counter the errors that were not what the developer meant to do.
+      # This includes things like passing the wrong number of parameters to formatting methods or assigning values to variables that are never used
+        </code></pre>
 
-      <div class="notes">
-        // GoLand is the Go-specific IDE from JetBrains.<br/>
-        // Go Playground (http://play.golang.org/) is also available for use
+        <div class="notes">
+          // GoLand is the Go-specific IDE from JetBrains.<br/>
+          // Go Playground (http://play.golang.org/) is also available for use
+        </div>
       </div>
     </div>
 

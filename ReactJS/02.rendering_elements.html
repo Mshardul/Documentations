@@ -9,21 +9,24 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="RenderingAnElementIntoTheDOM">Rendering an element into the DOM</h2>
-      Applications built with just React usually have a single root DOM node. If you are integrating React into an existing app, you may have as many isolated root DOM nodes as you like. To render a React element into a root DOM node, pass both to ReactDOM.render(): 
-      <pre><code class="language-javascript">
+    <div class="topic" id="RenderingAnElementIntoTheDOM">
+      <div class="topic-heading"><h2>Rendering an element into the DOM</h2></div>
+      <div class="topic-body">
+        Applications built with just React usually have a single root DOM node. If you are integrating React into an existing app, you may have as many isolated root DOM nodes as you like. To render a React element into a root DOM node, pass both to ReactDOM.render(): 
+        <pre><code class="language-javascript">
     const element = &lt;h1&gt;Hello, world&lt;/h1&gt;;
     ReactDOM.render(element, document.getElementById('root'));
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="UpdatingTheRenderedElement">Updating the Rendered Element</h2>
-      React elements are immutable. Once you create an element, you can’t change its children or attributes. The only way to update the UI is to create a new element, and pass it to ReactDOM.render().
-      <pre><code class="language-javascript">
+    <div class="topic" id="UpdatingTheRenderedElement">
+      <div class="topic-heading"><h2>Updating the Rendered Element</h2></div>
+      <div class="topic-body">
+        React elements are immutable. Once you create an element, you can’t change its children or attributes. The only way to update the UI is to create a new element, and pass it to ReactDOM.render().
+        <pre><code class="language-javascript">
     function tick() {
         const element = (
             &lt;div&gt; &lt;h1&gt;Hello, world!&lt;/h1&gt; &lt;h2&gt;It is {new Date().toLocaleTimeString()}.&lt;/h2&gt; &lt;/div&gt;
@@ -32,11 +35,12 @@
     }
     
     setInterval(tick, 1000);
-      </code></pre>
+        </code></pre>
 
-      <div class="notes">
-        // React DOM compares the element and its children to the previous one, and only applies the DOM updates necessary to bring the DOM to the desired state.<br/>
-        // only the node whose contents have changed gets updated by React DOM.<br/>
+        <div class="notes">
+          // React DOM compares the element and its children to the previous one, and only applies the DOM updates necessary to bring the DOM to the desired state.<br/>
+          // only the node whose contents have changed gets updated by React DOM.<br/>
+        </div>
       </div>
     </div>
   </div>

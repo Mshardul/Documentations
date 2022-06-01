@@ -9,56 +9,59 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="Input">Input</h2>
-      Python provides 2 inbuilt functions to read input from keyboard.
-      <ul>
-        <li>input(prompt)</li>
-        <li>raw_input(prompt)</li>
-      </ul>
-
-      <table>
-        <tr><th>Property</th><th>input</th><th>raw_input</th></tr>
-        <tr><td>Syntax</td><td>input(prompt)</td><td>raw_input(prompt)</td></tr>
-        <tr>
-          <td>Functioning</td>
-          <td>tells the program to stop and wait for the user to input the values</td>
-          <td>tells the program to stop and wait for the user to input the values</td>
-        </tr>
-        <tr>
-          <td>Python versions supported</td>
-          <td>both Python 2.x and Python 3.x</td>
-          <td>only in Python 2.x</td>
-        </tr>
-        <tr>
-          <td>input type</td>
-          <td>In Python 3.x, the input function explicitly converts the input you give to type string. But Python 2.x input function takes the value and type of the input you enter as it is without modifying the type</td>
-          <td>Type is always string. We need to typecase it, if required.</td>
-        </tr>
-        <tr>
-          <td>Example</td>
-          <td><pre><code class="language-python">
-      v = input("Enter the name: ")
-          </code></pre></td>
-          <td><pre><code class="language-python">
-      v = raw_input("Enter the name: ")
-          </code></pre></td>
-        </tr>
-      </table>
-      <div class="notes">
+    <div class="topic" id="Input">
+      <div class="topic-heading"><h2>Input</h2></div>
+      <div class="topic-body">
+        Python provides 2 inbuilt functions to read input from keyboard.
         <ul>
-          <li>Developers are recommended to use raw_input function in Python 2.x. Because there is a vulnerability in input function in Python 2.x version.</li>
-          <li>For taking multiple inputs at once, take the input as string and split it into multiple variables using <span class="code">split()</span></li>
+          <li>input(prompt)</li>
+          <li>raw_input(prompt)</li>
         </ul>
+
+        <table>
+          <tr><th>Property</th><th>input</th><th>raw_input</th></tr>
+          <tr><td>Syntax</td><td>input(prompt)</td><td>raw_input(prompt)</td></tr>
+          <tr>
+            <td>Functioning</td>
+            <td>tells the program to stop and wait for the user to input the values</td>
+            <td>tells the program to stop and wait for the user to input the values</td>
+          </tr>
+          <tr>
+            <td>Python versions supported</td>
+            <td>both Python 2.x and Python 3.x</td>
+            <td>only in Python 2.x</td>
+          </tr>
+          <tr>
+            <td>input type</td>
+            <td>In Python 3.x, the input function explicitly converts the input you give to type string. But Python 2.x input function takes the value and type of the input you enter as it is without modifying the type</td>
+            <td>Type is always string. We need to typecase it, if required.</td>
+          </tr>
+          <tr>
+            <td>Example</td>
+            <td><pre><code class="language-python">
+    v = input("Enter the name: ")
+            </code></pre></td>
+            <td><pre><code class="language-python">
+    v = raw_input("Enter the name: ")
+            </code></pre></td>
+          </tr>
+        </table>
+        <div class="notes">
+          <ul>
+            <li>Developers are recommended to use raw_input function in Python 2.x. Because there is a vulnerability in input function in Python 2.x version.</li>
+            <li>For taking multiple inputs at once, take the input as string and split it into multiple variables using <span class="code">split()</span></li>
+          </ul>
+        </div>
       </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="Output">Output</h2>
-      <span class="code">print()</span> function prints the message to the screen or any other standard output device.
-      <pre><code class="language-python">
+    <div class="topic" id="Output">
+      <div class="topic-heading"><h2>Output</h2></div>
+      <div class="topic-body">
+        <span class="code">print()</span> function prints the message to the screen or any other standard output device.
+        <pre><code class="language-python">
     print(value(s), sep= ' ', end = '\n', file=file, flush=flush) # syntax
 
     ''' params
@@ -68,42 +71,43 @@
         file(Optional): An object with a write method. Default : sys.stdout
         flush(Optional): A Boolean, specifying if the output is flushed (True) or buffered (False). Default: False
     '''
-      </code></pre>
-      The print statement accepts multiple objects separated by ","
-      <pre><code class="language-python">
+        </code></pre>
+        The print statement accepts multiple objects separated by ","
+        <pre><code class="language-python">
     name = input("enter your name.")
     print("hi", name)
-      </code></pre>
+        </code></pre>
 
-      <h3>Output Formatting</h3>
-      There are several ways to format output.
-      <ul>
-        <li>To use <span class="point">formatted string literals</span>, begin a string with <span class="code">f</span> or <span class="code">F</span> before the opening quotation mark or triple quotation mark.</li>
-        <li>The string method <span class="code">str.format()</span> helps a user create a fancier output.</li>
-      </ul>
-      <pre><code class="language-python">
-      ''' using String modulo operator(%) '''
-      # integer, float, octal, exponential
-      print("Students: %2d, Marks: %5.2f, Grades: %7.3o, percentile: %10.3E" % (100, 05.333, 25, 356.08977)) # Students: 100, Marks: 5.33, Grades: 031, percentile: 3.561E+02
-      # the general syntax here is %[flags][width][.precision]type 
+        <h3>Output Formatting</h3>
+        There are several ways to format output.
+        <ul>
+          <li>To use <span class="point">formatted string literals</span>, begin a string with <span class="code">f</span> or <span class="code">F</span> before the opening quotation mark or triple quotation mark.</li>
+          <li>The string method <span class="code">str.format()</span> helps a user create a fancier output.</li>
+        </ul>
+        <pre><code class="language-python">
+    ''' using String modulo operator(%) '''
+    # integer, float, octal, exponential
+    print("Students: %2d, Marks: %5.2f, Grades: %7.3o, percentile: %10.3E" % (100, 05.333, 25, 356.08977)) # Students: 100, Marks: 5.33, Grades: 031, percentile: 3.561E+02
+    # the general syntax here is %[flags][width][.precision]type 
 
-      ''' using the format method '''
-      # without using indexing
-      print('Hi {}, and hello {}!'.format('abc', 'def'))                                                     # Hi abc, and hello def!
-      # using indexing
-      print('{1} and {0}'.format('abc', 'def'))                                                              # def and abc
-      # using format fields
-      print("Second argument: {1:3d}, first one: {0:7.2f}".format(47.42, 11))                                # Second argument: 11, first one: 47.42
-      # using format in dictionary
-      data = dict(a ="abc", b ="def")
-      print("Hi {a}, hello {b}!".format(**data))                                                             # Hi abc, and hello def!
+    ''' using the format method '''
+    # without using indexing
+    print('Hi {}, and hello {}!'.format('abc', 'def'))                                                     # Hi abc, and hello def!
+    # using indexing
+    print('{1} and {0}'.format('abc', 'def'))                                                              # def and abc
+    # using format fields
+    print("Second argument: {1:3d}, first one: {0:7.2f}".format(47.42, 11))                                # Second argument: 11, first one: 47.42
+    # using format in dictionary
+    data = dict(a ="abc", b ="def")
+    print("Hi {a}, hello {b}!".format(**data))                                                             # Hi abc, and hello def!
 
-      ''' using the String method '''
-      name = "abcd"
-      print (cstr.center(10, '#'))                                                                           # ###abcd###
-      print (cstr.ljust(10, '-'))                                                                            # abcd------
-      print (cstr.rjust(10, '-'))                                                                            # ------abcd
-      </code></pre>
+    ''' using the String method '''
+    name = "abcd"
+    print (cstr.center(10, '#'))                                                                           # ###abcd###
+    print (cstr.ljust(10, '-'))                                                                            # abcd------
+    print (cstr.rjust(10, '-'))                                                                            # ------abcd
+        </code></pre>
+      </div>
     </div>
 
   </div>

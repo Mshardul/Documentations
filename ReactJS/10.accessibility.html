@@ -13,18 +13,21 @@
       // Web accessibility (also referred to as a11y) is the design and creation of websites that can be used by everyone. Accessibility support is necessary to allow assistive technology to interpret web pages.<br/>
     </div>
 
-    <div class="topic">
-      <h2 id="WAIARIA">WAI-ARIA</h2>
-      <p>The Web Accessibility Initiative - Accessible Rich Internet Applications document contains techniques for building fully accessible JavaScript widgets.</p>
-      <p>All <span class="code">aria-*</span> HTML attributes are fully supported in JSX. Whereas most DOM properties and attributes in React are camelCased, these attributes should be hyphen-cased (also known as kebab-case, lisp-case, etc) as they are in plain HTML</p>
+    <div class="topic" id="WAIARIA">
+      <div class="topic-heading"><h2>WAI-ARIA</h2></div>
+      <div class="topic-heading">
+        <p>The Web Accessibility Initiative - Accessible Rich Internet Applications document contains techniques for building fully accessible JavaScript widgets.</p>
+        <p>All <span class="code">aria-*</span> HTML attributes are fully supported in JSX. Whereas most DOM properties and attributes in React are camelCased, these attributes should be hyphen-cased (also known as kebab-case, lisp-case, etc) as they are in plain HTML</p>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="SemanticHTML">Semantic HTML</h2>
-      <p>Sometimes we break HTML semantics when we add &lt;div&gt; elements to our JSX to make our React code work, especially when working with lists (&lt;ol&gt;, &lt;ul&gt; and &lt;dl&gt;) and the HTML &lt;table&gt;. In these cases we should rather use React Fragments to group together multiple elements.</p>
-      <pre><code class="language-javascript">
+    <div class="topic" id="SemanticHTML">
+      <div class="topic-heading"><h2>Semantic HTML</h2></div>
+      <div class="topic-body">
+        <p>Sometimes we break HTML semantics when we add &lt;div&gt; elements to our JSX to make our React code work, especially when working with lists (&lt;ol&gt;, &lt;ul&gt; and &lt;dl&gt;) and the HTML &lt;table&gt;. In these cases we should rather use React Fragments to group together multiple elements.</p>
+        <pre><code class="language-javascript">
     function Glossary(props) {
         return (
             &lt;dl&gt;
@@ -35,9 +38,9 @@
             &lt;/dl&gt;
         );
     }
-      </code></pre>
-      <p>When you don’t need any props on the Fragment tag you can use the short syntax, if your tooling supports it</p>
-      <pre><code class="language-javascript">
+        </code></pre>
+        <p>When you don’t need any props on the Fragment tag you can use the short syntax, if your tooling supports it</p>
+        <pre><code class="language-javascript">
     function ListItem({ item }) {
         return (
             &lt;&gt;
@@ -46,30 +49,32 @@
             &lt;/&gt;
         );
     }
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="AccessibleForms">Accessible Forms</h2>
-
-      <h3>Labeling</h3>
-      <p>Although these standard HTML practices can be directly used in <span class="code">React</span>, note that the <span class="code">for</span> attribute is written as <span class="code">htmlFor</span> in JSX</p>
-      <pre><code class="language-javascript">
+    <div class="topic" id="AccessibleForms">
+      <div class="topic-heading"><h2>Accessible Forms</h2></div>
+      <div class="topic-body">
+        <h3>Labeling</h3>
+        <p>Although these standard HTML practices can be directly used in <span class="code">React</span>, note that the <span class="code">for</span> attribute is written as <span class="code">htmlFor</span> in JSX</p>
+        <pre><code class="language-javascript">
     &lt;label htmlFor="namedInput"&gt;Name:&lt;/label&gt;
     &lt;input id="namedInput" type="text" name="name"/&gt;
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="FocusControl">Focus Control</h2>
-      
-      <h3>Programmatically managing focus</h3>
-      <p>For example, by resetting keyboard focus to a button that opened a modal window after that modal window is closed.</p>
-      <pre><code class="language-javascript">
+    <div class="topic" id="FocusControl">
+      <div class="topic-heading"><h2>Focus Control</h2></div>
+      <div class="topic-body">
+        <h3>Programmatically managing focus</h3>
+        <p>For example, by resetting keyboard focus to a button that opened a modal window after that modal window is closed.</p>
+        <pre><code class="language-javascript">
     function CustomTextInput(props) {
       return ( &lt;div&gt;&lt;input ref={props.inputRef} /&gt;&lt;/div&gt; );
     }
@@ -82,7 +87,8 @@
     }
     
     this.inputElement.current.focus(); // set focus when required.
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
   </div>

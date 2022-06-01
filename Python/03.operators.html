@@ -9,90 +9,96 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic">
-      <h2 id="BasicOperators">Basic Operators</h2>
+    <div class="topic" id="BasicOperators">
+      <div class="topic-heading"><h2>Basic Operators</h2></div>
+      <div class="topic-body">
+        <span class="code">Operator</span> library has methods for all the operators that take 1 or 2 arguments (depending upon the operator) and returns the response.
+        <h3>Arithmetic Operators</h3>
+        + (add), - (subtract), * (multiplication), / (float division), // (int division), % (modulus), ** (power)
 
-      <span class="code">Operator</span> library has methods for all the operators that take 1 or 2 arguments (depending upon the operator) and returns the response.
-      <h3>Arithmetic Operators</h3>
-      + (add), - (subtract), * (multiplication), / (float division), // (int division), % (modulus), ** (power)
+        <h3>Comparison Operators</h3>
+        &gt; (greater than), &lt; (less than), == (is equal to), &gt;= (greater than or equal to), &lt;= (less than or equal to)
 
-      <h3>Comparison Operators</h3>
-      &gt; (greater than), &lt; (less than), == (is equal to), &gt;= (greater than or equal to), &lt;= (less than or equal to)
+        <h3>Logical Operators</h3>
+        and, or, not
 
-      <h3>Logical Operators</h3>
-      and, or, not
+        <h3>Bitwise Operators</h3>
+        & (bitwise and), | (bitwise or), ~ (bitwise not), ^ (bitwise xor), &gt;&gt; (bitwise right shift), &lt;&lt; (bitwise left shift)
 
-      <h3>Bitwise Operators</h3>
-      & (bitwise and), | (bitwise or), ~ (bitwise not), ^ (bitwise xor), &gt;&gt; (bitwise right shift), &lt;&lt; (bitwise left shift)
+        <h3>Assignment Operators</h3>
+        =, +=, -=, *=, /=, %=, //=, **=, &=, |=, ^=, &gt;&gt;=, &lt;&lt;=
 
-      <h3>Assignment Operators</h3>
-      =, +=, -=, *=, /=, %=, //=, **=, &=, |=, ^=, &gt;&gt;=, &lt;&lt;=
+        <h3>Identity Operators</h3>
+        is, is not
 
-      <h3>Identity Operators</h3>
-      is, is not
+        <h3>Membership Operators</h3>
+        in, not in
 
-      <h3>Membership Operators</h3>
-      in, not in
-
-      <div class="notes">
-        <ul>
-          <li><span class="code">Operator</span> library contains methods for operators including: 
-            <ul>
-              <li>Arithmetic: <span class="code">operator.add(a, b)</span>, <span class="code">operator.sub(a, b)</span>, <span class="code">operator.mul(a, b)</span>, <span class="code">operator.truediv(a, b)</span>, <span class="code">operator.floordiv(a, b)</span>, <span class="code">operator.mod(a, b)</span>, <span class="code">operator.pow(a, b)</span></li>
-              <li>Comparison: <span class="code">operator.lt(a, b)</span>, <span class="code">operator.gt(a, b)</span>, <span class="code">operator.le(a, b)</span>, <span class="code">operator.ge(a, b)</span>, <span class="code">operator.eq(a, b)</span>, <span class="code">operator.ne(a, b)</span></li>
-              <li>Bitwise: <span class="code">operator.and_(a,b)</span>, <span class="code">operator.or_(a,b)</span>, <span class="code">operator.xor(a,b</span>, <span class="code">operator.invert(a)</span></li>
-            </ul>
-          </li>
-        </ul>
+        <div class="notes">
+          <ul>
+            <li><span class="code">Operator</span> library contains methods for operators including: 
+              <ul>
+                <li>Arithmetic: <span class="code">operator.add(a, b)</span>, <span class="code">operator.sub(a, b)</span>, <span class="code">operator.mul(a, b)</span>, <span class="code">operator.truediv(a, b)</span>, <span class="code">operator.floordiv(a, b)</span>, <span class="code">operator.mod(a, b)</span>, <span class="code">operator.pow(a, b)</span></li>
+                <li>Comparison: <span class="code">operator.lt(a, b)</span>, <span class="code">operator.gt(a, b)</span>, <span class="code">operator.le(a, b)</span>, <span class="code">operator.ge(a, b)</span>, <span class="code">operator.eq(a, b)</span>, <span class="code">operator.ne(a, b)</span></li>
+                <li>Bitwise: <span class="code">operator.and_(a,b)</span>, <span class="code">operator.or_(a,b)</span>, <span class="code">operator.xor(a,b</span>, <span class="code">operator.invert(a)</span></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="PrecedenceAndAssociativityOfOperators">Precedence and Associativity of Operators</h2>
-      Following table lists all operators in the order of decreasing precedence.
-      <table>
-        <tr><th>Operator</th><th>Associativity</th></tr>
-        <tr><td>()</td><td>left-to-right</td></tr>
-        <tr><td>**</td><td>right-to-left</td></tr>
-        <tr><td>*, /, %</td><td>left-to-right</td></tr>
-        <tr><td>+, -</td><td>left-to-right</td></tr>
-        <tr><td>&lt;&lt;, &gt;&gt;</td><td>left-to-right</td></tr>
-        <tr><td>&lt; &lt;=, &gt;, &gt;=</td><td>left-to-right</td></tr>
-        <tr><td>==, !=</td><td>left-to-right</td></tr>
-        <tr><td>is, is not, in, not in</td><td>left-to-right</td></tr>
-        <tr><td>&</td><td>left-to-right</td></tr>
-        <tr><td>^</td><td>left-to-right</td></tr>
-        <tr><td>|</td><td>left-to-right</td></tr>
-        <tr><td>not</td><td>right-to-left</td></tr>
-        <tr><td>and</td><td>left-to-right</td></tr>
-        <tr><td>or</td><td>left-to-right</td></tr>
-        <tr><td>=, +=, -=, *=, /=, %=, &=, ^=, |=, &lt;&lt;=, &gt;&gt;=</td><td>right-to-left</td></tr>
-      </table>
+    <div class="topic" id="PrecedenceAndAssociativityOfOperators">
+      <div class="topic-heading"><h2>Precedence and Associativity of Operators</h2></div>
+      <div class="topic-body">
+        Following table lists all operators in the order of decreasing precedence.
+        <table>
+          <tr><th>Operator</th><th>Associativity</th></tr>
+          <tr><td>()</td><td>left-to-right</td></tr>
+          <tr><td>**</td><td>right-to-left</td></tr>
+          <tr><td>*, /, %</td><td>left-to-right</td></tr>
+          <tr><td>+, -</td><td>left-to-right</td></tr>
+          <tr><td>&lt;&lt;, &gt;&gt;</td><td>left-to-right</td></tr>
+          <tr><td>&lt; &lt;=, &gt;, &gt;=</td><td>left-to-right</td></tr>
+          <tr><td>==, !=</td><td>left-to-right</td></tr>
+          <tr><td>is, is not, in, not in</td><td>left-to-right</td></tr>
+          <tr><td>&</td><td>left-to-right</td></tr>
+          <tr><td>^</td><td>left-to-right</td></tr>
+          <tr><td>|</td><td>left-to-right</td></tr>
+          <tr><td>not</td><td>right-to-left</td></tr>
+          <tr><td>and</td><td>left-to-right</td></tr>
+          <tr><td>or</td><td>left-to-right</td></tr>
+          <tr><td>=, +=, -=, *=, /=, %=, &=, ^=, |=, &lt;&lt;=, &gt;&gt;=</td><td>right-to-left</td></tr>
+        </table>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="TernaryOperator">Ternary Operator</h2>
-      <div class="notes">
-        <ul>
-          <li>Python doesn't contain any special ternary operators. We can use inline if-else to achieve this.</li>
-        </ul>
-      </div>
-      Syntax: <span class="code">[on_true] if [expression] else [on_false] </span>
-      <pre><code class="language-python">
+    <div class="topic" id="TernaryOperator">
+      <div class="topic-heading"><h2>Ternary Operator</h2></div>
+      <div class="topic-body">
+        <div class="notes">
+          <ul>
+            <li>Python doesn't contain any special ternary operators. We can use inline if-else to achieve this.</li>
+          </ul>
+        </div>
+        Syntax: <span class="code">[on_true] if [expression] else [on_false] </span>
+        <pre><code class="language-python">
     a, b = 10, 20
     min = a if a < b else b
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="OperatorOverloading">Operator Overloading</h2>
-      <pre><code class="language-python">
+    <div class="topic" id="OperatorOverloading">
+      <div class="topic-heading"><h2>Operator Overloading</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
     ''' using + '''
     # when 2 numbers, add
     print(1 + 2)                       # 3
@@ -104,52 +110,52 @@
     print(3 * 4)                       # 12
     # when a string, repeat the string
     print("ab"*3)                      # ababab
-      </code></pre>
+        </code></pre>
 
-      <h3>Special functions for operator overloading</h3> 
-      <table>
-        <tr><th>Operator</th><th>Method</th></tr>
-        <tr><th colspan="2">Binary Operators</th></tr>
-        <tr><td>+</td><td>__add__(self, other)</td></tr>
-        <tr><td>-</td><td>__sub__(self, other)</td></tr>
-        <tr><td>*</td><td>__mul__(self, other)</td></tr>
-        <tr><td>/</td><td>__truediv__(self, other)</td></tr>
-        <tr><td>//</td><td>__floordiv__(self, other</td></tr>
-        <tr><td>%</td><td>__mod__(self, other)</td></tr>
-        <tr><td>**</td><td>__pow__(self, other)</td></tr>
-        <tr><td>&gt;&gt;</td><td>__rshift__(self, other)</td></tr>
-        <tr><td>&lt;&lt;</td><td>__lshift__(self, other)</td></tr>
-        <tr><td>&</td><td>__and__(self, other)</td></tr>
-        <tr><td>|</td><td>__or__(self, other)</td></tr>
-        <tr><td>^</td><td>__xor__(self, other)</td></tr>
-        <tr><th colspan="2">Comparison Operator</th></tr>
-        <tr><td>&lt;</td><td>__lt__(self, other)</td></tr>
-        <tr><td>&gt;</td><td>__gt__(self, other)</td></tr>
-        <tr><td>&lt;e</td><td>__le__(self, other)</td></tr>
-        <tr><td>&gt;=</td><td>__ge__(self, other)</td></tr>
-        <tr><td>==</td><td>__eq__(self, other)</td></tr>
-        <tr><td>!=</td><td>__ne__(self, other)</td></tr>
-        <tr><th colspan="2">Assignment Operators</th></tr>
-        <tr><td>+=</td><td>__iadd__(self, other)</td></tr>
-        <tr><td>-=</td><td>__isub__(self, other)</td></tr>
-        <tr><td>*=</td><td>__imul__(self, other)</td></tr>
-        <tr><td>/=</td><td>__idiv__(self, other)</td></tr>
-        <tr><td>//=</td><td>__ifloordiv__(self, other)</td></tr>
-        <tr><td>%=</td><td>__imod__(self, other)</td></tr>
-        <tr><td>**=</td><td>__ipow__(self, other)</td></tr>
-        <tr><td>&gt;&gt;=</td><td>__irshift__(self, other)</td></tr>
-        <tr><td>&lt;&lt;=</td><td>__ilshift__(self, other)</td></tr>
-        <tr><td>&=</td><td>__iand__(self, other)</td></tr>
-        <tr><td>|=</td><td>__ior__(self, other)</td></tr>
-        <tr><td>^=</td><td>__ixor__(self, other)</td></tr>
-        <tr><th colspan="2">Unary Operators</th></tr>
-        <tr><td>-</td><td>__neg__(self, other)</td></tr>
-        <tr><td>+</td><td>__pos__(self, other)</td></tr>
-        <tr><td>~</td><td>__invert__(self, other)</td></tr>
-      </table>
+        <h3>Special functions for operator overloading</h3> 
+        <table>
+          <tr><th>Operator</th><th>Method</th></tr>
+          <tr><th colspan="2">Binary Operators</th></tr>
+          <tr><td>+</td><td>__add__(self, other)</td></tr>
+          <tr><td>-</td><td>__sub__(self, other)</td></tr>
+          <tr><td>*</td><td>__mul__(self, other)</td></tr>
+          <tr><td>/</td><td>__truediv__(self, other)</td></tr>
+          <tr><td>//</td><td>__floordiv__(self, other</td></tr>
+          <tr><td>%</td><td>__mod__(self, other)</td></tr>
+          <tr><td>**</td><td>__pow__(self, other)</td></tr>
+          <tr><td>&gt;&gt;</td><td>__rshift__(self, other)</td></tr>
+          <tr><td>&lt;&lt;</td><td>__lshift__(self, other)</td></tr>
+          <tr><td>&</td><td>__and__(self, other)</td></tr>
+          <tr><td>|</td><td>__or__(self, other)</td></tr>
+          <tr><td>^</td><td>__xor__(self, other)</td></tr>
+          <tr><th colspan="2">Comparison Operator</th></tr>
+          <tr><td>&lt;</td><td>__lt__(self, other)</td></tr>
+          <tr><td>&gt;</td><td>__gt__(self, other)</td></tr>
+          <tr><td>&lt;e</td><td>__le__(self, other)</td></tr>
+          <tr><td>&gt;=</td><td>__ge__(self, other)</td></tr>
+          <tr><td>==</td><td>__eq__(self, other)</td></tr>
+          <tr><td>!=</td><td>__ne__(self, other)</td></tr>
+          <tr><th colspan="2">Assignment Operators</th></tr>
+          <tr><td>+=</td><td>__iadd__(self, other)</td></tr>
+          <tr><td>-=</td><td>__isub__(self, other)</td></tr>
+          <tr><td>*=</td><td>__imul__(self, other)</td></tr>
+          <tr><td>/=</td><td>__idiv__(self, other)</td></tr>
+          <tr><td>//=</td><td>__ifloordiv__(self, other)</td></tr>
+          <tr><td>%=</td><td>__imod__(self, other)</td></tr>
+          <tr><td>**=</td><td>__ipow__(self, other)</td></tr>
+          <tr><td>&gt;&gt;=</td><td>__irshift__(self, other)</td></tr>
+          <tr><td>&lt;&lt;=</td><td>__ilshift__(self, other)</td></tr>
+          <tr><td>&=</td><td>__iand__(self, other)</td></tr>
+          <tr><td>|=</td><td>__ior__(self, other)</td></tr>
+          <tr><td>^=</td><td>__ixor__(self, other)</td></tr>
+          <tr><th colspan="2">Unary Operators</th></tr>
+          <tr><td>-</td><td>__neg__(self, other)</td></tr>
+          <tr><td>+</td><td>__pos__(self, other)</td></tr>
+          <tr><td>~</td><td>__invert__(self, other)</td></tr>
+        </table>
 
-      <h3>Custom operator overloading example</h3>
-      <pre><code class="language-python">
+        <h3>Custom operator overloading example</h3>
+        <pre><code class="language-python">
     class A:
         def __init__(self, a):
             self.a = a
@@ -165,29 +171,31 @@
     ob2 = A(3)
     print(">" if ob1 > ob2 else "<")    # <
     print(ob1+ob2)                      # 5
-      </code></pre>
-
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
 
-    <div class="topic">
-      <h2 id="AnyAll">any vs all</h2>
-      <table>
-        <tr><th>Condition</th><th>any</th><th>all</th></tr>
-        <tr><td>All Truthy values</td><td>True</td><td>True</td></tr>
-        <tr><td>All Falsy values</td><td>False</td><td>False</td></tr>
-        <tr><td>One or more Truthy values, but not all. Others are False</td><td>True</td><td>False</td></tr>
-        <tr><td>One or more Falsy values, but not all. Others are True</td><td>True</td><td>False</td></tr>
-        <tr><td>Empty iterable</td><td>False</td><td>True</td></tr>
-      </table>
+    <div class="topic" id="AnyAll">
+      <div class="topic-heading"><h2>any vs all</h2></div>
+      <div class="topic-body">
+        <table>
+          <tr><th>Condition</th><th>any</th><th>all</th></tr>
+          <tr><td>All Truthy values</td><td>True</td><td>True</td></tr>
+          <tr><td>All Falsy values</td><td>False</td><td>False</td></tr>
+          <tr><td>One or more Truthy values, but not all. Others are False</td><td>True</td><td>False</td></tr>
+          <tr><td>One or more Falsy values, but not all. Others are True</td><td>True</td><td>False</td></tr>
+          <tr><td>Empty iterable</td><td>False</td><td>True</td></tr>
+        </table>
 
-      <pre><code class="language-python">
+        <pre><code class="language-python">
     print (any([False, False, False, False]))  # False
     print (any([False, False, False, True]))   # True
     print (all([True, True, True, True]))      # True
     print (all([True, True, True, False]))     # False
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
   </div>
 

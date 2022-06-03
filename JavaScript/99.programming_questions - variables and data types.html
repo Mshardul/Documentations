@@ -1,0 +1,206 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Programming questions - Functions</a></span>
+  <span class="next"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+
+    <div class="topic" id="StringAndIntegerOperations">
+      <div class="topic-heading"><h2>String and Integer Operations</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    console.log(2 + '2') // 22
+    console.log(2 - '2') // 0
+    /*
+        + is a number or string operator. If both operands are number, it adds. Otherwise it concatenates.
+        - is a number operator.
+    */
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ThreeComparativeOperatorsInARow">
+      <div class="topic-heading"><h2>Three comparative operators in a row</div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    console.log(5 &lt; 6 &lt;7) // true
+    console.log(7 &gt; 6 &gt;5) // false
+
+    /*
+        5 &lt; 6 &lt; 7 ==(5&lt;6=true)==> true &lt; 7 ==(1&lt;7)==> true
+        7 &gt; 6 &gt; 5 ==(7&gt;6=true)==> true &gt; 5 ==(1&gt;5)==> false
+    */
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ArgumentsInArrowFunctions">
+      <div class="topic-heading"><h2>Arguments in arrow functions</div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    let a = function() { return arguments; }
+    let b = () => { return arguments; }
+
+    console.log(a("hi")) // "hi"
+    console.log(b("hi")) // 
+
+    /* "arguments" doesn't bind with arrow function. Alternatively we can use tripple-dot parameters in arrow function. */
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ObjectFreezeAndSeal">
+      <div class="topic-heading"><h2>Object.freeze() and Object.Seal()</div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    let p1 = {"name": "abc"};
+    Object.freeze(p1);
+    p1.age = 10;
+    console.log(p1); // { name: 'abc' }
+    p1.name = "bcd";
+    console.log(p1); // { name: 'abc' }
+
+    let p2 = {"name": "abc"};
+    Object.seal(p2);
+    p2.age = 10;
+    console.log(p2); // { name: 'abc' }
+    p2.name = "bcd";
+    console.log(p2); // { name: 'bcd' }
+
+    /* 
+        Object.freeze(person) restricts from updating an object
+        Object.freeze(person) restricts from adding a new property to an object 
+    */
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="MathMax">
+      <div class="topic-heading"><h2>Math.max()</div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    console.log(Math.max()) // -Infinity
+
+    /* lowest value so that it can get the max value after comparison */
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="AddingTwoEmptyArrays">
+      <div class="topic-heading"><h2>Adding 2 empty arrays</div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    console.log([] + []) // empty string
+
+    /* 
+        + applies to either number or string. If neither, it typecases to string.
+        String([]) = String({}) = empty string
+    */
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="TaggedTemplates">
+      <div class="topic-heading"><h2>Tagged Templates</div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    function a() {
+      return 'hello'
+    }
+
+    const b = a 'hi'
+    console.log(b); // hello
+    
+     /* a 'hi' = a('hi') */
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ThisKeyword">
+      <div class="topic-heading"><h2>This keyword</div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    function y() {
+      console.log(this.length)
+    }
+    var x = {
+      length: 5,
+      method: function(y) {
+        arguments[0]();
+      }
+    };
+    x.method(y, 1); // 2
+
+    /*
+        x's method gets 2 arguments: { [Function: y], 1 }
+        so, this for function y is { [Function: y], 1 }
+        Hence this.length = 2
+    */
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="StringConstructor">
+      <div class="topic-heading"><h2>StringConstructor</div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    var x = "constructor"
+    console.log(x[x](01)) // "01"
+
+    /*
+        x is a string
+        x[x] = x["constructor"] = x.constructor
+        constructor of any string is a String function
+        passing any value to String function gets the value in String
+    */
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="FloatingPointAdditions">
+      <div class="topic-heading"><h2>Floating point addition</div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    console.log(0.1 + 0.2); // 0.30000000000000004
+
+    /*
+        as decimals are in base 10, but computer only understands base 2; this bug is encountered
+    */
+        </code></pre>
+      </div>
+    </div>
+  </div>
+    
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+    
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

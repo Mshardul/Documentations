@@ -122,6 +122,10 @@ a :visited {
   color: var(--link-visited-color);
 }
 
+.icon {
+  /* float: right; */
+}
+
 /* special classes */
 .notes {
   border-radius: 10px;

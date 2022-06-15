@@ -1,0 +1,181 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Interview questions - Theory</a></span>
+  <span class="next"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+
+    <div class="topic" id="Basics">
+      <div class="topic-heading"><h2>Basics</h2></div>
+      <div class="topic-body">
+        <div class="question_answer_div">
+          <h3 class="question">What is Python? and explain its features?</h3>
+          <p class="answer"></p>
+        </div>
+        <hr/>
+        <div class="question_answer_div">
+          <h3 class="question">How is Python interpreted?</h3>
+          <p class="answer">Source Code -> Intermediate Language -> Native (or machine) Language -> Execution</p>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="DataStructures">
+      <div class="topic-heading"><h2>Data Structures</h2></div>
+      <div class="topic-body">
+
+        <div class="question_answer_div">
+          <h3 class="question">Explain list, dictionary and tuple?</h3>
+          <p class="answer">
+            <ul>
+              <li>List
+                <ul>
+                  <li></li>
+                </ul>
+              </li>
+              <li>Dictionary
+                <ul>
+                  <li>stores key-value pair. Stored as <span class="code">{key1: value1, key2: value2}</span></li>
+                  <li>Members can be accessed using key.</li>
+                  <li>All the keys have to be unique</li>
+                </ul>
+              </li>
+              <li>Tuple
+                <ul>
+                  <li>Immutable list of Python objects. Hence, used to store read-only items. <span class="code">(item1, item2)</span></li>
+                </ul>
+              </li>
+            </ul>
+          </p>
+        </div>
+
+        <hr/>
+
+        <div class="question_answer_div">
+          <h3 class="question">Explain remove, del and pop for lists</h3>
+          <p class="answer">
+            <table>
+              <thead><td>Property</td><td>remove</td><td>del</td><td>pop</td></thead>
+              <tbody>
+                <tr>
+                  <td>Working</td>
+                  <td>removes first matching value</td>
+                  <td>deletes element using index</td>
+                  <td>removes element using index</td>
+                </tr>
+                <tr>
+                  <td>Parameter required</td>
+                  <td>value</td><td>index</td><td>index</td>
+                </tr>
+                <tr>
+                  <td>Returned value</td>
+                  <td>None</td><td>Doesn't return anything</td><td>Deleted element</td>
+                </tr>
+                <tr>
+                  <td>Example</td>
+                  <td><pre><code class="language-python">
+    l1 = [10, 20, 30]
+    a = l1.remove(20) # a = None, l1 = [10, 30]
+                  </code></pre></td>
+                  <td><pre><code class="language-python">
+    l1 = [10, 20, 30]
+    del l1[1] # l1 = [10, 30]
+                  </code></pre></td>
+                  <td><pre><code class="language-python">
+    l1 = [10, 20, 30]
+    c = l1.remove(1) # c = 20, l1 = [10, 30]
+                  </code></pre></td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+        </div>
+
+        <hr/>
+
+        <div class="question_answer_div">
+          <h3 class="question">Explain append vs extend</h3>
+          <p class="answer">
+            <table>
+              <thead><td>Property</td><td>append</td><td>extend</td></thead>
+              <tbody>
+                <tr><td>No of items added</td><td>single element</td><td>all elements of iterables</td></tr>
+                <tr><td>Position at which items are added</td><td>end of the list</td><td>end of the list</td></tr>
+                <tr><td>Types of items to be added</td><td>any data structures</td><td>only elements of iterables</td></tr>
+              </tbody>
+            </table>
+          </p>
+        </div>
+
+        <hr/>
+
+        <div class="question_answer_div">
+          <h3 class="question">Explain deep copy vs shallow copy</h3>
+          <p class="answer"></p>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="MemoryManagement">
+      <div class="topic-heading"><h2>Memory Management</h2></div>
+      <div class="topic-body">
+        <div class="question_answer_div">
+          <h3 class="question">How is memory managed in Python?</h3>
+          <p class="answer">
+            <ul>
+              <li>Involves a private heap containing all Python objects and Data Structures.</li>
+              <li>Interpreter takes care of this heap, and programmer has no access to it - Allocation of heap space for Python objects is taken care of by Python memory manager.</li>
+              <li>Built-in garbage collector recycles all unused memory. </li>
+            </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="Function">
+      <div class="topic-heading"><h2>Function</h2></div>
+      <div class="topic-body">
+        <div class="question_answer_div">
+          <h3 class="question">What are decorators in Python?</h3>
+          <p class="answer"></p>
+          <p class="answer_source">
+            <a href="./06.functions.html#Decorators">06. Functions - Decorators</a>
+          </p>
+        </div>
+
+        <hr/>
+
+        <div class="question_answer_div">
+          <h3 class="question">What are lambdas in Python?</h3>
+          <p class="answer"></p>
+          <p class="answer_source">
+            <a href="./06.functions.html#Lambda">06. Functions - Lambda</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+    
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+    
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

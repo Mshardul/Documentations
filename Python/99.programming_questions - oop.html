@@ -18,9 +18,9 @@
             self.b = bb
     class B:
         def __init__(self):
-          self. a = A(self)
+            self. a = A(self)
         def __del__(self):
-          print ("die")
+            print ("die")
     
     def fun():
         b = B()
@@ -127,6 +127,33 @@
     d = Derived()
     print(d._name) #5 abc
     print(d.__aadhar) #6 AttributeError: 'Derived' object has no attribute '__aadhar'
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ClassVariableValueChange">
+      <div class="topic-heading"><h2>Class Variable Value Change</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    class CSStudent:
+        stream = 'cse' # Class Variable
+        def __init__(self, name):
+            self.name = name # Instance Variable 
+    a = CSStudent('abc')
+    b = CSStudent('bcd')
+
+    # changing class variable value of an object
+    a.stream = "ece"
+    print(CSStudent.stream) # "cse"
+    print(a.stream) # "ece"
+    print(b.stream) # "cse"
+
+    # changing value of class variable of all the objects at once
+    CSStudent.steam = "it"
+    print(a.stream) # "ece" - as it was explicitly changed earlier
+    print(b.stream) # "it"
         </code></pre>
       </div>
     </div>

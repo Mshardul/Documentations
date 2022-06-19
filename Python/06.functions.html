@@ -14,7 +14,7 @@
       <div class="topic-body">
         <h3>Properties</h3>
         <ul>
-          <li>Python allows docstring for functions using three double-quotes(""").</li>
+          <li>Python allows docstring for functions using triple-quotes(""" or ''').</li>
           <li>Python allows default arguments, but they should not be followed by non-default arguments.</li>
           <li>Python allows functions to return multiple values.</li>
           <li>Python allows functions to have variable length of arguments (using *args for non-keywords arguments and **kwargs for keyword arguments).</li>
@@ -246,7 +246,7 @@
     <hr/>
 
     <div class="topic" id="Closures">
-      <div class="topic-heading"><h2>Closures</h2></div>
+        <div class="topic-heading"><h2>Closures</h2></div>
       <div class="topic-body">
         A Closure is a function object that remembers values in enclosing scopes even if they are not present in memory.
         <ul>
@@ -344,6 +344,14 @@
     print(facto(5)) # directly coming from saved memory
         </code></pre>
       </div>
+    </div>
+
+    <hr/>
+
+    <div class="notes">
+      <ul>
+        <li>In python, everything is passed by reference, except immutable objects which are passed by value.</li>
+      </ul>
     </div>
   </div>
 

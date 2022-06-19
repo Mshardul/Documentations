@@ -127,6 +127,7 @@
     d = Derived()
     print(d._name) #5 abc
     print(d.__aadhar) #6 AttributeError: 'Derived' object has no attribute '__aadhar'
+    print(b._Base__aadhar) #7 1234: This way of accessing private members of a class is known as "name mangling".
         </code></pre>
       </div>
     </div>
@@ -157,6 +158,23 @@
         </code></pre>
       </div>
     </div>
+
+    <hr/>
+
+    <div class="topic" id="WhatIsNameMangling">
+      <div class="topic-heading"><h2>What is name mangling?</h2></div>
+      <div class="topic-body">
+        There is a way of accessing private members using the object
+        <pre><code class="language-python">
+    class Student:
+        __school = "abc"
+    s1 = Student
+    print(s1.__school) # error
+    print(s1._Student__school) # "abc" # &lt;obj_name&gt;._&lt;class_name&gt;__&lt;variable_name&gt;
+        </code></pre>
+      </div>
+    </div>
+
   </div>
 
   <div class="sidebar-right">

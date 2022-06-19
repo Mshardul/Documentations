@@ -21,6 +21,12 @@
       
     print(None == 0) # False
     print(None == []) # False
+
+    # bool(empty variable, None, 0, null) = False
+    print(bool("hi")) # True
+    print(bool(0)) # False
+    print(bool("")) # False
+    print(bool([])) # False
         </code></pre>
       </div>
     </div>
@@ -176,6 +182,78 @@
     print(list1 is list3)      # True
     list3 = list3 + list2
     print(list1 is list3)      # False
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="RemoveDuplicatesInList">
+      <div class="topic-heading"><h2>Remove duplicates from a list</h2></div>
+      <div class="topic-body">
+        What are some ways to remove duplicates from a list?
+        <pre><code class="language-python">
+    l1 = ["a", "b", "c", "a", 1, 3, 3, 5]
+    ''' using a set '''
+    l2 = list(set(l1))
+    ''' using keys in a dictionary '''
+    l3 = list(dict.fromkeys(l1))
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ShallowCopy">
+      <div class="topic-heading"><h2>Shallow copy</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    f = [1,2,3,4]
+    s = f
+    s.append(5)
+    print(s) # [1,2,3,4,5]
+    print(f) # [1,2,3,4,5]
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ShuffleAList">
+      <div class="topic-heading"><h2>Shuffle a list</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    from random import shuffle
+    f = [1,2,3,4]
+    shuffle(f) # shuffle values in f into a random order
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="FloorDivision">
+      <div class="topic-heading"><h2>Floor division</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    print(5//2) # 2
+    print(-5//2) # -3
+    print(5//-2) # -3
+    print(5.0//2) # 2.0
+    print(-5.0//2) # -3.0
+    print(5.0//-2) # -3.0
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="MultiplyListAndInt">
+      <div class="topic-heading"><h2>Multiply list and int</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    l1 = [1,2,3,4,5]
+    print(l1 * 2) # [1,2,3,4,5,1,2,3,4,5]
         </code></pre>
       </div>
     </div>

@@ -67,7 +67,8 @@
 
     <div class="topic" id="ChainingDecorators">
       <div class="topic-heading"><h2>Chaining Decorators</h2></div>
-      <pre><code class="language-python">
+      <div class="topic-body">
+        <pre><code class="language-python">
     def decor1(func):
         def inner():
             x = func()
@@ -85,7 +86,8 @@
     def num():
         return 10
     print(num()) # 400
-      </code></pre>
+        </code></pre>
+      </div>
     </div>
 
     <hr/>
@@ -136,6 +138,21 @@
         </code></pre>
       </div>
     </div>
+
+    <hr/>
+
+    <div class="topic" id="ReduceInPython">
+      <div class="topic-heading"><h2>Reduce in Python</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    from functools import reduce
+    seq = [1,2,3,4,5,6,7,8]
+    sum = reduce(lambda x,y: x+y, seq)
+    print(sum) # 36
+        </code></pre>
+      </div>
+    </div>
+
   </div>
     
   <div class="sidebar-right">

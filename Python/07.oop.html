@@ -183,7 +183,7 @@
         <h3>Types of Members</h3>
         <ul>
           <li><span class="point">Protected Members</span>: cannot be accessed outside the class but can be accessed from within the class and its subclasses. Prefix the name of the member by a single underscore <span class="code">"_"</span></li>
-          <li><span class="point">Private Members</span>: are similar to protext except they should neither be accessed outside the class nor by any base class.Prefix the name of the member by double underscore <span class="code">"__"</span></li>
+          <li><span class="point">Private Members</span>: are similar to protect except they should neither be accessed outside the class nor by any subclass. Prefix the name of the member by double underscore <span class="code">"__"</span></li>
         </ul>
         <div class="notes">
           <ul>
@@ -331,6 +331,45 @@
         
       </div>
     </div>
+
+    <hr/>
+
+    <div class="topic" id="MethodOverloadingAndOverriding">
+      <div class="topic-heading"><h2>Method Overloading and Overriding</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>When the method of child class overrides the method of parent class on being called by the object of child class, it is known as <span class="point">Method Overriding</span>.</li>
+          <li><span class="point">Method Overloading</span> is the ability of a function or an operator to behave in different ways based on the parameters or the operands respectively.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="AbstractMethodsAndAbstractClass">
+      <div class="topic-heading"><h2>Abstract Method and Abstract Class</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>An <span class="point">Abstract method</span> is a method that is declared, but contains no implementation.</li>
+          <li>An <span class="point">Abstract class</span> is a class that contains one or more abstract methods.</li>
+          <li>An <span class="point">Abstract class</span> may not be instantiated, and its abstract method must be implemented by the base class.</li>
+          <li>Python provides a module named <span class="point">ABC</span> which provides the base for defining Abstract Base Class (ABC).</li>
+        </ul>
+        <pre><code class="language-python">
+    from abc import ABC, abstractmethod
+    class Mother:
+        @abstractmethod
+        def absmethod(self):
+            pass
+        def defined(self):
+            print("this is a method that is defined in the ABC")
+    class Daughter(Mother):
+        def absmethod(self):
+            print("Abstract method implemented in the child class")
+        </code></pre>
+      </div>
+    </div>
+
   </div>
 
   <div class="sidebar-right">

@@ -1,0 +1,101 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Programming questions - Functions</a></span>
+  <span class="next"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic" id="List">
+
+      <div class="topic-heading"><h2>Set of duplicates in a list</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    l1 = [1,2,3,4,1,2,3,5,6,7,3,5,9]
+    print(set([x for x in l1 if l1.count(x) > 1]))
+        </code></pre>
+      </div>
+
+      <hr/>
+
+      <div class="topic-heading"><h2>Reverse a list</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    l1 = [1,2,3,4]
+
+    ''' using reverse() '''
+    l1.reverse() # l1 = [4,3,2,1]
+
+    ''' using slicing '''
+    l2 = l1[::-1] # l2 = [4,3,2,1]
+
+    ''' using reversed() '''
+    l3 = list(reversed(l1)) # l3 = [4,3,2,1]
+
+    ''' using conventional looping ''' 
+    l4 = []
+    for i in range(len(l1), -1, -1):
+        l4.append(l1[i])
+        </code></pre>
+      </div>
+
+      <hr/>
+
+      <div class="topic-heading"><h2>Remove duplicates in a list</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    l1 = [1,2,3,4,1,2,3,5,6,7,3,5,9]
+
+    ''' using set '''
+    l2 = list(set(l1)) # l2 = [1,2,3,4,5,6,7,9]
+
+    ''' using set with lambda '''
+    rem_duplicate = lambda arr:set(arr)
+    l3 = list(rem_duplicate(l1)) # l3 = [1,2,3,4,5,6,7,9]
+
+    ''' using conventional looping '''
+    l3 = []
+    for ele in l1:
+        if ele not in l3:
+            l3.append(ele)
+    # l3 = [1,2,3,4,5,6,7,9]
+        </code></pre>
+      </div>
+
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="Dictionary">
+
+      <div class="topic-heading"><h2>Merge two dictionaries</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    d1 = {"hi": 1, "hello": 2}
+    d2 = {"namaste": 1}
+
+    ''' using update() '''
+    d1.update(d2) # d1 = {"hi": 1, "hello": 2, "namaste": 1}; d2 = {"namaste": 1}
+
+    ''' using ** '''
+    d3 = {**d1, **d2} # d3 = {"hi": 1, "hello": 2, "namaste": 1}; d1 = {"hi": 1, "hello": 2}; d2 = {"namaste": 1}
+        </code></pre>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

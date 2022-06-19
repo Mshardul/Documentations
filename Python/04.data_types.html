@@ -112,7 +112,7 @@
     l1.pop(3)                                                                        # [10, 'abc', 9.5]
     # slicing a list - [start:end:step] - default values: {start: 0, end: len(list); step: 1}
     l1[1:2]                                                                          # ['abc', 9.5]
-    # list comprehension
+    # list comprehension - transforming one list into another
     odd_square = [x ** 2 for x in range(1, 11) if x % 2 == 1]                        # [1, 9, 25, 49, 81]
         </code></pre>
 
@@ -159,7 +159,7 @@
             <td><pre><code class="language-python">l1.count(10) # 1</code></pre></td>
           </tr>
           <tr>
-            <td>sort()</td><td>Sort items in a list in ascending order</td>
+            <td>sort()</td><td>Sort items in a list in ascending order. for descending order, pass "reverse" set to False in the argument.</td>
             <td><pre><code class="language-python">l1.sort() # [3,5,7,9,10]</code></pre></td>
           </tr>
           <tr>
@@ -247,6 +247,7 @@
         <ul>
           <li>The sequence of values stored in a tuple can be of any type, and they are indexed by integers.</li>
           <li>tuples are created by placing a sequence of values separated by 'comma' with or without the use of parentheses for grouping the data sequence.</li>
+          <li>Faster as compared to lists.</li>
         </ul>
         <pre><code class="language-python">
     ''' initialization '''
@@ -611,6 +612,18 @@
         </code></pre>
       </div>
     </div>
+
+    <hr/>
+
+    <div class="topic" id="Bytes object">
+      <div class="topic-heading"><h2>Bytes object</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>The bytes() function returns a simple bytes object - It converts objects into bytes objects, or creates empty bytes object of the specified size.</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 
   <div class="sidebar-right">

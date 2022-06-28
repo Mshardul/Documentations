@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Programming questions - Pointers</a></span>
+  <span class="next"><a href="./00.main.html">Learning Go</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+
+    <div class="topic" id="SliceInFunctions">
+      <div class="topic-heading"><h2>Slice in functions</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-golang">
+    func updateSliceElement(a []int) {
+        a[0] = 10
+    }
+    func appendIntoSlice(a []int) {
+        a = append(a, 20)
+    }
+      
+    func main() {
+        var x = []int{1, 2, 3, 4, 5}
+        updateSliceElement(x) // x = [10, 2, 3, 4, 5]
+        appendIntoSlice(x) // x = [10, 2, 3, 4, 5]
+    }
+
+    /* 
+      on appending, the Go compiler
+      1. if len == cap => creates a new block in the memory, which is not returned. And hence not known by the calling function.
+      2. if len &lt; cap => the memory block is still the same, but length value of the slice is still the same in the calling function. Hence, can't access outside it.
+    */
+        </code></pre>
+      </div>
+    </div>
+  </div>
+</div>

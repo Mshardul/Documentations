@@ -153,6 +153,65 @@
       </div>
     </div>
 
+    <hr/>
+
+    <div class="topic" id="DefaultsInAFunction">
+      <div class="topic-heading"><h2>Defaults in a function</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    def append(ele, to=[], a=0):
+        to.append(ele)
+        a = ele
+        return to, a
+
+    print(append.__defaults__)    # ([], 0)
+    l1, x = append(10)
+    print(l1, x)                  # [10] 10
+    print(append.__defaults__)    # ([10], 0)
+    l2, y = append(20)
+    print(l2, y)                  # [10, 20] 20
+
+    # Python's default work like static, as default variables are stored in __defaults__ variable. So, with call by reference (not exactly), it changes the default ones permanantly.
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ClassInstanceIntoAFunction">
+      <div class="topic-heading"><h2>Class Instance into a Function</h2></div>
+      <div class="topic-body">
+    <pre><code class="language-python">
+    class Foo:
+        def __init__(self, x):
+            self.x = x
+  
+    def outer():
+        f = Foo(10)
+        inner1(f)
+        print(f.x) # 20
+        inner2(f)
+        print(f.x) # 20
+        g = None
+        inner2(g)
+        print(g is None) # True
+    
+    def inner1(f):
+        f.x = 20
+    
+    def inner2(f):
+        f = Foo(30)
+
+    outer()
+
+    '''
+    Since outer and inner1 are referring to the same memory, changes made to fields in f in inner1 are reflected in the variable in outer.
+    When inner2 reassigns f to a new class instance, this creates a separate instance and does not affect the variable in outer.
+    '''
+    </code></pre>
+      </div>
+    </div>
+
   </div>
     
   <div class="sidebar-right">

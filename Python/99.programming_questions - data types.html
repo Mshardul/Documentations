@@ -65,6 +65,54 @@
         </code></pre>
       </div>
 
+      <hr/>
+
+      <div class="topic-heading"><h2>Implement a Stack using a List</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    class Stack:
+        def __init__(self):
+            self.items = []
+        def isEmpty(self):
+            return not self.items
+        def push(self, item):
+            self.items.append(item)
+        def pop(self):
+            return self.items.pop()
+        def peek(self):
+            return self.items[-1]
+        def size(self)
+            return len(self.items)
+        def __str__(self):
+            return str(self.items)
+        </code></pre>
+      </div>
+
+      <hr/>
+
+      <div class="topic-heading"><h2>Implement a Queue using Collection.deque</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    from collection import deque
+    class Queue:
+        def __init__(self):
+            self.items = deque
+        def isEmpty(self):
+            return not self.items
+        def enqueue(self, ele):
+            self.items.append(ele)
+        def dequeue(self):
+            return self.items.popleft()
+        def size(self):
+            return len(self.items)
+        def peek(self)
+            return self.items[0]
+        def __str__(self):
+            return str(self.items)
+        
+        </code></pre>
+      </div>
+
     </div>
 
     <hr/>

@@ -1,0 +1,238 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Pointers</a></span>
+  <span class="next"><a href="./00.main.html">Learning Go</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+
+    <div class="topic" id="Basics">
+      <div class="topic-heading"><h2>Basics</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>A <span class="point">pointer</span> is simply a variable that holds the location in memory where a value is stored.</li>
+          <li>The zero value for a pointer is <span class="code">nil</span></li>
+          <li>Go's pointer syntax is partially borrowed from C and C++. However some of the tricks, including pointer arithmetic, are not allowed in Go.</li>
+          <li>Since Go has a garbage collector, most of the pain of memory management is removed.</li>
+          <li>The <span class="code">&</span> is the <span class="point">address operator</span>. It precedes a value type and returns the address of the memory location where the value is stored</li>
+          <li>The <span class="code">*</span> is the <span class="point">indirection operator</span>. It precedes a variable of pointer type and returns the pointed-to value. This is called dereferencing</li>
+          <li>A <span class="point">pointer type</span> is a type that represents a pointer. It is written with a <span class="code">*</span> before a type name. A pointer type can be based on any type</li>
+          <li>The built-in function <span class="code">new</span> creates a pointer variable. It returns a pointer to a zero value instance of the provided type</li>
+          <li>The lack of immutable declarations in <span class="code">Go</span> might seem problematic, but the ability to choose between value and pointer parameter types addresses the issue.</li>
+          <li>Rather than declare that some variables and parameters are immutable, Go developers use pointers to indicate that a parameter is mutable.</li>
+        </ul>
+        <pre><code class="language-golang">
+    /* empty pointer */
+    var pointerA *string
+    fmt.Println(pointerA == nil) // true
+    fmt.Println(*pointerA) // panics
+
+    /* pointer with a data type */
+    var x int32 = 10
+    pointerB := &x // referencing
+    fmt.Println(*pointerB) // 10 - dereferencing
+
+    /* pointer arithmetic */
+    z := 5 + *pointerB
+    fmt.Println(z) // 15
+
+    /* pointer variable using "new" keyword */
+    var pointerC = new(int)
+    fmt.Println(pointerC == nil) // false
+    fmt.Println(*pointerC) // 0
+
+    /* pointer to struct */
+    x := &Foo{}
+        </code></pre>
+        <div class="notes">
+          <ul>
+            <li>Before dereferencing a pointer, you must make sure that the pointer is non-nil. Your program will panic if you attempt to dereference a nil pointer</li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="PassingPointersInFunctions">
+      <div class="topic-heading"><h2>Passing pointers in functions</h2></div>
+      <div class="topic-body">
+        <h3>Passing indicate Mutable Parameters</h3>
+        <ul>
+          <li>Since Go is a call by value language, the values passed to functions are copies. For nonpointer types like primitives, structs, and arrays, this means that the called function cannot modify the original. Since the called function has a copy of the original data, the immutability of the original data is guaranteed.</li>
+          <li>However, if a pointer is passed to a function, the function gets a copy of the pointer. This still points to the original data, which means that the original data can be modified by the called function.</li>
+        </ul>
+        <pre><code class="language-golang">
+    func failedUpdate(px *int) {
+        x2 := 20
+        px = &x2
+    }
+    
+    func update(px *int) {
+        *px = 20
+    }
+    
+    func main() {
+        x := 10
+        failedUpdate(&x)
+        fmt.Println(x) // 10
+        update(&x)
+        fmt.Println(x) // 20
+    }
+        </code></pre>
+
+        <h3>Pointers are a last resort</h3>
+        As pointers make it harder to understand data flow and can create extra work for the garbage collector. Use them only when necessary
+        <ul>
+          <li>Rather than populating a struct by passing a pointer to it into a function, have the function instantiate and return the struct</li>
+          <li>The only time you should use pointer parameters to modify a variable is when the function expects an interface</li>
+          <li>When returning values from a function, you should favor value types. Only use a pointer type as a return type if there is state within the data type that needs to be modified.</li>
+        </ul>
+        <pre><code class="language-golang">
+    /* not this */
+    func MakeFoo(f *Foo) error {
+        f.Field1 = "val"
+        f.Field2 = 20
+        return nil
+    }
+
+    /* but this */
+    func MakeFoo() (Foo, error) {
+        f := Foo{
+          Field1: "val",
+          Field2: 20,
+        }
+        return f, nil
+    }
+        </code></pre>
+
+        <h3>Pointers-passing performance</h3>
+        <ul>
+          <li>If a struct is large enough, there are performance improvements from using a pointer to the struct as either an input parameter or a return value. The time to pass a pointer into a function is constant for all data sizes, as the size of a pointer is same for all data types.</li>
+          <li>
+            The behavior for returning a pointer versus returning a value is more interesting.<sup><a href="https://github.com/learning-go-book/pointer_performance">Source</a></sup>
+            <ul>
+              <li>For data structures that are smaller than a megabyte, it is actually slower to return a pointer type than a value type.</li>
+              <li>Once your data structures are larger than a megabyte, the performance advantage flips.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ZeroValueVsNoValue">
+      <div class="topic-heading"><h2>Zero value v/s no value</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>
+            If this distinction matters in your program, use a nil pointer to represent an unassigned variable or struct field.
+            <ul>
+              <li>Because pointers also indicate mutability, be careful when using this pattern.</li>
+              <li>Rather than return a pointer set to nil from a function, use the comma ok idiom, similar to maps.</li>
+            </ul>
+          </li>
+          <li>if a nil pointer is passed into a function via a parameter or a field on a parameter, you cannot set the value within the function as there's nowhere to store the value.</li>
+          <li>While a pointer does provide a handy way to indicate no value, if you are not going to modify the value, you should use a value type instead, paired with a boolean.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="MapsVsSlices">
+      <div class="topic-heading"><h2>Maps v/s Slices</h2></div>
+      <div class="topic-body">
+        <h3>Maps</h3>
+        <ul>
+          <li>
+            Any modifications made to a map that's passed to a function are reflected in the original variable that was passed in. Why?
+            <ul>
+              <li>within the Go runtime, a map is implemented as a pointer to a struct. Passing a map to a function means that you are copying a pointer.</li>
+              <li>Because of this, you should avoid using maps for input parameters or return values, especially on public APIs.</li>
+            </ul>
+          </li>
+          <li>
+            On an API-design level, maps are a bad choice. Why?
+            <ul>
+              <li>they say nothing about what values are contained within</li>
+              <li>there's nothing that explicitly defines what keys are in the map, so the only way to know what they are is to trace through the code</li>
+            </ul>
+          </li>
+          <li>
+            From the standpoint of immutability, maps are bad. Why?
+            <ul>
+              <li>the only way to know what ended up in the map is to trace through all of the functions that interact with it.</li>
+              <li>This prevents the API from being self-documenting.</li>
+            </ul>
+          </li>
+          <li>Go is a strongly typed language; rather than passing a map around, use a struct.</li>
+        </ul>
+        
+        <h3>Slices</h3>
+        <ul>
+          <li>
+            Modification to the contents of the slice is reflected in the original variable
+            <ul>
+              <li>
+                but using append to change the length isn't reflected in the original variable, even if the slice has a capacity greater than its length
+                <ul>
+                  <li>That's because a slice is implemented as a struct with three fields: an int field for length, an int field for capacity, and a pointer to a block of memory</li>
+                  <li>When a slice is copied to a different variable or passed to a function, a copy is made of the length, capacity, and the pointer.</li>
+                  <li>Changing the values in the slice changes the memory that the pointer points to, so the changes are seen in both the copy and the original.</li>
+                  <li>Changes to the length and capacity are not reflected back in the original, because they are only in the copy. Changing the capacity means that the pointer is now pointing to a new, bigger block of memory.</li>
+                  <li>In case when capacity is greater than length (even after append), the elements are appended in the same location. But as the length of the original slice remains same, it's not able to access those elements.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="notes">
+          <ul>
+            <li>The reason you can pass a slice of any size to a function is that the data that's passed to the function is the same for any size slice: two int values and a pointer.</li>
+            <li>The reason that you can't write a function that takes an array of any size is because the entire array is passed to the function, not just a pointer to the data.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="OffloadingGarbageCollection">
+      <div class="topic-heading"><h2>Offloading Garbage Collection</h2></div>
+      <div class="topic-body">
+        <h3>Comparison with Java</h3>
+        <ul>
+          <li>local variables and parameters are stored in the stack, just like Go</li>
+          <li>Howeve, objects in Java are implemented as pointers - every object variable instance, only the pointer to it is allocated on the stack; the data within the object is allocated on the heap.</li>
+          <li>Only primitive values (numbers, booleans, and chars) are stored entirely on the stack.</li>
+          <li>things like Lists in Java are actually a pointer to an array of pointers. Even though it looks like a linear data structure, reading it actually involves bouncing through memory, which is highly inefficient.</li>
+          <li>To work around all of this inefficiency, the Java Virtual Machine includes some very clever garbage collectors that do lots of work, some optimized for throughput, some for latency, and all with configuration settings to tune them for the best performance.</li>
+        </ul>
+        <h3>Go encourages using pointers sparingly.</h3>
+        <ul>
+          <li>The above-mentioned workload on the Java (or similar languages) Garbage collector is why, Go encourages developers to use pointers sparingly.</li>
+          <li>We reduce the workload of the garbage collector by making sure that as much as possible is stored on the stack.</li>
+          <li>Slices of structs or primitive types have their data lined up sequentially in memory for rapid access. And when the garbage collector does do work, it is optimized to return quickly rather than gather the most garbage.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+<span class="prev"><a href="./03.control_structures.html">Control Structures</a></span>
+<!-- <span class="next"><a href="./04.functions.html">04. Functions</a></span> -->
+</div>

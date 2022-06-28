@@ -1,0 +1,222 @@
+
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Types, Methods, and Interfaces</a></span>
+  <span class="next"><a href="./00.main.html">Learning Go</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+
+    <div class="topic" id="Basics">
+      <div class="topic-heading"><h2>Basics</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>Go is a statically typed language with both built-in types and user-defined types.</li>
+          <li>Like most modern languages, Go allows you to attach methods to types. It also has type abstraction, allowing you to write code that invokes methods without explicitly specifying the implementation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="Types">
+      <div class="topic-heading"><h2>Types</h2></div>
+      <div class="topic-body">
+        <h3>Basics</h3>
+        <ul>
+          <li><span class="point">Structs</span> should be read as declaring a user-defined type with a name to have the underlying type of the struct literal that follows.</li>
+          <li>In addition to struct literals, you can use any primitive type or compound type literal to define a concrete type.</li>
+          <li>Go allows you to declare a type at any block level, from the package block down. However, you can only access the type from within its scope. The only exceptions are exported package block level types</li>
+        </ul>
+        <pre><code class="language-golang">
+    type Score int
+    type Converter func(string)Score
+    type TeamScores map[string]Score
+        </code></pre>
+
+        <h3>Type Declarations aren't Inheritance</h3>
+        <ul>
+          <li>In addition to declaring types based on built-in Go types and struct literals, you can also declare a user-defined type based on another user-defined type</li>
+          <li>Declaring a type based on another type looks a bit like inheritance, but it isn't. The two types have the same underlying type, but that's all. There is no hierarchy between these types.</li>
+          <li>In languages with inheritance, a child instance can be used anywhere the parent instance is used. The child instance also has all the methods and data structures of the parent instance. That's not the case in Go.</li>
+          <li>A type conversion between types that share an underlying type keeps the same underlying storage but associates different methods.</li>
+        </ul>
+        <pre><code class="language-golang">
+    // declaring user-defined type based on another user-defined type
+    type HighScore Score
+    type Employee Person
+
+    // type declaration is not inheritance
+    var i int = 300
+    var s Score = 100
+    var hs HighScore = 200
+    hs = s                  // compilation error!
+    s = i                   // compilation error!
+    s = Score(i)            // ok
+    hs = HighScore(s)       // ok
+        </code></pre>
+
+        <h3>Types are Executable Documentation</h3>
+        <ul>
+          <li>While it's well understood that you should declare a struct type to hold a set of related data, it's less clear when you should declare a user-defined type based on other built-in types or one user-defined type that's based on another user-defined type.</li>
+          <li>The short answer is that types are documentation. They make code clearer by providing a name for a concept and describing the kind of data that is expected.</li>
+          <li>It's clearer for someone reading your code when a method has a parameter of type Percentage than of type int, and it's harder for it to be invoked with an invalid value.</li>
+          <li>When you have the same underlying data, but different sets of operations to perform, make two types. Declaring one as being based on the other avoids some repetition and makes it clear that the two types are related.</li>
+        </ul>
+
+        <h3>iota Is for Enumerations—Sometimes</h3>
+        <ul>
+          <li>Go doesn't have an enumeration type. Instead, it has iota, which lets you assign an increasing value to a set of constants.</li>
+          <li>When using iota, the best practice is to first define a type based on int that will represent all of the valid values, and use a const block to define a set of values for your type</li>
+        </ul>
+        <pre><code class="language-golang">
+    type MailCategory int
+    const (
+        Uncategorized MailCategory = iota
+        Personal
+        Spam
+    )
+    /*
+        The first constant in the const block has the type specified and its value is set to iota.
+        Every subsequent line has neither the type nor a value assigned to it.
+        When the Go compiler sees this, it repeats the type and the assignment to all of the subsequent constants in the block, and increments the value of iota on each line.
+        This means that it assigns 0 to the first constant (Uncategorized), 1 to the second constant (Personal), and so on.
+        When a new const block is created, iota is set back to 0.
+    */
+        </code></pre>
+        <div class="notes">
+          <ul>
+            <li>The concept of iota comes from the programming language APL (which stood for “A Programming Language”).</li>
+            <li>Don't use iota for defining constants where its values are explicitly defined (elsewhere). For example, when implementing parts of a specification and the specification says which values are assigned to which constants, you should explicitly write the constant values. Use iota for “internal” purposes only. That is, where the constants are referred to by name rather than by value. That way you can optimally enjoy iota by inserting new constants at any moment in time / location in the list without the risk of breaking everything. - Danny van Heumen</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="Methods">
+      <div class="topic-heading"><h2>Methods</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>The methods for a type are defined at the package block level</li>
+          <li>Method declarations look just like function declarations, with one addition: the receiver specification.</li>
+          <li>The receiver appears between the keyword func and the name of the method.</li>
+          <li>By convention, the receiver name is a short abbreviation of the type's name, usually its first letter.</li>
+          <li>It is nonidiomatic to use this or self.</li>
+          <li>Just like functions, method names cannot be overloaded - You can use the same method names for different types, but you can’t use the same method name for two different methods on the same type.</li>
+          <li>Methods must be declared in the same package as their associated type</li>
+        </ul>
+        <pre><code class="language-golang">
+    type Person struct {
+        FirstName string
+        LastName string
+        Age int
+    }
+    
+    func (p Person) String() string {
+        return fmt.Sprintf("%s %s, age %d", p.FirstName, p.LastName, p.Age)
+    }
+
+    func main() {
+        p := Person { FirstName: "Fred", LastName:"Fredson", Age: 52 }
+        output := p.String() # Fred Fredson, age 52
+    }
+        </code></pre>
+
+        <h3>Pointer Receivers and Value Receivers</h3>
+        The following rules help you determine when to use each kind of receiver
+        <ul>
+          <li>If your method modifies the receiver, you must use a <span class="code">pointer receiver</span>.</li>
+          <li>If your method needs to handle nil instances (see “Code Your Methods for nil Instances”), then it must use a <span class="code">pointer receiver</span>.</li>
+          <li>If your method doesn't modify the receiver, you can use a <span class="code">value receiver</span>.</li>
+        </ul>
+        <div class="notes">
+          <ul>
+            <li>When a type has any pointer receiver methods, a common practice is to be consistent and use pointer receivers for all methods, even the ones that don't modify the receiver</li>
+            <li>Do not write getter and setter methods for Go structs, unless you need them to meet an interface. Go encourages you to directly access a field. Reserve methods for business logic (except when you need to update multiple fields as a single operation or when the update isn't a straightforward assignment of a new value).</li>
+          </ul>
+        </div>
+
+        <h3>Code Your Methods for nil Instances</h3>
+        <ul>
+          <li>Go actually tries to invoke the method on a <span class="code">nil</span> instance. If it's a method with a value receiver, you'll get a panic, as there is no value being pointed to by the pointer.</li>
+        </ul>
+        <pre><code class="language-golang">
+    type IntTree struct {
+        val         int
+        left, right *IntTree
+    }
+    
+    func (it *IntTree) Contains(val int) bool {
+        switch {
+        case it == nil:
+            return false
+        case val &lt; it.val:
+            return it.left.Contains(val)
+        case val > it.val:
+            return it.right.Contains(val)
+        default:
+            return true
+        }
+    }
+        </code></pre>
+
+        <h3>Methods are functions too</h3>
+        <pre><code class="language-golang">
+    // struct with a method
+    type Adder struct {
+      start int
+    }
+    func (a Adder) AddTo(val int) int {
+      return a.start + val
+    }
+          
+    // create an instance of the type in the usual way and invoke its method
+    myAdder := Adder{start: 10}
+    fmt.Println(myAdder.AddTo(5)) // 15
+  
+    // We can also assign the method to a variable or pass it to a parameter of type func(int)int. This is called a method value
+    f1 := myAdder.AddTo
+    fmt.Println(f1(10)) // 20
+
+    // You can also create a function from the type itself. This is called a method expression
+    f2 := Adder.AddTo
+    fmt.Println(f2(myAdder, 15)) // 25
+        </code></pre>
+
+        <h3>Functions vs Methods</h3>
+        <ul>
+          <li>The differentiator is whether or not your function depends on other data.</li>
+          <li>package-level state should be effectively immutable</li>
+          <li>Any time your logic depends on values that are configured at startup or changed while your program is running, those values should be stored in a struct and that logic should be implemented as a method.</li>
+          <li>If your logic only depends on the input parameters, then it should be a function.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="EmbeddingForComposition">
+      <div class="topic-heading"><h2>Embedding for Composition</h2></div>
+      <div class="topic-body">
+        While Go doesn't have inheritance, it encourages code reuse via built-in support for composition and promotion
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+<span class="prev"><a href="./03.control_structures.html">Control Structures</a></span>
+<!-- <span class="next"><a href="./04.functions.html">04. Functions</a></span> -->
+</div>

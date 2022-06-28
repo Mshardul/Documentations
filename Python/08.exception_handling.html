@@ -9,7 +9,66 @@
 
 <div class="main-content">
   <div class="content">
-    <div class="topic" id=""></div>
+    <div class="topic" id="Basics">
+      <div class="topic-heading"><h2>Basics</h2></div>
+      <div class="topic-body">
+        Errors in Python can be of 2 types
+        <ul>
+          <li><span class="point">Syntax Errors</span> are caused by the wrong syntax in the code. They lead to the termination of the program.</li>
+          <li><span class="point">Exceptions</span> are raised when the program is syntactically correct, but the code resulted in an error. This error does not stop the execution of the program, however, it changes the normal flow of the program.</li>
+        </ul>
+        <br/>
+        Important keywords
+        <ul>
+          <li>try block contains that we feel might raise exceptions.</li>
+          <li>except block is used to tackle the exceptions.</li>
+          <li>the else block is executed when no exception occurs in the try block.</li>
+          <li>the finally block is executed at the end, whether of not the exception occurred</li>
+        </ul>
+        <pre><code class="language-python">
+    try: # exceptions might occur
+        result = x // y
+    except ZeroDivisionError: # if a particular exception occur
+        print("ZeroDivisionError Occurred and Handled")
+    except Exception as e: # if none of the exceptions earlier specified, occur
+        print("Unknown exception Occurred. We don't know how to handle it", e)
+    else: # if no error occurs
+        print("No error Occurred")
+    finally: # either the error occurs or not
+        print("The code is exiting. Bbye!")
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="BuiltInExceptionsInPython">
+      <div class="topic-heading"><h2>Built-in Exceptions in Python</h2></div>
+      <div class="topic-body">
+        <table>
+          <tr><th>Exception</th><th>Description</th></tr>
+          <tr><td colspan="2"><b>Base Class - are used mostly as base classes for other exceptions.</b></td></tr>
+          <tr><td>BaseException</td><td>base class for all built-in exceptions. It is not meant to be directly inherited by user-defined classes.</td></tr>
+          <tr><td>Exception</td><td>base class for all built-in non-system-exiting exceptions. All user-defined exceptions should also be derived from this class.</td></tr>
+          <tr><td>ArithmeticError</td><td>base class for those built-in exceptions that are raised for various arithmetic errors. (eg OverflowError, ZeroDivisionError, FloatingPointError etc)</td></tr>
+          <tr><td>BufferError</td><td>is raised when buffer related operations cannot be performed.</td></tr>
+          <tr><td>LookupError</td><td>base class for those exceptions that are raised when a key or index used on a mapping or sequence is invalid or not found. (KeyError and IndexError)</td></tr>
+          <tr><td colspan="2"><b>Concrete Exception - exceptions that are usually raised.</b></td></tr>
+          <tr><td>AssertionError</td><td>when an assert statement fails.</td></tr>
+          <tr><td>AttributeError</td><td>when an attribute reference or assignment fails (eg when a non-existent attribute is referenced)</td></tr>
+          <tr><td>EOFError</td><td>when built-in functions like input() hits an end-of-file condition (EOF) without reading any data.</td></tr>
+          <tr><td>FloatingPointError</td><td>when a floating point operation fails</td></tr>
+          <tr><td>GeneratorExit</td><td>when a generator or coroutine is closed (directly inherits from BaseException instead of Exception since it is technically not an error)</td></tr>
+          <tr><td>ImportError</td><td>when the import statement is unable to load a module or when the “from list” in from … import has a name that cannot be found.</td></tr>
+          <tr><td>ModuleNotFoundError</td><td>raised by import when a module could not be found, also when None is found in sys.modules (subclass of ImportError)</td></tr>
+          <tr><td>IndexError</td><td>when a sequence is referenced which is out of range</td></tr>
+          <tr><td>KeyError</td><td>when a mapping key is not found in the set of existing keys</td></tr>
+          <tr><td>KeyboardInterrupt</td><td>when the user hits the interrupt key such as Control-C or Delete.</td></tr>
+          <tr><td>MemoryError</td><td>when an operation runs out of memory.</td></tr>
+          <tr></tr>
+        </table>
+      </div>
+    </div>
   </div>
 
   <div class="sidebar-right">

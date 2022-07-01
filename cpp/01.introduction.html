@@ -1,0 +1,91 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Introduction</a></span>
+  <span class="next"><a href="./00.main.html">C++</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic" id="History">
+      <div class="topic-heading"><h2>History</h2></div>
+      <div class="topic-body">
+        <span class="point">C</span>
+        <ul>
+          <li>The C language was developed in 1972 by Dennis Ritchie at Bell Telephone laboratories, primarily as a systems programming language (a language to write operating systems with)</li>
+          <li>Ritchie's primary goals were to produce a minimalistic language that was easy to compile, allowed efficient access to memory, produced efficient code, and was self-contained (not reliant on other programs.</li>
+          <li>C ended up being so efficient and flexible that in 1973, Ritchie and Ken Thompson rewrote most of the Unix operating system using C</li>
+          <li>In 1978, Brian Kernighan and Dennis Ritchie published a book called “The C Programming Language”. This book, which was commonly known as K&R (after the authors' last names), provided an informal specification for the language and became a de facto standard</li>
+          <li>In 1983, the American National Standards Institute (ANSI) formed a committee to establish a formal standard for C. In 1989, they finished, and released the C89 standard, more commonly known as ANSI C.</li>
+          <li>In 1990 the International Organization for Standardization (ISO) adopted ANSI C (with a few minor modifications). This version of C became known as C90.</li>
+          <li>In 1999, the ANSI committee released a new version of C called C99.</li>
+        </ul>
+        <span class="point">C++</span>
+        <ul>
+          <li>developed by Bjarne Stroustrup at Bell Labs as an extension to C, starting in 1979.</li>
+          <li>adds many new features to the C language, and is perhaps best thought of as a superset of C, though this is not strictly true (as C99 introduced a few features that do not exist in C++)</li>
+          <li>C++ was standardized in 1998 by the ISO committee</li>
+          <li>A minor update to the language was released in 2003 (called C++03).</li>
+          <li>Four major updates to the C++ language (C++11, C++14, C++17, and C++20) have been made since then.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="Featuress">
+      <div class="topic-heading"><h2>Features</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li><span class="point">Simple:</span> programs can be broken down into logical units and parts, has a rich library support and a variety of data-types.</li>
+          <li><span class="point">Machine Independent but Platform Dependent:</span> A C++ executable is not platform-independent (compiled programs on Linux won't run on Windows), however they are machine independent.</li>
+          <li><span class="point">Mid-level language:</span> we can do both systems-programming (drivers, kernels, networking etc.) and build large-scale user applications (Media Players, Photoshop, Game Engines etc.)</li>
+          <li><span class="point">Rich library support:</span> rich library support - Both standard (built-in data structures, algorithms etc.) as well as 3rd party libraries (e.g. Boost libraries) for fast and rapid development.</li>
+          <li><span class="point">Execution speed:</span> it is a compiled language, and also hugely procedural. Plus not extra in-built default features (such as garbage-collection, dynamic typing etc) which slow the execution of the program overall.</li>
+          <li><span class="point">Object-Oriented:</span> Object-Oriented support helps C++ to make maintainable and extensible programs. i.e. Large-scale applications can be built.</li>
+          <li><span class="point">Compiled Language:</span> Being a compiled language, contributes to its speed.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ProgramExecution">
+      <div class="topic-heading"><h2>Program Execution</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-bash">
+    $ g++ --version # g++ compiler version
+
+    $ g++ name_of_program_file.cpp -o name_to_be_assigned_to_executable_file # create an executable file
+
+    $ ./name_to_be_assigned_to_executable_file # execute the executable file
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="notes">
+      <ul>
+        <li>The name of C++ signifies the evolutionary nature of the changes from C. <span class="code">++</span> is the C increment operator.</li>
+        <li>C++ got the OOP features from Simula67 Programming language.</li>
+        <li>A function is a minimum requirement for a C++ program to run.(at least main() function)</li>
+        <li>C++ excels in situations where high performance and precise control over memory and other resources is needed.</li>
+        <li>The term <span class="point">bug</span> was first used by Thomas Edison back in the 1870s! However, the term was popularized in the 1940s when engineers found an actual moth stuck in the hardware of an early computer, causing a short circuit.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./00.main.html">00. Index Page</a></span>
+  <span class="next"><a href="./02.variables.html">02. Variables</a></span>
+</div>

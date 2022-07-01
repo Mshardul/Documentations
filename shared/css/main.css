@@ -103,6 +103,9 @@ img {
 table {
   width: 100%;
 }
+thead {
+  font-weight: bold;
+}
 
 td, th {
   border: 2px solid var(--table-cell-border);

@@ -181,7 +181,7 @@
     <div class="topic" id="ClassInstanceIntoAFunction">
       <div class="topic-heading"><h2>Class Instance into a Function</h2></div>
       <div class="topic-body">
-    <pre><code class="language-python">
+        <pre><code class="language-python">
     class Foo:
         def __init__(self, x):
             self.x = x
@@ -208,7 +208,22 @@
     Since outer and inner1 are referring to the same memory, changes made to fields in f in inner1 are reflected in the variable in outer.
     When inner2 reassigns f to a new class instance, this creates a separate instance and does not affect the variable in outer.
     '''
-    </code></pre>
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="SortedWithLambda">
+      <div class="topic-heading"><h2>Sorted with Lambda</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    def sqr(num):
+        return num*num
+      
+    L = [4, -2, 9, -3, 6]
+    print(sorted(L, key=sqr))  # [-2, -3, 4, 6, 9]
+        </code></pre>
       </div>
     </div>
 

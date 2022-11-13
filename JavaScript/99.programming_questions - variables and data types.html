@@ -16,6 +16,7 @@
         <pre><code class="language-javascript">
     console.log(2 + '2') // 22
     console.log(2 - '2') // 0
+
     /*
         + is a number or string operator. If both operands are number, it adds. Otherwise it concatenates.
         - is a number operator.
@@ -27,7 +28,7 @@
     <hr/>
 
     <div class="topic" id="ThreeComparativeOperatorsInARow">
-      <div class="topic-heading"><h2>Three comparative operators in a row</div>
+      <div class="topic-heading"><h2>Three comparative operators in a row</h2></div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     console.log(5 &lt; 6 &lt;7) // true
@@ -44,7 +45,7 @@
     <hr/>
 
     <div class="topic" id="ArgumentsInArrowFunctions">
-      <div class="topic-heading"><h2>Arguments in arrow functions</div>
+      <div class="topic-heading"><h2>Arguments in arrow functions</h2></div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     let a = function() { return arguments; }
@@ -61,7 +62,7 @@
     <hr/>
 
     <div class="topic" id="ObjectFreezeAndSeal">
-      <div class="topic-heading"><h2>Object.freeze() and Object.Seal()</div>
+      <div class="topic-heading"><h2>Object.freeze() and Object.Seal()</h2></div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     let p1 = {"name": "abc"};
@@ -89,7 +90,7 @@
     <hr/>
 
     <div class="topic" id="MathMax">
-      <div class="topic-heading"><h2>Math.max()</div>
+      <div class="topic-heading"><h2>Math.max()</h2></div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     console.log(Math.max()) // -Infinity
@@ -102,7 +103,7 @@
     <hr/>
 
     <div class="topic" id="AddingTwoEmptyArrays">
-      <div class="topic-heading"><h2>Adding 2 empty arrays</div>
+      <div class="topic-heading"><h2>Adding 2 empty arrays</h2></div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     console.log([] + []) // empty string
@@ -118,7 +119,7 @@
     <hr/>
 
     <div class="topic" id="TaggedTemplates">
-      <div class="topic-heading"><h2>Tagged Templates</div>
+      <div class="topic-heading"><h2>Tagged Templates</h2></div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     function a() {
@@ -136,18 +137,20 @@
     <hr/>
 
     <div class="topic" id="ThisKeyword">
-      <div class="topic-heading"><h2>This keyword</div>
+      <div class="topic-heading"><h2>This keyword</h2></div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     function y() {
       console.log(this.length)
     }
+
     var x = {
       length: 5,
       method: function(y) {
         arguments[0]();
       }
     };
+
     x.method(y, 1); // 2
 
     /*
@@ -162,7 +165,7 @@
     <hr/>
 
     <div class="topic" id="StringConstructor">
-      <div class="topic-heading"><h2>StringConstructor</div>
+      <div class="topic-heading"><h2>StringConstructor</h2></div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     var x = "constructor"
@@ -181,7 +184,7 @@
     <hr/>
 
     <div class="topic" id="FloatingPointAdditions">
-      <div class="topic-heading"><h2>Floating point addition</div>
+      <div class="topic-heading"><h2>Floating point addition</h2></div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     console.log(0.1 + 0.2); // 0.30000000000000004
@@ -192,6 +195,66 @@
         </code></pre>
       </div>
     </div>
+
+    <hr/>
+
+    <div class="topic" id="ArrayWithSpreadOperator">
+      <div class="topic-heading"><h2>Array with Spread Operator</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    const a = [1, 2, 3, 4, 5]
+    console.log(...arr)         // 1 2 3 4 5
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="FunctionWithRestOperator">
+      <div class="topic-heading"><h2>Function with Rest Operator</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    function getAge(...args) {
+      console.log(typeof args);    # object
+    }
+
+    getAge(21);
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="FunctionInsideObject">
+      <div class="topic-heading"><h2>Function inside Object</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    const user = {
+      email: "default_email@mail.com",
+      updateEmail: email => {
+          this.email = email;
+      }
+    }
+
+    user.updateEmail("updated_email@mail.com");
+    console.log(user.email);                        // default_email@mail.com
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="TypeOfTypeof">
+      <div class="topic-heading"><h2>Type of typeof</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    let num = 1;
+    console.log(typeof typeof num);              // string
+        </code></pre>
+      </div>
+    </div>
+
+    
   </div>
     
   <div class="sidebar-right">

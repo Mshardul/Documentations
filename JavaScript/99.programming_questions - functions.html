@@ -4,14 +4,14 @@
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
   <span class="center"><a href="#">Programming questions - Functions</a></span>
-  <span class="next"><a href="./00.main.html">Python - Interview Prep</a></span>
+  <span class="next"><a href="./00.main.html">Javascript</a></span>
 </div>
 
 <div class="main-content">
   <div class="content">
 
     <div class="topic" id="ReturnStatementInNextLine">
-      <div class="topic-heading"><h2>Return statement in next line</div>
+      <div class="topic-heading"><h2>Return statement in next line</h2></div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     let x = function() {
@@ -28,7 +28,7 @@
     <hr/>
 
     <div class="topic" id="SetTimeout">
-      <div class="topic-heading"><h2>setTimeout</div>
+      <div class="topic-heading"><h2>setTimeout</h2></div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     console.log("1")
@@ -47,6 +47,66 @@
         </code></pre>
       </div>
     </div>
+
+    <hr/>
+
+    <div class="topic" id="SetTimeout2">
+      <div class="topic-heading"><h2>Set Timeout 2</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    let status = "hi";
+
+    setTimeout(() => {
+      status = "hello";
+      console.log("1: ", status);       // hello
+    }, 0);
+
+    console.log("2: ", status);         // hi
+
+
+    /* output */
+    2: hi
+    1: hello
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="SetTimeout3">
+      <div class="topic-heading"><h2>Set Timeout 3</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    function func() {
+        let i;
+        for(i = 0; i &lt; 3; i++)
+            setTimeout(() => {
+              console.log(i);
+            }, i*100);
+    }
+
+    func();                            // 3 3 3
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="SetTimeout3">
+      <div class="topic-heading"><h2>Set Timeout 3</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    var x = 5, y = 1;
+    var obj = {x: 10};
+
+    with(obj) {
+        console.log(x, y);       // 10 1
+    }
+
+        </code></pre>
+      </div>
+    </div>
+
   </div>
     
   <div class="sidebar-right">

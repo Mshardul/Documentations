@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Programming questions - Exceptional Handling</a></span>
+  <span class="next"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+
+    <div class="topic" id="ScopeWithFunction">
+      <div class="topic-heading"><h2>Scope with Function</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    n = 4
+    def f1():
+        n = n ** 4
+        print(n)    # UnboundLocalError: local variable 'n' referenced before assignment
+    f1()
+        </code></pre>
+      </div>
+    </div>
+
+
+  </div>
+</div>

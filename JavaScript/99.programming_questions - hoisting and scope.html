@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Programming questions - Hoisting</a></span>
+  <span class="next"><a href="./00.main.html">Javascript</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+
+    <div class="topic" id="HoistingWithVar">
+      <div class="topic-heading"><h2>Hoisting with var</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    console.log(i+j); // 3
+
+    var i = 1;
+    var j = 1;
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="HoistingFunctionAndVar">
+      <div class="topic-heading"><h2>Hoisting function and var</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    a();
+    
+    function a() {
+      console.log("a");    # a
+    }
+
+    b();                   # TypeError: b is not a function
+    
+    var b = function() {
+      console.log("b");
+    }
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="HoistingWithConst">
+      <div class="topic-heading"><h2>Hoisting with const</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    const randomValue = 21;
+
+    function getInfo() {
+      console.log(typeof randomValue);          # ReferenceError: Cannot access 'randomValue' before initialization
+      const randomValue = "Hi";
+    }
+
+    getInfo();
+        </code></pre>
+      </div>
+    </div>
+
+
+  </div>
+</div>

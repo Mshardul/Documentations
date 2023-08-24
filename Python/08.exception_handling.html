@@ -3,8 +3,8 @@
 
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
-  <span class="center"><a href="#">OOP</a></span>
-  <span class="next"><a href="./00.main.html">Exception Handling</a></span>
+  <span class="center"><a href="#">Exception Handling</a></span>
+  <span class="next"><a href="./00.main.html">Python - Interview Prep</a></span>
 </div>
 
 <div class="main-content">
@@ -26,15 +26,15 @@
           <li>the finally block is executed at the end, whether of not the exception occurred</li>
         </ul>
         <pre><code class="language-python">
-    try: # exceptions might occur
+    try:                            # exceptions might occur
         result = x // y
-    except ZeroDivisionError: # if a particular exception occur
+    except ZeroDivisionError:       # if a particular exception occur
         print("ZeroDivisionError Occurred and Handled")
-    except Exception as e: # if none of the exceptions earlier specified, occur
+    except Exception as e:          # if none of the exceptions earlier specified, occur
         print("Unknown exception Occurred. We don't know how to handle it", e)
-    else: # if no error occurs
+    else:                           # if no error occurs
         print("No error Occurred")
-    finally: # either the error occurs or not
+    finally:                        # irrespective of whether the error occurs or not
         print("The code is exiting. Bbye!")
         </code></pre>
       </div>

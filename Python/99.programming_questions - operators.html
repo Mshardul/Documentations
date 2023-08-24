@@ -9,6 +9,23 @@
 
 <div class="main-content">
   <div class="content">
+    <div class="topic" id="Precedence">
+      <div class="topic-heading"><h2>Precedence</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    """ What will be the output? """
+    print(True or False and False)      # True
+    print(True or False or False)       # True
+    print(False or False and True)      # False
+    print(False or True and True)       # True
+    print(True or True and False)       # True
+    print(True or False and True)       # True
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
     <div class="topic" id="GreaterThan">
       <div class="topic-heading"><h2>Greater Than</h2></div>
       <div class="topic-body">
@@ -38,10 +55,15 @@
       </div>
     </div>
 
-    <hr/>
-
-    
-
-
   </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
 </div>

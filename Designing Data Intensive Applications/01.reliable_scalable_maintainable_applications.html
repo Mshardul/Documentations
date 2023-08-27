@@ -1,0 +1,127 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Introduction</a></span>
+  <span class="next"><a href="./00.main.html">Designing Data-intensive Applications</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic"  id="DataIntensiveApplications">
+      <div class="topic-heading"><h2>Data-intensive Applications</h2></div>
+
+      <div class="topic-body">
+        <p>A data-intensive application is typically build from standard building blocks that provide commonly needed functionality. For example, many applications need:</p>
+        <ul>
+          <li><span class="point">Databases</span>: Sore data so that they, or another application, can find it again later</li>
+          <li><span class="point">Caches</span>: Remember the result of an expensive operation, to speed up reads.</li>
+          <li><span class="point">Search Indexes</span>: Allow users to search data by keyword of filter it in various ways.</li>
+          <li><span class="point">Stream Processing</span>: Send a message to another process, to be handled asynchronously.</li>
+          <li><span class="point">Batch Processing</span>: Periodically crunch a large amount of accumulated data.</li>
+        </ul>
+
+        <p>While building an app, we need to figure out which tools and which approaches are the most appropriate for the task at hand.
+
+        <h3>Why lump everything together under an umbrella term like data systems?</h3>
+        <ul>
+          <li>
+            Many new tools for data storage and processing have emerged in recent years. They are optimized for a variety of different use cases, and they no longer neatly fit into traditional categories. For example,
+            <ul>
+              <li>There are datastores that are also used as message queues (Redis) and there are message queues with database-like durability guarantees (Kafka). The boundaries between these tools are becoming blurred.</li>
+            </ul>
+          </li>
+          <li>
+            Increasingly many aps now have such demanding or wide-ranging requirements that a single tool can no longer meet all of its data processing and storage needs. Instead, the work is broken down into tasks that are handled by special-purpose tools. For example,
+            <ul>
+              <li>If you have an application-managed caching layer (using Memcached), or a full-text search server (such as Elasticsearch or Solr) separate from your main DB, it is normally the application code's responsibility to keep those caches and indexes in sync with the main DB.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>Factors</h3>
+        There are many factors that may influence the design of a data system. These factors depend very much on the situation. Here we focus on three concerns that are important in most software systems.
+        <ul>
+          <li><a href="#Reliability">Reliability</a>: System should continue to work correctly (performing correct function at desired level of performance) even in the face of adversity (faults).</li>
+          <li><a href="#Scalability">Scalability</a>: There should be reasonable way of dealing with system growth (in data volume, traffic volume, or complexity).</li>
+          <li><a href="#Maintainability">Maintainability</a>: Multiple people (engineering and operations) should be able to work productively on a system.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic"  id="Reliability">
+      <div class="topic-heading"><h2>Reliability</h2></div>
+
+      <div class="topic-body">
+        <p>Typical expectations for a system to be reliable:</p>
+        <ul>
+          <li>Performing functions that the user expects</li>
+          <li>Tolerating user making mistakes or using the app in unexpected ways.</li>
+          <li>Good enough performance for the required use case, under the expected load and data volume.</li>
+          <li>Preventing any unauthorized access and abuse.</li>
+        </ul>
+
+        <h3>Faults</h3>
+        <ul>
+          <li>The things that can go wrong are called <span class="point">faults</span>, and systems that anticipate faults and can cope with them are called <span class="point">fault-tolerant</span> or <span class="point">resilient</span>.</li>
+          <li>A <span class="point">Fault</span> is usually defined as one component of the system deviating from its spec, whereas a <span class="point">failure</span> is when the system as a whole stops providing the required service to the user. It is impossible to reduce the probability of a fault to zero; therefore it is usually best to design <span class="point">fault-tolerance</span> mechanism that prevents faults from causing failures.</li>
+            <ul>
+              <li>Increase rate of faults by triggering them deliberately - for example, by randomly killing individual process without warning. Many critical bugs are actually due to poor error handling</li>
+              <li>By deliberately inducing faults, you ensure that the fault-tolerance machinery is continually exercised and tested, which can increase ur confidence that faults will be handled correctly when they occur naturally. eg. the Netflix Chaos Monkey.</li>
+              <li> There are cases where prevention is better than cure (eg because no cure exists). This is the case with security matters, eg. if an attacker has compromised a system and gained access to sensitive data.</li>
+            </ul>
+          <li>Faults can be of 3 types</li>
+          <ul>
+            <li>Hardware Faults</li>
+            <li>Software Errors</li>
+            <li>Human Errors</li>
+          </ul>
+        </ul>
+
+        <h3>Hardware Faults</h3>
+        <ul>
+          <li>HDDs are reported as having a MTTF (Mean Time To Failure) of about 10-15 yrs. On a storage cluster with 10000 disks, we should expect on average one disk to die per day.</li>
+            <ul>
+              <li>Oure first response is usually to add redundancy to the individual hardware components in order to reduce the failure rate of the system.</li>
+              <li>As data volumes and app's computing demands have increased, more apps have begun using larger numbers of machines, which proportionally increases the rate of hardware faults.</li>
+              <li>Moreover some cloud platforms (eg AWS) make VM instances unavailable without warning, as they are designed to prioritize flexibility and elasticity over single-machine reliability.</li>
+            </ul>
+          <li>A <span class="point">single-server system</span> requires planned downtime if you need to reboot the machine (eg. to apply OS security patches), whereas a system that can tolerate machine failure can be patched one node at a time, without downtime of the entire system, known as a <span class="point">rolling upgrade</span></li>
+        </ul>
+
+        <h3>Software Errors</h3>
+        <ul>
+          <li>Software Errors are harder to anticipate, and bcoz they are correlated across nodes (unlike hardware faults), they tend to cause many more system failures.</li>
+          <li>There is now quick solution to this. But a lot of small things can help</li>
+          <ul>
+            <li>carefully thinking about assumptions and interactions in the system; thorough testing; process isolation; allowing processes to crash and restart; measuring, monitoring and analyzing system behavior in prod.</li>
+            <li>eg. in a message queue, the number of incoming messages equals the number of outgoing messages, it can constantly check itself while it is running and raise an alert if a discrepancy is found</li>
+          </ul>
+        </ul>
+
+        <h3>Human Errors</h3>
+      </div>
+    </div>
+
+
+
+    <hr/>
+
+    <div class="topic" id="Reliability">
+      <div class="topic-heading"><h2>Reliability</h2></div>
+
+      <div class="topic-body">
+
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+
+</div>

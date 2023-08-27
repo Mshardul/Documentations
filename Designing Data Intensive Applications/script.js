@@ -7,7 +7,6 @@ window.addEventListener('DOMContentLoaded', function() {
 });
   
 window.addEventListener('load', function() {
-  this.alert("hi");
   hljs.highlightAll();
 
   /* create Table of content */

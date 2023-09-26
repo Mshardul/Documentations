@@ -3,7 +3,7 @@
 
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
-  <span class="center"><a href="#">Introduction</a></span>
+  <span class="center"><a href="#">Reliable, Scalable, and Maintainable Applications</a></span>
   <span class="next"><a href="./00.main.html">Designing Data-intensive Applications</a></span>
 </div>
 
@@ -103,20 +103,159 @@
         </ul>
 
         <h3>Human Errors</h3>
+        There can be several approaches to make the system reliable, in spite of human errors.
+        <ul>
+          <li>Design system in a way that minimizes opportunities for error. eg. well-designed abstractions, APIs and admin interfaces make it easy to do "the right thing" and discourages "the wrong thing".</li>
+          <ul>
+            <li>However if the interfaces are too restrictive people will work around them, negating their benefit, so this is a tricky balance to get right.</li>
+          </ul>
+          <li>Decouple the places where people make the most mistakes from the places where they can cause failures. eg. providing sandbox environment where people can explore and experiment safely using real data without affecting real users.</li>
+          <li>Test thoroughly at all levels, from unit tests to whole-system integration tests and manual testing.</li>
+          <li>Allow quick and easy recovery from human errors, to minimize the impact in case of failure. eg. roll backs, and incremental roll outs.</li>
+          <li>Set up detailed and clear monitoring, such as performance metrics and error rates. This can show us early warning signals.</li>
+          <li>IMplement good management practices and training.</li>
+        </ul>
+        <p>One study of large internet services found that configuration errors by operators were the leading cause of outages, whereas hardware faults (servers or network) played a role in only 10-25% of outages.</p>
       </div>
     </div>
-
 
 
     <hr/>
 
-    <div class="topic" id="Reliability">
-      <div class="topic-heading"><h2>Reliability</h2></div>
+    <div class="topic" id="Scalability">
+      <div class="topic-heading"><h2>Scalability</h2></div>
 
       <div class="topic-body">
+        <ul>
+          <li><span class="point">Scalability</span> is used to describe a system's ability to cope with increased load.</li>
+          <li>Discussing scalability means considering questions like "If the system grows is a particular way, what are our options for coping with the growth?" and "How can we add computing resources to handle the additional load?"</li>
+        </ul>
+
+        <h3>Load</h3>
+        <ul>
+          <li>Load can be describe with a few numbers which we call <span class="point">load parameters</span>. The best choice of parameters depends on the architecture of your system. eg requests per second to a server, ratio of reads to writes in a db, number of simultaneously active users in a chatroom, hit rate on a cache.</li>
+        </ul>
+
+        <h4>Twitter case study</h4>
+        Assuming only 2 features: <span class="point">posting tweets</span> and <span class="point">viewing the timeline</span> of people you follow. With 12k writes per second, Twitter's scaling challenge is not primarily due to tweet volume, but due to fan-out - each user follows many people, and each user is followed by many people. there are broadly 2 ways of implementing these 2 operations:
+        <ol>
+          <li>
+            Posting a tweet simply inserter new tweet into db. Reading the timeline requires finding all the people a user follows, retrieving each of their tweets, and merging them into a sorted list. In a relational db, it would look something like,
+            <pre><code class="language-javascript">
+    SELECT tweets.*, users.* FROM tweets
+      JOIN users ON tweets.sender_id = users.id
+      JOIN follows ON follows.followee_id = users.id
+      WHERE follows.follower_id = CURRENT_USER;
+            </code></pre>
+          </li>
+          <li>Maintain a cache for each users' home timeline - like a mailbox of tweets for each recipient user. When a user posts a tweet, look up all the people who follow that user, and insert the new tweet into each of their home timeline caches.</li>
+          <ul>
+            <li>Request to read the home timeline is then cheap, bcoz its result has been computed ahead of time.</li>
+          </ul>
+        </ol>
+
+        <h4>Conclusion</h4>
+        <ul>
+          <li>The first version of Twitter used approach 1, but the systems struggled to keep up with the load of home timeline queries, so the company switched to approach 2. This works better bcoz the average rate of published tweets is almost 2 orders of magnitude lower than the rate of home timeline reads.</li>
+          <li>However, the downside of approach 2 is that posting a tweet now requires a lot of extra work. eg. for a person with 30M followers, a single tweet may result in over 30M writes. Doing this in a timely manner (Twitter tries to deliver tweets to followers within 5 secs) is a significant challenge</li>
+          <li>In case of Twitter, distribution of followers per user is a key load param for discussing scalability, since it determines the fan-out load.</li>
+          <li>Now Twitter is moving to a hybrid of both approaches. Most users' tweets continue to be fanned out to home timelines as soon as they are posted, but a small number of users (with very large number of followers) are excepted from this fan-out. These tweets are fetched separately and merged with that users' home timeline when it is read.</li>
+        </ul>
+
+        <h3>Describing Performance</h3>
+        <ul>
+          <li>Think of response time as a distribution of values that can be measured, instead of a single number.</li>
+          <li>Most requests are reasonably fast, but there are occasional outliers.</li>
+          <li>Hence, percentile is a better metric than arithmetic mean.</li>
+          <li>Queueing delays often account for a large part of the response time at high percentiles. As a server can process a small number of things in parallel (limited, for example by its number of CPUs).</li>
+          <li>So, it is important to measure response time on the client side.</li>
+        </ul>
+        <div class="notes">
+          <ul>
+            <li>Service Time: the actual time to process the request</li>
+            <li>Response time: what the client sees. besides the service time, it includes network delays and queueing delays.</li>
+            <li>Latency: The duration that a request is waiting to be handled - during which it is latent (awaiting service)</li>
+          </ul>
+        </div>
+
+        <h3>Scaling: Coping with Load</h3>
+        <ul>
+          <li><span class="point">Types of Scaling</span></li>
+          <ul>
+            <li><span class="point">Vertical Scaling</span> (aka Scaling up): moving to a more powerful machine.</li>
+            <li><span class="point">Horizontal Scaling</span> (or Scaling out): Distributing the load across multiple smaller machines.</li>
+            <li>Distributing load across multiple machines is also known as a <span class="point">shared-nothing architecture</span>.</li>
+          </ul>
+          <li><span class="point">Ways of Scaling</span></li>
+          <ul>
+            <li><span class="point">Elastic Scaling</span> can automatically add computing resources when they detect a load increase.</li>
+            <li><span class="point">Manual Scaling</span> relies on a human intervention to analyze the capacity and deciding to add more machine to the systems.</li>
+            <li>An elastic system can be useful if load is highly unpredictable, but manual scaling is simpler and may have fewer operational surprises.</li>
+          </ul>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="Maintainability">
+      <div class="topic-heading"><h2>Maintainability</h2></div>
+
+      <div class="topic-body">
+        3 design principles to make systems easy to maintain.
+        <ul>
+          <li><span class="point">Operability</span>: Make it easy for operations teams to keep the system running smoothly.</li>
+          <li><span class="point">Simplicity</span>: Make it easy for new engineers to understand the system, by removing as much complexity as possible.</li>
+          <li><span class="point">Evolvability</span>: Make it easy for engineers to make changes to the system in the future, adapting for unanticipated use cases as requirement changes. aka extensibility, modifiability, or plasticity.</li>
+        </ul>
+
+        <h3>Operability</h3>
+        <p>"Good operations can often work around the limitations of bad (or incomplete) software, but good software cannot run reliably with bad operations."</p>
+
+        <p>Operations team is typically responsible for following tasks:</p>
+        <ul>
+          <li>Monitoring health of system, and quickly restoring service if it goes into a bad state.</li>
+          <li>Tracking down the cause of problems, such as system failures or degraded performance.</li>
+          <li>Keeping software and platforms up to date, including security patches.</li>
+          <li>Keeping tabs on how different systems affect each other, so that a problematic change can be avoided before it causes damage.</li>
+          <li>Anticipating future problems and solving them before they occur (eg capacity planning).</li>
+          <li>Establishing good practices and tools for deployment, configuration management, and more.</li>
+          <li>Performing complex maintenance tasks. eg. moving app from one platform to another.</li>
+          <li>Maintaining the security of the system as configuration changes are made.</li>
+          <li>Defining processes that make operations predictable and help keep the production environment stable.</li>
+          <li>Preserving the org's knowledge about the system, even as individuals come and go.</li>
+        </ul>
+
+        <p>Data Systems can do various things to make routine tasks for Good operability easy:</p>
+        <ul>
+          <li>Providing visibility into the runtime behavior and internals of the system, with <span class="point">good monitoring</span>.</li>
+          <li>Providing <span class="point">good support for automation</span> and integration with standard tools.</li>
+          <li><span class="point">Avoiding dependency on individual machines</span> (allowing machines to be take down for maintenance while the system as a whole continues running uninterrupted)</li>
+          <li>Providing <span class="point">good documentation</span> and an easy-to-understand operational model.</li>
+          <li>Providing <span class="point">good default behavior</span>, but also giving administrators the freedom to override defaults when needed</li>
+          <li><span class="point">Self-healing</span> when appropriate, but also giving admins manual control over the system state when needed.</li>
+          <li>Exhibiting <span class="point">predictable behavior</span>, minimizing surprises.</li>
+
+        </ul>
+
+        <h3>Simplicity</h3>
+        <ul>
+          <li>There are various possible <span class="point">symptoms of complexity</span>: explosion of the state space, tight coupling of modules, tangled dependencies, inconsistent naming and terminology, hacks aimed at solving performance problems, special-casing to work around issues elsewhere and many more.</li>
+          <li>making a system simpler does not necessarily mean reducing its functionality; it can also mean removing <span class="point">accidental complexity</span>.</li>
+          <ul>
+            <li>Moseley and Marks define complexity as accidental if it is not inherent in the problem that the software solves (as seen by the users) but arises only from the implementation.</li>
+            <li>One of the best tool for removing accidental complexity is <span class="point">abstraction</span>. A good abstraction can hide a great deal of implementation detail behind a clean, simple-to-understand facade.</li>
+          </ul>
+        </ul>
+
+        <h3>Evolvability</h3>
+        <ul>
+          <li>In terms of organizational processes, Agile working patterns provide a framework for adapting to change.</li>
+        </ul>
 
       </div>
     </div>
+
   </div>
 
   <div class="sidebar-right">
@@ -124,4 +263,9 @@
     <div class="menu-content" id="menu-content"></div>
   </div>
 
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./00.main.html">00. Index</a></span>
+  <span class="next"><a href="./02.data_models_and_query_languages.html">02. Data Models and Query Languages</a></span>
 </div>

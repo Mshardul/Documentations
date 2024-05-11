@@ -270,6 +270,31 @@
       </div>
     </div>
 
+    <hr/>
+
+    <div class="topic" id="NonlocalKeyword">
+      <div class="topic-heading"><h2><span class="code">nonlocal</span> keyword</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>The <span class="code">nonlocal</span> keyword is used to work with variables inside nested functions, where the variable should not belong to the inner function</li>
+          <li>Use <span class="code">nonlocal</span> to declare that the variable is not local to the nested function, allowing you to modify the variable's value in the enclosing scope.</li>
+        </ul>
+        <pre><code class="language-python">
+    def outer():
+        x = "local"
+        def inner():
+            nonlocal x
+            x = "nonlocal"
+            print("Inner:", x)
+
+        inner()
+        print("Outer:", x)
+
+    outer()               # Inner: nonlocal \n Outer: nonlocal
+        </code></pre>
+      </div>
+    </div>
+
   </div>
 
   <div class="sidebar-right">

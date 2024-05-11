@@ -175,6 +175,139 @@
       </div>
     </div>
 
+    <hr/>
+
+    <div class="topic" id="Slots">
+      <div class="topic-heading"><h2><span class="code">__slots__</span> in Python</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li><span class="code">__slots__</span> is used to limit the attributes that an object can have, saving memory and potentially speeding attribute access.</li>
+        </ul>
+        <pre><code class="language-python">
+
+    class SlotsTest:
+        __slots__ = ['x', 'y']
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
+
+    obj = SlotsTest(2, 3)
+    obj.x = 5  # Works fine
+    obj.z = 4  # AttributeError: 'SlotsTest' object has no attribute 'z'
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="Slots">
+      <div class="topic-heading"><h2>Abstract Base Class</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li><span class="point">Abstract base classes</span> define methods that must be implemented by any subclass</li>
+          <li>They ensure a certain degree of conformity in how different classes are designed and interacted with.</li>
+        </ul>
+        <pre><code language="python">
+  from abc import ABC, abstractmethod
+
+  class AbstractClass(ABC):
+      @abstractmethod
+      def my_method(self):
+          pass
+  
+  class ConcreteClass(AbstractClass):
+      def my_method(self):
+          print("Implementation of my_method")
+  
+  obj = ConcreteClass()
+  obj.my_method()  # Output: Implementation of my_method
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="Slots">
+      <div class="topic-heading"><h2>Method Resolution Order (MRO)</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>Method Resolution Order (MRO) determines the order in which Python looks for a method in a hierarchy of classes.</li>
+          <li>It uses the C3 linearization algorithm.</li>
+          <li>It is defined by the <span class="code">__mro__</span> attribute or the <span class="code">mro()</span> method.</li>
+          <li>Understanding MRO is crucial for knowing where methods are inherited from, especially in complex class hierarchies.</li>
+        </ul>
+        <pre><code language="python">
+    class A:
+        def who(self):
+            print("A")
+
+    class B(A):
+        pass
+
+    class C(A):
+        def who(self):
+            print("C")
+
+    class D(B, C):
+        pass
+
+    obj = D()
+    obj.who()  # Prints "C" because of the order in MRO
+    print(D.mro())  # Shows the order: [D, B, C, A, object]
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="CallMethod">
+      <div class="topic-heading"><h2><span class="code">__call__</span> in Python</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>__call__ allows an instance of a class to be called as a function.</li>
+        </ul>
+        <pre><code class="language-python">
+    class Product:
+        def __init__(self, name, price):
+            self.name = name
+            self.price = price
+
+        def __call__(self, x):
+            print(f"{self.name} costs {self.price * x}")
+
+    p = Product("coffee", 2)
+    p(3)  # Output: coffee costs 6
+
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="NewVsInit">
+      <div class="topic-heading"><h2><span class="code">__new__</span> vs <span class="code">__init__</span> in Python</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li><span class="code">__new__</span> is a static method that is responsible for creating a new instance of a class.</li>
+          <li><span class="code">__init__</span> is an instance method responsible for initializing the object after its creation.</li>
+        </ul>
+        <pre><code class="language-python">
+        class MyClass:
+            def __new__(cls):
+                print("Creating instance")
+                instance = super().__new__(cls)
+                return instance
+
+            def __init__(self):
+                print("Initializing instance")
+
+        obj = MyClass()             # Creating instance \n Initializing instance
+
+        </code></pre>
+      </div>
+    </div>
+
+
   </div>
 
   <div class="sidebar-right">

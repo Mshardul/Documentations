@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Programming questions - Concurrent Programming</a></span>
+  <span class="next"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic" id="AsyncioGather">
+      <div class="topic-heading"><h2>Describe Python's <span class="code">asyncio.gather</span> and its usage.</h2></div>
+      <div class="topic-body">
+        <p><span class="code">asyncio.gather</span> is used to run multiple coroutines concurrently and aggregate their results. It helps in managing several tasks simultaneously.</p>
+        <pre><code class="language-python">
+    import asyncio
+
+    async def factorial(name, number):
+        f = 1
+        for i in range(2, number + 1):
+            print(f"Task {name}: Compute factorial({i})...")
+            await asyncio.sleep(1)
+            f *= i
+        print(f"Task {name}: factorial({number}) = {f}")
+        return f
+
+    async def main():
+        # Schedule three calls *concurrently*:
+        results = await asyncio.gather(
+            factorial("A", 2),
+            factorial("B", 3),
+            factorial("C", 4),
+        )
+        print(results)
+
+    asyncio.run(main())
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ThreadSafeSingletonClass">
+      <div class="topic-heading"><h2>Thread-safe singleton Class in Python</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    import threading
+
+    class Singleton:
+        _instance = None
+        _lock = threading.Lock()  # Lock object to synchronize threads
+
+        def __new__(cls):
+            with cls._lock:  # Critical section starts
+                if cls._instance is None:
+                    cls._instance = super(Singleton, cls).__new__(cls)
+            return cls._instance
+        </code></pre>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+
+</div>
+  
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

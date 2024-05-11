@@ -227,6 +227,124 @@
       </div>
     </div>
 
+    <hr/>
+
+    <div class="topic" id="StaticMethodVsClassMethod">
+      <div class="topic-heading"><h2>@staticmethod vs @classmethod</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li><span class="point">@staticmethod</span> does not receive any reference to the class or instance it is called on. It's like a regular function but belongs to the class's namespace.</li>
+          <li><span class="point">@classmethod</span> receives the class itself as the first argument (usually named cls) and can modify class state that applies across all instances of the class.</li>
+        </ul>
+        <pre><code class="language-python">
+    class Demo:
+        count = 0
+
+        @classmethod
+        def increment_count(cls):
+            cls.count += 1
+
+        @staticmethod
+        def static_method():
+            print("Called static_method")
+
+    # Static method call
+    Demo.static_method()  # "Called static_method"
+
+    # Class method modifying class state
+    print("Initial Count:", Demo.count)  # Initial Count: 0
+    Demo.increment_count()
+    print("Modified Count:", Demo.count)  # Modified Count: 1
+
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="CallMethod">
+      <div class="topic-heading"><h2><span class="code">__call__</span> in Python</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>__call__ allows an instance of a class to be called as a function.</li>
+        </ul>
+        <pre><code class="language-python">
+    class Product:
+        def __init__(self, name, price):
+            self.name = name
+            self.price = price
+
+        def __call__(self, x):
+            print(f"{self.name} costs {self.price * x}")
+
+    p = Product("coffee", 2)
+    p(3)  # Output: coffee costs 6
+
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="AbstractMethodVsVirtualMethod">
+      <div class="topic-heading"><h2>Abstract Method vs Virtual Method</h2></div>
+      <div class="topic-body">
+        <h3>Abstract Method</h3>
+        <ul>
+          <li>An abstract method is a method that is declared in a class, but it does not have an implementation in that class.</li>
+          <li>The class containing an abstract method is typically known as an abstract class, and it cannot be instantiated on its own.</li>
+          <li>Abstract methods must be implemented by any subclass that derives from the abstract class.</li>
+          <li>Must be declared in an abstract class using the abc module and must be implemented by any subclass.</li>
+        </ul>
+        <pre><code class="language-python">
+    from abc import ABC, abstractmethod
+
+    class MyAbstractClass(ABC):
+        @abstractmethod
+        def my_abstract_method(self):
+            """This is a description of what the method does."""
+            pass
+
+    class ConcreteClass(MyAbstractClass):
+        def my_abstract_method(self):
+            print("Implementation of the abstract method.")
+
+    # Attempting to instantiate MyAbstractClass would raise an error
+    # obj = MyAbstractClass()  # TypeError: Can't instantiate abstract class
+
+    # Correct usage
+    obj = ConcreteClass()
+    obj.my_abstract_method()  # Output: Implementation of the abstract method.
+
+        </code></pre>
+
+        <h3>Virtual Method</h3>
+        <ul>
+          <li>A virtual method is a method that has an implementation in a base class but can be overridden in a derived class.</li>
+          <li>Python handles method overriding differently and does not have the "virtual" keyword.</li>
+          <li>In Python, all methods in classes are effectively virtual, which means any method can be overridden in a subclass.</li>
+        </ul>
+        <pre><code class="language-python">
+    class BaseClass:
+        def my_method(self):
+            print("This is a method in the base class.")
+
+    class DerivedClass(BaseClass):
+        def my_method(self):
+            print("This method overrides the base class method.")
+
+    base_obj = BaseClass()
+    base_obj.my_method()  # Output: This is a method in the base class.
+
+    derived_obj = DerivedClass()
+    derived_obj.my_method()  # Output: This method overrides the base class method.
+
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
   </div>
     
   <div class="sidebar-right">

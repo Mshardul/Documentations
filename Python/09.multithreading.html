@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Multithreading</a></span>
+  <span class="next"><a href="./00.main.html">Python - Interview Prep</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+    <div class="topic" id="Overview">
+      <div class="topic-heading"><h2>Overview</h2></div>
+      <div class="topic-body">
+        <p>Threading is a way to run multiple threads (smaller units of a process) concurrently within a program.</p>
+        <p>Threads share the same memory space, making them suitable for I/O-bound tasks.</p>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="Usecase">
+      <div class="topic-heading"><h2>Use Case</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>Threads are ideal for I/O-bound tasks (e.g., file reading/writing, network requests).</li>
+          <li>CPU-bound tasks should consider multiprocessing or asyncio.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="ThreadingModule">
+      <div class="topic-heading"><h2>Threading Module</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+import threading
+import time
+
+def print_numbers():
+    for i in range(10):
+        print(i)
+        time.sleep(1)
+
+"""
+Thread class represents an activity that will be run in a separate thread. 
+`target` specifies that print_numbers function will be executed in the new thread.
+"""
+thread = threading.Thread(target=print_numbers)
+"""
+Thread class initiates the thread's activity by calling run method in a new thread.
+The run method in turn calls the target function.
+"""
+thread.start()
+"""
+join() blocks the calling thread (main thread) until the thread whose join method is called terminates.
+
+"""
+thread.join()
+        </code></pre>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="prev"><a href="./08.exception_handling.html">08. Exception Handling</a></span>
+  <span class="next"><a href="./02.input_output.html">02. Input/Output</a></span>
+</div>

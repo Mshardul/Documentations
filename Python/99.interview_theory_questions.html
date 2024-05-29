@@ -471,9 +471,42 @@
             </ul>
           </p>
           <p class="answer_source">
-            <a href="./99.programming_questions-functions.html#AbstractMethodVsVirtualMethod">Programming Questions - Function</a>
+            <a href="./99.programming_questions-functions.html#AbstractMethodVsVirtualMethod">Programming Questions - Abstract Method vs Virtual Method</a>
           </p>
         </div>
+
+        <hr/>
+
+        <div class="question_answer_div">
+          <div class="question">How are arguments passed by value or by reference in Python?</div>
+          <p class="answer">
+            Neither. Python uses a mechanism known as "pass-by-object-reference" or "pass-by-assignment". When you pass arguments to a function in Python, you are actually passing object references, not the actual object itself nor an explicit pointer to it. However, these references are passed by value. This means the function receives a copy of the reference, pointing to the same object in memory as the original one.
+            <pre><code class="language-python">
+    def modify_num(num):
+        num = num + 10
+        return num
+
+    def modify_lst(lst):
+        lst.append(4)
+        return lst
+
+    x = 5
+    print(modify(x))  # 15
+    print(x)          # 5, unchanged because x is an immutable integer
+
+    x = [1, 2, 3]
+    print(modify(x))  # [1, 2, 3, 4]
+    print(x)          # [1, 2, 3, 4], x is changed because it's mutable
+            </code></pre>
+            <h3>Key Points</h3>
+            <ul>
+              <li><span class="point">No New Objects Are Created on Passing:</span> When you pass an argument, Python does not create a new object; it only passes the reference. Whether the function can modify the original object depends on whether the object is mutable or immutable.</li>
+              <li><span class="point">Reassignment Does Not Affect Original:</span> Reassigning a parameter to a new value within a function creates a new local variable. It does not affect the original variable outside the function.</li>
+            </ul>
+          </p>
+        </div>
+
+        <hr/>
 
       </div>
     </div>

@@ -1,0 +1,80 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Programming questions - Hoisting</a></span>
+  <span class="next"><a href="./00.main.html">Javascript</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+
+    <div class="topic" id="ArrayWithExpression">
+      <div class="topic-heading"><h2>Array with Expression</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    const list = [1+2, 1*2, 1/2];
+    console.log(list);                  // [ 3, 2, 0.5 ]
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="TripleEqualTo">
+      <div class="topic-heading"><h2>Triple Equal To (===)</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-python">
+    let a = [1, 2, "3"]
+    a = a.filter((a, i) => a === Number(i))
+    console.log(a)                             # []
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="IteratingOverObject">
+      <div class="topic-heading"><h2>Iterating over Object</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    /* using for-in loop */
+    for (const prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            console.log(prop, obj[prop]); 
+        }
+    }
+
+
+    /* using Object.keys() - introduced in ES6 */
+    Object.keys(obj).forEach((prop, index)=>{
+        console.log(prop, obj[prop]);
+    });
+
+
+    /* using Object.values() - introduced in ES8 */
+    Object.values(obj).forEach((value)=>{
+        console.log(value);
+    });
+
+
+    /* using Object.entries() - introduced in ES8 */
+    Object.entries(obj).forEach((entry)=>{
+        console.log(entry[0], entry[1]);
+    });
+        </code></pre>
+      </div>
+    </div>
+
+  </div>
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+    
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

@@ -1,0 +1,258 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Programming questions - Functions</a></span>
+  <span class="next"><a href="./00.main.html">Javascript</a></span>
+</div>
+
+<div class="main-content">
+  <div class="content">
+
+    <div class="topic" id="ReturnStatementInNextLine">
+      <div class="topic-heading"><h2>Return statement in next line</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    let x = function() {
+        return
+        { msg: "hi" }
+    }
+    console.log(x()); // undefined
+    
+    /* encounters empty return. Hence returns nothing */
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="SetTimeout">
+      <div class="topic-heading"><h2>setTimeout</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    console.log("1")
+    setTimeout(function(){console.log("2")}, 1000)
+    setTimeout(function(){console.log("3")}, 0)
+    console.log("4")
+
+    /* 1 4 3 2 */
+
+    function x() {
+        setTimeout(function(){console.log(i)}, 1000);
+        var i = 1;
+    }
+    x();
+    /* 1 */
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="SetTimeout2">
+      <div class="topic-heading"><h2>Set Timeout 2</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    let status = "hi";
+
+    setTimeout(() => {
+      status = "hello";
+      console.log("1: ", status);       // hello
+    }, 0);
+
+    console.log("2: ", status);         // hi
+
+
+    /* output */
+    2: hi
+    1: hello
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="SetTimeout3">
+      <div class="topic-heading"><h2>Set Timeout 3</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    function func() {
+        let i;
+        for(i = 0; i &lt; 3; i++)
+            setTimeout(() => {
+              console.log(i);
+            }, i*100);
+    }
+
+    func();                            // 3 3 3
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="SetTimeout3">
+      <div class="topic-heading"><h2>Set Timeout 3</h2></div>
+      <div class="topic-body">
+        <pre><code class="language-javascript">
+    var x = 5, y = 1;
+    var obj = {x: 10};
+
+    with(obj) {
+        console.log(x, y);       // 10 1
+    }
+
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="MapAndParseInt">
+      <div class="topic-heading"><h2>Map and ParseInt</h2></div>
+      <div class="topic-body">
+        <h3>Explain the output.</h3>
+        <pre><code class="language-javascript">
+    ['1', '5', '11'].map(parseInt)          /* [1, NaN, 3] */
+        </code></pre>
+        <ul>
+          <li>
+            <span class="point">Function Signature of parseInt:</span> can take up to two arguments: <span class="code">parseInt(string, radix)</span>
+            <ul>
+              <li><span class="point">string:</span> the string to parse</li>
+              <li><span class="point">radix:</span> the base of the mathematical numeral systems used</li>
+            </ul>
+          </li>
+          <li>
+            <span class="point">Behavior of map:</span> calls the provided function with three arguments
+            <ul>
+              <li>current array element</li>
+              <li>index of that element</li>
+              <li>the entire array</li>
+            </ul>
+          </li>
+          <li>
+            <span class="point">Application to Each Element</span>
+            <ul>
+              <li>
+                <span class="code">parseInt('1', 0)</span> is called
+                <ul>
+                  <li>In JavaScript, a radix of 0 (or omitted) means the function decides the radix based on the input string.</li>
+                  <li>Since '1' doesn't start with '0x' or '0', it's treated as a decimal (base 10)</li>
+                  <li>so it returns 1.</li>
+                </ul>
+              </li>
+              <li>
+                <span class="code">parseInt('5', 1)</span> is called
+                <ul>
+                  <li>A radix of 1 is not valid (the radix must be between 2 and 36)</li>
+                  <li>so parseInt returns NaN.</li>
+                </ul>
+              </li>
+              <li>
+                <span class="code">parseInt('11', 2)</span> is called
+                <ul>
+                  <li>the function interprets the string '11' as a binary number (base 2)</li>
+                  <li>which converts to decimal 3.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="DifferentWaysOfCallingAFunction">
+      <div class="topic-heading"><h2>Different ways of calling a function</h2></div>
+      <div class="topic-body">
+        <h3>Direct Invocation</h3>
+        <pre><code class="language-javascript">
+    function show() {
+        console.log('show function');
+    }
+    
+    show();
+        </code></pre>
+
+        <h3>Using call and apply.</h3>
+        <pre><code class="language-javascript">
+    function show() {
+        console.log('show function');
+    }
+
+    show.call({});
+    show.apply({});
+        </code></pre>
+
+        <h3>Using setTimeout</h3>
+        <pre><code class="language-javascript">
+    function show() {
+        console.log('show function');
+    }
+    
+    setTimeout(show, 0)
+        </code></pre>
+
+        <h3>Using new keyword</h3>
+        <pre><code class="language-javascript">
+    function show() {
+        console.log('show function');
+    }
+    
+    new show();
+        </code></pre>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="topic" id="CallingAFunctionWithoutUsingParentheses">
+      <div class="topic-heading"><h2>Calling a function without using Parentheses</h2></div>
+      <div class="topic-body">
+        <h3>Using New keyword</h3>
+        The parenthesis are only required when we want to pass some default values.
+        <pre><code class="language-javascript">
+    function show() {
+        console.log('show function');
+    }
+    
+    new show;
+        </code></pre>
+
+        <h3>Using tagged template literal</h3>
+        <pre><code class="language-javascript">
+    function show() {
+        console.log('show function');
+    }
+    
+    show``;
+        </code></pre>
+
+        <h3>Using getter property in object</h3>
+        <pre><code class="language-javascript">
+    const obj = {
+        show: 1,
+        get show() {
+            console.log('show function');
+        }
+    }
+  
+    obj.show;
+        </code></pre>
+      </div>
+    </div>
+  </div>
+    
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+    
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

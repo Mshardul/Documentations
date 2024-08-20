@@ -1,0 +1,149 @@
+<link rel="stylesheet" href="styles.css">
+<script src="./script.js"></script>
+
+<div class="navbar">
+  <span class="prev"><a href="../main.html">Notes</a></span>
+  <span class="center"><a href="#">Javascript - Introduction</a></span>
+  <span class="next"><a href="./00.main.html">Javascript</a></span>
+</div>
+
+<div class="main-content">
+  
+  <div class="content">
+
+    <div class="topic" id="StandardWebTechnologies">  
+      <div class="topic-heading"><h2>Standard Web technologies</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li><span class="point">HTML</span> is the markup language that we use to structure and give meaning to our web content, for example defining paragraphs, headings, and data tables, or embedding images and videos in the page.</li>
+          <li><span class="point">CSS</span> is a language of style rules that we use to apply styling to our HTML content, for example setting background colors and fonts, and laying out our content in multiple columns.</li>
+          <li><span class="point">JavaScript</span> is a scripting language that enables you to create dynamically updating content, control multimedia, animate images, and pretty much everything else. (Okay, not everything, but it is amazing what you can achieve with a few lines of JavaScript code.)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="topic" id="apis">
+      <div class="topic-heading"><h2>Application Programming Interfaces (APIs)</h2></div>
+      <div class="topic-body">
+        APIs generally fall into 2 categories
+        <ul>
+          <li>
+            <span class="point">Browser APIs</span> are built into your web browser, and are able to expose data from the surrounding computer environment.
+            <ul>
+              <li>The <span class="point">DOM (Document Object Model) API</span> allows you to manipulate HTML and CSS, creating, removing and changing HTML, dynamically applying new styles to your page, etc.</li>
+              <li>The <span class="point">Geolocation API</span> retrieves geographical information.</li>
+              <li>The <span class="point">Canvas and WebGL APIs</span> allow you to create animated 2D and 3D graphics.</li>
+              <li><span class="point">Audio and Video APIs like HTMLMediaElement and WebRTC</span> allow you to do really interesting things with multimedia, such as play audio and video right in a web page, or grab video from your web camera and display it on someone else's computer</li>
+            </ul>
+          </li>
+          <li>
+            <span class="point">Third party APIs</span> are not built into the browser by default.
+            <ul>
+              <li>The <span class="point">Twitter API</span> allows you to do things like displaying your latest tweets on your website.</li>
+              <li>The <span class="point">Google Maps API and OpenStreetMap API</span> allows you to embed custom maps into your website, and other such functionality.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="topic" id="JavaScriptRunningOrder">
+      <div class="topic-heading"><h2>JavaScript running order</h2></div>
+      <div class="topic-body">
+        When the browser encounters a block of JavaScript, it generally runs it in order, from top to bottom. 
+        <pre><code class="language-javascript">
+    button.addEventListener("click", updateName); /* Uncaught ReferenceError: Cannot access 'button' before initialization */
+
+    const button = document.querySelector("button");
+    
+    function updateName() {
+      const name = prompt("Enter a new name");
+      button.textContent = `Player 1: ${name}`;
+    }
+          
+        </code></pre>
+      </div>
+    </div>
+
+    <div class="topic" id="InterpretedVsCompiledCode">
+      <div class="topic-heading"><h2>Interpreted versus compiled code</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li>
+            <span class="point">Interpreted Languages</span>
+            <ul>
+              <li>The code is run from top to bottom and the result of running the code is immediately returned.</li>
+              <li>You don't have to transform the code into a different form before the browser runs it.</li>
+              <li>The code is received in its programmer-friendly text form and processed directly from that.</li>
+            </ul>
+          </li>
+          <li>
+            <span class="point">Compiled Languages</span>
+            <ul>
+              <li>Transforms (compiled) into another form before they are run by the computer.</li>
+              <li>For example, C/C++ are compiled into machine code that is then run by the computer.</li>
+              <li>The program is executed from a binary format, which was generated from the original program source code.</li>
+            </ul>
+          </li>
+          <li>
+            <span class="point">JavaScript is a lightweight interpreted programming language.</span>
+            <ul>
+              <li>The web browser receives the JavaScript code in its original text form and runs the script from that.</li>
+              <li>Most modern JavaScript interpreters actually use a technique called just-in-time compiling to improve performance; the JavaScript source code gets compiled into a faster, binary format while the script is being used, so that it can be run as quickly as possible.</li>
+              <li>JavaScript is still considered an interpreted language, since the compilation is handled at run time, rather than ahead of time.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="topic" id="ServerSideVsClientSideCode">
+      <div class="topic-heading"><h2>Server-side versus client-side code</h2></div>
+      <div class="topic-body">
+        <ul>
+          <li><span class="point">Client-side code</span> is code that is run on the user's computer — when a web page is viewed, the page's client-side code is downloaded, then run and displayed by the browser.</li>
+          <li><span class="point">Server-side code</span> is run on the server, then its results are downloaded and displayed in the browser.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="topic" id="ImportingJsToHtml">
+      <div class="topic-heading" id="Import JavaScript to HTML">
+        <ul>
+          <li>
+            <span class="point">Internal JavaScript</span>
+            <pre><code class="language-javascript">
+    &lt;script&gt;
+      // JavaScript goes here
+    &lt;/script&gt;
+            </code></pre>
+          </li>
+
+          <li>
+            <span class="point">External JavaScript</span>
+            <pre><code class="language-javascript">
+    &lt;script type="module" src="script.js"&gt;&lt;/script&gt;
+            </code></pre>
+          </li>
+
+          <li>
+            <span class="point">Inline JavaScript handlers</span>
+            <pre><code class="language-javascript">
+    &lt;button onclick="createParagraph()"&gt;Click me!&lt;/button&gt;
+            </code></pre>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="sidebar-right">
+    <div class="menu-header" id="menu-header">Table of Content</div>
+    <div class="menu-content" id="menu-content"></div>
+  </div>
+</div>
+  
+<div class="footer">
+  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
+  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+</div>

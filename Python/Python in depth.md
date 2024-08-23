@@ -110,8 +110,10 @@
     - [Encapsulation and Abstraction](#encapsulation-and-abstraction)
     - [Inheritance:](#inheritance)
     - [Polymorphism](#polymorphism)
-    - [Magic Methods:](#magic-methods)
+    - [Magic (or Dunder) Methods:](#magic-or-dunder-methods)
     - [Composition:](#composition)
+  - [Advanced OOP Topics](#advanced-oop-topics)
+    - [Metaclasses in Python](#metaclasses-in-python)
 - [Exception Handling](#exception-handling)
 - [Python Modules and Packages](#python-modules-and-packages)
 - [Advanced Data Structures and Algorithms in Python](#advanced-data-structures-and-algorithms-in-python)
@@ -1525,10 +1527,13 @@
   counter2 = counter()
   print(counter2())  # Output: 1
 
-  # counter is a function that initializes count to 0.
-  # increment is an inner function that increases count by 1 each time it is called.
-  # The nonlocal keyword is used so that increment modifies count in the enclosing scope, rather than creating a new local variable.
-  # Each time counter is called, a new increment function is created with its own count variable. Thus, counter1 and counter2 are independent of each other.
+  """
+  counter is a function that initializes count to 0.
+  increment is an inner function that increases count by 1 each time it is called.
+  The nonlocal keyword is used so that increment modifies count in the enclosing scope, rather than creating a new local variable.
+  Each time counter is called, a new increment function is created with its own count variable.
+  Thus, counter1 and counter2 are independent of each other.
+  """
   ```
 ### How Closures Work
 - Lexical Scoping: means that a function's scope is determined by its position in the source code. The closure "remembers" the scope in which it was created.
@@ -2055,7 +2060,7 @@
 
 ## Key Concepts of OOP
 ### Encapsulation and Abstraction
-- Encapsulation: is the process of wrapping data and the methods that manipulate that data into a single unit (a class). It is a way of restricting access to certain components and preventing the accidental modification of data.
+- **Encapsulation:** is the process of wrapping data and the methods that manipulate that data into a single unit (a class). It is a way of restricting access to certain components and preventing the accidental modification of data.
   - Level of Access Control in Python
     ```python
     class ExampleClass:
@@ -2497,6 +2502,11 @@
     ```
 - Duck typing: is a form of polymorphism where the actual type of an object is less important than the methods it supports. The name comes from the saying: "If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck."
   ```python
+  """
+  In this example, the make_it_quack function takes any object and calls its quack method.
+  It doesn't matter whether the object is actually an instance of a Duck class.
+  As long as the object has a quack method, it can be passed to make_it_quack.
+  """
   class Duck:
       def quack(self):
           return "Quack"
@@ -2515,39 +2525,38 @@
   make_it_quack(dog)                                  # Output: Woof (but pretending to quack)
   ```
 - Operator Overloading: allows you to define or change the behavior of built-in operators (+, -, *, etc.) when they are applied to objects of a user-defined class. This is done by defining special methods in the class that correspond to the operators.
-      - Python provides a set of special methods (also known as magic methods or dunder methods) that you can implement in your class to overload operators.
-      - Arithmetic Operators
-        - `__add__(self, other)` : Overloads the `+` operator.
-        - `__sub__(self, other)` : Overloads the `-` operator.
-        - `__mul__(self, other)` : Overloads the `*` operator.
-        - `__truediv__(self, other)` : Overloads the `/` operator.
-        - `__floordiv__(self, other)`  : Overloads the `//` operator.
-        - `__mod__(self, other)` : Overloads the `%` operator.
-        - `__pow__(self, other)` : Overloads the `**` operator.
-      - Comparison Operators:
-        - `__eq__(self, other)`: Overloads the `==` operator.
-        - `__ne__(self, other)`: Overloads the `!=` operator.
-        - `__lt__(self, other)`: Overloads the `<` operator.
-        - `__le__(self, other)`: Overloads the `<=` operator.
-        - `__gt__(self, other)`: Overloads the `>` operator.
-        - `__ge__(self, other)`: Overloads the `>=` operator.
-      - Unary Operators:
-        - `__neg__(self)`: Overloads the `unary -` operator (negation).
-        - `__pos__(self)`: Overloads the `unary +` operator (positive).
-        - `__abs__(self)`: Overloads the `abs()` function.
-        - `__invert__(self)`: Overloads the `~` operator (bitwise inversion).
-      - Assignment Operators:
-        - `__iadd__(self, other)`: Overloads the `+=` operator.
-        - `__isub__(self, other)`: Overloads the `-=` operator.
-        - `__imul__(self, other)`: Overloads the `*=` operator.
-        - `__itruediv__(self, other)`: Overloads the `/=` operator.
-        - `__ifloordiv__(self, other)`: Overloads the `//=` operator.
-        - `__imod__(self, other)`: Overloads the `%=` operator.
-        - `__ipow__(self, other)`: Overloads the `**=` operator.
-### Magic Methods:
+  - Python provides a set of special methods (also known as magic methods or dunder methods) that you can implement in your class to overload operators.
+  - Arithmetic Operators
+    - `__add__(self, other)` : Overloads the `+` operator.
+    - `__sub__(self, other)` : Overloads the `-` operator.
+    - `__mul__(self, other)` : Overloads the `*` operator.
+    - `__truediv__(self, other)` : Overloads the `/` operator.
+    - `__floordiv__(self, other)`  : Overloads the `//` operator.
+    - `__mod__(self, other)` : Overloads the `%` operator.
+    - `__pow__(self, other)` : Overloads the `**` operator.
+  - Comparison Operators:
+    - `__eq__(self, other)`: Overloads the `==` operator.
+    - `__ne__(self, other)`: Overloads the `!=` operator.
+    - `__lt__(self, other)`: Overloads the `<` operator.
+    - `__le__(self, other)`: Overloads the `<=` operator.
+    - `__gt__(self, other)`: Overloads the `>` operator.
+    - `__ge__(self, other)`: Overloads the `>=` operator.
+  - Unary Operators:
+    - `__neg__(self)`: Overloads the `unary -` operator (negation).
+    - `__pos__(self)`: Overloads the `unary +` operator (positive).
+    - `__abs__(self)`: Overloads the `abs()` function.
+    - `__invert__(self)`: Overloads the `~` operator (bitwise inversion).
+  - Assignment Operators:
+    - `__iadd__(self, other)`: Overloads the `+=` operator.
+    - `__isub__(self, other)`: Overloads the `-=` operator.
+    - `__imul__(self, other)`: Overloads the `*=` operator.
+    - `__itruediv__(self, other)`: Overloads the `/=` operator.
+    - `__ifloordiv__(self, other)`: Overloads the `//=` operator.
+    - `__imod__(self, other)`: Overloads the `%=` operator.
+    - `__ipow__(self, other)`: Overloads the `**=` operator.
+### Magic (or Dunder) Methods:
 - are special methods that are automatically invoked by Python in response to certain operations or events. 
 - These methods are not meant to be called directly by the user but are used internally by Python to execute specific behaviors.
-- Dunder Methods: are special methods that are automatically invoked by Python in response to certain operations or events. These methods are not meant to be called directly by the user but are used internally by Python to execute specific behaviors.
   - Commonly Used Magic (Dunder) Methods
     - Initialization and Representation Methods
       - `__init__(self, ...)`: This method is called when an instance of the class is created. It initializes the object with the provided arguments.
@@ -2915,6 +2924,97 @@
     office = Office()
     office.print_report("Annual Report")
     ```
+## Advanced OOP Topics
+### Metaclasses in Python
+- Introduction to Metaclasses
+  - A metaclass is a class that defines the behavior of other classes. In other words, just as objects are instances of classes, classes are instances of metaclasses.
+  ```python
+  class MyMeta(type):
+      def __new__(cls, name, bases, dct):
+          print(f"Creating class {name}")
+          return super().__new__(cls, name, bases, dct)
+
+  class MyClass(metaclass=MyMeta):
+      pass
+
+  # Creating an instance of MyClass
+  my_instance = MyClass()
+  ```
+- Why Use Metaclasses?
+  - Customization: Metaclasses allow you to customize the class creation process, enabling you to control how classes are constructed, modify the class before it is fully created, or even automatically add new methods or attributes.
+  - Enforcing Rules: Metaclasses can enforce certain rules or patterns in your class design, ensuring consistency across multiple classes without having to manually add the same code to each one.
+  - Automatic Registration: They can be used to automatically register classes in a registry or perform other actions when classes are defined.
+- The `__new__()` and `__init__()` Methods in Metaclasses
+  - `__new__()`:
+    - The `__new__()` method is responsible for creating a new class. It is called before the class is actually created, and it returns the newly created class.
+    - In a metaclass, `__new__()` is used to control the creation of the class itself (not instances of the class).
+  - `__init__()`:
+    - The `__init__()` method is called after the class has been created. It initializes the class by setting any necessary attributes or performing any required setup.
+    - In a metaclass, `__init__()` can be used to modify or customize the class after it has been created.
+  - Example
+    ```python
+    class MyMeta(type):
+        def __new__(cls, name, bases, dct):
+            dct['class_id'] = name.lower()
+            return super().__new__(cls, name, bases, dct)
+
+    class MyClass(metaclass=MyMeta):
+        pass
+
+    # Checking the class attribute
+    print(MyClass.class_id)  # Output: myclass
+    ```
+- Metaclass Use Cases
+  - Enforcing Class Design: Metaclasses can enforce that certain attributes or methods are present in a class or follow specific naming conventions.
+    ```python
+    class AttributeEnforcerMeta(type):
+        def __init__(cls, name, bases, dct):
+            if not hasattr(cls, 'required_attribute'):
+                raise TypeError(f"Class {name} is missing required attribute 'required_attribute'")
+            super().__init__(name, bases, dct)
+
+    class MyClass(metaclass=AttributeEnforcerMeta):
+        required_attribute = "I am required"
+
+    # This will work fine, but if you remove `required_attribute`, a TypeError will be raised.
+    # The AttributeEnforcerMeta metaclass checks if the required_attribute is present in any class that uses this metaclass. If the attribute is missing, a TypeError is raised.
+    ```
+  - Automatic Class Registration: Metaclasses can be used to automatically register classes in a global registry.
+    ```python
+    class RegistryMeta(type):
+          registry = {}
+
+          def __init__(cls, name, bases, dct):
+              if name != 'BaseClass':
+                  RegistryMeta.registry[name] = cls
+              super().__init__(name, bases, dct)
+
+      class BaseClass(metaclass=RegistryMeta):
+          pass
+
+      class ClassA(BaseClass):
+          pass
+
+      class ClassB(BaseClass):
+          pass
+
+      # Checking the registry
+      print(RegistryMeta.registry)
+      # Output: {'ClassA': <class '__main__.ClassA'>, 'ClassB': <class '__main__.ClassB'>}
+      ```
+- Metaclasses and Inheritance: Metaclasses follow the inheritance chain just like classes do. If you inherit from a class with a metaclass, the child class will automatically use the same metaclass unless you explicitly override it.
+  ```python
+  class MyMeta(type):
+      pass
+
+  class BaseClass(metaclass=MyMeta):
+      pass
+
+  class SubClass(BaseClass):
+      pass
+
+  print(type(SubClass))  # Output: <class '__main__.MyMeta'>
+  ```
 
 
 

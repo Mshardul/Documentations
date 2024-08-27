@@ -114,7 +114,25 @@
     - [Composition:](#composition)
   - [Advanced OOP Topics](#advanced-oop-topics)
     - [Metaclasses in Python](#metaclasses-in-python)
+    - [Custom Object Creation](#custom-object-creation)
+    - [Class Decorators](#class-decorators)
+    - [Descriptor Protocol](#descriptor-protocol)
+    - [Mixins](#mixins)
+    - [Creating Custom Immutable Objects](#creating-custom-immutable-objects)
+  - [Best Practices and Tips for OOP in Python](#best-practices-and-tips-for-oop-in-python)
+    - [Design Principles](#design-principles)
+    - [Code Organization](#code-organization)
+    - [Practical Tips for Writing OOP Code](#practical-tips-for-writing-oop-code)
+    - [Testing and Debugging](#testing-and-debugging)
+    - [Performance Considerations](#performance-considerations)
+    - [Collaboration and Code Maintenance](#collaboration-and-code-maintenance)
 - [Exception Handling](#exception-handling)
+  - [Exceptions](#exceptions)
+    - [Introdution to Exceptions](#introdution-to-exceptions)
+    - [Handling Exceptions](#handling-exceptions)
+    - [Catching Specific Exceptions](#catching-specific-exceptions)
+    - [Creating Custom Exceptions](#creating-custom-exceptions)
+    - [Advanced Exception Handling Techniques](#advanced-exception-handling-techniques)
 - [Python Modules and Packages](#python-modules-and-packages)
 - [Advanced Data Structures and Algorithms in Python](#advanced-data-structures-and-algorithms-in-python)
 - [Python Standard Libraries](#python-standard-libraries)
@@ -3016,49 +3034,965 @@
   print(type(SubClass))  # Output: <class '__main__.MyMeta'>
   ```
 
+### Custom Object Creation
+- `__init__()` and `__new__()`: 
+  - `__init__()` is commonly used for initializing objects after they’ve been created
+  - `__new__()` gives you control over the actual creation of the object itself
+- The `__new__()` Method
+  - Basics
+    - `__new__()` is a special method in Python responsible for creating a new instance of a class. It is called before `__init__()` and is the first step of instance creation.
+    - `__new__()` is typically overridden in scenarios where you need to control the creation of a new object, such as when implementing singletons, immutable objects, or when inheriting from immutable types like `tuple` or `str`.
+  - Structure
+    - The `__new__()` method receives the class itself (`cls`) as its first argument, followed by any additional arguments passed during object instantiation.
+    - It returns a new instance of the class, usually by calling `super().__new__(cls, *args, **kwargs)`.
+  - Example
+    ```python
+    """
+    __new__() is overridden to print a message when a new instance is created. 
+    The instance is then passed to __init__() for initialization.
+    """
+    class MyClass:
+        def __new__(cls, *args, **kwargs):
+            print("Creating a new instance of MyClass")
+            instance = super().__new__(cls)
+            return instance
+        
+        def __init__(self, value):
+            print("Initializing the instance")
+            self.value = value
 
+    # Creating an instance of MyClass
+    obj = MyClass(10)
+    # Output:
+    # Creating a new instance of MyClass
+    # Initializing the instance
+    ```
+  - When to Override `__new__()`:
+    - Immutable Objects: When you need to create instances of immutable types like `str`, `int`, or `tuple`, where object creation needs to be tightly controlled.
+    - Singleton Pattern: Implementing the Singleton pattern, where only one instance of a class should exist.
+    - Custom Metaclasses: When working with metaclasses, you might need to override `__new__()` to customize class creation.
+- The `__init__()` Method
+  - Basics
+    - `__init__()` is the initializer method in Python, called after `__new__()` to initialize the newly created object. It is where you set up the initial state of the object.
+    - `__init__()` is used to initialize instance attributes and perform any setup tasks necessary after the object is created.
+  - Structure
+    - The `__init__()` method receives the instance (`self`) as its first argument, followed by any additional arguments passed during object instantiation.
+  - Example
+    ```python
+    """
+    __init__() is used here to set the value attribute when a new instance of MyClass is created.
+    """
+    class MyClass:
+        def __init__(self, value):
+            print("Initializing the instance")
+            self.value = value
 
+    # Creating an instance of MyClass
+    obj = MyClass(10)
+    # Output:
+    # Initializing the instance
+    ```
+- `__new__()` vs. `__init__()`
+  - `__new__()`:
+    - Responsible for creating a new instance of the class.
+    - It is the first method called during object instantiation.
+    - Returns the newly created instance.
+    - Typically used for immutable objects or when altering the creation process itself.
+  - `__init__()`:
+    - Responsible for initializing the instance after it has been created.
+    - Called after `__new__()`.
+    - Does not return anything; it simply sets up the object.
+    - Used for setting initial attributes and performing setup tasks.
+- Use Cases for Custom Object Creation
+  - Immutable Objects: cannot be modified after they are created. Overriding `__new__()` is necessary when you want to customize how these objects are created.
+    ```python
+    """
+    Here, MyString is a subclass of str.
+    The __new__() method is used to create the immutable string object.
+    The __init__() method is used for any additional setup or logging.
+    """
+    class MyString(str):
+        def __new__(cls, value):
+            # Create the immutable string object
+            instance = super().__new__(cls, value)
+            return instance
+        
+        def __init__(self, value):
+            print("Initializing MyString")
+        
+        def __repr__(self):
+            return f"MyString({super().__repr__()})"
 
+    # Creating an instance of MyString
+    my_str = MyString("Hello")
+    print(my_str)  # Output: MyString('Hello')
+    ```
+  - Singleton Pattern: ensures that only one instance of a class is created.
+    ```python
+    """
+    The __new__() method is overridden to ensure that only one instance of Singleton is ever created.
+    If an instance already exists, __new__() returns it instead of creating a new one.
+    """
+    class Singleton:
+        _instance = None
+        
+        def __new__(cls, *args, **kwargs):
+            if not cls._instance:
+                cls._instance = super().__new__(cls, *args, **kwargs)
+            return cls._instance
+        
+        def __init__(self, value):
+            self.value = value
 
+    # Creating instances of Singleton
+    s1 = Singleton(10)
+    s2 = Singleton(20)
 
-- Advanced OOP Topics
-  - Metaclasses in Python
-    - What is a Metaclass?
-    - Defining and Using Metaclasses
-  - The __new__() Method
-    - Difference between __new__() and __init__()
-  - Custom Object Creation
-  - Class Decorators
-    - Applying Decorators to Classes
-  - Descriptor Protocol
-    - Understanding __get__(), __set__(), and __delete__()
-    - Use Cases for Descriptors
-  - Mixins
-  - Immutable Objects
-- Best Practices and Tips for OOP in Python
-  - Writing Clean and Maintainable OOP Code
-    - SOLID Principles
-    - DRY (Don’t Repeat Yourself)
-  - Testing Object-Oriented Code
-    - Unit Testing with unittest and pytest
-    - Mocking Objects in Tests
-  - Documentation and Code Comments
-    - Using Docstrings Effectively
-    - Documenting Classes and Methods
+    print(s1.value)  # Output: 20
+    print(s2.value)  # Output: 20
+    print(s1 is s2)  # Output: True
+    ```
+  - Customizing Object Creation with Metaclasses: Metaclasses can customize object creation by defining or altering the class itself.
+    ```python
+    """
+    Here, the MyMeta metaclass adds a custom_attr attribute to MyClass during its creation, before any instances are made.
+    """
+    class MyMeta(type):
+        def __new__(cls, name, bases, dct):
+            dct['custom_attr'] = "Custom Attribute"
+            return super().__new__(cls, name, bases, dct)
+
+    class MyClass(metaclass=MyMeta):
+        pass
+
+    # Creating an instance of MyClass
+    obj = MyClass()
+    print(obj.custom_attr)  # Output: Custom Attribute
+    ```
+### Class Decorators
+- Basics
+  - A class decorator is a function that is applied to a class to modify or extend its behavior.
+  - It takes a class as its input and returns either the same class or a modified version of it.
+- Example
+  ```python
+  """
+  The add_method decorator function takes MyClass as an argument, adds an extra_method to it, and then returns the modified class.
+  When MyClass is instantiated, the object now has both the original method and the new method added by the decorator.
+  """
+  def add_method(cls):
+      cls.extra_method = lambda self: "This is an extra method"
+      return cls
+
+  @add_method
+  class MyClass:
+      def original_method(self):
+          return "This is the original method"
+
+  # Creating an instance of MyClass
+  obj = MyClass()
+
+  # Using the original method
+  print(obj.original_method())  # Output: This is the original method
+
+  # Using the method added by the decorator
+  print(obj.extra_method())  # Output: This is an extra method
+  ```
+- Applying Decorators to Classes
+  - Chaining Multiple Class Decorators: You can chain multiple decorators on a single class, with each decorator being applied in the order they are listed.
+    ```python
+    """
+    Here, the add_method and add_attribute decorators are both applied to MyClass.
+    The class gains both the new method and the new attribute, demonstrating how decorators can be stacked to apply multiple modifications.
+    """
+    def add_method(cls):
+        cls.extra_method = lambda self: "This is an extra method"
+        return cls
+
+    def add_attribute(cls):
+        cls.extra_attribute = "This is an extra attribute"
+        return cls
+
+    @add_method
+    @add_attribute
+    class MyClass:
+        def original_method(self):
+            return "This is the original method"
+
+    # Creating an instance of MyClass
+    obj = MyClass()
+
+    # Using the original method
+    print(obj.original_method())  # Output: This is the original method
+
+    # Using the method and attribute added by the decorators
+    print(obj.extra_method())      # Output: This is an extra method
+    print(obj.extra_attribute)     # Output: This is an extra attribute
+    ```
+  - Validating Class Attributes: A class decorator can be used to validate that certain required attributes or methods are present in a class.
+    ```python
+    """
+    The validate_class decorator checks if the class has a required_method.
+    If it does not, a TypeError is raised.
+    In this case, MyClass implements the required method, so the decorator allows the class to be created.
+    """
+    def validate_class(cls):
+        if not hasattr(cls, 'required_method'):
+            raise TypeError(f"Class {cls.__name__} is missing required method 'required_method'")
+        return cls
+
+    @validate_class
+    class MyClass:
+        def required_method(self):
+            return "This is the required method"
+
+    # Creating an instance of MyClass
+    obj = MyClass()
+    print(obj.required_method())  # Output: This is the required method
+    ```
+  - Automatically Registering Classes: Class decorators can also be used to automatically register classes in a registry or to perform other automatic setup tasks.
+    ```python
+    registry = {}
+
+    def register_class(cls):
+        registry[cls.__name__] = cls
+        return cls
+
+    @register_class
+    class MyClass:
+        def my_method(self):
+            return "This is my method"
+
+    # Checking the registry
+    print(registry)                       # Output: {'MyClass': <class '__main__.MyClass'>}
+
+    # Creating an instance of MyClass
+    obj = registry['MyClass']()
+    print(obj.my_method())                # Output: This is my method
+    ```
+  - Combining Class Decorators with Metaclasses: In advanced scenarios, you might combine class decorators with metaclasses to achieve even more powerful customizations.
+    ```python
+    """
+    In this example, MyClass is enhanced by both a class decorator and a metaclass.
+    The class decorator adds a class_name attribute, while the metaclass adds a meta_added attribute.
+    The result is a class that combines the functionality of both enhancements.
+    """
+    def add_class_name(cls):
+        cls.class_name = cls.__name__
+        return cls
+
+    class MyMeta(type):
+        def __new__(cls, name, bases, dct):
+            dct['meta_added'] = "Added by metaclass"
+            return super().__new__(cls, name, bases, dct)
+
+    @add_class_name
+    class MyClass(metaclass=MyMeta):
+        pass
+
+    # Creating an instance of MyClass
+    obj = MyClass()
+
+    # Accessing attributes added by the decorator and metaclass
+    print(obj.class_name)   # Output: MyClass
+    print(obj.meta_added)   # Output: Added by metaclass
+    ```
+- Class Decorators vs. Metaclasses: While both class decorators and metaclasses can be used to modify classes, they serve different purposes and have different use cases:
+  - **Class Decorators**
+    - **Simplicity:** Easier to write and understand, making them ideal for simpler modifications.
+    - **Focus:** Best for modifying or enhancing a single class or a small set of classes.
+    - **Order of Execution:** Applied after the class is created.
+  - **Metaclasses**
+    - **Power:** More powerful and flexible, allowing deep customization of class behavior.
+    - **Breadth:** Suitable for controlling the creation and behavior of multiple related classes in a consistent way.
+    - **Order of Execution:** Applied during class creation, before the class decorator.
+### Descriptor Protocol
+- Basics
+  - The descriptor protocol is a set of methods (`__get__()`, `__set__()`, and `__delete__()`) that allow an object to manage attribute access in another object. 
+  - Descriptors are objects that implement one or more of these methods.
+- The Methods of the Descriptor Protocol
+  - `__get__()`: Called when an attribute is accessed. It retrieves the attribute value.
+    - Parameters
+      - `self`: The descriptor instance.
+      - `instance`: The instance that the attribute was accessed on (or `None` if accessed through the class).
+      - `owner`: The class that owns the attribute.
+    - Example
+      ```python
+      class Descriptor:
+          def __get__(self, instance, owner):
+              print(f"Getting value, instance: {instance}, owner: {owner}")
+              return 42
+
+      class MyClass:
+          attr = Descriptor()
+
+      # Accessing the descriptor
+      obj = MyClass()  
+      print(obj.attr)  
+      # Output: 
+      # Getting value, instance: <__main__.MyClass object at ...>, owner: <class '__main__.MyClass'>
+      # 42
+      ```
+  - `__set__(self, instance, value)`: Called when an attribute is assigned a value. It handles the attribute assignment.
+    - Parameters:
+      - `self`: The descriptor instance.
+      - `instance`: The instance that the attribute is being set on.
+      - `value`: The value being assigned to the attribute.
+    - Example
+      ```python
+      class Descriptor:
+          def __set__(self, instance, value):
+              print(f"Setting value to {value}")
+              instance._value = value
+
+      class MyClass:
+          attr = Descriptor()
+
+      # Setting the descriptor
+      obj = MyClass()
+      obj.attr = 100  # Output: Setting value to 100
+      ```
+  - `__delete__(self, instance)`: Called when an attribute is deleted. It handles the attribute deletion.
+    - Parameters:
+      - `self`: The descriptor instance.
+      - `instance`: The instance that the attribute is being deleted from.
+    - Example:
+      ```python
+      class Descriptor:
+          def __delete__(self, instance):
+              print("Deleting value")
+              del instance._value
+
+      class MyClass:
+          attr = Descriptor()
+
+      # Deleting the descriptor
+      obj = MyClass()
+      del obj.attr  # Output: Deleting value
+      ```
+- **Types of Descriptors:** Descriptors can be categorized based on which methods of the descriptor protocol they implement.
+  - **Data Descriptors:** A descriptor that implements both `__get__()` and `__set__()` (or `__delete__()`). Data descriptors control both attribute access and modification.
+    ```python
+    """
+    Here, DataDescriptor implements both __get__() and __set__(), making it a data descriptor that controls both reading and writing of the attribute.
+    """
+    class DataDescriptor:
+        def __get__(self, instance, owner):
+            return instance._value
+
+        def __set__(self, instance, value):
+            instance._value = value
+
+    class MyClass:
+        attr = DataDescriptor()
+
+    obj = MyClass()
+    obj.attr = 10             # Setting a value
+    print(obj.attr)           # Output: 10
+    ```
+  - **Non-Data Descriptors:** A descriptor that implements only `__get__()`. Non-data descriptors control only attribute access, leaving assignment and deletion to be handled normally.
+    ```python
+    """
+    NonDataDescriptor implements only __get__(), so it controls only how the attribute is accessed.
+    The assignment and deletion of attr would follow the normal behavior unless overridden.
+    """
+    class NonDataDescriptor:
+        def __get__(self, instance, owner):
+            return "Non-data descriptor value"
+
+    class MyClass:
+        attr = NonDataDescriptor()
+
+    obj = MyClass()
+    print(obj.attr)  # Output: Non-data descriptor value
+    ```
+- Use Cases for Descriptors
+  - **Properties:** `@property` decorator is built on the descriptor protocol. It allows you to define methods that act as getters, setters, and deleters for an attribute.
+    ```python
+    """
+    The @property decorator provides a clean interface for managing attribute access and validation without exposing internal implementation details.
+    """
+    class MyClass:
+        def __init__(self, value):
+            self._value = value
+        
+        @property
+        def value(self):
+            return self._value
+        
+        @value.setter
+        def value(self, new_value):
+            if new_value < 0:
+                raise ValueError("Value must be non-negative")
+            self._value = new_value
+
+    # Using the property
+    obj = MyClass(10)
+    print(obj.value)  # Output: 10
+    obj.value = 20    # Valid
+    # obj.value = -5  # Would raise ValueError
+    ```
+      - **Static Methods:** Static methods in Python do not receive an implicit first argument (`self` or `cls`). They are just regular functions that happen to be defined inside a class. The `@staticmethod` decorator turns a function into a static method, which is implemented using the descriptor protocol.
+        ```python
+        """
+        The StaticMethod descriptor wraps a function and returns it as-is, regardless of whether it’s accessed from an instance or a class.
+        """
+        class StaticMethod:
+            def __init__(self, func):
+                self.func = func
+
+            def __get__(self, instance, owner):
+                return self.func
+        ```
+      - **Class Methods:** Class methods receive the class (`cls`) as their first argument instead of an instance. The `@classmethod` decorator is used to create class methods, and it is implemented using the descriptor protocol.
+        ```python
+        """
+        The ClassMethod descriptor wraps a function and returns a method bound to the class (owner) rather than to an instance.
+        This allows the method to receive the class as its first argument.
+        """
+        class ClassMethod:
+            def __init__(self, func):
+                self.func = func
+
+            def __get__(self, instance, owner):
+                return MethodType(self.func, owner)
+        ```
+      
+  - **Type Checking and Validation:** Descriptors can be used to enforce type constraints or perform validation when attributes are set.
+    ```python
+    """
+    The TypedDescriptor enforces that the name attribute must be a string and the age attribute must be an integer.
+    If a wrong type is assigned, a TypeError is raised.
+    """
+    class TypedDescriptor:
+        def __init__(self, name, expected_type):
+            self.name = name
+            self.expected_type = expected_type
+
+        def __get__(self, instance, owner):
+            return instance.__dict__.get(self.name)
+
+        def __set__(self, instance, value):
+            if not isinstance(value, self.expected_type):
+                raise TypeError(f"Expected {self.expected_type}")
+            instance.__dict__[self.name] = value
+
+    class MyClass:
+        name = TypedDescriptor('name', str)
+        age = TypedDescriptor('age', int)
+
+    obj = MyClass()
+    obj.name = "Alice"  # Valid
+    obj.age = 30        # Valid
+    # obj.age = "thirty"  # Would raise TypeError
+    ```
+  - **Lazy Attribute Evaluation:** Descriptors can be used to implement lazy evaluation, where the value of an attribute is calculated the first time it is accessed and then cached for subsequent access.
+    ```python
+    class LazyProperty:
+        def __init__(self, func):
+            self.func = func
+            self.name = func.__name__
+
+        def __get__(self, instance, owner):
+            if self.name not in instance.__dict__:
+                instance.__dict__[self.name] = self.func(instance)
+            return instance.__dict__[self.name]
+
+    class MyClass:
+        @LazyProperty
+        def expensive_calculation(self):
+            print("Computing value...")
+            return 42
+
+    obj = MyClass()
+    print(obj.expensive_calculation)  # Output: Computing value... 42
+    print(obj.expensive_calculation)  # Output: 42
+    ```
+  - **Methods:** In Python, when you define a function inside a class, it is automatically transformed into an instance method. The descriptor protocol is responsible for binding the method to an instance when it is accessed.
+    ```python
+    """
+    When obj.my_method() is called, the my_method function is retrieved from the class using the descriptor protocol, and Python automatically passes obj as the first argument (self) to the method.
+    When accessed through the class (MyClass.my_method), the function is not bound to any instance, so it remains a plain function.
+    """
+    class MyClass:
+        def my_method(self):
+            return "Instance method called"
+
+    # Creating an instance of MyClass
+    obj = MyClass()
+
+    # Accessing the method from the instance
+    print(obj.my_method())  # Output: Instance method called
+
+    # Accessing the method from the class (unbound method in Python 2, plain function in Python 3)
+    print(MyClass.my_method)  # Output: <function MyClass.my_method at 0x...>
+    ```
+    - The method binding is handled by the descriptor protocol, specifically by the __get__() method of the function object. Here’s a conceptual example of what happens under the hood:
+      ```python
+      """
+      The __get__() method checks if the method is being accessed on an instance (instance is not None).
+      If so, it returns a bound method object; otherwise, it returns the original function object.
+      """
+      class Function:
+          def __get__(self, instance, owner):
+              if instance is None:
+                  return self
+              return MethodType(self, instance)
+      ```
+### Mixins
+- **Introduction**
+  - A mixin is a class that provides methods to be used by other classes through multiple inheritance.
+  - A mixin is not meant to stand on its own; instead, it’s designed to be combined with other classes to add specific functionality.
+- **Characteristics of Mixins**
+  - **No Instantiation:** Mixins are not meant to be instantiated on their own. They are designed to be used in conjunction with other classes.
+  - **Single Responsibility:** A mixin typically provides one specific piece of functionality or behavior. This makes it easier to compose multiple mixins into a single class.
+  - **Use with Multiple Inheritance:** Mixins are most effective when used with multiple inheritance, allowing you to "mix in" the desired behavior into a class that already inherits from another base class.
+
+- Practical Use Cases for Mixins
+  - Example: Adding Serialization Capabilities
+    ```python
+    """
+    The SerializableMixin class provides methods to serialize an object into a dictionary or JSON format.
+    By inheriting from SerializableMixin, the Person class automatically gains these serialization capabilities.
+    """
+    import json
+
+    class SerializableMixin:
+        def to_dict(self):
+            return {key: getattr(self, key) for key in self.__dict__}
+
+        def to_json(self):
+            return json.dumps(self.to_dict())
+
+    class Person(SerializableMixin):
+        def __init__(self, name, age):
+            self.name = name
+            self.age = age
+
+    p = Person("Alice", 30)
+    print(p.to_dict())              # Output: {'name': 'Alice', 'age': 30}
+    print(p.to_json())              # Output: {"name": "Alice", "age": 30}
+    ```
+  - Example: Adding Access Control
+    ```python
+    class AccessControlMixin:
+        def check_access(self, user_role, required_role):
+            if user_role != required_role:
+                raise PermissionError("Access denied")
+
+    class Document(AccessControlMixin):
+        def __init__(self, content, required_role):
+            self.content = content
+            self.required_role = required_role
+
+        def view(self, user_role):
+            self.check_access(user_role, self.required_role)
+            return self.content
+
+    doc = Document("Top Secret Document", required_role="admin")
+    try:
+        print(doc.view("user"))                     # Raises PermissionError
+    except PermissionError as e:
+        print(e)                                    # Output: Access denied
+
+    print(doc.view("admin"))                        # Output: Top Secret Document
+    ```
+- Mixins vs. Inheritance
+  - Purpose
+    - Traditional inheritance is used to create a new class that is a specialized version of an existing class. It represents an "is-a" relationship, where the subclass is a specific type of the superclass.
+    - Mixins are used to add specific, reusable pieces of functionality to a class. They do not represent an "is-a" relationship but rather a "has-a" relationship or a "can-do" capability. Mixins are not meant to be standalone classes; they are designed to be used in combination with other classes.
+  - Coupling
+    - Classes in a traditional inheritance hierarchy are tightly coupled. Changes to the parent class can have wide-reaching effects on all subclasses, which may lead to unintended consequences or require significant refactoring.
+    - Mixins allow for loose coupling between the behavior they provide and the classes that use them. Mixins can be added or removed without affecting the overall class hierarchy, making the system more flexible and easier to modify.
+  - Inheritance Path
+    - Traditional inheritance typically follows a single path, where each class is a specialization of its parent. 
+    - Mixins promote composition over inheritance. A class can be composed of multiple mixins, each providing a small piece of functionality. 
+  - Example
+    ```python
+    """
+    ElectricCar combines the basic vehicle behavior from Vehicle with logging from LoggerMixin and charging capability from ElectricMixin.
+    This approach keeps the code modular and avoids deep inheritance hierarchies.
+    """
+    class Vehicle:
+        def move(self):
+            print("Vehicle moves")
+
+    class LoggerMixin:
+        def log(self, message):
+            print(f"[LOG]: {message}")
+
+    class ElectricMixin:
+        def charge(self):
+            print("Charging battery")
+
+    class ElectricCar(Vehicle, LoggerMixin, ElectricMixin):
+        def drive(self):
+            self.log("Driving the electric car")
+            print("Electric car drives")
+
+    car = ElectricCar()
+    car.move()   # Inherited from Vehicle
+    car.charge() # Provided by ElectricMixin
+    car.drive()  # Defined in ElectricCar, uses LoggerMixin
+    ```
+### Creating Custom Immutable Objects
+- Introduction to Immutable Objects
+  - An immutable object is an object whose data or state cannot be changed after it is created. Once you create an immutable object, you cannot modify its attributes or the contents it holds.
+  - Common Immutable Types in Python: `int`, `float`, `str`, `tuple`, `frozenset`, `bytes`
+- Example
+  ```python
+  """
+  The ImmutablePoint class is designed to be immutable.
+  The __setattr__() method is overridden to prevent any modification of attributes after they are set in the __init__() method.
+  If you attempt to modify x or y, an AttributeError is raised.
+  """
+  class ImmutablePoint:
+      def __init__(self, x, y):
+          super().__setattr__('x', x)
+          super().__setattr__('y', y)
+
+      def __setattr__(self, name, value):
+          raise AttributeError("Cannot modify immutable object")
+
+      def __repr__(self):
+          return f"ImmutablePoint(x={self.x}, y={self.y})"
+
+  # Creating an immutable point
+  p = ImmutablePoint(10, 20)
+  print(p)  # Output: ImmutablePoint(x=10, y=20)
+
+  # Attempting to modify an attribute raises an error
+  # p.x = 30  # Raises AttributeError: Cannot modify immutable object
+  ```
+- Using `__new__()` for Immutability: For immutable types like tuples or strings, Python uses the `__new__()` method rather than `__init__()` to create instances. Similar approach can be used in the custom immutable classes.
+  ```python
+  class ImmutableRectangle:
+      def __new__(cls, width, height):
+          instance = super().__new__(cls)
+          instance._width = width
+          instance._height = height
+          return instance
+
+      @property
+      def width(self):
+          return self._width
+
+      @property
+      def height(self):
+          return self._height
+
+      def __repr__(self):
+          return f"ImmutableRectangle(width={self.width}, height={self.height})"
+
+  # Creating an immutable rectangle
+  r = ImmutableRectangle(5, 10)
+  print(r)  # Output: ImmutableRectangle(width=5, height=10)
+
+  # Attempting to modify the attributes is not possible
+  # r.width = 7  # Raises AttributeError because 'width' is a read-only property
+  ```
+- Properties of Immutable Objects
+  - No Need for Deep Copies: Since immutable objects cannot change, copying them is unnecessary. For example, copying a tuple just returns a reference to the original tuple.
+    ```python
+    t1 = (1, 2, 3)
+    t2 = t1
+    t3 = t1[:]
+    print(t1 is t2)  # Output: True
+    print(t1 is t3)  # Output: True
+    ```
+  - Memory Efficiency: Immutable objects can be more memory-efficient because Python can share references to the same object across different parts of a program.
+  - Cacheability: Immutable objects can be cached or memoized, as their state will not change, leading to potential performance improvements.
+  - Python interns small integers and strings, reusing them across a program to save memory.
+    ```python
+    """
+    Here, a and b both reference the same integer object 10, and s1 and s2 both reference the same string "hello".
+    This reuse of objects is possible because integers and strings are immutable.
+    """
+    a = 10
+    b = 10
+    print(a is b)  # Output: True
+
+    s1 = "hello"
+    s2 = "hello"
+    print(s1 is s2)  # Output: True
+    ```
+
+## Best Practices and Tips for OOP in Python
+### Design Principles
+- **Follow the SOLID Principles:** The SOLID principles are a set of five design principles intended to make software design more understandable, flexible, and maintainable.
+- **Use Encapsulation Effectively**
+  - Use private (`__`) and protected (`_`) attributes to hide internal state and prevent direct access from outside the class.
+  - Provide getter and setter methods to control access to attributes, or use the `@property` decorator to create managed attributes.
+- **Favor Composition Over Inheritance:** Composition involves creating classes that are composed of other classes, rather than inheriting from a base class. This allows for more flexible and reusable designs.
+  - Use composition when the relationship is more "has-a" than "is-a".
+  - Prefer composition for adding functionality, and use inheritance only when there is a clear hierarchical relationship.
+- **Keep Classes Small and Focused:** Ensure each class has a single responsibility or a closely related set of responsibilities. Large classes that do too much can be difficult to maintain and understand.
+  - If a class is getting too large, consider breaking it down into smaller, more focused classes.
+  - Use mixins or helper classes to move unrelated responsibilities out of the main class.
+### Code Organization
+- Use Modules and Packages to Organize Code
+  - **Modules:** Use modules to organize related classes and functions. A module is simply a Python file with a `.py` extension, and it should contain code that is related in functionality.
+  - **Packages:** Use packages to group related modules together. A package is a directory containing a special `__init__.py` file, along with one or more modules. Packages allow for better code organization in larger projects.
+- **Follow the Python Naming Conventions:** Follow Python’s PEP 8 style guide for naming classes, methods, variables, and modules. Consistent naming makes your code more readable and easier to understand.
+  - Use CamelCase for class names (e.g., MyClass).
+  - Use snake_case for method and variable names (e.g., my_method, my_variable).
+  - Keep module names short and lowercase (e.g., utils.py).
+- **Keep the Interface Clean** : Define a clear and minimal public interface for your classes. Avoid exposing unnecessary details to the user of the class.
+  - Use private and protected attributes to hide internal details.
+  - Only expose methods and attributes that are essential for using the class.
+- **Separation of Concerns:** Ensure that each part of your code has a specific responsibility. This can involve separating business logic, data access, and user interface code into different layers or modules.
+  - Use patterns like MVC (Model-View-Controller) to separate different concerns in your application.
+  - Keep business logic in service or manager classes, separate from data access code or user interface code.
+### Practical Tips for Writing OOP Code
+- **Use Properties to Control Attribute Access:** Use properties to control how attributes are accessed and modified, especially if you need to enforce constraints or trigger side effects when an attribute is set.
+- **Leverage Python’s Special Methods:** Python’s special methods (also known as dunder methods) allow you to define how objects of your class behave in certain operations, such as addition, comparison, and string representation.
+  - Implement `__str__()` and `__repr__()` to provide meaningful string representations of your objects.
+  - Implement comparison methods like `__eq__()`, `__lt__()`, and `__hash__()` to enable object comparison and usage in sets and dictionaries.
+- **Avoid Premature Optimization:** Focus on writing clean, readable code before worrying about optimization. Premature optimization can lead to complex code that is difficult to maintain.
+  - Write code that is clear and easy to understand. Optimize only if there is a proven performance issue.
+    - Example
+      ```python
+      # Clear and simple code
+      squares = [x * x for x in range(10)]
+
+      # Avoid unnecessary complexity
+      squares = [pow(x, 2) for x in range(10)]
+      ```
+- **Avoid Overengineering:** Avoid adding unnecessary layers of abstraction or complexity to your code. Overengineering can make the code harder to understand and maintain.
+  - Use simple inheritance hierarchies and avoid deep inheritance chains.
+  - Only add complexity when it solves a real problem or improves code clarity.
+- **Use Docstrings to Document Your Code:** Use docstrings to document your classes, methods, and modules. This makes your code more maintainable and easier for others (and your future self) to understand.
+- **Use Abstract Base Classes (ABCs):** Abstract Base Classes provide a way to define a common interface for a group of classes. Use them when you want to ensure that all subclasses implement certain methods.
+### Testing and Debugging
+- **Write Unit Tests:** Write unit tests for your classes to ensure that they behave as expected. Testing helps catch bugs early and makes your code more reliable.
+- **Write Unit Tests:** Write unit tests for your classes to ensure that they behave as expected. Testing helps catch bugs early and makes your code more reliable.
+- **Use Logging for Debugging and Monitoring:** Use logging to track the execution of your program and diagnose issues. Logging provides insight into how your code is running and can help identify problems.
+  - Use the logging module to log messages at different levels (DEBUG, INFO, WARNING, ERROR, CRITICAL).
+  - Avoid using print() statements for debugging; logging is more flexible and can be configured to write to different outputs.
+### Performance Considerations
+- **Object Creation:** Creating and destroying objects can be costly in terms of memory and performance. Be mindful of how often objects are created, especially in tight loops or high-performance sections of your code.
+  - Consider using object pools or reusing objects where appropriate.
+  - Avoid unnecessary object creation inside loops.
+- **Optimize with Built-In Data Structures:** Use Python’s built-in data structures (`list`, `dict`, `set`, `tuple`) efficiently. They are optimized for performance and should be preferred over custom implementations unless necessary.
+  - Avoid unnecessary conversions between data structures.
+- **Profile and Optimize Bottlenecks:** Use profiling tools (eg `cProfile`, `timeit`) to identify performance bottlenecks in your code. Optimize only the parts of the code that are proven to be slow.
+### Collaboration and Code Maintenance
+- **Write Clear and Understandable Code:** Prioritize writing clear and understandable code. Clear code is easier for others to read, understand, and maintain.
+  - Use meaningful variable and method names.
+  - Avoid writing overly clever or obscure code.
+- **Keep Your Code DRY (Don’t Repeat Yourself):** Avoid duplicating code. Reuse code through functions, classes, and modules to reduce redundancy and make maintenance easier.
+  - If you find yourself copying and pasting code, consider refactoring it into a reusable function or method.
+  - Use inheritance or mixins to share behavior across classes.
 
 # Exception Handling
-  - Try, Except, Else, Finally
-    - Catching specific exceptions vs generic exceptions.
-    - Using `else` and `finally` blocks effectively.
-  - Custom Exceptions
-    - Creating and raising custom exceptions.
-    - Best practices for defining custom exception classes.
-  - Common Exceptions in Competitive Programming
-    - Understanding and handling `IndexError`, `KeyError`, `ValueError`, `TypeError`.
-    - When to use exception handling vs input validation.
-  - Best Practices for Handling Exceptions
-    - Performance implications of exceptions.
-    - Avoiding overuse of exceptions in code.
+
+## Exceptions
+### Introdution to Exceptions
+- An exception is an event that occurs during the execution of a program that disrupts the normal flow of instructions.
+- In Python, exceptions are objects that represent these error conditions.
+- **Built-in Exceptions**
+  - **Base Exceptions:** These are the fundamental exceptions that all other exceptions derive from.
+    - `BaseException`: The base class for all built-in exceptions.
+    - `SystemExit`: Raised by the `sys.exit()` function.
+    - `KeyboardInterrupt`: Raised when the user hits the interrupt key (usually Ctrl+C).
+    - `GeneratorExit`: Raised when a generator's `close()` method is called.
+  - **Standard Error Exceptions:** is the base class for most built-in exceptions, excluding system-exiting exceptions.
+    - `Exception`: The base class for most built-in exceptions.
+  - **Arithmetic Errors**
+    - `ArithmeticError`: The base class for arithmetic errors.
+      - `FloatingPointError`: Raised when a floating point operation fails.
+      - `OverflowError`: Raised when a calculation exceeds maximum limit for a numeric type.
+      - `ZeroDivisionError`: Raised when dividing by zero.
+  - **Lookup Errors**
+    - `LookupError`: The base class for lookup errors.
+      - `IndexError`: Raised when a sequence index is out of range.
+      - `KeyError`: Raised when a dictionary key is not found.
+  - **Import Errors**
+    - `ImportError`: Raised when an import fails.
+      - `ModuleNotFoundError`: Raised when a module cannot be found.
+  - **Attribute Errors**
+    - `AttributeError`: Raised when attribute reference or assignment fails.
+  - **OS and System Errors:** Exceptions related to operating system or system-related issues.
+    - `OSError`: The base class for all OS-related errors.
+      - `BlockingIOError`: Raised when an operation would block on an object (e.g., socket).
+      - `ChildProcessError`: Raised when a child process fails.
+      - `ConnectionError`: The base class for connection-related errors.
+        - `BrokenPipeError`: Raised when a pipe is broken.
+        - `ConnectionAbortedError`: Raised when a connection is aborted.
+        - `ConnectionRefusedError`: Raised when a connection is refused.
+        - `ConnectionResetError`: Raised when a connection is reset by the peer.
+      - `FileExistsError`: Raised when trying to create a file or directory that already exists.
+      - `FileNotFoundError`: Raised when a file or directory is requested but cannot be found.
+      - `InterruptedError`: Raised when a system call is interrupted.
+      - `IsADirectoryError`: Raised when a directory is expected but a file is found.
+      - `NotADirectoryError`: Raised when a file is expected but a directory is found.
+      - `PermissionError`: Raised when trying to perform an operation without the necessary permissions.
+      - `ProcessLookupError`: Raised when a process cannot be found.
+      - `TimeoutError`: Raised when a system function times out.
+  - **Assertion and Integrity Errors:** Exceptions raised for logical integrity or consistency errors.
+    - `AssertionError`: Raised when an assert statement fails.
+    - `MemoryError`: Raised when an operation runs out of memory.
+    - `ReferenceError`: Raised when a weak reference is used in an inappropriate context.
+    - `RuntimeError`: Raised when an error is detected that doesn't fall into any specific category.
+      - `NotImplementedError`: Raised when an abstract method that needs to be implemented is not.
+      - `RecursionError`: Raised when the maximum recursion depth is exceeded.
+  - **Syntax and Parsing Errors:** Exceptions related to syntax or parsing issues.
+    - `SyntaxError`: Raised when the parser encounters a syntax error.
+      - `IndentationError`: Raised when indentation is not correct.
+        - `TabError`: Raised when tabs and spaces are mixed in indentation.
+    - `SystemError`: Raised when the interpreter detects an internal error.
+  - **Type and Value Errors:** Exceptions related to incorrect types or values.
+    - `TypeError`: Raised when an operation or function is applied to an object of inappropriate type.
+    - `ValueError`: Raised when a function receives an argument of the correct type but an inappropriate value.
+    - `UnicodeError`: The base class for Unicode-related encoding/decoding errors.
+      - `UnicodeDecodeError`: Raised when a Unicode decoding error occurs.
+      - `UnicodeEncodeError`: Raised when a Unicode encoding error occurs.
+      - `UnicodeTranslateError`: Raised when a Unicode translation error occurs.
+  - **Warnings:** Categories of warnings for different levels of concern.
+    - `Warning`: The base class for all warning categories.
+      - `DeprecationWarning`: Raised for deprecated features.
+      - `PendingDeprecationWarning`: Raised for features that are deprecated but not yet removed.
+      - `RuntimeWarning`: Raised for runtime warnings (e.g., deprecated features).
+      - `SyntaxWarning`: Raised for syntax-related warnings.
+      - `UserWarning`: Raised for user-defined warnings.
+      - `FutureWarning`: Raised for warnings about changes that will happen in the future.
+      - `ImportWarning`: Raised for warnings related to module imports.
+      - `UnicodeWarning`: Raised for warnings related to Unicode.
+      - `BytesWarning`: Raised when a bytes-related warning occurs.
+      - `ResourceWarning`: Raised for resource usage warnings (e.g., unclosed files).
+  - **Iteration and Generator Errors:** Exceptions raised during iteration or by generators.
+    - `StopIteration`: Raised to signal the end of an iterator.
+    - `StopAsyncIteration`: Raised to signal the end of an asynchronous iterator.
+    - `GeneratorExit`: Raised when a generator or coroutine is closed.
+  - **System-Related Exceptions:** Special exceptions related to system behavior.
+    - `SystemExit`: Raised by the sys.exit() function.
+    - `KeyboardInterrupt`: Raised when the user hits the interrupt key (Ctrl+C).
+    - `GeneratorExit`: Raised when a generator or coroutine’s close() method is called.
+- **Exception Hierarchy**
+  - **Base Classes:** All built-in exceptions in Python inherit from the `BaseException` class. The most common base class for exceptions is `Exception`.
+  - Hierarchy Example
+    ```plaintext
+    BaseException
+    └── Exception
+      ├── ArithmeticError
+      │   └── ZeroDivisionError
+      └── LookupError
+          ├── IndexError
+          └── KeyError
+    ```
+- **Raising Exceptions:** `raise` Statement is used to explicitly trigger an exception in Python. This is useful when you want to enforce certain conditions in your code.
+  ```python
+  def divide(a, b):
+      if b == 0:
+          raise ZeroDivisionError("Cannot divide by zero")
+      return a / b
+
+  print(divide(10, 0))          # Raises ZeroDivisionError
+  print(divide(10, 2))          # Output: 5.0
+  ```
+### Handling Exceptions
+- **The try-except Block:** 
+  - The `try` block lets you test a block of code for errors. The except block lets you handle the error.
+    ```python
+    try:
+        result = 10 / 0
+    except ZeroDivisionError:
+        print("Cannot divide by zero")
+    ```
+  - **Multiple Exceptions:** handle multiple exceptions by specifying multiple `except` blocks.
+    ```python
+    try:
+        value = int("abc")
+    except ValueError:
+        print("Conversion error: Value is not a number")
+    except TypeError:
+        print("Type error: Invalid type")
+    ```
+  - **The else Block:** is executed if the `try` block does not raise an exception. It’s useful for code that should run only if no exceptions occur.
+    ```python
+    try:
+      result = 10 / 2
+    except ZeroDivisionError:
+        print("Cannot divide by zero")
+    else:
+        print(f"Result is {result}")        # Output: Result is 5.0
+    ```
+  - **The finally block:** is executed no matter what—whether an exception occurs or not. It’s typically used to clean up resources (e.g., closing files or database connections).
+    ```python
+    try:
+        file = open("example.txt", "r")
+    except FileNotFoundError:
+        print("File not found")
+    finally:
+        file.close()                  # Ensures the file is closed even if an exception occurs
+    ```
+### Catching Specific Exceptions
+- Catching Multiple Exceptions in One Block
+  ```python
+  try:
+      x = int(input("Enter a number: "))
+      y = 10 / x
+  except (ValueError, ZeroDivisionError) as e:
+      print(f"Error occurred: {e}")
+  ```
+- Catching All Exceptions using `Exception`. However, this is generally discouraged.
+  ```python
+  try:
+      result = some_undefined_function()
+  except Exception as e:
+      print(f"An error occurred: {e}")
+  ```
+### Creating Custom Exceptions
+- Defining Custom Exceptions: Custom exceptions are typically subclasses of `Exception`. This allows you to create meaningful, application-specific error types.
+- Example
+  ```python
+  class InsufficientFundsError(Exception):
+      def __init__(self, balance, amount):
+          self.balance = balance
+          self.amount = amount
+          super().__init__(f"Insufficient fund: {amount}, but balance is only {balance}")
+
+  def withdraw(balance, amount):
+      if amount > balance:
+          raise InsufficientFundsError(balance, amount)
+      return balance - amount
+
+  try:
+      balance = withdraw(100, 150)
+  except InsufficientFundsError as e:
+      print(e)                # Output: Attempted to withdraw 150, but balance is only 100
+  ```
+### Advanced Exception Handling Techniques
+- **Using the with Statement for Resource Management:** The `with` statement in Python simplifies resource management by automatically handling exceptions and ensuring that resources are cleaned up.
+  ```python
+  with open("example.txt", "r") as file:
+      data = file.read()
+  # The file is automatically closed when the block is exited
+  ```
+- **Custom Context Managers:** You can create custom context managers using the `contextlib` module or by implementing the `__enter__()` and `__exit__()` methods.
+  ```python
+  from contextlib import contextmanager
+
+  @contextmanager
+  def open_file(filename, mode):
+      file = open(filename, mode)
+      try:
+          yield file
+      finally:
+          file.close()
+
+  with open_file("example.txt", "w") as file:
+      file.write("Hello, World!")
+  ```
+- **Exception Chaining with from:** Python allows you to chain exceptions using the `from` keyword, making it easier to understand the sequence of events that led to an error.
+  ```python
+  """
+  This technique preserves the original exception while raising a new one, providing more context for debugging.
+  """
+  try:
+      result = 10 / 0
+  except ZeroDivisionError as e:
+      raise ValueError("Invalid calculation") from e
+  ```
 
 # Python Modules and Packages
   - Modules

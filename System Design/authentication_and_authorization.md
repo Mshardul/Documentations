@@ -232,6 +232,12 @@
         - **Granular Control:** Allows specific refresh tokens to be revoked without affecting others.
         - **Stateful:** Requires maintaining state on the server, which can complicate scalability.
         - **Security Concerns:** If the refresh token is not properly stored on the client-side, it can be compromised, leading to unauthorized access.
+
+
+
+
+
+
 ### OAuth 2.0
 - **Overview:** OAuth 2.0 is an industry-standard protocol for authorization, allowing third-party services to exchange information securely without exposing user credentials.
 - **OAuth 2.0 Grant Types:**

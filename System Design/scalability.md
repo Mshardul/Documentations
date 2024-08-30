@@ -203,7 +203,6 @@
       - **OAuth2 and OpenID Connect:** Implement OAuth2 and OpenID Connect for secure, token-based authentication and authorization across microservices.
       - **Role-Based Access Control (RBAC):** Apply RBAC to manage and enforce permissions for different services and users.
       - **Security Testing:** Integrate security testing into the CI/CD pipeline, including static code analysis, dynamic application security testing (DAST), and vulnerability scanning.
-- **Real-world Examples**
 - **Communication between Microservices**
   - **Synchronous Communication**
     - **HTTP/REST (Representational State Transfer)**: RESTful APIs are one of the most common ways for microservices to communicate synchronously. Each microservice exposes a set of REST endpoints that other services can call using standard HTTP methods like GET, POST, PUT, and DELETE.
@@ -263,18 +262,17 @@
         - It manages the communication between microservices at the network layer. Each microservice instance has a sidecar proxy that handles the communication, providing features like load balancing, retries, and security.
         - Service A communicates with Service B through the mesh, which handles routing, retries, and other policies.
       - **Use Cases:** Ideal for complex microservices environments where visibility, security, and control over communication are paramount.
-    - **Message Broker v/s Pub/Sub**
-      | Aspect                  | Message Broker                                               | Pub/Sub                                              |
-      |-------------------------|--------------------------------------------------------------|------------------------------------------------------|
-      | **Communication Model** | Supports point-to-point and publish-subscribe.               | Specifically designed for publish-subscribe.         |
-      | **Message Delivery**    | Delivers messages to specific consumers, often from a queue. | Delivers messages to all subscribers of a topic.      |
-      | **Usage Scenarios**     | Used for task queues and reliable message delivery.          | Used for broadcasting events to multiple recipients.  |
-      | **Examples**            | RabbitMQ, Apache ActiveMQ, Amazon SQS                        | Apache Kafka, Google Cloud Pub/Sub, AWS SNS          |
-      | **Message Persistence** | Typically supports message persistence until consumed.       | Messages are usually transient unless configured.     |
-      | **Queue vs. Topic**     | Works with queues, each message processed by one consumer.   | Works with topics, each message received by all subscribers. |
-      | **Routing**             | Involves routing messages to specific queues or consumers.   | No routing; messages are published to a topic.       |
-      | **Scaling**             | Scales by adding more queues or consumers.                   | Scales by adding more subscribers.                   |
-
+### Message Broker v/s Pub Sub
+| Aspect                   | Message Broker                                               | Pub Sub                                                      |
+|--------------------------|--------------------------------------------------------------|--------------------------------------------------------------|
+| **Communication Model**  | Supports point-to-point and publish-subscribe.               | Specifically designed for publish-subscribe.                 |
+| **Message Delivery**     | Delivers messages to specific consumers, often from a queue. | Delivers messages to all subscribers of a topic.             |
+| **Usage Scenarios**      | Used for task queues and reliable message delivery.          | Used for broadcasting events to multiple recipients.         |
+| **Examples**             | RabbitMQ, Apache ActiveMQ, Amazon SQS                        | Apache Kafka, Google Cloud Pub/Sub, AWS SNS                  |
+| **Message Persistence**  | Typically supports message persistence until consumed.       | Messages are usually transient unless configured.            |
+| **Queue vs. Topic**      | Works with queues, each message processed by one consumer.   | Works with topics, each message received by all subscribers. |
+| **Routing**              | Involves routing messages to specific queues or consumers.   | No routing; messages are published to a topic.               |
+| **Scaling**              | Scales by adding more queues or consumers.                   | Scales by adding more subscribers.                           |
 ### Service-Oriented Architecture
 - **Overview:** SOA is an architectural style where services provide reusable functionality through well-defined interfaces and protocols. It focuses on integrating heterogeneous systems and promoting interoperability.
 - **Characteristics**
@@ -299,7 +297,6 @@
   - **Loose Coupling:** Ensure services are as independent as possible to facilitate flexibility.
   - **Service Registry:** Maintain a centralized repository for discovering and managing services.
   - **Security Protocols:** Implement robust security measures for service communication and data handling.
-- **Real-world Examples**
 ### Microservices Architecture v/s SOA
 | Aspect                        | Microservices Architecture                                             | Service-Oriented Architecture (SOA)                              |
 |-------------------------------|------------------------------------------------------------------------|------------------------------------------------------------------|

@@ -992,7 +992,7 @@
   print(set1 - set2)                          # Output: {1, 2}
   ```
 - Symmetric Difference (`^`) returns the elements that are in either set, but not in both (essentially the union minus the intersection).
-  - ```python
+  ```python
   et1 = {1, 2, 3}
   set2 = {3, 4, 5}
   print(set1 ^ set2)  # Output: {1, 2, 4, 5}
@@ -1138,15 +1138,16 @@
 
 ## Time Complexities Comparision
 ### Comparision Table
-- | Tables                     | List | Tuple | Set  | Dictionary | String |
-  |----------------------------|:----:|:-----:|:----:|:----------:|:------:|
-  | Access By Index            | O(1) | O(1)  | N/A  | O(1)       | O(1)   |
-  | Insert at End              | O(1) | N/A   | O(1) | O(1)       | N/A    | 
-  | Insert at Beginning/Middle | O(n) | N/A   | N/A  | N/A        | N/A    |
-  | Delete by Value            | O(n) | N/A   | O(1) | O(1)       | N/A    |
-  | Delete by Index            | O(n) | N/A   | N/A  | O(1)       | N/A    |
-  | Membership Testing         | O(n) | O(n)  | O(1) | O(1)       | O(n)   |
-  | Iterating                  | O(n) | O(n)  | O(n) | O(n)       | O(n)   |
+| Tables                     | List | Tuple | Set  | Dictionary | String |
+|----------------------------|:----:|:-----:|:----:|:----------:|:------:|
+| Access By Index            | O(1) | O(1)  | N/A  | O(1)       | O(1)   |
+| Insert at End              | O(1) | N/A   | O(1) | O(1)       | N/A    | 
+| Insert at Beginning/Middle | O(n) | N/A   | N/A  | N/A        | N/A    |
+| Delete by Value            | O(n) | N/A   | O(1) | O(1)       | N/A    |
+| Delete by Index            | O(n) | N/A   | N/A  | O(1)       | N/A    |
+| Membership Testing         | O(n) | O(n)  | O(1) | O(1)       | O(n)   |
+| Iterating                  | O(n) | O(n)  | O(n) | O(n)       | O(n)   |
+
 ### Rule of Thumb
 - Lists and tuples are ideal for ordered collections where you need to access elements by index, but lists allow mutability, whereas tuples are immutable.
 - Sets and dictionaries are excellent for fast membership testing and frequent inserts/deletes, with dictionaries offering key-value mapping.

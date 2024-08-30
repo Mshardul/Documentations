@@ -1,0 +1,236 @@
+html {
+  scroll-behavior: smooth;
+}
+
+#content {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.3s ease;
+  padding-left: 20px;
+}
+
+pre {
+  background: #282c34;
+  color: #abb2bf;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 16px;
+  line-height: 1.5;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+code {
+  background-color: #f1f1f1;
+  color: #d63384;
+  /* Adjust to a color that stands out */
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 90%;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Back to Top button styling */
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: none;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+#backToTop:hover {
+  background-color: #0056b3;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+th, td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+  font-size: 16px;
+}
+th {
+  background-color: #007BFF;
+  color: white;
+  font-weight: bold;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+tr:hover {
+  background-color: #f1f1f1;
+}
+table {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+@media screen and (max-width: 600px) {
+  table, th, td {
+    display: block;
+    width: 100%;
+  }
+  th, td {
+    box-sizing: border-box;
+  }
+  th {
+    background-color: #007BFF;
+    color: white;
+  }
+  tr {
+    margin-bottom: 10px;
+  }
+}
+
+/* General text size */
+body {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+/* Headings */
+h1, h2, h3 {
+  font-family: 'Arial', sans-serif;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  line-height: 1.2;
+  border-radius: 5px;
+}
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #007BFF;
+  color: white;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #5a6268;
+  color: white;
+  padding: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+}
+h3 {
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #f8f9fa;
+  color: #007BFF;
+  padding: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  padding-left: 30px;
+  border-left: 5px solid #007BFF;
+}
+
+/* Paragraphs and other text */
+p {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+/* Lists */
+ul, ol {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+/* Left-side menu styling */
+#menu {
+  position: fixed;
+  left: -250px;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  overflow-y: auto;
+  transition: left 0.3s ease;
+  z-index: 1001;
+  color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+#menu a {
+  padding: 2px 5px;
+  text-decoration: none;
+  font-size: 15px;
+  color: white;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+#menu a:hover {
+  background-color: #575757;
+}
+/* General styling for the menu icon */
+#menuToggle {
+  position: fixed;
+  top: 20px; /* Space from the top */
+  left: 20px; /* Space from the left */
+  width: 60px; /* Ensure width and height are equal */
+  height: 60px; /* Ensure width and height are equal */
+  background-color: #007BFF; /* Primary color */
+  color: white;
+  /* padding: 12px; Adjust padding for a better look */
+  font-size: 24px; /* Larger font for better visibility */
+  cursor: pointer;
+  z-index: 1002; /* Ensure it's above the menu */
+  border-radius: 50%; /* Rounded button */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Change icon color and scale on hover */
+#menuToggle:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  transform: scale(1.1); /* Slightly enlarge on hover */
+}
+/* Icon when menu is open */
+#menu.open + #menuToggle::before {
+  content: '✖'; /* Unicode for cross icon */
+  font-size: 24px; /* Ensure the cross icon has the same size */
+}
+/* Smooth transition between states */
+#menuToggle::before {
+  content: '☰'; /* Hamburger icon */
+  transition: transform 3.0s ease;
+}
+#menu.open {
+  left: 0;
+}
+#menu.open+#menuToggle {
+  left: 210px;
+}
+#menu.open+#menuToggle::before {
+  content: '✖';
+}

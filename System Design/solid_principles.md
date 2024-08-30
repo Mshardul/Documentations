@@ -1,6 +1,7 @@
 # SOLID Principles
 
 ## Quick Glance
+
 ### Single Responsibility Principle (SRP)
 - **One Class, One Job:** If you describe what a class does in more than one sentence, it probably has more than one responsibility.
 ### Open/Closed Principle (OCP)
@@ -13,10 +14,12 @@
 - **Depend on Abstractions, Not Concrete Classes:** High-level modules (business logic) should depend on interfaces or abstract classes, not specific implementations. This allows flexibility in changing implementations without affecting the system.
 
 ## Single Responsibility Principle (SRP)
+
 ### Basics
 - It states that a class should have only one reason to change, meaning it should have only one job or responsibility.
 - It ensures that each class is focused on a specific task, making it easier to understand, test, and maintain.
 - **One Class, One Job:** If you describe what a class does in more than one sentence, it probably has more than one responsibility.
+
 ### Example
 - Consider a class that handles both user data and email sending. This class has two reasons to change: if the user data structure changes or if the email sending mechanism changes.
   ```python

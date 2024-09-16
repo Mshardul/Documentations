@@ -1,7 +1,5 @@
 # INDEX
 - [INDEX](#index)
-- [Python Modules and Packages](#python-modules-and-packages)
-- [Advanced Data Structures and Algorithms in Python](#advanced-data-structures-and-algorithms-in-python)
 - [Python Standard Libraries](#python-standard-libraries)
   - [Itertools and Collections](#itertools-and-collections)
   - [Regular Expressions (Regex)](#regular-expressions-regex)
@@ -22,37 +20,6 @@
 - [Python for Competitive Programming: Best Practices](#python-for-competitive-programming-best-practices)
 - [Interview Questions](#interview-questions)
   - [Datatypes](#datatypes)
-
-# Python Modules and Packages
-  - Modules
-    - Creating and importing custom modules.
-    - Importing specific functions or classes from a module.
-    - Understanding the `__name__` variable.
-  - Standard Library Modules
-    - Overview of important modules: `math`, `random`, `time`, `os`, `sys`.
-    - Practical examples using these modules in competitive programming.
-  - Packages
-    - Creating and using packages.
-    - `__init__.py` file and its significance.
-    - Understanding relative imports.
-
-# Advanced Data Structures and Algorithms in Python
-  - Heaps
-    - Introduction to `heapq` module.
-    - Implementing min-heap and max-heap.
-    - Practical problems using heaps: Kth largest/smallest elements, priority queues.
-  - Deque
-    - Introduction to `collections.deque`.
-    - Advantages of deque over list for append and pop operations.
-    - Sliding window problems using deque.
-  - Sorting
-    - Built-in sorting functions: `sorted()` vs `list.sort()`.
-    - Sorting with custom keys: lambda functions.
-    - Stability in sorting algorithms.
-  - Binary Search
-    - Implementing binary search manually.
-    - Using `bisect` module for binary search operations.
-    - Practical problems: finding insert positions, search intervals.
 
 # Python Standard Libraries
 ## Itertools and Collections

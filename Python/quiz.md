@@ -48,7 +48,63 @@
 - [Question 47](#question-47)
 - [Question 48](#question-48)
 - [Question 49](#question-49)
-- [Question 41](#question-41-1)
+- [Question 50](#question-50)
+- [Question 51](#question-51)
+- [Question 52](#question-52)
+- [Question 53](#question-53)
+- [Question 54](#question-54)
+- [Question 55](#question-55)
+- [Question 56](#question-56)
+- [Question 57](#question-57)
+- [Question 58](#question-58)
+- [Question 59](#question-59)
+- [Question 60](#question-60)
+- [Question 61](#question-61)
+- [Question 62](#question-62)
+- [Question 63](#question-63)
+- [Question 64](#question-64)
+- [Question 65](#question-65)
+- [Question 66](#question-66)
+- [Question 67](#question-67)
+- [Question 68](#question-68)
+- [Question 69](#question-69)
+- [Question 70](#question-70)
+- [Question 71](#question-71)
+- [Question 72](#question-72)
+- [Question 73](#question-73)
+- [Question 74](#question-74)
+- [Question 75](#question-75)
+- [Question 76](#question-76)
+- [Question 77](#question-77)
+- [Question 78](#question-78)
+- [Question 79](#question-79)
+- [Question 80](#question-80)
+- [Question 81](#question-81)
+- [Question 82](#question-82)
+- [Question 83](#question-83)
+- [Question 84](#question-84)
+- [Question 85](#question-85)
+- [Question 86](#question-86)
+- [Question 87](#question-87)
+- [Question 88](#question-88)
+- [Question 89](#question-89)
+- [Question 90](#question-90)
+- [Question 91](#question-91)
+- [Question 92](#question-92)
+- [Question 93](#question-93)
+- [Question 94](#question-94)
+- [Question 95](#question-95)
+- [Question 96](#question-96)
+- [Question 97](#question-97)
+- [Question 98](#question-98)
+- [Question 99](#question-99)
+- [Question 100](#question-100)
+- [Question 101](#question-101)
+- [Question 102](#question-102)
+- [Question 103](#question-103)
+- [Question 104](#question-104)
+- [Question 105](#question-105)
+- [Question 101](#question-101-1)
 
 
 # Question 1
@@ -149,7 +205,7 @@ Which built-in Python function can be used to determine the memory address of an
 
 # Question 8
 ## Tags
-#python, #package, #init_file
+#python, #package, #init.py
 ## Question
 What is the purpose of the `__init__.py` file in a Python package?
 ## Options
@@ -820,7 +876,7 @@ print(Test.count, a.count, b.count)
 
 # Question 49
 ## Tags
-#python #output_question #itertools
+#python #output_question #itertools #itertools_permutations
 ## Question
 What will the following code output?
 ```python
@@ -830,11 +886,1024 @@ result = list(itertools.permutations([1, 2, 3], 2))
 print(result)
 ```
 ## Options
+- [ ] `[(1, 2), (2, 1), (1, 3), (3, 1), (2, 3), (3, 2)]`
+- [ ] `[(1, 2), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2)]`
+- [ ] `[(1, 2), (2, 3), (3, 1)]`
+- [ ] `[(1, 3), (2, 1), (3, 2)]`
 ## Answer
+2. `[(1, 2), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2)]`
+
+# Question 50
+## Tags
+#python #output_question #data_structure #list #list_slicing
+## Question
+What will this code output?
+```python
+x = [1, 2, 3, 4]
+print(x[::-2])
+```
+## Options
+- [ ] `[4, 3]`
+- [ ] `[4, 2]`
+- [ ] `[4, 3, 2, 1]`
+- [ ] `[4, 2, 1]`
+## Answer
+2. `[4, 2]`
+
+# Question 51
+## Tags
+## Question
+What will the following code output?
+```python
+a = [1, 2, 3]
+b = a * 2
+c = [a] * 2
+a[0] = 99
+print(b, c)
+```
+## Options
+- [ ] `[1, 2, 3, 1, 2, 3], [[99, 2, 3], [99, 2, 3]]`
+- [ ] `[1, 2, 3, 1, 2, 3], [[1, 2, 3], [1, 2, 3]]`
+- [ ] `[99, 2, 3, 99, 2, 3], [[99, 2, 3], [99, 2, 3]]`
+- [ ] Raises a `TypeError`
+## Answer
+1. `[1, 2, 3, 1, 2, 3], [[99, 2, 3], [99, 2, 3]]`
+
+# Question 52
+## Tags
+#python #output_question #data_structure #set #set_union #set_intersection #set_difference
+## Question
+What will this code output?
+```python
+x = {1, 2, 3}
+y = {3, 4, 5}
+z = x | y - x & y
+print(z)
+```
+## Options
+- [ ] `{1, 2, 3, 4, 5}`
+- [ ] `{1, 2, 4, 5}`
+- [ ] `{4, 5}`
+- [ ] Raises a `TypeError`
+## Answer
+2. `{1, 2, 4, 5}`
+
+# Question 53
+## Tags
+#python #output_question #data_structure #list #zip #iterator #generator
+## Question
+What will this code output?
+```python
+x = [1, 2, 3]
+y = [4, 5, 6]
+z = zip(x, y)
+print(list(z))
+print(list(z))
+```
+## Options
+- [ ] `[(1, 4), (2, 5), (3, 6)], [(1, 4), (2, 5), (3, 6)]`
+- [ ] `[(1, 4), (2, 5), (3, 6)], []`
+- [ ] Raises a `TypeError`
+- [ ] `[(1, 4), (2, 5), (3, 6)], [(4, 5, 6)]`
+## Answer
+2. `[(1, 4), (2, 5), (3, 6)], []`
+
+# Question 54
+## Tags
+#python #function #data_structure #list
+## Question
+What will this code output?
+```python
+def func(nums, value):
+    nums.append(value)
+    nums = [x * 2 for x in nums]
+    return nums
+
+lst = [1, 2, 3]
+result = func(lst, 4)
+print(lst, result)
+```
+## Options
+- [ ] `[1, 2, 3], [2, 4, 6, 8]`
+- [ ] `[1, 2, 3, 4], [2, 4, 6, 8]`
+- [ ] `[1, 2, 3, 4], [1, 2, 3, 4]`
+- [ ] Raises an `UnboundLocalError`
+## Answer
+2. `[1, 2, 3, 4], [2, 4, 6, 8]`
+
+# Question 55
+## Tags
+#python #output_question #data_structure #list #list_comprehension #list_sum
+## Question
+What will this code output?
+```python
+x = [1, 2, 3]
+y = (i * 2 for i in x)
+print(sum(y) + sum(y))
+```
+## Options
+- [ ] `12`
+- [ ] `6`
+- [ ] Raises a `TypeError`
+- [ ] `0`
+## Answer
+1. 12
+
+# Question 56
+## Tags
+#python #decorator
+## Question
+Which of the following statements about Python decorators is true?
+## Options
+- [ ] Decorators are functions that modify the behavior of another function or method.
+- [ ] A decorator can only be applied to functions, not classes or methods.
+- [ ] A decorator must always return a callable object.
+- [ ] The `@` syntax for decorators was introduced in Python 2.0.
+## Answer
+1. Decorators are functions that modify the behavior of another function or method.
+
+# Question 57
+## Tags
+#python #global_interpreter_lock
+## Question
+Which of the following statements about Python’s GIL (Global Interpreter Lock) is correct?
+## Options
+- [ ] Python’s GIL ensures that multiple threads can execute simultaneously on multi-core CPUs.
+- [ ] Python’s GIL allows only one thread to execute Python bytecode at a time.
+- [ ] The GIL is not present in Python implementations like CPython.
+- [ ] The GIL ensures thread safety for Python’s built-in data types.
+## Answer
+2. Python’s GIL allows only one thread to execute Python bytecode at a time.
+
+# Question 58
+## Tags
+#python #output_question #data_structure #list
+## Question
+What will this code output?
+```python
+x = [[0] * 3] * 3
+x[0][0] = 1
+print(x)
+```
+## Options
+- [ ] `[[1, 0, 0], [0, 0, 0], [0, 0, 0]]`
+- [ ] `[[1, 0, 0], [1, 0, 0], [1, 0, 0]]`
+- [ ] `[[1, 0, 0], [0, 1, 0], [0, 0, 1]]`
+- [ ] Raises an `IndexError`
+## Answer
+2. `[[1, 0, 0], [1, 0, 0], [1, 0, 0]]`
+
+# Question 59
+## Tags
+## Question
+Which of the following is the most accurate statement about Python’s `@classmethod` decorator?
+## Options
+- [ ] It can modify both instance and class-level attributes.
+- [ ] It can access and modify class-level attributes but cannot access instance attributes.
+- [ ] It is used to override the `__init__` method.
+- [ ] It is equivalent to the `@staticmethod` decorator.
+## Answer
+2. It can access and modify class-level attributes but cannot access instance attributes.
+
+# Question 60
+## Tags
+#python #output_question #oop #inheritance
+## Question
+What will this code output?
+```python
+class Parent:
+    def __init__(self):
+        self.value = 42
+
+class Child(Parent):
+    def __init__(self):
+        super().__init__()
+        self.value += 1
+
+obj = Child()
+print(obj.value)
+```
+## Options
+- [ ] `42`
+- [ ] `43`
+- [ ] Raises an `AttributeError`
+- [ ] Raises a `TypeError`
+## Answer
+2. `43`
+
+# Question 61
+## Tags
+#python #output_question #oop #inheritance #method_resolution_order
+## Question
+What will this code output?
+```python
+class A:
+    def greet(self):
+        return "Hello from A"
+
+class B(A):
+    def greet(self):
+        return "Hello from B"
+
+class C(A):
+    def greet(self):
+        return "Hello from C"
+
+class D(B, C):
+    pass
+
+obj = D()
+print(obj.greet())
+```
+## Options
+- [ ] `Hello from A`
+- [ ] `Hello from B`
+- [ ] `Hello from C`
+- [ ] Raises an `AmbiguityError`
+## Answer
+2. `Hello from B`
+
+# Question 62
+## Tags
+#python #output_question #package #module #init.py
+## Question
+What will happen when the following code is executed?
+```python
+from mypackage import module
+```
+## Options
+- [ ] mypackage must have an `__init__.py` file for this import to work.
+- [ ] mypackage and module are imported into the current namespace.
+- [ ] The import will fail if module is not explicitly listed in mypackage.`__all__`.
+- [ ] mypackage can be imported even without `__init__.py` in Python 3.3 and above.
+## Answer
+4. mypackage can be imported even without `__init__.py` in Python 3.3 and above.
+
+# Question 63
+## Tags
+#python #output_question #scope #nonlocal
+## Question
+What will this code output?
+```python
+def outer():
+    x = 10
+    def inner():
+        nonlocal x
+        x = x + 5
+        return x
+    return inner
+
+fn = outer()
+print(fn())
+print(fn())
+```
+## Options
+- [ ] `10, 10`
+- [ ] `15, 15`
+- [ ] `15, 20`
+- [ ] Raises an `UnboundLocalError`
+## Answer
+3. `15, 20`
+
+# Question 64
+## Tags
+#python #decorator #property #getter
+## Question
+Which of the following best describes Python’s `@property` decorator?
+## Options
+- [ ] It converts a method into a getter for a property.
+- [ ] It allows defining a method as a read-only property.
+- [ ] It allows methods to be overridden dynamically.
+- [ ] It ensures a method cannot be accessed without a valid instance.
+## Answer
+1. It converts a method into a getter for a property.
+
+# Question 65
+## Tags
+#python #output_question #oop #variable #getter
+## Question
+What will this code output?
+```python
+class MyClass:
+    def __init__(self):
+        self.data = [1, 2, 3]
+
+    def __getitem__(self, index):
+        return self.data[index] + 10
+
+obj = MyClass()
+print(obj[1], obj[2])
+```
+## Options
+- [ ] `12, 13`
+- [ ] `11, 12`
+- [ ] Raises an `AttributeError`
+- [ ] Raises a `TypeError`
+## Answer
+1. `12, 13`
+
+# Question 66
+## Tags
+#python #output_question #oop #inheritance #class_variable #instance_variable
+## Question
+What will this code output?
+```python
+class A:
+    x = 5
+
+    def __init__(self):
+        self.x = 10
+
+class B(A):
+    pass
+
+obj = B()
+print(obj.x, A.x, B.x)
+```
+## Options
+- [ ] `5, 5, 5`
+- [ ] `10, 5, 5`
+- [ ] `5, 10, 10`
+- [ ] `10, 10, 5`
+## Answer
+2. `10, 5, 5`
+
+# Question 67
+## Tags
+#python #output_question #oop #method_chaining
+## Question
+What will this code output?
+```python
+class MyClass:
+    def __init__(self):
+        self.value = 1
+
+    def increment(self):
+        self.value += 1
+        return self
+
+obj = MyClass()
+print(obj.increment().increment().value)
+```
+## Options
+- [ ] `1`
+- [ ] `2`
+- [ ] `3`
+- [ ] Raises an `AttributeError`
+## Answer
+3. `3`
+
+# Question 68
+## Tags
+#python #oop #static_method #decorator
+## Question
+Which of the following statements about Python’s `@staticmethod` decorator is correct?
+## Options
+- [ ] It can modify both class-level and instance-level attributes.
+- [ ] It does not take self or cls as its first argument.
+- [ ] It can only access instance-level attributes.
+- [ ] It ensures the method cannot be overridden in subclasses.
+## Answer
+2. It does not take self or cls as its first argument.
+
+# Question 69
+## Tags
+#python #identifier
+## Question
+What is the maximum length of a Python identifier?
+## Options
+- [ ] 32
+- [ ] 16
+- [ ] 128
+- [ ] No fixed length is specified
+## Answer
+4. No fixed length is specified
+
+# Question 70
+## Tags
+#python #output_question #arithmetic
+## Question
+What will be the output of the following code snippet?
+```python
+print(2**3 + (5 + 6)**(1 + 1))
+```
+## Options
+- [ ] 129
+- [ ] 8
+- [ ] 121
+- [ ] Raises a `SyntaxError`
+## Answer
+1. 129
+
+# Question 71
+## Tags
+#python #output_question #data_type
+## Question
+What will be the datatype of the var in the below code snippet?
+```python
+var = 10
+print(type(var))
+var = "Hello"
+print(type(var))
+```
+## Options
+- [ ] `str` and `int`
+- [ ] `int` and `int`
+- [ ] `str` and `str`
+- [ ] `int` and `str`
+## Answer
+4. `int` and `str`
+
+# Question 72
+## Tags
+#python #code_block
+## Question
+How is a code block indicated in Python?
+## Options
+- [ ] Brackets
+- [ ] Indentation
+- [ ] Key
+- [ ] Comments
+## Answer
+2. Indentation
+
+# Question 73
+## Tags
+#python #output_question #data_structure #float #int
+## Question
+What will be the output of the following code snippet?
+```python
+print(type(5 / 2))
+print(type(5 // 2))
+```
+## Options
+- [ ] `float` and `int`
+- [ ] `int` and `float`
+- [ ] `float` and `float`
+- [ ] `int` and `int`
+## Answer
+1. `float` and `int`
+
+# Question 74
+## Tags
+#python #output_question #variable_swap
+## Question
+What will be the output of the following code snippet?
+```python
+a = 3
+b = 1 
+print(a, b)
+a, b = b, a 
+print(a, b)
+```
+## Options
+- [ ] `3, 1` and `1, 3`
+- [ ] `3, 1` and `3, 1`
+- [ ] `1, 3` and `1, 3`
+- [ ] `1, 3` and `3, 1`
+## Answer
+1. `3, 1` and `1, 3`
+
+# Question 75
+## Tags
+#python #loop
+## Question
+Which of the following types of loops are not supported in Python?
+## Options
+- [ ] `while` loop
+- [ ] `for` loop
+- [ ] `do-while` loop
+- [ ] None of the above
+## Answer
+3. `do-while` loop
+
+# Question 76
+## Tags
+#python #output_question #data_structure #list #list_del
+## Question
+What will be the output of the following code snippet?
+```python
+example = ["Sunday", "Monday", "Tuesday", "Wednesday"];
+del example[2]
+print(example)
+```
+## Options
+- [ ] `["Sunday", "Monday", "Tuesday", "Wednesday"]`
+- [ ] `["Sunday", "Monday", "Wednesday"]`
+- [ ] `["Monday", "Tuesday", "Wednesday"]`
+- [ ] `["Sunday", "Monday", "Tuesday"]`
+## Answer
+2. `["Sunday", "Monday", "Wednesday"]`
+
+# Question 77
+## Tags
+#python #output_question #data_structure #list #list_search
+## Question
+Which of the following is the proper syntax to check if a particular element is present in a list?
+## Options
+- [ ] `if element in list`
+- [ ] `if element not in list`
+- [ ] Both a and b
+- [ ] None of the above
+## Answer
+3. Both a and b
+
+# Question 78
+## Tags
+#python #output_question #data_structure #tuple #tuple_sort #sorted
+## Question
+What will be the type of the variable sorted_numbers in the below code snippet?
+```python
+numbers = (4, 7, 19, 2, 89, 45, 72, 22)
+sorted_numbers = sorted(numbers)
+print(sorted_numbers)
+```
+## Options
+- [ ] `list`
+- [ ] `tuple`
+- [ ] `string`
+- [ ] `int`
+## Answer
+1. `list`
+
+# Question 79
+## Tags
+#python #output_question #data_structure #tuple #tuple_filter #filter
+## Question
+What will be the output of the following code snippet?
+```python
+numbers = (4, 7, 19, 2, 89, 45, 72, 22)
+sorted_numbers = sorted(numbers)
+even = lambda a: a % 2 == 0
+even_numbers = filter(even, sorted_numbers)
+print(type(even_numbers))
+```
+## Options
+- [ ] `filter`
+- [ ] `int`
+- [ ] `list`
+- [ ] `tuple`
+## Answer
+1. `filter`
+
+# Question 80
+## Tags
+#python #output_question #data_structure #list #list_slice
+## Question
+What will be the output of the following code snippet?
+```python
+example = ["Sunday", "Monday", "Tuesday", "Wednesday"];
+print(example[-3:-1])
+```
+## Options
+- [ ] `["Monday", "Tuesday"]`
+- [ ] `["Sunday", "Monday"]`
+- [ ] `["Tuesday", "Wednesday"]`
+- [ ] `["Wednesday", "Monday"]`
+## Answer
+1. `["Monday", "Tuesday"]`
+
+# Question 81
+## Tags
+#python #datetime
+## Question
+Which of the following functions converts date to corresponding time in Python?
+## Options
+- [ ] `strptime()`
+- [ ] `strftime()`
+- [ ] Both a and b
+- [ ] None of the above
+## Answer
+1. `strptime()`
+
+# Question 82
+## Tags
+#python #args
+## Question
+As what datatype are the *args stored, when passed into a function?
+## Options
+- [ ] `list`
+- [ ] `tuple`
+- [ ] `dictionary`
+- [ ] `set`
+## Answer
+2. `tuple`
+
+# Question 83
+## Tags
+#python #output_question #kwargs
+## Question
+What will be the output of the following code snippet?
+```python
+def tester(**kwargs):
+   for key, value in kwargs.items():
+       print(key, value, end = " ")
+tester(Sunday = 1, Monday = 2, Tuesday = 3, Wednesday = 4)
+```
+## Options
+- [ ] `Sunday 1 Monday 2 Tuesday 3 Wednesday 4`
+- [ ] `Sunday 1 Monday 2 Tuesday 3`
+- [ ] `Wednesday 4`
+- [ ] `Sunday 1`
+## Answer
+1. `Sunday 1 Monday 2 Tuesday 3 Wednesday 4`
+
+# Question 84
+## Tags
+#python #kwargs
+## Question
+As what datatype are the *kwargs stored, when passed into a function?
+## Options
+- [ ] `list`
+- [ ] `tuple`
+- [ ] `dictionary`
+- [ ] `set`
+## Answer
+3. `dictionary`
+
+# Question 85
+## Tags
+#python #exception_handling
+## Question
+Which of the following blocks will always be executed whether an exception is encountered or not in a program?
+## Options
+- [ ] `except`
+- [ ] `finally`
+- [ ] `else`
+- [ ] `try`
+## Answer
+2. `finally`
+
+# Question 86
+## Tags
+#python #output_question #math #math_functions
+## Question
+What will be the output of the following code snippet?
+```python
+from math import *
+a = 2.19
+b = 3.999999
+c = -3.30
+print(int(a), floor(b), ceil(c), fabs(c))
+```
+## Options
+- [ ] 2, 3, -3, 3.3
+- [ ] 3, 4, -3, 3
+- [ ] 2, 3, -3, 3
+- [ ] 2, 3, -3, -3.3
+## Answer
+1. 2, 3, -3, 3.3
+
+# Question 87
+## Tags
+#python #output_question #data_structure #set #set_union
+## Question
+What will be the output of the following code snippet?
+```python
+set1 = {1, 3, 5}
+set2 = {2, 4, 6}
+print(len(set1 + set2))
+```
+## Options
+- [ ] 3
+- [ ] 6
+- [ ] 0
+- [ ] Raises a `TypeError`
+## Answer
+4. Raises a `TypeError`
+
+# Question 88
+## Tags
+#python #exception_handling
+## Question
+What keyword is used in Python to raise exceptions?
+## Options
+- [ ] `throw`
+- [ ] `raise`
+- [ ] `catch`
+- [ ] `try`
+## Answer
+2. `raise`
+
+# Question 89
+## Tags
+#python #output_question #data_structure #set #set_union
+## Question
+What will be the output of the following code snippet?
+```python
+s1 = {1, 2, 3, 4, 5}
+s2 = {2, 4, 6}
+print(s1 ^ s2)
+```
+## Options
+- [ ] `{1, 2, 3, 4, 5}`
+- [ ] `{1, 3, 5, 6}`
+- [ ] `{2, 4}`
+- [ ] `{1, 2, 3, 4, 5, 6}`
+## Answer
+2. `{1, 3, 5, 6}`
+
+# Question 90
+## Tags
+#python #output_question #filter #data_structure #list
+## Question
+What will be the output of the following code snippet?
+```python
+a = [[], "abc", [0], 1, 0]
+print(list(filter(bool, a)))
+```
+## Options
+- [ ] `["abc", [0], 1]`
+- [ ] `[1]`
+- [ ] `["abc"]`
+- [ ] `[1, "abc", [0]]`
+## Answer
+1. `["abc", [0], 1]`
+
+# Question 91
+## Tags
+#python
+## Question
+In which language is Python written?
+## Options
+- [ ] C++
+- [ ] Java
+- [ ] C
+- [ ] JavaScript
+## Answer
+3. C
+
+# Question 92
+## Tags
+#python #output_question #variable_scope #global #keyword
+## Question
+What will be the output of the following code snippet?
+```python
+def func():
+   global value
+   value = "Local"
+   
+value = "Global"
+func()
+print(value)
+```
+## Options
+- [ ] Raises a `NameError`
+- [ ] Raises a `SyntaxError`
+- [ ] `Local`
+- [ ] `Global`
+## Answer
+3. `Local`
+
+# Question 93
+## Tags
+#python #output_question #data_structure #list
+## Question
+What will be the output of the following code snippet?
+```python
+def solve(a):
+   a = [1, 3, 5]
+a = [2, 4, 6]
+print(a)
+solve(a)
+print(a)
+```
+## Options
+- [ ] `[2, 4, 6]`, `[2, 4, 6]`
+- [ ] `[2, 4, 6]`, `[1, 3, 5]`
+- [ ] `[1, 3, 5]`, `[1, 3, 5]`
+- [ ] `[1, 3, 5]`, `[2, 4, 6]`
+## Answer
+1. `[2, 4, 6]`, `[2, 4, 6]`
+
+# Question 94
+## Tags
+#python #comment
+## Question
+Which of the following character is used to give single-line comments in Python?
+## Options
+- [ ] `//`
+- [ ] `#`
+- [ ] `!`
+- [ ] `/**/`
+## Answer
+2. `#`
+
+# Question 95
+## Tags
+#python #output_question #arithmetic #operator #operator_precedence
+## Question
+What is the output of the following code snippet?
+```python
+print(2**(3**2), (2**3)**2, 2**3**2)
+```
+## Options
+- [ ] 512, 64, 512
+- [ ] 512, 512, 512
+- [ ] 64, 512, 64
+- [ ] 64, 64, 64
+## Answer
+1. 512, 64, 512
+
+# Question 96
+## Tags
+#python #output_question #data_structure #boolean
+## Question
+What will be the output of the following Python function?
+```python
+print(min(max(False,-3,-4), 2,7))
+```
+## Options
+- [ ] `-4`
+- [ ] `-3`
+- [ ] `2`
+- [ ] `False`
+## Answer
+4. `False`
+
+# Question 97
+## Tags
+#python #output_question #data_structure #float
+## Question
+What will be the output of the following Python code?
+```python
+x = 56.236
+print("%.2f"%x)
+```
+## Options
+- [ ] `56.236`
+- [ ] `56.23`
+- [ ] `56.0000`
+- [ ] `56.24`
+## Answer
+4. `56.24`
+
+# Question 98
+## Tags
+#python #output_question #data_structure #list #id #object_id
+## Question
+What will be the output of the following Python program?
+```python
+def foo(x):
+    x[0] = ['def']
+    x[1] = ['abc']
+    return id(x)
+q = ['abc', 'def']
+print(id(q) == foo(q))
+```
+## Options
+- [ ] Raises a `SyntaxError`
+- [ ] `None`
+- [ ] `True`
+- [ ] `False`
+
+## Answer
+3. `True`
+
+# Question 99
+## Tags
+#python #output_question #data_structure #set
+## Question
+What will be the output of the following Python program?
+```python
+z=set('abc')
+print(z)
+z.add('san')
+print(z)
+z.update(set(['p', 'q']))
+print(z)
+```
+## Options
+- [ ] `{"abc"}`, `{"abc", "san"}`, `{"abc", "san", "p", "q"}`
+- [ ] `{"a", "b", "c"}`, `{"a", "b", "c", "san"}`, `{"a", "b", "c", "san", "p", "q"}`
+- [ ] `{"abc"}`, `{"abc", "san"}`, `{"abc", "san", "pq"}`
+- [ ] `{"a", "b", "c"}`, `{"a", "b", "c", "san"}`, `{"a", "b", "c", "san", "pq"}`
+## Answer
+1. `{"a", "b", "c"}`, `{"a", "b", "c", "san"}`, `{"a", "b", "c", "san", "p", "q"}`
+
+# Question 100
+## Tags
+#python #output_question #data_structure #string #string_center
+## Question
+What will be the output of the following Python code?
+```python
+print('*', "abcde".center(6), '*', sep='')
+```
+## Options
+- [ ] `*  abcde *`
+- [ ] `*abcde *`
+- [ ] `* abcde*`
+- [ ] `* abcde  *`
+## Answer
+2. `*abcde *`
+
+# Question 101
+## Tags
+#python #output_question #control_flow #while_loop #while_else
+## Question
+What will be the output of the following Python program?
+```python
+i = 0
+while i < 5:
+    print(i)
+    i += 1
+    if i == 3:
+        break
+else:
+    print(0)
+```
+## Options
+- [ ] Raises a `SyntaxError`
+- [ ] `0 1 2 0`
+- [ ] `0 1 2`
+- [ ] No output
+## Answer
+3. `0 1 2`
+
+# Question 102
+## Tags
+#python #output_question #data_structure #set
+## Question
+What will be the output of the following Python code snippet?
+```python
+z = set('abc$de')
+print('a' in z)
+```
+## Options
+- [ ] `True`
+- [ ] `False`
+- [ ] Raises a `SyntaxError`
+- [ ] Raises a `NameError`
+## Answer
+1. `True`
+
+# Question 103
+## Tags
+#python #output_question #data_structure #string #string_formatting #format
+## Question
+What will be the output of the following Python code?
+```python
+print("Hello {0[0]} and {0[1]}".format(('foo', 'bin')))
+```
+## Options
+- [ ] `Hello f and o`
+- [ ] `Hello foo and bin`
+- [ ] Raises a `SyntaxError`
+- [ ] `Hello and`
+## Answer
+2. `Hello foo and bin`
+
+# Question 104
+## Tags
+#python #output_question #data_structure #list #list_join #string #map
+## Question
+What will be the output of the following Python code?
+```python
+x = [[0], [1]]
+print((' '.join(list(map(str, x))),))
+x = [[0, 1], [2, 3]]
+print((' '.join(list(map(str, x))),))
+```
+## Options
+- [ ] `[0] [1]`, `[0, 1] [2, 3]`
+- [ ] `01`, `0123`
+- [ ] `('[0] [1]',)`, `('[0, 1] [2, 3]',)`
+- [ ] `['01', '0123']`
+## Answer
+3. `('[0] [1]',)`, `('[0, 1] [2, 3]',)`
+
+# Question 105
+## Tags
+#python #output_question #exception_handling #try #finally
+## Question
+What will be the output of the following Python code?
+```python
+def foo():
+    try:
+        return 1
+    finally:
+        return 2
+k = foo()
+print(k)
+```
+## Options
+- [ ] `1`
+- [ ] `2`
+- [ ] Raises a `SyntaxError`
+- [ ] Raises a `NameError`
+## Answer
+2. `2`
 
 
 
-# Question 41
+
+
+
+
+
+
+
+# Question 101
 ## Tags
 ## Question
 ## Options

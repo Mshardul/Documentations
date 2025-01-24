@@ -380,6 +380,7 @@ interact(Fish())  # Raises AttributeError: 'Fish' object has no attribute 'speak
 To ensure that every object passed to `interact()` implements `speak()`,
 implement an Abstract Class `Animal` with abstractmethod `speak()`
 Inherit both `Dog` and `Cat` from this `Animal` class, and make `interact()` argument type as `Animal`.
+"""
 ```
 ### Related Topics
 

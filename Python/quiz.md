@@ -24,11 +24,11 @@ greet()
 Which of the following statements about Python’s scoping rules (LEGB rule) is correct?
 ## Options
 - [ ] Local variables override all other scopes, including built-ins and globals.
-- [ ] Enclosed (non-local) variables take precedence over local variables.
+- [ ] Local variables take precedence over Enclosed (non-local) variables.
 - [ ] Global variables take precedence over local variables.
 - [ ] Built-in variables (like len) always have the highest priority.
 ## Answer
-2. Enclosed (non-local) variables take precedence over local variables.
+2. Local variables take precedence over Enclosed (non-local) variables.
 
 # Question 3
 ## Tags

@@ -386,6 +386,31 @@ Inherit both `Dog` and `Cat` from this `Animal` class, and make `interact()` arg
 
 
 ## Metaclasses
+### what?
+- A metaclass is to a class what a class is to an instance.
+- just like a class governs how its instances behave, a metaclass governs how a class behaves (how it’s created, attributes it has, etc.).
+- Normally, when you create a class in Python - like `class MyClass: pass` - the default metaclass is `type`. This means `MyClass` itself is an instance of `type`.
+- But you can override this behavior by specifying a different metaclass, effectively customizing how your class is built.
+### why?
+- **Intercept Class Creation:** You can run special logic whenever a class is defined.
+- **Modify Class Attributes:** You can automatically add, remove, or change methods/attributes on the class.
+- **Enforce Rules:** You can check if certain methods exist, or if attributes are typed in a specific way, raising errors if they don’t meet your criteria.
+- **Register Classes Automatically:** You can keep track of all subclasses in a central registry (handy for frameworks or plugins).
+### example
+```python
+class MyMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        print(f"Creating class {name} with MyMeta...")
+        return super().__new__(mcs, name, bases, attrs)
+
+class MyClass(metaclass=MyMeta):
+    pass
+
+# When Python sees 'class MyClass(...)', it calls MyMeta.__new__ to create the MyClass object.
+```
+
+
+
 ## The Global Interpreter Lock (GIL)
 ## Concurrency with Threads (conceptual)
 ## Concurrency with Multiple Processes (conceptual)

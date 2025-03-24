@@ -1,10 +1,51 @@
+- [Technical Challenges Faced and Overcame](#technical-challenges-faced-and-overcame)
+  - [What key Technical challenges have you faced?](#what-key-technical-challenges-have-you-faced)
+    - [Architecture](#architecture)
+    - [Stakeholders](#stakeholders)
+    - [Team Lead](#team-lead)
+- [Technology Decision Making](#technology-decision-making)
+  - [When did you have to choose a Technology Stack (X over Y), and explain the trade-offs you had to consider?](#when-did-you-have-to-choose-a-technology-stack-x-over-y-and-explain-the-trade-offs-you-had-to-consider)
+    - [Golang over Python for high-throughtput microservice](#golang-over-python-for-high-throughtput-microservice)
+    - [Flask over Django](#flask-over-django)
+    - [FastAPI over Flask or Django](#fastapi-over-flask-or-django)
+    - [React over Angular](#react-over-angular)
+- [Influencing team to adopt a new Engineering Solution](#influencing-team-to-adopt-a-new-engineering-solution)
+  - [Ever had to Lead or Influence your team to adopt a new Engineering Approach or Best Practice. How did you convince them?](#ever-had-to-lead-or-influence-your-team-to-adopt-a-new-engineering-approach-or-best-practice-how-did-you-convince-them)
+    - [Moving from Monolithic to Microservices](#moving-from-monolithic-to-microservices)
+    - [Adopting CI/CD practices using GitLab CI/CD](#adopting-cicd-practices-using-gitlab-cicd)
+    - [Instilling a culture of Detailed PRs and Strict Code Reviews](#instilling-a-culture-of-detailed-prs-and-strict-code-reviews)
+- [Scalability](#scalability)
+  - [How did you Build Scalable Solution for thousands of people to join Online Video Conference at once?](#how-did-you-build-scalable-solution-for-thousands-of-people-to-join-online-video-conference-at-once)
+    - [focus on a microservices-based architecture and leveraging cloud scalability](#focus-on-a-microservices-based-architecture-and-leveraging-cloud-scalability)
+    - [continuous performance management and process adjustments](#continuous-performance-management-and-process-adjustments)
+    - [performance-aware culture in the team](#performance-aware-culture-in-the-team)
+- [Team Leadership](#team-leadership)
+  - [how did you manage coordination across different roles and ensure successful, on-time delivery of projects without compromising on quality?](#how-did-you-manage-coordination-across-different-roles-and-ensure-successful-on-time-delivery-of-projects-without-compromising-on-quality)
+    - [Architecture](#architecture-1)
+    - [Process](#process)
+    - [Collaboration](#collaboration)
+- [End-to-End Solution](#end-to-end-solution)
+  - [How did you approach the End-to-End Solution Design in terms of technical strategy and team leadership?](#how-did-you-approach-the-end-to-end-solution-design-in-terms-of-technical-strategy-and-team-leadership)
+    - [Architecture](#architecture-2)
+    - [Process](#process-1)
+    - [Team](#team)
+- [DevOps](#devops)
+  - [Describe how you implemented a CI/CD pipeline in one of your projects, and what impact it had on the team and product delivery?](#describe-how-you-implemented-a-cicd-pipeline-in-one-of-your-projects-and-what-impact-it-had-on-the-team-and-product-delivery)
+    - [Architecture](#architecture-3)
+    - [Process](#process-2)
+    - [Team](#team-1)
+- [Team Culture](#team-culture)
+
+
 # Technical Challenges Faced and Overcame
 
-## What key Technical challenges have you faced in your career?
+## What key Technical challenges have you faced?
 
 ### Architecture
 - Designing for **high scalability** and **availability**
     - Utilized **Microservice Architecture** and leveraging **AWS-managed Services** for **auto-scaling** and **high resposiveness**.
+    - implemented **edge caching via CloudFront** and used **AWS Lambda** for **burstable workloads**.
+    - migrated stateful components to **Redis** to reduce database load.
 - Integration of 5 different social media APIs with varying data formats and rate limits: 
     - Added an **abstract layer** and **unified data model** to handle **inconsistencies**, coupled with **thorough error handling** and **caching strategies**.
 
@@ -25,6 +66,17 @@
     - Mentored them through **pair programming** and **code reviews**
     - **breaking down the problem** into manageable tasks.
 
+## How did you validate the effectiveness of project?
+
+### Metrics
+- Metrics like trainer retention and course completion rates were **key indicators** of success.
+
+### Prompt Engineering
+- Andrew Ng's **prompt engineering** course helped me **develop better prompts** for the model.
+
+### Stakeholders
+- Regular meetings with Stakeholders helped me understand the **effectiveness of the project**.
+
 
 # Technology Decision Making
 
@@ -34,14 +86,19 @@
 - Golang’s **concurrency model** and **compiled performance** excelled for the **scale** we needed.
 - Golang gave us **efficient goroutines** and **lower latency** under load.
 - **performance** and **type safety** were more critical for this service (to handle **thousands of req/sec** without hiccups).
-- **Downside:** slightly **longer development time** and **needing to manage memory manually**.
+- **Downside:** **stricter type definitions** and **learning curve** for Python-centric teams.
 - But it paid off when our service **easily handled peak traffic** with **minimal CPU usage**.
+- Go microservices ensured **low-latency** responses for **influencer-facing features**.
 
 ### Flask over Django
 - for **rapid development** and **flexibility** for a microservice that had very specific needs.
 - **Flask’s minimalistic approach** meant we could **start small** and **add only the libraries we needed**, which kept our **initial velocity high**.
 - **Trade-off:** Flask required us to **implement certain features (like authentication or admin interfaces) from scratch** that Django would have provided out-of-the-box.
 - It was okay as our **team was experienced** in those areas and we **wanted full control** to optimize each component.
+
+### FastAPI over Flask or Django
+- native support for **async operations** - ideal for microservices needing **high throughput**
+- **FastAPI’s ASGI** support allowed **seamless integration with WebSocket-based features** for live classes, which **Django’s WSGI** architecture couldn’t handle as efficiently.
 
 ### React over Angular
 - **React** because our team had **prior experience** with it and a **strong JavaScript skill set**, which meant a **smoother learning curve** and **faster onboarding** for new members.
@@ -115,8 +172,10 @@
     - **DevOps engineers** understood the **deployment topology** from day one.
 - By defining these interfaces and boundaries early: each subgroup could **work somewhat independently** yet **remain aligned with the overall design**.
 - This Blueprint **minimized misunderstandings and integration issues** later, helping with delivery timelines.
+- broke the integration into **modular microservices**, allowing **parallel development**.
 
 ### Process
+- integrated **Jira** to **track dependencies**
 - **Meetings:** Organized **regular stand-ups** and **bi-weekly sprint planning meetings** that included representatives from various teams.
     - **Tasks:** **review Progress**, **surface Blockers**, **demo PRs**, and **adjust priorities** collaboratively.
     - **Demos:** **reinforced accountability** and **teamwork across functions**
@@ -124,6 +183,7 @@
     - **Managed By:** maintaining a **transparent backlog** and **negotiating scope with stakeholders** to find a healthy balance
 - **Solutions:** **having a clear process** with defined roles, **open communication** channels, and a **culture of calling out issues early**
 - **Result:** **delivering complex projects on time**, as everyone was aware of the timeline and quality standards and could coordinate their work accordingly.
+- **Regular demos** with product teams **ensured alignment**.
 
 ### Collaboration
 - encouraged an Environment, where
@@ -132,6 +192,7 @@
     - Feature Demos in the standups
     - Acknowledging Contributions
     - Discouraging Blame Games or Name Calling
+
 
 # End-to-End Solution
 
@@ -142,7 +203,76 @@
 - **Technical Strategies**
     - **Divided problem into stages**: video transcription, content analysis, qc, and feedback generation
     - **Utilized FastAPI for Async Programming**: to handle concurrent requests and reduce latency
-    - **Isolating AI processing in its own service queue:** 
+    - **Isolating AI processing in its own service queue:** made the system more **scalable** and failures in AI processing **wouldn’t take down the whole app**.
+    - **Ensuring Privacy:** used **AWS KMS** to encrypt data at rest and in transit, and not sharing **user-sensitive data** with the AI services.
+    - **Cost Awareness:** since APIs were expensive, implemented **batching requests**, and **caching results** wherever possible.
+    - **Detailed Documentation:** 
+
+### Process
+- **Challenges**
+    - Needed to Integrate various Payment Gateways (JusPay, Stripe, Tabby), where **Process** and **Strategy** were crucial.
+- **Steps Taken**
+    - Started by **gathering requirements** from the business stakeholders
+        - understanding each vendor's use cases
+        - expected transaction volumes
+        - regional compliances
+    - 2 microservices to keep things decoupled
+        - focused on **Payments Processing** logic
+            - handling common workflow
+            - differences between vendors
+        - transactions logging and callbacks
+    - set up **CI/CD** pipeline
+    - followed **Iterative Approach:** integrate one vendor, deploy to staging, test end-to-end with the frontend, gather feedback, then move to the next vendor.
+- **Feedback Mechanism**
+    - Weekly meetings with the shareholders to ensure that said expectations are met.
+- **Fallback Mechanism**
+    - If one Payments Gateway fails, **fallback to another** to ensure uninterrupted transactions. 
+    - This was **well documented** and **tested properly**.
+
+### Team
+- **Project:** Social Media Marketing Campaign App
+- **Mission:** to allow seamless campaign creation and tracking across various social media platforms in one place.
+- **Leadership Strategy:** to empower team members with ownership of different integrations while maintaining a unified vision
+- **Steps Taken**
+    - assembled a cross-functional team and clarified our mission
+    - broke the team into small groups, each responsible for researching and implementing one social media API
+    - To ensure consistency, I established coding guidelines for how we handle API responses, errors, and rate limiting.
+    - made sure the frontend and backend folks were in constant communication
+    - By fostering collaboration and giving each person a voice in technical decisions, the team remained highly motivated and aligned.
+
+
+# DevOps
+
+## Describe how you implemented a CI/CD pipeline in one of your projects, and what impact it had on the team and product delivery?
+
+### Architecture
+- played a key part in building out our infrastructure automation and CI/CD pipeline.
+- designed a pipeline that would containerize each service with Docker and then use Kubernetes to orchestrate deployments.
+- **critical architectural decision** was using **Terraform** for **infrastructure as code**: AWS environments (from dev to prod) were consistent and could be brought up or changed in a controlled manner.
+- **GitHub Actions Pipeline**: on every code push, would run tests, build a Docker image, and deploy to a Kubernetes cluster.
+- **challenge:** coordinating deployments when multiple services were involved (to avoid incompatibilities)
+    - solved by using semantic versioning and Helm charts to manage service dependencies.
+- **Impact:** gave us **predictable**, **repeatable deployments** and reduced “it works on my machine” problems because everything ran in containers.
+- moved from **manual**, **ad-hoc server** setups to an **automated** and **version-controlled infrastructure**, greatly increasing our system’s **reliability** and **scalability**.
+
+### Process
+- **Task:** improve the deployment process for a project that was moving to Azure.
+- **Steps Taken**
+    - introduced a CI/CD pipeline using Azure DevOps
+        - setting up continuous integration to run our test suite and continuous deployment to push changes to Azure App Services.
+    - worked with the team to define a branching strategy (GitFlow) that would work with the pipeline, ensuring that merging to the main branch would trigger a deployment to a staging slot and only after approval would it swap to production.
+- **Initial challenges**: Tests that weren’t reliable and caused pipeline failures
+    - revisited the flaky tests and improved our test suite for stability
+    - Over a few iterations, the team began to trust the pipeline as we saw deployments succeed consistently.
+- **Impact:** went from doing infrequent, large releases (which were stressful and often delayed) to frequent, small releases.
+    - features and fixes reached users faster and with fewer bugs, because the automated tests and checks in the pipeline caught issues early
+
+### Team
+- emphasis on **team education and buy-in**
+- **challenge:** proposed adopting Docker and Kubernetes for our development and deployment process
+    - Rather than imposing it, organized a hands-on workshop
+        - walked the team through containerizing a small app and deploying it to a local Kubernetes cluster.
+    - helped demystify the tools and got everyone comfortable with the basics.
 
 
 # Team Culture

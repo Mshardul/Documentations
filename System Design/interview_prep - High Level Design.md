@@ -79,6 +79,7 @@
 - **Quick Tips**
     - CDN at edge, Redis mid-tier, DB as last resort
     - Cache + Queue + AutoScale = Spike Survival Formula
+    - Think "Scale Out, Not Up" (horizontal > vertical scaling).
 
 ### How would you structure a system to support millions of users?
 `High Traffic` `Large-scale System` `Scalability`
@@ -108,15 +109,17 @@
 - **Use Eventual Consistency by Design**
     - Accept temporary inconsistencies (e.g., counters, read-after-write) for higher availability.
 - **Idempotent Operations**
-    - Ensure repeated events (retries) don’t corrupt state.
+    - Ensure retries don’t cause duplicates.
 - **Retry + Dead Letter Queues**
     - Retry transient failures; move persistent ones to DLQ.
 - **Conflict Resolution**
-    - Use versioning (timestamps, vector clocks) to resolve divergent updates.
+    - Use versioning (timestamps, vector clocks, CRDTs (Conflict-free Replicated Data Types)) to resolve divergent updates.
 - **Read Repair + Background Sync**
     - Auto-correct inconsistent replicas asynchronously.
 - **Stale Read Tolerance**
     - Display cached/stale data for non-critical reads with freshness indicators.
+- **Sagas**
+    - Break transactions into compensatable steps.
 - **Quick Tips**
     - Prefer eventual consistency for non-critical data like logs, notifications.
 
@@ -125,7 +128,7 @@
 ### How do you ensure high availability in a large-scale system?
 `Availability` `Large-scale System`
 - **Redundancy**
-    - Multiple instances, AZs (Availability Zones), and regions.
+    - Deploy replicas across zones/regions.
 - **Load Balancers**
     - Route traffic to healthy nodes, remove failed ones.
 - **Failover Mechanisms**
@@ -133,39 +136,191 @@
 - **Graceful Degradation**
     - Serve degraded experience instead of total failure.
 - **Health Checks & Circuit Breakers**
-    - Prevent cascading failures by isolating faults early.
+    - Automatically reroute traffic from failed nodes.
+    - Prevent cascading failures (e.g., Hystrix).
 - **Infrastructure as Code (IaC)**
     - Enables fast recovery and reproducibility.
+- **Quick Tips**
+    - Think in terms of **remove single points of failure**.
+    - Aim for **N+2 redundancy** (two extra nodes beyond expected load).
 
 ## Fault Tolerance
 ### How would you implement fault tolerance in a distributed system?
 `Distributed System` `Fault Tolerance`
+- **Retry & Timeout Logic**
+    - Retry transient failures with exponential backoff.
+- **Idempotency**
+    - Ensure operations are repeatable without side effects.
+- **Bulkheads**
+    - Isolate components so one failure doesn’t bring down others.
+- **Circuit Breaker Pattern**
+    - Prevent overloading failed services.
+- **Redundant Services**
+    - Deploy across multiple zones or regions.
+- **Graceful Degradation**
+    - Drop non-critical services if needed (ads, personalization, etc.).
+- **Self-Healing Infrastructure**
+    - Auto-restart failed services (K8s probes, ECS health checks).
+- **Quick Tips**
+    - Think “retry + circuit + fallback + redundancy”.
+    - Faults are inevitable — absorb, isolate, and recover.
+    - Assume everything fails; design for it.
+
 ### Design a fault-tolerant system to survive regional cloud outages.
 `Distributed System` `Fault Tolerance`
+- **Active-Active or Active-Passive Across Regions**
+    - Use global DNS failover and health checks.
+- **Data Sync Across Regions**
+    - Use cross-region replication (e.g., RDS, S3, DynamoDB Global Tables).
+- **Stateless App Layer + Global Load Balancer**
+    - App instances in both regions behind Route53/GCLB.
+- **Shared Storage Consideration**
+    - Avoid tight coupling to single-region storage (S3 with CRR or multi-region buckets).
+- **Asynchronous Data Pipelines**
+    - Buffer messages (Kafka/MQ) with durability in both regions.
+- **Quick Tips**
+    - Avoid stateful dependencies tied to a single region.
+
 ## Observability
 ### How do you approach designing for observability (logs, metrics, traces)?
 `Observability` `Logging` `Metrics` `Monitoring`
+- **Structured Logging**
+    - Use Structured JSON logs with correlation IDs.
+- **Metrics**
+    - Use Prometheus, CloudWatch, or Datadog to track KPIs (latency, throughput, error rate).
+- **Distributed Tracing**
+    - OpenTelemetry, Jaeger, or Zipkin for tracing inter-service calls.
+- **Dashboards + Alerting**
+    - Use Grafana for dashboards; define SLO-based alerts.
+- **Log Aggregators**
+    - Use ELK/EFK stack to centralize logs.
+- **Quick Tips**
+    - "3 Pillars: Logs, Metrics, Traces".
+    - Always pass a trace ID across services.
+    - "If you can’t measure it, you can’t improve it".
+
 ## Security
 ### What are the best practices for securing a microservices-based architecture?
 `Security` `Microservice Architecture`
+- **Zero Trust Principle**
+    - Treat every service as untrusted; authenticate each call.
+- **API Gateway + Identity Provider**
+    - OAuth2/JWT + rate limiting at entry point.
+- **Service-to-Service Auth**
+    - Use mTLS or service mesh like Istio.
+- **Secrets Management**
+    - Vault, AWS Secrets Manager – never hardcode secrets.
+- **Least Privilege Access**
+    - Fine-grained IAM roles for each service.
+- **Quick Tips**
+    - Never trust internal network implicitly.
+
 ### How do you secure APIs against common vulnerabilities (e.g., SQLi, XSS)?
 `API` `Microservice Architecture` `Security`
+- **Input Validation & Sanitization**
+    - Use allow-lists; never trust input from client.
+- **Prepared Statements**
+    - Prevent SQLi via parameterized queries.
+- **Content Security Policy (CSP)**
+    - Helps mitigate XSS.
+- **Rate Limiting**
+    - Throttle suspicious clients.
+- **Authentication + Authorization**
+    - Use strong identity checks (OAuth2, RBAC/ABAC).
+
 ## Caching
 ### How would you design a caching layer to minimize database load while avoiding stale data?
 `Caching` `Database`
+- **Layered Caching**
+    - CDN (Edge) for static assets.
+    - Application Cache (e.g., Redis, Memcached) for frequently queried DB rows or computed results.
+- **Cache Invalidation Strategies**
+    - Write-through: Update cache and DB synchronously.
+    - Write-around: Write directly to DB, cache only on reads.
+    - Write-back (write-behind): Update cache first; DB is updated later asynchronously (risky but fast).
+- **TTL (Time-to-Live)**
+    - Set TTLs based on staleness tolerance. Aggressive TTL for high freshness.
+- **Cache Busting**
+    - Use versioned cache keys or event-driven invalidation (e.g., on data update, invalidate cache).
+- **Read-Through**
+    - App fetches from cache, and on miss, from DB → then populates cache.
+
 ### What are the trade-offs between write-through and write-around caching?
 `Caching` `Write-through Caching` `Write-around Caching`
+- **Write-through Caching**
+    - Data always in sync (no stale data)
+    - Slower writes (cache + DB)
+    - Use Case: Reads are very frequent → data must be fresh (e.g., product prices).
+- **Write-around Caching**
+    - Faster writes (only to DB)
+    - Potential for stale or missing cache
+    - Use Case: Writes are frequent, but reads are rare (e.g., audit logs).
+- Quick Tips
+    - For read-heavy workloads → prefer write-through.
+    - For write-heavy workloads → prefer write-around.
+
 ### How do you ensure data freshness in highly cached systems?
 `Caching` `Data Freshness` `Latency` `Staleness`
+- **Short TTLs**
+    - Use shorter expiry times for frequently changing data.
+- **Versioned Keys**
+    - Invalidate old cache keys by changing version (e.g., user:v2:123).
+- **Event-Based Invalidation**
+    - Publish events (via Kafka/SNS) when source-of-truth changes.
+- **Stale-While-Revalidate**
+    - Serve stale data while updating cache in background.
+- **Active Monitoring**
+    - Track cache hit/miss ratio and stale data complaints.
+
 ## Rate Limiting
 ### How do you design a rate-limiting system for geographically distributed APIs?
 `API` `Distributed System` `Rate Limiting`
+- **Token Bucket/Leaky Bucket Algorithms**
+    - Control request rate with flexibility (burst handling) or smoothing.
+- **Distributed Coordination**
+    - Use centralized in-memory store (e.g., Redis Cluster) or edge-local caches + eventual sync.
+- **CDN/Edge Rate Limiting**
+    - Offload early (e.g., Cloudflare Workers, API Gateway throttles).
+- **Per-User/IP/Endpoint Limits**
+    - Fine-grained controls (avoid global limits).
+- **Real-time Feedback to Clients**
+    - HTTP 429 + headers indicating retry time.
+- **Regional Load-Shedding**
+    - Gracefully shed excess load in hotspots to protect core services.
+
 ## Reliability
 ### What are the best practices to improve system reliability over time?
 `Best Practices` `Reliability`
+- **Redundancy + Failover**
+	- No single points of failure — everything must be redundant.
+- **Observability + Alerting**
+    - Early detection of issues reduces MTTR.
+- **Chaos Engineering**
+    - Test failure scenarios (Netflix’s Chaos Monkey model).
+- **Blameless Postmortems**
+    - Encourage learning from failure, not finger-pointing.
+- **SLIs, SLOs, SLAs**
+    - Define and track service objectives (e.g., 99.9% availability).
+- **Safe Deployments**
+    - Use blue-green, canary, and feature flags.
+
 ## Service Level Objectives
 ### How do you define and measure SLAs, SLOs, and SLIs in system design?
 `Observability` `Reliability` `SLA` `SLI` `SLO`
+- **SLA (Agreement)**
+    - External commitment (e.g., 99.9% uptime or refunds triggered).
+- **SLO (Objective)**
+    - Internal target (e.g., 99.95% availability).
+- **SLI (Indicator)**
+    - Metric used to measure performance (e.g., request latency, error rate).
+- **Examples**
+    - SLI: % of successful requests**
+    - SLO: 99.95% requests should succeed over 30 days**
+    - SLA: 99.9% or client gets credit.
+- **Tracking Tools**
+    - Prometheus + Grafana for metric collection and alerting.
+- **Quick Tips
+
 ## Maintainability
 ### How do you design a system that’s easy to maintain and evolve?
 `Maintainability` `Refactoring`

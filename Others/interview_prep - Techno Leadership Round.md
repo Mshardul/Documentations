@@ -3,6 +3,13 @@
     - [Architecture](#architecture)
     - [Stakeholders](#stakeholders)
     - [Team Lead](#team-lead)
+  - [How did you validate the effectiveness of project?](#how-did-you-validate-the-effectiveness-of-project)
+    - [Metrics](#metrics)
+    - [Prompt Engineering](#prompt-engineering)
+    - [Stakeholders](#stakeholders-1)
+  - [A failure or something you would do differently if given another chance.](#a-failure-or-something-you-would-do-differently-if-given-another-chance)
+    - [Standardization when different teams working on different modeules](#standardization-when-different-teams-working-on-different-modeules)
+    - [Decoupling Payments Module into 2 Microservices](#decoupling-payments-module-into-2-microservices)
 - [Technology Decision Making](#technology-decision-making)
   - [When did you have to choose a Technology Stack (X over Y), and explain the trade-offs you had to consider?](#when-did-you-have-to-choose-a-technology-stack-x-over-y-and-explain-the-trade-offs-you-had-to-consider)
     - [Golang over Python for high-throughtput microservice](#golang-over-python-for-high-throughtput-microservice)
@@ -34,6 +41,19 @@
     - [Architecture](#architecture-3)
     - [Process](#process-2)
     - [Team](#team-1)
+- [Strengths](#strengths)
+  - [What are some of your strengths?](#what-are-some-of-your-strengths)
+    - [Technical](#technical)
+    - [Leadership](#leadership)
+- [Weeknesses](#weeknesses)
+  - [What are some of your weaknesses?](#what-are-some-of-your-weaknesses)
+- [Challenges Faced](#challenges-faced)
+  - [What challenges did you face in your career? and how did you overcome them?](#what-challenges-did-you-face-in-your-career-and-how-did-you-overcome-them)
+- [Conflicts](#conflicts)
+  - [Were there any instances of Conflicts between two teammates? How did you resolve them?](#were-there-any-instances-of-conflicts-between-two-teammates-how-did-you-resolve-them)
+  - [Strong Conflicts among team members](#strong-conflicts-among-team-members)
+    - [Architecture Disagreement During Refactor](#architecture-disagreement-during-refactor)
+    - [Code Ownership vs Delivery Velocity](#code-ownership-vs-delivery-velocity)
 - [Team Culture](#team-culture)
 
 
@@ -78,6 +98,40 @@
 - Regular meetings with Stakeholders helped me understand the **effectiveness of the project**.
 
 ## A failure or something you would do differently if given another chance.
+
+### Standardization when different teams working on different modeules
+- **Situation**
+    - Was leading the backend and architecture for a campaign management platform that needed integration with five different social media APIs. We had a tight timeline to launch an MVP that supported at least three platforms.
+- **Failure**
+    - Made the decision to build all integrations in parallel by dividing them among sub-teams — thinking this would accelerate delivery.
+    - While we were able to move quickly in development, it led to inconsistencies in API abstraction, error handling, and data formats because each team implemented their integration differently.
+    - When it came time to stitch the pieces together, we spent more time debugging integration mismatches and normalizing data than we saved during development.
+    - As a result, the go-live was delayed by nearly 2 weeks, and the MVP required multiple patches post-launch to stabilize.
+- **Lesson**
+    - **Parallel execution without upfront standardization is risky**: We lacked a well-defined interface contract or base SDK for these APIs, which would’ve saved rework later.
+    - **Speed at the start can cost time at the end**: I realized that spending 1 extra week in design and standardization would have saved us at least 2–3 weeks of downstream fixes.
+    - **Leadership isn’t just about trusting delegation — it’s also about setting the right guardrails**: I should have reviewed the early architecture choices from each sub-team more closely and driven alignment before implementation.
+- **Improvement**
+    - Create a shared API abstraction layer first, and mandate each integration team to follow it.
+    - Introduce a common error handling and logging framework.
+    - Set up a mock contract for integration testing early on to ensure everyone is building toward the same output.
+    - In parallel, I’d designate a single tech reviewer per module to ensure cohesion.
+
+### Decoupling Payments Module into 2 Microservices
+- **Situation**
+    - split the system into two decoupled microservices: Payment Orchestrator (Determined the optimal gateway based on user region, currency, and compliance rules) and Payment Processor (Executed transactions, calculated taxes/discounts, and logged results)
+- **Failure**
+    - **Overcomplicated Service Dependencies**: The Orchestrator and Processor relied heavily on synchronous HTTP calls for critical workflows (e.g., tax calculations before routing). During peak traffic, this caused cascading failures
+    - **Lack of Idempotency**: Network glitches or retries led to: Duplicate charges (e.g., users billed twice for the same course). Mismatched logs between services, complicating audits.
+    - **Inadequate Testing for Edge Cases**: We tested individual services in isolation but neglected cross-service scenarios (e.g., partial failures, race conditions).
+- **Lessons**
+    - **Decoupling Requires Asynchronous Design**: Synchronous dependencies between microservices create tight coupling and fragility. Event-driven architectures (e.g., SQS, Kafka) would have reduced cascading failures.
+    - **Idempotency is Mission-Critical**: Payment systems must guarantee that retries never duplicate charges.
+    - **Testing Edge Cases is Crucial**: When it comes to something as critical as Payments Service, edge test cases must be taken care of.
+- **Improvement**
+    - **Adopt Event-Driven Communication**: Replace HTTP calls with AWS SQS for async workflows. This decouples services and allows graceful degradation during failures.
+    - **Build Idempotency from Day One**: Generate unique idempotency keys for every transaction and store them in Redis with TTL. Reject duplicate keys to prevent double charges.
+    - **Enhance Testing for Edge Cases**: Write edge test cases for race conditions, partial failures, and cascading failures.
 
 # Technology Decision Making
 
@@ -220,8 +274,10 @@
     - 2 microservices to keep things decoupled
         - focused on **Payments Processing** logic
             - handling common workflow
+            - processing payments
+        - focused on **Payments Gateway Integration**
+            - choosing the right gateway - based on the region
             - differences between vendors
-        - transactions logging and callbacks
     - set up **CI/CD** pipeline
     - followed **Iterative Approach:** integrate one vendor, deploy to staging, test end-to-end with the frontend, gather feedback, then move to the next vendor.
 - **Feedback Mechanism**
@@ -275,6 +331,79 @@
         - walked the team through containerizing a small app and deploying it to a local Kubernetes cluster.
     - helped demystify the tools and got everyone comfortable with the basics.
 
+
+# Strengths
+
+## What are some of your strengths?
+
+### Technical
+- **System Design and Scalability Thinking**: eg using AWS DynamoDB over a SQL database for the most load-intensive parts of the system.
+- **Cross-Functional Collaboration**: eg collaborating with Ops and Finanace Teams for Payments Integration.
+- **Quick and Learned Decision Making**: eg using Step Functions when emails were being marked as spam.
+- **Driving Engineering Best Practices**: eg introducing PR Templates, GitLab CI/CD, code review guidelines across teams
+- **Proper Documentation**: eg creating a clear documentation for the new architecture.
+
+### Leadership
+- **Mentorship and Team Building**: eg Mentoring a junior developer into integration of Test Cases.
+- **Effective Communication**: eg highlighting positive outcomes and addressing team concerns.
+- **Leadership Strategy**: eg using a microservices-based architecture and leveraging cloud scalability.
+
+# Weeknesses
+
+## What are some of your weaknesses?
+
+- **Over-Engineering Early**: For the Brand-facing app, prematurely added too many abstraction layers for “future use,” which made onboarding harder.
+    - **Fix**: Now you prioritize simplicity in early versions and only refactor once patterns emerge.
+- **Not Delegating Enough Initially**: You tried to handle both architecture and implementation early in a project at GE, which slowed progress.
+    - **Fix**: Now you prioritize simplicity in early versions and only refactor once patterns emerge.
+- **Underestimating the Time for Documentation**: Post-launch, the absence of internal documentation slowed onboarding of new developers.
+    - **Fix**: You now block time for docs in every sprint and assign it like any other deliverable.
+
+# Challenges Faced
+
+## What challenges did you face in your career? and how did you overcome them?
+
+- **Vendor-Specific Payment Failures**: Tabby’s sandbox didn’t behave like production, causing failed callbacks post-launch.
+    - **Fix**: Set up a mock API layer to simulate vendor behavior and added health-check retries.
+- **Slow CI/CD Adoption**: Developers were reluctant to use GitLab CI/CD pipelines.
+    - **Fix**: Demo-ed a POC to display the benefits of CI/CD and got everyone on board.
+- **Ambiguous Requirements from Stakeholders**:  A stakeholder kept changing scope for the AI-driven QC project.
+    - **Fix**: Created a fixed scope doc with checkpoints and used OKRs to anchor decisions.
+
+# Conflicts
+
+## Were there any instances of Conflicts between two teammates? How did you resolve them?
+
+- **Frontend vs Backend Integration Delay**: The frontend team was blocked waiting on backend APIs.
+    - **Fix**: Introduced an API contracts (using Swagger and Confluence) upfront and scheduled early alignment syncs.
+- **Code Ownership Dispute**: Two developers argued over a feature ownership.
+    - **Fix**: held a 1:1 with both, then redefined module ownership based on prior contributions and future goals.
+- **Disagreement on Tech Stack Choice**: Two developers disagreed on which tech stack to use.
+    - **Fix**: Facilitated a discussion, compared metrics (learning curve, ecosystem), and let team vote post POC review.
+
+## Strong Conflicts among team members
+
+### Architecture Disagreement During Refactor
+- During the refactor of a backend service, two senior engineers on my team had fundamentally different views:
+    - One advocated for using **event-driven architecture with Kafka** to decouple services.
+    - The other strongly preferred keeping the **current REST-based synchronous design**, fearing increased complexity and ops overhead.
+- **Handling**
+    - **One-on-One Listening**: spoke to both individuals separately — not to judge, but to deeply understand their reasoning
+    - **Short-Term vs Long-Term Vision Split**: While it was easy to continue with REST for now, but probably later on we needed to switch to event-driven architecture for scalability.
+- **Solution**
+    - Based on current requirement; Going on with the current design for now, and switching to Kafka after 6 months.
+
+### Code Ownership vs Delivery Velocity
+- During a tight release window, one of the mid-level engineers bypassed the usual code review process and merged a major backend change into the main branch. He justified it by saying: “It’s my module, I know what I’m doing — code review will just delay things.”
+- A senior engineer on the team objected strongly — saying this set a bad precedent and violated our team ownership and peer review culture.
+- **Handling**
+    - **Clarified the Real Issue**: This wasn’t just about a merge — it was about boundaries and expectations.
+        - The mid-level dev felt ownership pressure due to delivery timelines and took shortcuts.
+        - The senior felt disrespected and worried that our review rigor was being eroded.
+        - **Situation Reframing**: Not a people problem — a process weakness under pressure.
+    - **Created Guardrails + Compromise**
+        - A mandatory 1-review rule even during crunches (reduced from 2 temporarily).
+        - A new “critical PR fast track” label — that allowed devs to signal when they needed rapid reviews, so others could prioritize.
 
 # Team Culture
 - **Detailed PRs**

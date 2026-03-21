@@ -71,12 +71,15 @@
 - [Late Binding Closures](#late-binding-closures)
 - [Chaining Comparisons (e.g., `1 < x < 10`)](#chaining-comparisons-eg-1--x--10)
 
-
 ## List Comprehensions
+
 ### what it is?
+
 - List comprehensions provide a concise way to create lists.
 - Instead of writing several lines of code with loops and append(), a list comprehension can do it all in a single, readable line.
+
 ### python example
+
 ```python
 # Using list comprehension
 numbers = [x * 2 for x in range(10)]
@@ -88,15 +91,19 @@ for x in range(10):
 ```
 
 ## Generator Expressions
+
 ### what it is?
+
 - Generator expressions look like **list comprehensions** but use **parentheses** instead of brackets.
-- They **don’t create the entire list in memory at once**. 
+- They **don’t create the entire list in memory at once**.
 - Instead, they **generate items one by one** (on-the-fly).
 - create a **generator object**, which is an iterator.
 - Any iterator can be advanced using Python’s built-in `next()` function.
 - They are **memory-efficient** because they only produce one item at a time.
 - Great for scenarios where you **don’t need the entire list stored in memory all at once**.
+
 ### Example
+
 ```python
 # List comprehension (creates a full list)
 numbers_list = [x * 2 for x in range(10)]
@@ -108,21 +115,27 @@ numbers_generator = (x * 2 for x in range(10))
 for ind in range(10):
     print(next(numbers_generator))  # yield generator expression using `next` function
 ```
+
 ### Related topics
+
 [List Comprehensions](#list-comprehensions)
 
 ## Generators
+
 ### what are they?
+
 - Generators are special functions that let you **produce a sequence of values one at a time**, rather than building and returning a complete list at once.
 - Every time a generator’s `yield` is reached, the function “pauses” and gives back a value. **When the function is resumed, it continues right after the yield**.
 - Write a generator function using `def` and `yield` statements.
 - Generators are **memory efficient**, as they generate items only when needed.
 - Generators make the Code Cleaner. They’re a concise way to manage data that comes in sequences (e.g., reading lines from a file).
+
 ### Example
+
 ```python
 def count_down(start):
     """
-    The function count_down “pauses” each time it hits yield and 
+    The function count_down “pauses” each time it hits yield and
     resumes from the same spot when the next item is requested.
     """
     while start > 0:
@@ -133,20 +146,28 @@ for num in count_down(3):
     print(num)
 # Output: 3, 2, 1
 ```
+
 ### Generator vs Iterator
-- Generators are a special type of iterators that are created by yield or generator expression. Iterators are any object providing __iter__() and __next__().
+
+- Generators are a special type of iterators that are created by yield or generator expression. Iterators are any object providing **iter**() and **next**().
 - When we say “generator,” we usually mean a function or expression using yield. However, all generator functions automatically create an iterator object (technically a “generator object”).
 - Because that “generator object” implements the [iterator protocol](#iterators-and-iteration-protocol), it is an iterator.
+
 ### Related Topics
+
 [Generator Expression](#generator-expressions) [Iterators and Iteration Protocol](#iterators-and-iteration-protocol)
 
 ## Lambda Functions
+
 ### what are they?
+
 - A lambda function is a **small**, **anonymous** function (meaning it doesn’t have a name like a regular `def` function).
 - It can take **any number of arguments** but only **one expression**.
 - They allow **concise function definition** for simple tasks.
 - Often used as an **inline function** for short operations, especially when passing a function as an argument to another function (e.g., `map`, `filter`).
+
 ### Example
+
 ```python
 # Equivalent lambda function
 add_two_lambda = lambda n: n + 2
@@ -157,11 +178,15 @@ results = list(map(lambda n: n + 2, numbers))  # [3, 4, 5, 6]
 ```
 
 ## Decorators
+
 ### what are they?
-- Decorators allow you to **modify or wrap the behavior of functions (or classes)** without changing their actual code. 
+
+- Decorators allow you to **modify or wrap the behavior of functions (or classes)** without changing their actual code.
 - They are **functions that take another function as an argument**, do some processing, and **return a modified or enhanced version of that function**.
 - They help keep your code **DRY (Don’t Repeat Yourself)** by extracting reusable behavior (e.g., logging, timing, authentication checks) into a single place.
+
 ### Example
+
 ```python
 def logging_decorator(func):
     def wrapper():
@@ -178,12 +203,16 @@ say_hello()  # When you call say_hello(), it actually runs the wrapper.
 ```
 
 ## Mixin Classes
+
 ### What are they?
+
 - A Mixin is a special kind of class that’s designed to provide **extra functionality to other classes through inheritance**.
 - A Mixin class typically doesn’t stand on its own; it’s **meant to be “mixed” into another class** to add specific features.
 - They let you **add small, reusable behaviors** across multiple classes without duplicating code.
 - They keep your **code more modular** than using large base classes or complicated inheritance hierarchies.
+
 ### Example
+
 ```python
 class LogMixin:  # provides logging functionality
     def log(self, message):
@@ -201,31 +230,39 @@ class DataProcessor(BaseProcessor, LogMixin):  # inherits logging ability withou
 dp = DataProcessor()
 dp.process_and_log("SampleData")
 ```
+
 ### Related Topics
+
 [Decorators](#decorators)
 
-
 ## Context Managers (`with` statement)
+
 ### What and Why?
+
 - A context manager lets you **set something up before a block of code runs and then automatically clean it up afterward**, even if an error occurs.
 - You typically use it with the `with` statement.
 - They ensure **resources are properly closed or released** (`files`, `database connections`, `locks`, etc.).
 - They keep your code simpler and more reliable by reducing the chance of forgetting cleanup steps.
+
 ### Example
+
 ```python
 with open('some_file.txt', 'r') as file:
     data = file.read()
     print(data)
 # The file is automatically closed here, even if an error happens in the block.
 ```
+
 ### Creating your own Context Manager
+
 - You can also **create your own context manager** using a class with `__enter__` and `__exit__` methods:
+
 ```python
 class MyContextManager:
     def __enter__(self):
         print("Entering the block")
         return self  # Whatever is returned here is assigned to the 'as' variable
-    
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         print("Exiting the block")
 
@@ -234,15 +271,21 @@ with MyContextManager() as mgr:
 ```
 
 ## Multiple Inheritance
+
 ### What and Why?
+
 - allows a class to inherit from more than one parent class.
 - helps combining features from different classes into a single class.
 - Allows “mixins” to add specific functionalities (e.g., logging, serialization) without large single-inheritance chains.
+
 ### syntax
+
 ```python
 class Child(Parent1, Parent2):
 ```
+
 ### Example
+
 ```python
 class Flyable:
     def fly(self):
@@ -259,8 +302,11 @@ donald = Duck()
 donald.fly()    # "Flying!"
 donald.swim()   # "Swimming!"
 ```
+
 ### Diamond Problem and MRO
+
 - When two parent classes share a common ancestor and define methods with the same name, you get something like:
+
 ```python
 class P1:
 def greet(self):
@@ -274,20 +320,25 @@ class C1(P1, P2):
     pass
 
 obj_c = C1()
-obj_c.greet()  
+obj_c.greet()
 ```
+
 - In Python, multiple inheritance is allowed, and MRO ensures that Python determines a single, consistent path to follow for method lookup.
 - Read more about [MRO](#method-resolution-order-mro)
 
 ## Iterators and Iteration Protocol
+
 ### Iterables and Iterators
+
 - An **iterable** is any **object** that has an `__iter__()` method **returning an iterator object**.
 - An iterator is any object that implements the methods:
-    - `__iter__()` (returns the iterator object itself), and
-    - `__next__()` (returns the next item or raises `StopIteration`).
+  - `__iter__()` (returns the iterator object itself), and
+  - `__next__()` (returns the next item or raises `StopIteration`).
 - This protocol is what powers for loops, list comprehensions, and **anything that loops over data in Python**.
 - Under the hood, `for ele in lst` repeatedly calls `next(lst)` until `StopIteration` occurs.
+
 ### Example
+
 ```python
 class SimpleIterator:
     def __init__(self, limit):
@@ -311,19 +362,27 @@ print(next(my_iter))  # 1
 print(next(my_iter))  # 2
 print(next(my_iter))  # Raises StopIteration
 ```
+
 ### Related Topics
+
 [Generators](#generators), [Dunder Methods](#dunder-methods)
 
 ## Method Resolution Order (MRO)
+
 ### What?
+
 - When you call a method (or access an attribute) on an object, Python looks it up in the class hierarchy in a specific order.
 - This lookup path is called the **Method Resolution Order (MRO)**.
+
 ### How Does Python Calculate the MRO?
+
 - Python uses the C3 linearization algorithm.
 - In simple terms, it tries to create an order that respects:
-    - The order in which classes are listed in the inheritance tuple.
-    - The order of inheritance in parent classes, ensuring a consistent and unambiguous sequence.
+  - The order in which classes are listed in the inheritance tuple.
+  - The order of inheritance in parent classes, ensuring a consistent and unambiguous sequence.
+
 ### Example
+
 ```python
 """
 The `do_something()` method is found by searching `D → B → A → C → A again` (but it won’t revisit A if it’s already found that method).
@@ -349,15 +408,21 @@ d.do_something()
 print(D.__mro__)
 # (<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>)
 ```
+
 ### Related Topics
+
 [Multiple Inheritance](#multiple-inheritance)
 
 ## Polymorphism
+
 ### what?
+
 - “Poly” means many; “morph” means form.
 - it means one interface (like a method name) can be used with different underlying forms (different classes), each providing its own implementation.
 - Duck Typing is a form of polymorphism in Python: if two different classes implement the same method name, Python can call that method on either class without worrying about the class type.
+
 ### Example
+
 ```python
 class Dog:
     def speak(self):
@@ -382,21 +447,27 @@ implement an Abstract Class `Animal` with abstractmethod `speak()`
 Inherit both `Dog` and `Cat` from this `Animal` class, and make `interact()` argument type as `Animal`.
 """
 ```
+
 ### Related Topics
 
-
 ## Metaclasses
+
 ### what?
+
 - A metaclass is to a class what a class is to an instance.
 - just like a class governs how its instances behave, a metaclass governs how a class behaves (how it’s created, attributes it has, etc.).
 - Normally, when you create a class in Python - like `class MyClass: pass` - the default metaclass is `type`. This means `MyClass` itself is an instance of `type`.
 - But you can override this behavior by specifying a different metaclass, effectively customizing how your class is built.
+
 ### why?
+
 - **Intercept Class Creation:** You can run special logic whenever a class is defined.
 - **Modify Class Attributes:** You can automatically add, remove, or change methods/attributes on the class.
 - **Enforce Rules:** You can check if certain methods exist, or if attributes are typed in a specific way, raising errors if they don’t meet your criteria.
 - **Register Classes Automatically:** You can keep track of all subclasses in a central registry (handy for frameworks or plugins).
+
 ### example
+
 ```python
 class MyMeta(type):
     def __new__(mcs, name, bases, attrs):
@@ -409,32 +480,56 @@ class MyClass(metaclass=MyMeta):
 # When Python sees 'class MyClass(...)', it calls MyMeta.__new__ to create the MyClass object.
 ```
 
-
-
 ## The Global Interpreter Lock (GIL)
+
 ## Concurrency with Threads (conceptual)
+
 ## Concurrency with Multiple Processes (conceptual)
+
 ## Asynchronous Programming (`async` / `await`)
+
 ## Asynchronous Generators
+
 ## Asynchronous Context Managers
+
 ## Reflection and Introspection (`dir()`, `getattr()`, etc.)
+
 ## Memory Management & Reference Counting
+
 ## Garbage Collection
+
 ## Type Hints & Annotations (PEP 484)
+
 ## Pythonic Best Practices (PEP 8)
+
 ## Functional Programming Concepts (`map`, `filter`, `reduce`)
+
 ## Slicing and Slice Objects
+
 ## Shallow vs Deep Copy
+
 ## Exception Handling and Custom Exceptions
+
 ## Dunder Methods
+
 ## Operator Overloading
+
 ## Overriding vs Overloading Methods
+
 ## Security Considerations (`eval`, `exec`)
+
 ## Packing and Unpacking Arguments (`*args`, `**kwargs`)
+
 ## Name Binding and Scoping Rules (`global`, `nonlocal`)
+
 ## Class Variables vs Instance Variables
+
 ## Use of `super()` in Inheritance
+
 ## Property Decorators (`@property`)
+
 ## Class Decorators
+
 ## Late Binding Closures
+
 ## Chaining Comparisons (e.g., `1 < x < 10`)

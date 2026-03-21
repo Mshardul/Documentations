@@ -1,59 +1,61 @@
 # Terraform Configuration Language and Syntax
 
 ## Advanced Terraform Syntax
+
 - Local Values
-    - What are local values?
-    - Defining and using locals
-    - Best practices for local values
+  - What are local values?
+  - Defining and using locals
+  - Best practices for local values
 - Functions
-    - Built-in functions in Terraform
-    - Commonly used functions (e.g., concat, join, lookup)
-    - Using functions to manipulate data
+  - Built-in functions in Terraform
+  - Commonly used functions (e.g., concat, join, lookup)
+  - Using functions to manipulate data
 - Dynamic Blocks
-    - What are dynamic blocks?
-    - Use cases for dynamic blocks
-    - Generating multiple resource blocks dynamically
+  - What are dynamic blocks?
+  - Use cases for dynamic blocks
+  - Generating multiple resource blocks dynamically
 - Conditional Logic
-    - Using conditionals in resources and variables
-    - Ternary operators
-    - Conditional resource creation
+  - Using conditionals in resources and variables
+  - Ternary operators
+  - Conditional resource creation
 - Loops
-    - Introduction to loops in Terraform
-    - for_each and count meta-arguments
-    - Using loops in resources and modules
+  - Introduction to loops in Terraform
+  - for_each and count meta-arguments
+  - Using loops in resources and modules
 - Meta-Arguments
-    - Overview of Terraform meta-arguments
-    - count, for_each, depends_on
-    - Managing resource lifecycle with meta-arguments
+  - Overview of Terraform meta-arguments
+  - count, for_each, depends_on
+  - Managing resource lifecycle with meta-arguments
 - Splat Expressions
-    - Introduction to splat expressions
-    - Accessing multiple attributes of resources
-    - Simplifying complex references with splat
+  - Introduction to splat expressions
+  - Accessing multiple attributes of resources
+  - Simplifying complex references with splat
 
 ## Modules
-- Introduction to Terraform Modules
-    - What are modules?
-    - Why use modules in Terraform?
-- Creating and Organizing Modules
-    - Structuring modules
-    - Inputs, outputs, and variables in modules
-    - Reusing modules across projects
-- Nested Modules
-    - Defining and using nested modules
-    - Best practices for module nesting
-- Module Versioning
-    - Versioning your modules
-    - Managing module versions in Terraform configurations
-- Public vs Private Modules
-    - Using modules from the Terraform Registry
-    - Creating and using private modules
-- Testing and Validating Modules
-    - Best practices for module testing
-    - Using `terraform validate` with modules
-    - Common pitfalls in module development
 
+- Introduction to Terraform Modules
+  - What are modules?
+  - Why use modules in Terraform?
+- Creating and Organizing Modules
+  - Structuring modules
+  - Inputs, outputs, and variables in modules
+  - Reusing modules across projects
+- Nested Modules
+  - Defining and using nested modules
+  - Best practices for module nesting
+- Module Versioning
+  - Versioning your modules
+  - Managing module versions in Terraform configurations
+- Public vs Private Modules
+  - Using modules from the Terraform Registry
+  - Creating and using private modules
+- Testing and Validating Modules
+  - Best practices for module testing
+  - Using `terraform validate` with modules
+  - Common pitfalls in module development
 
 ## Resources and Providers
+
 - What are Resources? Understanding Provider Blocks
   - Defining resources in Terraform
   - Understanding Provider configuration
@@ -70,6 +72,7 @@
 # Managing State and Terraform Workflows
 
 ## Terraform State
+
 - What is Terraform State?
   - Purpose of Terraform state files
   - How Terraform uses state to track infrastructure
@@ -84,6 +87,7 @@
   - Versioning and locking state files
 
 ## Terraform Workflow Commands
+
 - Init, Plan, Apply, Destroy
   - Running the terraform init command to initialize configurations
   - Understanding terraform plan and its output
@@ -99,6 +103,7 @@
   - Managing resource recreation during updates
 
 ## Terraform Workspaces
+
 - Multi-environment deployments using Workspaces
   - Isolating environments with workspaces
   - Using workspaces for dev, staging, and production
@@ -115,6 +120,7 @@
 # Modules and Reusability
 
 ## Introduction to Modules
+
 - Why use modules?
   - Reusability of infrastructure code
   - Separation of concerns and modular design
@@ -129,6 +135,7 @@
   - Naming conventions and documentation for modules
 
 ## Using Public Modules
+
 - Terraform Registry and how to use pre-built modules
   - Browsing the Terraform module registry
   - Finding and evaluating modules for your use case
@@ -145,6 +152,7 @@
 # Provisioners, Remote Backends, and External Data Sources
 
 ## Terraform Provisioners
+
 - What are Provisioners?
   - Defining provisioners and their purpose
   - Executing commands on remote resources
@@ -159,6 +167,7 @@
   - Alternatives to provisioners for automation
 
 ## Remote Backends
+
 - Configuring backends for Terraform state management
   - Setting up S3 and DynamoDB for state management
   - Configuring GCS or Azure Blob Storage as backends
@@ -173,6 +182,7 @@
   - Auditing state access and usage
 
 ## External Data Sources
+
 - Fetching external data using external providers
   - Using external data sources with Terraform
   - Querying APIs and services for data
@@ -185,6 +195,7 @@
 # Terraform Best Practices and Advanced Features
 
 ## Managing Large Infrastructures
+
 - Structure and organize large-scale Terraform projects
   - Splitting projects into multiple directories
   - Using modules to organize resources
@@ -199,6 +210,7 @@
   - Enforcing cost and security policies with Sentinel
 
 ## Terraform Cloud and Terraform Enterprise
+
 - Introduction to Terraform Cloud
   - Setting up Terraform Cloud accounts
   - Using workspaces in Terraform Cloud
@@ -215,16 +227,19 @@
 # Real-World Case Studies and Projects
 
 ## Multi-Cloud Deployment
+
 - Using Terraform for deploying infrastructure across AWS, Azure, and GCP
 - Managing cross-cloud resources with Terraform
 - Creating hybrid cloud solutions with Terraform
 
 ## Highly Available Web Application
+
 - Building a highly available and scalable web app with Terraform on AWS
 - Automating infrastructure deployment with Terraform modules
 - Scaling web infrastructure across multiple availability zones
 
 ## Terraform Cloud Infrastructure
+
 - Implementing real-world infrastructure-as-code in Terraform Cloud
 - Managing multiple services and environments with Terraform Cloud
 - Collaborating on infrastructure projects using Terraform Cloud

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -19,7 +19,7 @@
         if (isLoggedIn) { return &lt;UserGreeting /&gt;; }
         return &lt;GuestGreeting /&gt;;
     }
-  
+
     ReactDOM.render(
         &lt;Greeting isLoggedIn={false} /&gt;, document.getElementById('root')
     );
@@ -31,11 +31,11 @@
         constructor(props) {
             super(props); this.handleLoginClick = this.handleLoginClick.bind(this); this.handleLogoutClick = this.handleLogoutClick.bind(this); this.state = {isLoggedIn: false};
         }
-    
+
         handleLoginClick() { this.setState({isLoggedIn: true}); }
-      
+
         handleLogoutClick() { this.setState({isLoggedIn: false}); }
-    
+
         render() {
             const isLoggedIn = this.state.isLoggedIn; let button;
             if (isLoggedIn) { button = &lt;LogoutButton onClick={this.handleLogoutClick} /&gt;; }
@@ -43,7 +43,7 @@
             return ( &lt;div&gt; &lt;Greeting isLoggedIn={isLoggedIn} /&gt; {button} &lt;/div&gt; );
         }
     }
-    
+
     ReactDOM.render( &lt;LoginControl /&gt;, document.getElementById('root') );
         </code></pre>
 
@@ -61,7 +61,7 @@
         <pre><code class="language-javascript">
     function WarningBanner(props) {
         if (!props.warn) { return null; }
-        return ( &lt;div className="warning"&gt; Warning! &lt;/div&gt; ); 
+        return ( &lt;div className="warning"&gt; Warning! &lt;/div&gt; );
     }
         </code></pre>
       </div>
@@ -75,6 +75,10 @@
 </div>
 
 <div class="footer">
-  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
-  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+  <span class="prev"
+    ><a href="./05.event_handling.html">05. Event Handling</a></span
+  >
+  <span class="next"
+    ><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span
+  >
 </div>

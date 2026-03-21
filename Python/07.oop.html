@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -14,21 +14,47 @@
       <div class="topic-body">
         <span class="point">Definition</span>
         <ul>
-          <li>A <span class="code">Class</span> is a user-defined blueprint or prototype from which objects are created. Classes provide a means of bundling data and functionality together.</li>
-          <li>Each class instance or <span class="code">Object</span> can have attributes attached to it for maintaining its state. Objects can also have methods (defined by their class) for modifying their state.</li>
-          <li>A class is like a blueprint while an instance is a copy of the class with actual values</li>
+          <li>
+            A <span class="code">Class</span> is a user-defined blueprint or
+            prototype from which objects are created. Classes provide a means of
+            bundling data and functionality together.
+          </li>
+          <li>
+            Each class instance or <span class="code">Object</span> can have
+            attributes attached to it for maintaining its state. Objects can
+            also have methods (defined by their class) for modifying their
+            state.
+          </li>
+          <li>
+            A class is like a blueprint while an instance is a copy of the class
+            with actual values
+          </li>
         </ul>
         <span class="point">Properties</span>
         <ul>
           <li>Classes are created by keyword class.</li>
           <li>Attributes are the variables that belong to a class.</li>
-          <li>Attributes are always public and can be accessed using the dot (.) operator.</li>
+          <li>
+            Attributes are always public and can be accessed using the dot (.)
+            operator.
+          </li>
         </ul>
         <span class="point">An object consists of</span>
         <ul>
-          <li><span class="point">State</span>: It is represented by the attributes of an object. It also reflects the properties of an object.</li>
-          <li><span class="point">Behavior</span>: It is represented by the methods of an object. It also reflects the response of an object to other objects.</li>
-          <li><span class="point">Identity</span>: It gives a unique name to an object and enables one object to interact with other objects.</li>
+          <li>
+            <span class="point">State</span>: It is represented by the
+            attributes of an object. It also reflects the properties of an
+            object.
+          </li>
+          <li>
+            <span class="point">Behavior</span>: It is represented by the
+            methods of an object. It also reflects the response of an object to
+            other objects.
+          </li>
+          <li>
+            <span class="point">Identity</span>: It gives a unique name to an
+            object and enables one object to interact with other objects.
+          </li>
         </ul>
         <pre><code class="language-python">
     class Dog:
@@ -43,34 +69,70 @@
 
         <h3>self</h3>
         <ul>
-          <li>Class methods must have an extra first parameter in the method definition. We do not give a value for this parameter when we call the method, Python provides it.</li>
-          <li>If we have a method that takes no arguments, then we still have to have one argument (ie self)</li>
-          <li>This is similar to this pointer in C++ and this reference in Java.</li>
+          <li>
+            Class methods must have an extra first parameter in the method
+            definition. We do not give a value for this parameter when we call
+            the method, Python provides it.
+          </li>
+          <li>
+            If we have a method that takes no arguments, then we still have to
+            have one argument (ie self)
+          </li>
+          <li>
+            This is similar to this pointer in C++ and this reference in Java.
+          </li>
         </ul>
-        <br/><br/>
+        <br /><br />
         <div class="notes">
           <ul>
-            <li>When we call a method of this object as myobject.method(arg1, arg2), this is automatically converted by Python into MyClass.method(myobject, arg1, arg2)</li>
+            <li>
+              When we call a method of this object as myobject.method(arg1,
+              arg2), this is automatically converted by Python into
+              MyClass.method(myobject, arg1, arg2)
+            </li>
           </ul>
         </div>
 
         <h3>__init__ ()</h3>
         <ul>
-          <li><span class="point">The __init__ method</span> is similar to constructors in C++ and Java. Constructors are used to initializing the object's state.</li>
-          <li>It runs as soon as an object of a class is instantiated. The method is useful to do any initialization you want to do with your object.</li>
-          <li>Constructor can be <span class="point">Default (no parameters except self)</span> or <span class="point">Parameterized (multiple parameters)</span></li>
+          <li>
+            <span class="point">The __init__ method</span> is similar to
+            constructors in C++ and Java. Constructors are used to initializing
+            the object's state.
+          </li>
+          <li>
+            It runs as soon as an object of a class is instantiated. The method
+            is useful to do any initialization you want to do with your object.
+          </li>
+          <li>
+            Constructor can be
+            <span class="point">Default (no parameters except self)</span> or
+            <span class="point">Parameterized (multiple parameters)</span>
+          </li>
         </ul>
 
         <h3>__del__ ()</h3>
         <ul>
-          <li><span class="point">The __del__ method</span> is similar to destructors in C++ and Java. It is called when all references to the object have been deleted i.e when an object is garbage collected.</li>
-          <li>In Python, destructors are not needed as much as in C++ because Python has a garbage collector that handles memory management automatically.</li>
+          <li>
+            <span class="point">The __del__ method</span> is similar to
+            destructors in C++ and Java. It is called when all references to the
+            object have been deleted i.e when an object is garbage collected.
+          </li>
+          <li>
+            In Python, destructors are not needed as much as in C++ because
+            Python has a garbage collector that handles memory management
+            automatically.
+          </li>
         </ul>
-
 
         <h3>Class and instance variable</h3>
         <ul>
-          <li><span class="point">Instance variables</span> are variables whose value is assigned inside a constructor or method with self whereas <span class="point">class variables</span> are variables whose value is assigned in the class.</li>
+          <li>
+            <span class="point">Instance variables</span> are variables whose
+            value is assigned inside a constructor or method with self whereas
+            <span class="point">class variables</span> are variables whose value
+            is assigned in the class.
+          </li>
         </ul>
         <pre><code class="language-python">
     class Dog:
@@ -91,15 +153,25 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Inheritance">
       <div class="topic-heading"><h2>Inheritance</h2></div>
       <div class="topic-body">
         <ul>
-          <li>"object" class is root of all classes. So, even when a class is inheriting from no other class, it is actully inheriting from "object" class.</li>
-          <li>If you forget to invoke the __init__() of the parent class then its instance variables would not be available to the child class. </li>
-          <li>Private members of parent class are not accessible to the child class.</li>
+          <li>
+            "object" class is root of all classes. So, even when a class is
+            inheriting from no other class, it is actully inheriting from
+            "object" class.
+          </li>
+          <li>
+            If you forget to invoke the __init__() of the parent class then its
+            instance variables would not be available to the child class.
+          </li>
+          <li>
+            Private members of parent class are not accessible to the child
+            class.
+          </li>
         </ul>
         <pre><code class="language-python">
     class Person(object): # parent class
@@ -120,11 +192,26 @@
         <h3>Different forms of inheritance</h3>
         There are 2 forms of Inheritance
         <ol>
-          <li><span class="point">Single inheritance</span>: When a child class inherits from only one parent class.</li>
-          <li><span class="point">Multiple inheritance</span>: When a child class inherits from multiple parent classes.</li>
-          <li><span class="point">Multilevel inheritance</span>: When we have a child and grandchild relationship.</li>
-          <li><span class="point">Hierarchical inheritance</span>: More than one derived classes are created from a single base.</li>
-          <li><span class="point">Hybrid inheritance</span>: This form combines more than one form of inheritance.</li>
+          <li>
+            <span class="point">Single inheritance</span>: When a child class
+            inherits from only one parent class.
+          </li>
+          <li>
+            <span class="point">Multiple inheritance</span>: When a child class
+            inherits from multiple parent classes.
+          </li>
+          <li>
+            <span class="point">Multilevel inheritance</span>: When we have a
+            child and grandchild relationship.
+          </li>
+          <li>
+            <span class="point">Hierarchical inheritance</span>: More than one
+            derived classes are created from a single base.
+          </li>
+          <li>
+            <span class="point">Hybrid inheritance</span>: This form combines
+            more than one form of inheritance.
+          </li>
         </ol>
         <pre><code class="language-python">
     '''
@@ -133,10 +220,10 @@
     |
     C1
     '''
-    class C1(P1): # 
+    class C1(P1): #
         pass
 
-    ''' 
+    '''
     Multiple Inheritance
     P1    P2
       \  /
@@ -174,32 +261,55 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Encapsulation">
       <div class="topic-heading"><h2>Encapsulation</h2></div>
       <div class="topic-body">
-        <span class="point">Encapsulation</span> is the idea of wrapping data and the methods that work on data within one unit. This puts restrictions on accessing variables and methods directly and can prevent the accidental modification of data
+        <span class="point">Encapsulation</span> is the idea of wrapping data
+        and the methods that work on data within one unit. This puts
+        restrictions on accessing variables and methods directly and can prevent
+        the accidental modification of data
         <h3>Types of Members</h3>
         <ul>
-          <li><span class="point">Protected Members</span>: cannot be accessed outside the class but can be accessed from within the class and its subclasses. Prefix the name of the member by a single underscore <span class="code">"_"</span></li>
-          <li><span class="point">Private Members</span>: are similar to protect except they should neither be accessed outside the class nor by any subclass. Prefix the name of the member by double underscore <span class="code">"__"</span></li>
+          <li>
+            <span class="point">Protected Members</span>: cannot be accessed
+            outside the class but can be accessed from within the class and its
+            subclasses. Prefix the name of the member by a single underscore
+            <span class="code">"_"</span>
+          </li>
+          <li>
+            <span class="point">Private Members</span>: are similar to protect
+            except they should neither be accessed outside the class nor by any
+            subclass. Prefix the name of the member by double underscore
+            <span class="code">"__"</span>
+          </li>
         </ul>
         <div class="notes">
           <ul>
-            <li>Although the protected variable can be accessed out of the class as well as in the derived class(modified too in derived class), it is customary(convention not a rule) to not access the protected out the class body.</li>
+            <li>
+              Although the protected variable can be accessed out of the class
+              as well as in the derived class(modified too in derived class), it
+              is customary(convention not a rule) to not access the protected
+              out the class body.
+            </li>
           </ul>
         </div>
-        <a href="./99.programming_questions - oop.html#ProtectedAndPrivateMembers" target="_blank">example &#128796;</a>
+        <a
+          href="./99.programming_questions - oop.html#ProtectedAndPrivateMembers"
+          target="_blank"
+          >example &#128796;</a
+        >
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Polymorphism">
       <div class="topic-heading"><h2>Polymorphism</h2></div>
       <div class="topic-body">
-        <span class="point">Polymorphism</span> means the same function name (but different signatures) being used for different types.
+        <span class="point">Polymorphism</span> means the same function name
+        (but different signatures) being used for different types.
         <pre><code class="language-python">
     ''' Inbuilt Polymorphism of len() in Python '''
     print(len("geeks")) # for string
@@ -215,11 +325,11 @@
     class India():
         def capital(self):
             print("New Delhi")
-    
+
     class USA():
         def capital(self):
             print("Washington, D.C.")
-    
+
     obj_ind = India()
     obj_usa = USA()
     obj_ind.capital() # New Delhi
@@ -263,20 +373,23 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ClassOrStaticVariables">
       <div class="topic-heading"><h2>Class or Static Variables</h2></div>
       <div class="topic-body">
         <ul>
           <li>All objects of a class share class or static variables.</li>
-          <li>An instance or non-static variables are different for different objects (every object has a copy)</li>
+          <li>
+            An instance or non-static variables are different for different
+            objects (every object has a copy)
+          </li>
         </ul>
         <pre><code class="language-python">
     class CSStudent:
         stream = 'cse' # Class Variable
         def __init__(self, name):
-            self.name = name # Instance Variable 
+            self.name = name # Instance Variable
     a = CSStudent('abc')
     b = CSStudent('bcd')
 
@@ -292,23 +405,51 @@
     CSStudent.steam = "it"
     print(a.stream) # "ece" - as it was explicitly changed earlier
     print(b.stream) # "it"
-        
+
         </code></pre>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ClassVsStaticMethods">
       <div class="topic-heading"><h2>Class v/s Static Methods</h2></div>
       <div class="topic-body">
         <table>
-          <thead><td>Property</td><td>Class method</td><td>Static method</td></thead>
-          <tr><td>Definition</td><td colspan="2">bound to the class and not the object of the class.</td></tr>
-          <tr><td>Decorator</td><td>@classmethod</td><td>@staticmethod</td></tr>
-          <tr><td>Access/Modify Class state</td><td>Can do</td><td>Can't do</td></tr>
-          <tr><td>Any specific parameters</td><td><span class="code">cls</span> as first parameter</td><td>NA</td></tr>
-          <tr><td>General Usage</td><td>to create factory methods. Factory methods return class objects ( similar to a constructor ) for different use cases.</td><td>to create utility functions.</td></tr>
+          <thead>
+            <td>Property</td>
+            <td>Class method</td>
+            <td>Static method</td>
+          </thead>
+          <tr>
+            <td>Definition</td>
+            <td colspan="2">
+              bound to the class and not the object of the class.
+            </td>
+          </tr>
+          <tr>
+            <td>Decorator</td>
+            <td>@classmethod</td>
+            <td>@staticmethod</td>
+          </tr>
+          <tr>
+            <td>Access/Modify Class state</td>
+            <td>Can do</td>
+            <td>Can't do</td>
+          </tr>
+          <tr>
+            <td>Any specific parameters</td>
+            <td><span class="code">cls</span> as first parameter</td>
+            <td>NA</td>
+          </tr>
+          <tr>
+            <td>General Usage</td>
+            <td>
+              to create factory methods. Factory methods return class objects (
+              similar to a constructor ) for different use cases.
+            </td>
+            <td>to create utility functions.</td>
+          </tr>
         </table>
         <pre><code class="language-python">
     class Variable:
@@ -328,32 +469,56 @@
 
     print (Person.isValid("_123"))
         </code></pre>
-        
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="MethodOverloadingAndOverriding">
-      <div class="topic-heading"><h2>Method Overloading and Overriding</h2></div>
+      <div class="topic-heading">
+        <h2>Method Overloading and Overriding</h2>
+      </div>
       <div class="topic-body">
         <ul>
-          <li>When the method of child class overrides the method of parent class on being called by the object of child class, it is known as <span class="point">Method Overriding</span>.</li>
-          <li><span class="point">Method Overloading</span> is the ability of a function or an operator to behave in different ways based on the parameters or the operands respectively.</li>
+          <li>
+            When the method of child class overrides the method of parent class
+            on being called by the object of child class, it is known as
+            <span class="point">Method Overriding</span>.
+          </li>
+          <li>
+            <span class="point">Method Overloading</span> is the ability of a
+            function or an operator to behave in different ways based on the
+            parameters or the operands respectively.
+          </li>
         </ul>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="AbstractMethodsAndAbstractClass">
-      <div class="topic-heading"><h2>Abstract Method and Abstract Class</h2></div>
+      <div class="topic-heading">
+        <h2>Abstract Method and Abstract Class</h2>
+      </div>
       <div class="topic-body">
         <ul>
-          <li>An <span class="point">Abstract method</span> is a method that is declared, but contains no implementation.</li>
-          <li>An <span class="point">Abstract class</span> is a class that contains one or more abstract methods.</li>
-          <li>An <span class="point">Abstract class</span> may not be instantiated, and its abstract method must be implemented by the base class.</li>
-          <li>Python provides a module named <span class="point">ABC</span> which provides the base for defining Abstract Base Class (ABC).</li>
+          <li>
+            An <span class="point">Abstract method</span> is a method that is
+            declared, but contains no implementation.
+          </li>
+          <li>
+            An <span class="point">Abstract class</span> is a class that
+            contains one or more abstract methods.
+          </li>
+          <li>
+            An <span class="point">Abstract class</span> may not be
+            instantiated, and its abstract method must be implemented by the
+            base class.
+          </li>
+          <li>
+            Python provides a module named <span class="point">ABC</span> which
+            provides the base for defining Abstract Base Class (ABC).
+          </li>
         </ul>
         <pre><code class="language-python">
     from abc import ABC, abstractmethod
@@ -369,7 +534,6 @@
         </code></pre>
       </div>
     </div>
-
   </div>
 
   <div class="sidebar-right">
@@ -380,5 +544,7 @@
 
 <div class="footer">
   <span class="prev"><a href="./00.main.html">00. Index Page</a></span>
-  <span class="next"><a href="./02.input_output.html">02. Input/Output</a></span>
+  <span class="next"
+    ><a href="./02.input_output.html">02. Input/Output</a></span
+  >
 </div>

@@ -35,7 +35,6 @@
 - [12. Known Limitations](#12-known-limitations)
 - [13. V2 Roadmap](#13-v2-roadmap)
 
-
 ## 1. Overview
 
 - A lightweight, offline-friendly quiz revision tool built with plain HTML, CSS, and JS — no framework, no build step.
@@ -47,16 +46,19 @@
 ## 2. Usage Instructions
 
 ### Running the App
+
 - Requires a local HTTP server (opening `quiz.html` directly via `file://` will block JSON loading due to CORS).
 - Recommended: `npx serve .` or `python -m http.server 8080` in the project directory.
 - Open `http://localhost:8080` in a browser.
 
 ### Loading Questions
+
 - Point the JS config to your `quiz.json` file path (see [Configuration](#8-configuration)).
 - On load, the JS verifies the file — if invalid or unreachable, an error is shown.
 - No UI-based question addition in v1; edit `quiz.json` directly.
 
 ### Applying Filters
+
 - Click the floating menu icon (bottom-right) → Tags icon.
 - Select one or more tags from the drawer (checkboxes).
 - Click **Apply** → SweetAlert warning shown → confirm to reload with `?tags=tag1,tag2` in the URL.
@@ -65,6 +67,7 @@
 - Active filters persist in the URL and are reflected in the drawer on reload.
 
 ### Interacting with Quiz Cards
+
 - **Select an option** using radio buttons (one per line).
 - **Show/Hide Answer** — passive peek at the answer without marking as attempted.
 - **Clear Selection** — visible only when an option is selected; resets the radio.
@@ -82,11 +85,11 @@
 └── quiz.js          # All logic — data loading, filtering, pagination, rendering
 ```
 
-| File | Responsibility |
-|---|---|
-| `quiz.html` | Structure, CDN script tags, div layout |
-| `quiz.css` | Visual design, responsive layout, chip colours, drawer, floating buttons |
-| `quiz.js` | JSON loading/validation, tag colour map, filtering, shuffling, pagination, rendering, keyboard nav |
+| File        | Responsibility                                                                                     |
+| ----------- | -------------------------------------------------------------------------------------------------- |
+| `quiz.html` | Structure, CDN script tags, div layout                                                             |
+| `quiz.css`  | Visual design, responsive layout, chip colours, drawer, floating buttons                           |
+| `quiz.js`   | JSON loading/validation, tag colour map, filtering, shuffling, pagination, rendering, keyboard nav |
 
 ---
 
@@ -112,6 +115,7 @@ quiz.css
 ```
 
 **Key data flow:**
+
 - `quiz.json` → `quiz.js` → DOM (quiz.html rendered dynamically)
 - User interaction → `quiz.js` event handlers → DOM updates
 - Filter change → URL update → page reload → full re-init
@@ -131,23 +135,23 @@ quiz.css
 
 ### `meta` object
 
-| Field | Type | Description |
-|---|---|---|
-| `topic` | `string` | Title shown in the page header |
-| `version` | `number` | Schema version (integer) |
+| Field          | Type       | Description                                           |
+| -------------- | ---------- | ----------------------------------------------------- |
+| `topic`        | `string`   | Title shown in the page header                        |
+| `version`      | `number`   | Schema version (integer)                              |
 | `allowed_tags` | `string[]` | Master tag vocabulary; source of truth for the drawer |
 
 ### `questions` array — each item
 
-| Field | Type | Description |
-|---|---|---|
-| `id` | `string` | UUID v4 (e.g., `"a1b2c3d4-..."`) |
-| `question` | `string` | Question text (plain string) |
-| `options` | `string[]` | Array of 4 option strings |
-| `answer` | `number` | 0-based index into `options` |
-| `explanation` | `string` | Markdown string (max ~50 words); use `\n\n` for paragraph breaks; supports `` `code` ``, `**bold**`, `_italic_` |
-| `tags` | `string[]` | 1–10 tags; must exist in `meta.allowed_tags` |
-| `type` | `string` | `"single"` (default) or `"multi"` (multi-select; reserved for v2) |
+| Field         | Type       | Description                                                                                                     |
+| ------------- | ---------- | --------------------------------------------------------------------------------------------------------------- |
+| `id`          | `string`   | UUID v4 (e.g., `"a1b2c3d4-..."`)                                                                                |
+| `question`    | `string`   | Question text (plain string)                                                                                    |
+| `options`     | `string[]` | Array of 4 option strings                                                                                       |
+| `answer`      | `number`   | 0-based index into `options`                                                                                    |
+| `explanation` | `string`   | Markdown string (max ~50 words); use `\n\n` for paragraph breaks; supports `` `code` ``, `**bold**`, `_italic_` |
+| `tags`        | `string[]` | 1–10 tags; must exist in `meta.allowed_tags`                                                                    |
+| `type`        | `string`   | `"single"` (default) or `"multi"` (multi-select; reserved for v2)                                               |
 
 ### Full example
 
@@ -156,7 +160,14 @@ quiz.css
   "meta": {
     "topic": "Cloud Native & DevOps",
     "version": 1,
-    "allowed_tags": ["security", "cloud-native", "aws", "secrets-management", "kubernetes", "docker"]
+    "allowed_tags": [
+      "security",
+      "cloud-native",
+      "aws",
+      "secrets-management",
+      "kubernetes",
+      "docker"
+    ]
   },
   "questions": [
     {
@@ -178,11 +189,13 @@ quiz.css
 ```
 
 ### Constraints
+
 - `answer` index must be a valid index into `options` — do not reorder options after setting it.
 - `id` must be unique across all questions.
 - No trailing commas — strict JSON.
 
 ### Adding a new question manually
+
 1. Generate a UUID (e.g., `uuidgen` in terminal or any online tool).
 2. Write question, options, set `answer` as 0-based index.
 3. Write `explanation` in markdown — preview in a `.md` scratch file first.
@@ -194,6 +207,7 @@ quiz.css
 ## 6. Tag System
 
 ### Format rules
+
 - **Lowercase** — `secrets-management` not `Secrets-Management`
 - **Hyphen-separated** — `api-security` not `api_security` or `apiSecurity`
 - **No plurals** — `container` not `containers`
@@ -202,22 +216,24 @@ quiz.css
 
 ### Taxonomy (think in layers)
 
-| Layer | Purpose | Examples |
-|---|---|---|
-| Domain | Broad subject area | `cloud-native`, `security`, `devops`, `networking` |
-| Concept | Specific topic tested | `secrets-management`, `rbac`, `ci-cd`, `ingress` |
-| Technology | Tool/service-specific | `kubernetes`, `docker`, `aws`, `vault` |
+| Layer      | Purpose               | Examples                                           |
+| ---------- | --------------------- | -------------------------------------------------- |
+| Domain     | Broad subject area    | `cloud-native`, `security`, `devops`, `networking` |
+| Concept    | Specific topic tested | `secrets-management`, `rbac`, `ci-cd`, `ingress`   |
+| Technology | Tool/service-specific | `kubernetes`, `docker`, `aws`, `vault`             |
 
 - Aim for: 1 domain tag + 1–2 concept tags + optional technology tags.
 - Range: **1–10 tags per question**; no hard cap but use meaningfully.
 
 ### Controlled vocabulary
+
 - `meta.allowed_tags` is the **single source of truth**.
 - Before adding a question, check tags against this list.
 - To introduce a new tag: add it to `allowed_tags` first, then use it in questions.
 - Avoids duplicates like `secrets-management` vs `secret-mgmt`.
 
 ### Colour assignment
+
 - A static list of ~100 light-themed colours is defined in `quiz.js`.
 - On init, tags are assigned colours **round-robin** from this list.
 - Colours are cached in a `tagColorMap` object (tag name → colour).
@@ -248,8 +264,8 @@ Config is a small inline object at the top of `quiz.js` — no separate config f
 
 ```js
 const CONFIG = {
-  quizFilePath: "./quiz.json",  // path to your quiz JSON file
-  pagination_size: 10           // number of questions per "Load More" batch
+  quizFilePath: "./quiz.json", // path to your quiz JSON file
+  pagination_size: 10, // number of questions per "Load More" batch
 };
 ```
 
@@ -278,11 +294,13 @@ Div3   — Quiz area: one card (Div3.1) per question
 ```
 
 ### Floating elements (bottom-right)
+
 - **↑ Back to top button** — always visible on scroll.
 - **Floating menu** — Confluence-style icon cluster.
   - **Tags icon** — opens right-side drawer (non-blocking).
 
 ### Tag drawer
+
 ```
 Drawer (right side, doesn't shift page)
 ├── Div1 (top 90%, vertically scrollable): collection of tag chips
@@ -292,11 +310,13 @@ Drawer (right side, doesn't shift page)
 ```
 
 ### Load More button
+
 - Vertically centered, at the bottom of the page.
 - Appends next `pagination_size` questions between last card and itself.
 - Greyed out (disabled) when question pool is exhausted.
 
 ### Card design
+
 - Light-grey background, `secondary-color` border.
 - Submit button uses `primary-color`.
 
@@ -318,10 +338,10 @@ Drawer (right side, doesn't shift page)
 
 Loaded via CDN — no npm install required.
 
-| Library | Purpose | CDN tag in `quiz.html` |
-|---|---|---|
-| [SweetAlert2](https://sweetalert2.github.io/) | Warning dialog before filter-triggered page reload | `<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>` |
-| [marked.js](https://marked.js.org/) | Renders explanation markdown strings to HTML | `<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>` |
+| Library                                       | Purpose                                            | CDN tag in `quiz.html`                                                      |
+| --------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------- |
+| [SweetAlert2](https://sweetalert2.github.io/) | Warning dialog before filter-triggered page reload | `<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>`       |
+| [marked.js](https://marked.js.org/)           | Renders explanation markdown strings to HTML       | `<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>` |
 
 ---
 

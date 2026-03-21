@@ -1,8 +1,8 @@
-:root{
-  --main-link-color: #5121F5;
-  --subject-border-color: #8181F5;
-  --navbar-background-color: #8181F5;
-  --main-link-visited-color: #5121F5;
+:root {
+  --main-link-color: #5121f5;
+  --subject-border-color: #8181f5;
+  --navbar-background-color: #8181f5;
+  --main-link-visited-color: #5121f5;
 }
 
 li {
@@ -30,14 +30,23 @@ h2 {
   font-size: xx-large;
   padding: 10px;
 }
-.left, .right, .center {display:inline;}
-.left {float: left}
-.right {float: right}
-.center {float: none;}
+.left,
+.right,
+.center {
+  display: inline;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.center {
+  float: none;
+}
 
 .subject {
   border: 5px solid var(--subject-border-color);
   border-radius: 15px;
   padding: 5px;
 }
-

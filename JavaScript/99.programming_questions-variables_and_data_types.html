@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -9,7 +9,6 @@
 
 <div class="main-content">
   <div class="content">
-
     <div class="topic" id="StringAndIntegerOperations">
       <div class="topic-heading"><h2>String and Integer Operations</h2></div>
       <div class="topic-body">
@@ -25,10 +24,12 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ThreeComparativeOperatorsInARow">
-      <div class="topic-heading"><h2>Three comparative operators in a row</h2></div>
+      <div class="topic-heading">
+        <h2>Three comparative operators in a row</h2>
+      </div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     console.log(5 &lt; 6 &lt;7) // true
@@ -42,7 +43,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ArgumentsInArrowFunctions">
       <div class="topic-heading"><h2>Arguments in arrow functions</h2></div>
@@ -52,17 +53,19 @@
     let b = () => { return arguments; }
 
     console.log(a("hi")) // "hi"
-    console.log(b("hi")) // 
+    console.log(b("hi")) //
 
     /* "arguments" doesn't bind with arrow function. Alternatively we can use tripple-dot parameters in arrow function. */
         </code></pre>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ObjectFreezeAndSeal">
-      <div class="topic-heading"><h2>Object.freeze() and Object.Seal()</h2></div>
+      <div class="topic-heading">
+        <h2>Object.freeze() and Object.Seal()</h2>
+      </div>
       <div class="topic-body">
         <pre><code class="language-javascript">
     let p1 = {"name": "abc"};
@@ -79,15 +82,15 @@
     p2.name = "bcd";
     console.log(p2); // { name: 'bcd' }
 
-    /* 
+    /*
         Object.freeze(person) restricts from updating an object
-        Object.freeze(person) restricts from adding a new property to an object 
+        Object.freeze(person) restricts from adding a new property to an object
     */
         </code></pre>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="MathMax">
       <div class="topic-heading"><h2>Math.max()</h2></div>
@@ -100,7 +103,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="AddingTwoEmptyArrays">
       <div class="topic-heading"><h2>Adding 2 empty arrays</h2></div>
@@ -108,7 +111,7 @@
         <pre><code class="language-javascript">
     console.log([] + []) // empty string
 
-    /* 
+    /*
         + applies to either number or string. If neither, it typecases to string.
         String([]) = String({}) = empty string
     */
@@ -116,7 +119,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="TaggedTemplates">
       <div class="topic-heading"><h2>Tagged Templates</h2></div>
@@ -128,13 +131,13 @@
 
     const b = a 'hi'
     console.log(b); // hello
-    
+
      /* a 'hi' = a('hi') */
         </code></pre>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ThisKeyword">
       <div class="topic-heading"><h2>This keyword</h2></div>
@@ -162,7 +165,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="StringConstructor">
       <div class="topic-heading"><h2>StringConstructor</h2></div>
@@ -181,7 +184,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="FloatingPointAdditions">
       <div class="topic-heading"><h2>Floating point addition</h2></div>
@@ -196,7 +199,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ArrayWithSpreadOperator">
       <div class="topic-heading"><h2>Array with Spread Operator</h2></div>
@@ -208,7 +211,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="FunctionWithRestOperator">
       <div class="topic-heading"><h2>Function with Rest Operator</h2></div>
@@ -223,7 +226,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="FunctionInsideObject">
       <div class="topic-heading"><h2>Function inside Object</h2></div>
@@ -242,7 +245,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="TypeOfTypeof">
       <div class="topic-heading"><h2>Type of typeof</h2></div>
@@ -253,17 +256,19 @@
         </code></pre>
       </div>
     </div>
-
-    
   </div>
-    
+
   <div class="sidebar-right">
     <div class="menu-header" id="menu-header">Table of Content</div>
     <div class="menu-content" id="menu-content"></div>
   </div>
 </div>
-    
+
 <div class="footer">
-  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
-  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+  <span class="prev"
+    ><a href="./05.event_handling.html">05. Event Handling</a></span
+  >
+  <span class="next"
+    ><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span
+  >
 </div>

@@ -1,9 +1,11 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
-  <span class="center"><a href="#">Programming questions - Keywords and Variables</a></span>
+  <span class="center"
+    ><a href="#">Programming questions - Keywords and Variables</a></span
+  >
   <span class="next"><a href="./00.main.html">Python - Interview Prep</a></span>
 </div>
 
@@ -15,10 +17,10 @@
         <pre><code class="language-python">
     print(False == 0) # True
     print(True == 1) # True
-      
+
     print(True + True + True) # 3
     print(True + False + False) # 1
-      
+
     print(None == 0) # False
     print(None == []) # False
 
@@ -31,14 +33,14 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="IsAndIn">
       <div class="topic-heading"><h2>Is and In</h2></div>
       <div class="topic-body">
         <pre><code class="language-python">
     print("a" in "apple") # True
-    for i in "apple": 
+    for i in "apple":
         print(i) # "a", "p", "p", "l", "e"
     print(' ' is ' ') # True: string is immutable
     print({} is {}) # False: dictionary is mutable
@@ -46,7 +48,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ReturnAndYield">
       <div class="topic-heading"><h2>Return and Yield</h2></div>
@@ -58,7 +60,7 @@
             S += i
         return S
     print(fun()) # 45
-      
+
     def fun():
         S = 0
         for i in range(10):
@@ -70,7 +72,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="LocalAndGlobalVariables">
       <div class="topic-heading"><h2>Local and Global variables</h2></div>
@@ -143,7 +145,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="GlobalAndNonlocal">
       <div class="topic-heading"><h2>Global and nonlocal</h2></div>
@@ -151,7 +153,7 @@
         <pre><code class="language-python">
     # global variable
     x = 15
-    
+
     # nonlocal keyword
     def fun():
       var1 = 25
@@ -166,13 +168,16 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="==VsIs">
       <div class="topic-heading"><h2>== vs is</h2></div>
       <div class="topic-body">
-        What is the difference between <span class="code">==</span> and <span class="code">is</span>
-        <span class="code">==</span> compares the values of both the operands and checks for value equality. Whereas the <span class="code">is</span> operator checks whether both the operands refer to the same object or not (present in the same memory location)
+        What is the difference between <span class="code">==</span> and
+        <span class="code">is</span> <span class="code">==</span> compares the
+        values of both the operands and checks for value equality. Whereas the
+        <span class="code">is</span> operator checks whether both the operands
+        refer to the same object or not (present in the same memory location)
         <pre><code class="language-python">
     list1 = []
     list2 = []
@@ -186,7 +191,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="RemoveDuplicatesInList">
       <div class="topic-heading"><h2>Remove duplicates from a list</h2></div>
@@ -202,7 +207,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ShallowCopy">
       <div class="topic-heading"><h2>Shallow copy</h2></div>
@@ -217,7 +222,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ShuffleAList">
       <div class="topic-heading"><h2>Shuffle a list</h2></div>
@@ -230,7 +235,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="FloorDivision">
       <div class="topic-heading"><h2>Floor division</h2></div>
@@ -246,7 +251,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="MultiplyListAndInt">
       <div class="topic-heading"><h2>Multiply list and int</h2></div>
@@ -258,7 +263,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="MultipleAssignment">
       <div class="topic-heading"><h2>Multiple assignment</h2></div>
@@ -270,14 +275,24 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="NonlocalKeyword">
-      <div class="topic-heading"><h2><span class="code">nonlocal</span> keyword</h2></div>
+      <div class="topic-heading">
+        <h2><span class="code">nonlocal</span> keyword</h2>
+      </div>
       <div class="topic-body">
         <ul>
-          <li>The <span class="code">nonlocal</span> keyword is used to work with variables inside nested functions, where the variable should not belong to the inner function</li>
-          <li>Use <span class="code">nonlocal</span> to declare that the variable is not local to the nested function, allowing you to modify the variable's value in the enclosing scope.</li>
+          <li>
+            The <span class="code">nonlocal</span> keyword is used to work with
+            variables inside nested functions, where the variable should not
+            belong to the inner function
+          </li>
+          <li>
+            Use <span class="code">nonlocal</span> to declare that the variable
+            is not local to the nested function, allowing you to modify the
+            variable's value in the enclosing scope.
+          </li>
         </ul>
         <pre><code class="language-python">
     def outer():
@@ -294,7 +309,6 @@
         </code></pre>
       </div>
     </div>
-
   </div>
 
   <div class="sidebar-right">
@@ -304,6 +318,10 @@
 </div>
 
 <div class="footer">
-  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
-  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+  <span class="prev"
+    ><a href="./05.event_handling.html">05. Event Handling</a></span
+  >
+  <span class="next"
+    ><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span
+  >
 </div>

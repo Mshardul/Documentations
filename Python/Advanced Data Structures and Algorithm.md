@@ -1,4 +1,5 @@
 # Heaps
+
 - Introduction to `heapq` module.
   - [In depth study](./heapq%20module.md)
 - Practical problems using heaps:
@@ -8,6 +9,7 @@
   - Kth largest/smallest elements.
 
 # Deque
+
 - Introduction to `collections.deque`.
 - Advantages of deque over list for append and pop operations.
 - Operations:
@@ -20,6 +22,7 @@
   - Sliding window problems.
 
 # Dictionaries
+
 - `defaultdict`: Simplified handling of missing dictionary keys.
   - Use Cases:
     - Frequency counting
@@ -30,6 +33,7 @@
     - Frequency analysis in strings and collections.
 
 # Sorting
+
 - Built-in sorting functions: `sorted()` vs `list.sort()`.
 - Sorting with custom keys: Lambda functions.
 - Stability in sorting algorithms.
@@ -45,6 +49,7 @@
   - Implementing QuickSort and MergeSort in Python.
 
 # Binary Search
+
 - Implementing binary search manually.
 - Using `bisect` module for binary search operations.
 - Practical problems:
@@ -52,6 +57,7 @@
   - Search intervals.
 
 # Graph Algorithms with Python
+
 - Graph Representation:
   - Using dictionaries and lists to represent graphs in Python.
   - Adjacency List Implementation: Efficient graph representation with dictionaries.
@@ -68,6 +74,7 @@
   - Bellman-Ford Algorithm: Handling negative weights in graphs using Python.
 
 # Tries and Text Processing
+
 - Trie Implementation: Building a trie (prefix tree) using dictionaries.
   - Common Trie Operations: Insert, search, and delete in a Pythonic manner.
 - Regex for Pattern Matching: Efficient text search with Python’s `re` module.
@@ -75,6 +82,7 @@
   - Using `difflib` and `Levenshtein` for string similarity and approximate matching.
 
 # Dynamic Programming in Python
+
 - Memoization with `functools.lru_cache()`: Using built-in memoization to optimize recursive algorithms.
   - Examples:
     - Fibonacci sequence
@@ -82,6 +90,7 @@
 - Tabulation and Dynamic Arrays: Implementing DP problems using Python’s lists and dynamic resizing.
 
 # Sets and Hashing in Python
+
 - Set Operations:
   - Understanding Python’s `set` and `frozenset` for efficient membership testing and operations like union, intersection, and difference.
 - `hash()` Function: How Python implements hashing and the significance of hashable types.
@@ -92,12 +101,14 @@
   - Applications: Solving connected component problems, Kruskal’s algorithm for MST.
 
 # Advanced String Manipulation and Algorithms
+
 - Efficient Substring Search:
   - Implementing KMP (Knuth-Morris-Pratt) and Rabin-Karp algorithms in Python.
 - Z-Algorithm: A linear-time string matching algorithm.
 - Python’s `difflib` for Approximate Matching: Tools for string comparison, matching, and finding differences.
 
 # Bit Manipulation in Python
+
 - Bitwise Operators: Leveraging Python’s built-in operators for bit-level manipulation.
 - Common Bit Manipulation Problems:
   - Efficient techniques for checking powers of two
@@ -105,12 +116,14 @@
   - Finding unique elements in arrays.
 
 # Backtracking and Recursive Algorithms in Python
+
 - Backtracking Techniques:
   - Solving constraint satisfaction problems like N-Queens, Sudoku using recursion and Python lists.
 - Efficient Recursive Solutions:
   - Implementing recursion with and without memoization in Python.
 
 # Caching and Efficient Lookups
+
 - `functools.lru_cache()`: Built-in Python decorator for caching function results.
   - Use Cases:
     - Dynamic programming optimizations

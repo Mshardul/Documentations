@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -12,7 +12,8 @@
     <div class="topic" id="DefaultEventHandler">
       <div class="topic-heading"><h2>Default Event Handler</h2></div>
       <div class="topic-body">
-        you cannot return false to prevent default behavior in React. You must call <span class="code">preventDefault</span>
+        you cannot return false to prevent default behavior in React. You must
+        call <span class="code">preventDefault</span>
         instead of
         <pre><code class="language-javascript">
     &lt;form onsubmit="console.log('You clicked submit.'); return false"&gt;&lt;button type="submit"&gt;Submit&lt;/button&gt;&lt;/form&gt;
@@ -25,39 +26,40 @@
     }
         </code></pre>
       </div>
-
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="EventHandlingInES6Class">
       <div class="topic-heading"><h2>Event Handling in ES6 Class</h2></div>
       <div class="topic-body">
         <h3>in ES6 Class</h3>
-        When you define a component using an ES6 class, a common pattern is for an event handler to be a method on the class. <br/>
+        When you define a component using an ES6 class, a common pattern is for
+        an event handler to be a method on the class. <br />
         <pre><code class="language-javascript">
     class Toggle extends React.Component {
         constructor(props) {
             super(props); this.state = {isToggleOn: true};
             this.handleClick = this.handleClick.bind(this); // This binding is necessary to make `this` work in the callback
         }
-    
+
         handleClick() {
             this.setState(prevState => ({ isToggleOn: !prevState.isToggleOn }));
         }
-    
+
         render() {
             return ( &lt;button onClick={this.handleClick}&gt; {this.state.isToggleOn ? 'ON' : 'OFF'} &lt;/button&gt; );
         }
     }
-    
+
     ReactDOM.render( &lt;Toggle /&gt;, document.getElementById('root') );
         </code></pre>
-        If you aren't using class fields syntax, you can use an arrow function in the callback:
+        If you aren't using class fields syntax, you can use an arrow function
+        in the callback:
         <pre><code class="language-javascript">
     class LoggingButton extends React.Component {
         handleClick() { console.log('this is:', this); }
-    
+
         render() {
             // This syntax ensures `this` is bound within handleClick
             return ( &lt;button onClick={() => this.handleClick()}&gt; Click me &lt;/button&gt; );
@@ -65,7 +67,6 @@
     }
         </code></pre>
       </div>
-
     </div>
   </div>
 
@@ -76,6 +77,12 @@
 </div>
 
 <div class="footer">
-  <span class="prev"><a href="./04.state_and_lifecycle.html">04. State and Lifecycle</a></span>
-  <span class="next"><a href="./06.conditional_rendering.html">06. Conditional Rendering</a></span>
+  <span class="prev"
+    ><a href="./04.state_and_lifecycle.html">04. State and Lifecycle</a></span
+  >
+  <span class="next"
+    ><a href="./06.conditional_rendering.html"
+      >06. Conditional Rendering</a
+    ></span
+  >
 </div>

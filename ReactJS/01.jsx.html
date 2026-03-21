@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -20,14 +20,21 @@
           <li>use it with React to describe what the UI should look like</li>
           <li>JSX produces React <span class="code">elements</span>.</li>
           <li>React doesn't require JSX.</li>
-          <li>React embraces the fact that rendering logic is inherently coupled with other UI logic: how events are handled, how the state changes over time, and how the data is prepared for display. Instead of artificially separating technologies by putting markup and logic in separate files, React separates concerns with loosely coupled units called “components” that contain both.</li>
+          <li>
+            React embraces the fact that rendering logic is inherently coupled
+            with other UI logic: how events are handled, how the state changes
+            over time, and how the data is prepared for display. Instead of
+            artificially separating technologies by putting markup and logic in
+            separate files, React separates concerns with loosely coupled units
+            called “components” that contain both.
+          </li>
         </ul>
 
         <h3>Embedding Expressions</h3>
         <pre><code class="language-javascript">
     const name = 'Josh Perez';
     const element = &lt;h1&gt;Hello, {name}&lt;/h1&gt;;
-    
+
     ReactDOM.render( element, document.getElementById('root') );
         </code></pre>
 
@@ -35,9 +42,9 @@
         <pre><code class="language-javascript">
     function formatName(user) { return user.firstName + ' ' + user.lastName; }
 
-    const user = { firstName: 'Harper', lastName: 'Perez' };    
+    const user = { firstName: 'Harper', lastName: 'Perez' };
     const element = ( &lt;h1&gt;Hello, {formatName(user)}!&lt;/h1&gt; );
-    
+
     ReactDOM.render( element, document.getElementById('root') );
         </code></pre>
 
@@ -61,28 +68,40 @@
         </code></pre>
 
         <h3>JSX Represents Objects</h3>
-        Babel compiles JSX down to <span class="code">React.createElement()</span> calls.
+        Babel compiles JSX down to
+        <span class="code">React.createElement()</span> calls.
         <pre><code class="language-javascript">
     const element = ( &lt;h1 className="greeting"&gt;Hello, world!&lt;/h1&gt; );
         </code></pre>
 
-        compiles to 
-        
+        compiles to
+
         <pre><code class="language-javascript">
     const element = React.createElement( 'h1', {className: 'greeting'}, 'Hello, world!' );
         </code></pre>
 
-        React.createElement() performs a few checks to help you write bug-free code but essentially it creates an object like this: //These objects are called <span class="code">React elements</span>.
+        React.createElement() performs a few checks to help you write bug-free
+        code but essentially it creates an object like this: //These objects are
+        called <span class="code">React elements</span>.
 
         <pre><code class="language-javascript">
     const element = { type: 'h1', props: { className: 'greeting', children: 'Hello, world!' } };
         </code></pre>
 
         <div class="notes">
-          // You can put any valid JavaScript expression inside the curly braces in JSX. For example, 2 + 2, user.firstName, or formatName(user) are all valid JavaScript expressions.<br/>
-          // splitting JSX over multiple line isn&#39;t required, it&#39;s recommended wrapping it in parentheses to avoid the pitfalls of <span class="code">automatic semicolon insertion.</span><br/>
-          // You should either use quotes (for string values) or curly braces (for expressions), but not both in the same attribute.<br/>
-          // By default, React DOM escapes any values embedded in JSX before rendering them. Thus it ensures that you can never inject anything that&#39;s not explicitly written in your application. Everything is converted to a string before being rendered. This helps prevent XSS (cross-site-scripting) attacks.<br/>
+          // You can put any valid JavaScript expression inside the curly braces
+          in JSX. For example, 2 + 2, user.firstName, or formatName(user) are
+          all valid JavaScript expressions.<br />
+          // splitting JSX over multiple line isn&#39;t required, it&#39;s
+          recommended wrapping it in parentheses to avoid the pitfalls of
+          <span class="code">automatic semicolon insertion.</span><br />
+          // You should either use quotes (for string values) or curly braces
+          (for expressions), but not both in the same attribute.<br />
+          // By default, React DOM escapes any values embedded in JSX before
+          rendering them. Thus it ensures that you can never inject anything
+          that&#39;s not explicitly written in your application. Everything is
+          converted to a string before being rendered. This helps prevent XSS
+          (cross-site-scripting) attacks.<br />
         </div>
       </div>
     </div>
@@ -96,5 +115,7 @@
 
 <div class="footer">
   <span class="prev"><a href="./00.main.html">00. Index Page</a></span>
-  <span class="next"><a href="./02.rendering_elements.html">02. Rendering Elements</a></span>
+  <span class="next"
+    ><a href="./02.rendering_elements.html">02. Rendering Elements</a></span
+  >
 </div>

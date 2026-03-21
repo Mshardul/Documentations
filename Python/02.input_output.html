@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -19,12 +19,26 @@
         </ul>
 
         <table>
-          <tr><th>Property</th><th>input</th><th>raw_input</th></tr>
-          <tr><td>Syntax</td><td>input(prompt)</td><td>raw_input(prompt)</td></tr>
+          <tr>
+            <th>Property</th>
+            <th>input</th>
+            <th>raw_input</th>
+          </tr>
+          <tr>
+            <td>Syntax</td>
+            <td>input(prompt)</td>
+            <td>raw_input(prompt)</td>
+          </tr>
           <tr>
             <td>Functioning</td>
-            <td>tells the program to stop and wait for the user to input the values</td>
-            <td>tells the program to stop and wait for the user to input the values</td>
+            <td>
+              tells the program to stop and wait for the user to input the
+              values
+            </td>
+            <td>
+              tells the program to stop and wait for the user to input the
+              values
+            </td>
           </tr>
           <tr>
             <td>Python versions supported</td>
@@ -33,34 +47,52 @@
           </tr>
           <tr>
             <td>input type</td>
-            <td>In Python 3.x, the input function explicitly converts the input you give to type string. But Python 2.x input function takes the value and type of the input you enter as it is without modifying the type</td>
+            <td>
+              In Python 3.x, the input function explicitly converts the input
+              you give to type string. But Python 2.x input function takes the
+              value and type of the input you enter as it is without modifying
+              the type
+            </td>
             <td>Type is always string. We need to typecase it, if required.</td>
           </tr>
           <tr>
             <td>Example</td>
-            <td><pre><code class="language-python">
+            <td>
+              <pre><code class="language-python">
     v = input("Enter the name: ")
-            </code></pre></td>
-            <td><pre><code class="language-python">
+            </code></pre>
+            </td>
+            <td>
+              <pre><code class="language-python">
     v = raw_input("Enter the name: ")
-            </code></pre></td>
+            </code></pre>
+            </td>
           </tr>
         </table>
         <div class="notes">
           <ul>
-            <li>Developers are recommended to use raw_input function in Python 2.x. Because there is a vulnerability in input function in Python 2.x version.</li>
-            <li>For taking multiple inputs at once, take the input as string and split it into multiple variables using <span class="code">split()</span></li>
+            <li>
+              Developers are recommended to use raw_input function in Python
+              2.x. Because there is a vulnerability in input function in Python
+              2.x version.
+            </li>
+            <li>
+              For taking multiple inputs at once, take the input as string and
+              split it into multiple variables using
+              <span class="code">split()</span>
+            </li>
           </ul>
         </div>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Output">
       <div class="topic-heading"><h2>Output</h2></div>
       <div class="topic-body">
-        <span class="code">print()</span> function prints the message to the screen or any other standard output device.
+        <span class="code">print()</span> function prints the message to the
+        screen or any other standard output device.
         <pre><code class="language-python">
     print(value(s), sep= ' ', end = '\n', file=file, flush=flush) # syntax
 
@@ -81,14 +113,22 @@
         <h3>Output Formatting</h3>
         There are several ways to format output.
         <ul>
-          <li>To use <span class="point">formatted string literals</span>, begin a string with <span class="code">f</span> or <span class="code">F</span> before the opening quotation mark or triple quotation mark.</li>
-          <li>The string method <span class="code">str.format()</span> helps a user create a fancier output.</li>
+          <li>
+            To use <span class="point">formatted string literals</span>, begin a
+            string with <span class="code">f</span> or
+            <span class="code">F</span> before the opening quotation mark or
+            triple quotation mark.
+          </li>
+          <li>
+            The string method <span class="code">str.format()</span> helps a
+            user create a fancier output.
+          </li>
         </ul>
         <pre><code class="language-python">
     ''' using String modulo operator(%) '''
     # integer, float, octal, exponential
     print("Students: %2d, Marks: %5.2f, Grades: %7.3o, percentile: %10.3E" % (100, 05.333, 25, 356.08977)) # Students: 100, Marks: 5.33, Grades: 031, percentile: 3.561E+02
-    # the general syntax here is %[flags][width][.precision]type 
+    # the general syntax here is %[flags][width][.precision]type
 
     ''' using the format method '''
     # without using indexing
@@ -109,7 +149,6 @@
         </code></pre>
       </div>
     </div>
-
   </div>
 
   <div class="sidebar-right">
@@ -119,6 +158,8 @@
 </div>
 
 <div class="footer">
-  <span class="prev"><a href="./01.introduction.html">01. Introduction</a></span>
+  <span class="prev"
+    ><a href="./01.introduction.html">01. Introduction</a></span
+  >
   <span class="next"><a href="./03.operators.html">03. Operators</a></span>
 </div>

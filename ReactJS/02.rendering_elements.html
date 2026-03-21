@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -10,9 +10,14 @@
 <div class="main-content">
   <div class="content">
     <div class="topic" id="RenderingAnElementIntoTheDOM">
-      <div class="topic-heading"><h2>Rendering an element into the DOM</h2></div>
+      <div class="topic-heading">
+        <h2>Rendering an element into the DOM</h2>
+      </div>
       <div class="topic-body">
-        Applications built with just React usually have a single root DOM node. If you are integrating React into an existing app, you may have as many isolated root DOM nodes as you like. To render a React element into a root DOM node, pass both to ReactDOM.render(): 
+        Applications built with just React usually have a single root DOM node.
+        If you are integrating React into an existing app, you may have as many
+        isolated root DOM nodes as you like. To render a React element into a
+        root DOM node, pass both to ReactDOM.render():
         <pre><code class="language-javascript">
     const element = &lt;h1&gt;Hello, world&lt;/h1&gt;;
     ReactDOM.render(element, document.getElementById('root'));
@@ -20,12 +25,14 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="UpdatingTheRenderedElement">
       <div class="topic-heading"><h2>Updating the Rendered Element</h2></div>
       <div class="topic-body">
-        React elements are immutable. Once you create an element, you can’t change its children or attributes. The only way to update the UI is to create a new element, and pass it to ReactDOM.render().
+        React elements are immutable. Once you create an element, you can’t
+        change its children or attributes. The only way to update the UI is to
+        create a new element, and pass it to ReactDOM.render().
         <pre><code class="language-javascript">
     function tick() {
         const element = (
@@ -33,13 +40,16 @@
         );
         ReactDOM.render(element, document.getElementById('root'));
     }
-    
+
     setInterval(tick, 1000);
         </code></pre>
 
         <div class="notes">
-          // React DOM compares the element and its children to the previous one, and only applies the DOM updates necessary to bring the DOM to the desired state.<br/>
-          // only the node whose contents have changed gets updated by React DOM.<br/>
+          // React DOM compares the element and its children to the previous
+          one, and only applies the DOM updates necessary to bring the DOM to
+          the desired state.<br />
+          // only the node whose contents have changed gets updated by React
+          DOM.<br />
         </div>
       </div>
     </div>
@@ -53,5 +63,7 @@
 
 <div class="footer">
   <span class="prev"><a href="./01.jsx.html">01. JSX</a></span>
-  <span class="next"><a href="./03.components_and_props.html">03. Components and Props</a></span>
+  <span class="next"
+    ><a href="./03.components_and_props.html">03. Components and Props</a></span
+  >
 </div>

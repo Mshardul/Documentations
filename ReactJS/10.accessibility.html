@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -10,23 +10,40 @@
 <div class="main-content">
   <div class="content">
     <div class="notes">
-      // Web accessibility (also referred to as a11y) is the design and creation of websites that can be used by everyone. Accessibility support is necessary to allow assistive technology to interpret web pages.<br/>
+      // Web accessibility (also referred to as a11y) is the design and creation
+      of websites that can be used by everyone. Accessibility support is
+      necessary to allow assistive technology to interpret web pages.<br />
     </div>
 
     <div class="topic" id="WAIARIA">
       <div class="topic-heading"><h2>WAI-ARIA</h2></div>
       <div class="topic-heading">
-        <p>The Web Accessibility Initiative - Accessible Rich Internet Applications document contains techniques for building fully accessible JavaScript widgets.</p>
-        <p>All <span class="code">aria-*</span> HTML attributes are fully supported in JSX. Whereas most DOM properties and attributes in React are camelCased, these attributes should be hyphen-cased (also known as kebab-case, lisp-case, etc) as they are in plain HTML</p>
+        <p>
+          The Web Accessibility Initiative - Accessible Rich Internet
+          Applications document contains techniques for building fully
+          accessible JavaScript widgets.
+        </p>
+        <p>
+          All <span class="code">aria-*</span> HTML attributes are fully
+          supported in JSX. Whereas most DOM properties and attributes in React
+          are camelCased, these attributes should be hyphen-cased (also known as
+          kebab-case, lisp-case, etc) as they are in plain HTML
+        </p>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="SemanticHTML">
       <div class="topic-heading"><h2>Semantic HTML</h2></div>
       <div class="topic-body">
-        <p>Sometimes we break HTML semantics when we add &lt;div&gt; elements to our JSX to make our React code work, especially when working with lists (&lt;ol&gt;, &lt;ul&gt; and &lt;dl&gt;) and the HTML &lt;table&gt;. In these cases we should rather use React Fragments to group together multiple elements.</p>
+        <p>
+          Sometimes we break HTML semantics when we add &lt;div&gt; elements to
+          our JSX to make our React code work, especially when working with
+          lists (&lt;ol&gt;, &lt;ul&gt; and &lt;dl&gt;) and the HTML
+          &lt;table&gt;. In these cases we should rather use React Fragments to
+          group together multiple elements.
+        </p>
         <pre><code class="language-javascript">
     function Glossary(props) {
         return (
@@ -39,7 +56,10 @@
         );
     }
         </code></pre>
-        <p>When you don’t need any props on the Fragment tag you can use the short syntax, if your tooling supports it</p>
+        <p>
+          When you don’t need any props on the Fragment tag you can use the
+          short syntax, if your tooling supports it
+        </p>
         <pre><code class="language-javascript">
     function ListItem({ item }) {
         return (
@@ -53,13 +73,18 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="AccessibleForms">
       <div class="topic-heading"><h2>Accessible Forms</h2></div>
       <div class="topic-body">
         <h3>Labeling</h3>
-        <p>Although these standard HTML practices can be directly used in <span class="code">React</span>, note that the <span class="code">for</span> attribute is written as <span class="code">htmlFor</span> in JSX</p>
+        <p>
+          Although these standard HTML practices can be directly used in
+          <span class="code">React</span>, note that the
+          <span class="code">for</span> attribute is written as
+          <span class="code">htmlFor</span> in JSX
+        </p>
         <pre><code class="language-javascript">
     &lt;label htmlFor="namedInput"&gt;Name:&lt;/label&gt;
     &lt;input id="namedInput" type="text" name="name"/&gt;
@@ -67,30 +92,32 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="FocusControl">
       <div class="topic-heading"><h2>Focus Control</h2></div>
       <div class="topic-body">
         <h3>Programmatically managing focus</h3>
-        <p>For example, by resetting keyboard focus to a button that opened a modal window after that modal window is closed.</p>
+        <p>
+          For example, by resetting keyboard focus to a button that opened a
+          modal window after that modal window is closed.
+        </p>
         <pre><code class="language-javascript">
     function CustomTextInput(props) {
       return ( &lt;div&gt;&lt;input ref={props.inputRef} /&gt;&lt;/div&gt; );
     }
-    
+
     class Parent extends React.Component {
       constructor(props) { super(props); this.inputElement = React.createRef(); }
       render() {
         return ( &lt;CustomTextInput inputRef={this.inputElement} /&gt; );
       }
     }
-    
+
     this.inputElement.current.focus(); // set focus when required.
         </code></pre>
       </div>
     </div>
-
   </div>
 
   <div class="sidebar-right">
@@ -100,6 +127,12 @@
 </div>
 
 <div class="footer">
-  <span class="prev"><a href="./09.composition_vs_inheirtance.html">09. Composition vs Inheritance</a></span>
-  <span class="next"><a href="./11.code_splitting.html">11. Code Splitting</a></span>
+  <span class="prev"
+    ><a href="./09.composition_vs_inheirtance.html"
+      >09. Composition vs Inheritance</a
+    ></span
+  >
+  <span class="next"
+    ><a href="./11.code_splitting.html">11. Code Splitting</a></span
+  >
 </div>

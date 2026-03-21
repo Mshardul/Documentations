@@ -1,317 +1,302 @@
 {
-    "meta": {
-        "topic": "System Design Quiz",
-        "version": 1,
-        "allowed_tags": ["api", "api-design", "caching", "cap-theorem", "cassandra", "cdn", "chat", "circuit-breaker", "cloud-native", "conflict-resolution", "consensus", "consistency", "consistent-hashing", "database", "distributed-database", "distributed-storage", "distributed-system", "distributed-systems", "dynamodb", "fault-tolerance", "hdfs", "idempotency", "indexing", "kafka", "kubernetes", "leader-election", "load-balancing", "message-queue", "messaging", "metadata", "microservice", "microservices", "networking", "ordering", "payment", "performance", "quorum", "raft", "rate-limiting", "read-replicas", "real-time", "redis", "replication", "resilience", "scalability", "secrets-management", "security", "session-management", "sharding", "streaming", "transaction", "uuid", "vault", "zookeeper"]
-    },
-    "questions": [
-        {
-            "id": "f3a2b1c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
-            "type": "single",
-            "question": "When designing a URL shortening service like bit.ly, which database choice is most suitable for storing the mapping between short codes and long URLs, considering high write throughput and low latency reads?",
-            "options": [
-                "MySQL with a single master",
-                "PostgreSQL with synchronous replication",
-                "A distributed key-value store like DynamoDB or Cassandra",
-                "MongoDB with a single replica set"
-            ],
-            "answer": 2,
-            "explanation": "A distributed key-value store scales horizontally for high write throughput and delivers low-latency reads, matching the needs of a URL shortener.",
-            "tags": [
-                "database",
-                "scalability",
-                "dynamodb",
-                "cassandra"
-            ]
-        },
-        {
-            "id": "a4b5c6d7-e8f9-0a1b-2c3d-4e5f6a7b8c9d",
-            "type": "single",
-            "question": "In a distributed messaging system like Kafka, what is the primary role of a partition?",
-            "options": [
-                "To replicate data across multiple brokers for fault tolerance",
-                "To enable ordering of messages within a single consumer group",
-                "To allow horizontal scalability by splitting a topic's data across multiple brokers",
-                "To compress messages to reduce storage overhead"
-            ],
-            "answer": 2,
-            "explanation": "Partitions allow a topic's data to be distributed across brokers, enabling horizontal scalability and parallelism in storage and processing.",
-            "tags": [
-                "messaging",
-                "kafka",
-                "scalability"
-            ]
-        },
-        {
-            "id": "b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e",
-            "type": "single",
-            "question": "Which technique is most effective for handling read-heavy workloads in a typical web application database?",
-            "options": [
-                "Vertical scaling of the database server",
-                "Adding read replicas and directing read queries to them",
-                "Using a multi-primary replication setup",
-                "Sharding the database by a primary key"
-            ],
-            "answer": 1,
-            "explanation": "Read replicas offload read traffic from the primary, scaling read capacity without complex application changes.",
-            "tags": [
-                "database",
-                "scalability",
-                "read-replicas"
-            ]
-        },
-        {
-            "id": "c5d6e7f8-g9h0-i1j2-k3l4-m5n6o7p8q9r0",
-            "type": "single",
-            "question": "In a leader-based distributed consensus system (like Raft), what happens if the leader node fails?",
-            "options": [
-                "The system becomes unavailable until the leader is manually restored",
-                "A new leader is elected from the followers, and the system resumes operation",
-                "All followers convert to read-only mode permanently",
-                "The system switches to a gossip protocol for consistency"
-            ],
-            "answer": 1,
-            "explanation": "Followers detect leader failure via heartbeat timeouts and trigger a new election, ensuring the system continues with minimal downtime.",
-            "tags": [
-                "distributed-systems",
-                "consensus",
-                "raft"
-            ]
-        },
-        {
-            "id": "d6e7f8g9-h0i1-j2k3-l4m5-n6o7p8q9r0s1",
-            "type": "single",
-            "question": "When designing a system for real-time analytics on user clickstreams, which component is essential for ingesting high-velocity data reliably?",
-            "options": [
-                "A batch processing framework like Apache Spark",
-                "A message queue or stream processing platform like Apache Kafka",
-                "An in-memory cache like Redis",
-                "A relational database with indexing"
-            ],
-            "answer": 1,
-            "explanation": "A message queue like Kafka reliably ingests high-velocity clickstream data, decouples producers from consumers, and enables real-time stream processing.",
-            "tags": [
-                "streaming",
-                "kafka",
-                "real-time"
-            ]
-        },
-        {
-            "id": "e7f8g9h0-i1j2-k3l4-m5n6-o7p8q9r0s1t2",
-            "type": "single",
-            "question": "What is the primary purpose of a content delivery network (CDN) in system design?",
-            "options": [
-                "To act as a load balancer between application servers",
-                "To store database replicas geographically closer to users",
-                "To cache static assets near end users, reducing latency",
-                "To provide DDoS protection exclusively"
-            ],
-            "answer": 2,
-            "explanation": "A CDN caches static assets (images, CSS, JS) on edge servers worldwide, drastically reducing latency by serving content from locations closer to users.",
-            "tags": [
-                "cdn",
-                "performance",
-                "caching"
-            ]
-        },
-        {
-            "id": "f8g9h0i1-j2k3-l4m5-n6o7-p8q9r0s1t2u3",
-            "type": "single",
-            "question": "In a microservices architecture, which pattern is most effective for handling partial failures and preventing cascading failures across services?",
-            "options": [
-                "Retry with exponential backoff",
-                "Database connection pooling",
-                "Circuit breaker",
-                "Two-phase commit"
-            ],
-            "answer": 2,
-            "explanation": "The circuit breaker pattern prevents cascading failures by stopping requests to a failing service and allowing it time to recover, avoiding repeated timeouts.",
-            "tags": [
-                "microservices",
-                "resilience",
-                "circuit-breaker"
-            ]
-        },
-        {
-            "id": "g9h0i1j2-k3l4-m5n6-o7p8-q9r0s1t2u3v4",
-            "type": "single",
-            "question": "Which database property is most critical when designing a system that requires strong consistency across globally distributed replicas?",
-            "options": [
-                "Eventual consistency",
-                "Quorum-based writes and reads",
-                "Read-after-write consistency",
-                "ACID transactions with a single primary"
-            ],
-            "answer": 1,
-            "explanation": "Quorum-based writes and reads ensure strong consistency by requiring acknowledgment from a majority of replicas before committing, providing linearizability even in distributed deployments.",
-            "tags": [
-                "distributed-systems",
-                "consistency",
-                "quorum"
-            ]
-        },
-        {
-            "id": "h0i1j2k3-l4m5-n6o7-p8q9-r0s1t2u3v4w5",
-            "type": "single",
-            "question": "Which strategy is most suitable for uniquely identifying requests in a distributed system to support idempotency?",
-            "options": [
-                "Auto-incrementing database IDs",
-                "UUID or request-scoped unique identifiers generated by the client",
-                "IP address combined with a timestamp",
-                "Sequence numbers from a centralized Redis counter"
-            ],
-            "answer": 1,
-            "explanation": "UUIDs or client-generated unique request IDs allow the server to detect duplicate requests and safely retry operations without unintended side effects.",
-            "tags": [
-                "api-design",
-                "idempotency",
-                "uuid"
-            ]
-        },
-        {
-            "id": "i1j2k3l4-m5n6-o7p8-q9r0-s1t2u3v4w5x6",
-            "type": "single",
-            "question": "When designing a large-scale chat system, which technique is most suitable for ensuring that messages are delivered in the correct order to all participants in a group chat?",
-            "options": [
-                "Using a single message queue per group with a consumer per participant",
-                "Storing messages with a timestamp and having clients sort locally",
-                "Using a consistent hashing ring to assign messages to partitions",
-                "Using a single-threaded dispatcher per conversation with sequence numbers"
-            ],
-            "answer": 1,
-            "explanation": "Using a consistent timestamp (e.g., server-generated) and having clients sort locally is a common, scalable approach; for strict ordering, a single-threaded dispatcher per conversation with sequence numbers is also viable.",
-            "tags": [
-                "messaging",
-                "chat",
-                "ordering"
-            ]
-        },
-        {
-            "id": "j2k3l4m5-n6o7-p8q9-r0s1-t2u3v4w5x6y7",
-            "type": "single",
-            "question": "In a distributed file system like HDFS, what is the purpose of a NameNode?",
-            "options": [
-                "To store the actual file data blocks",
-                "To manage metadata and namespace operations",
-                "To replicate data across data nodes",
-                "To balance the load between clients"
-            ],
-            "answer": 1,
-            "explanation": "The NameNode stores metadata (file names, block locations, etc.) and coordinates client access, acting as the central controller for the distributed file system.",
-            "tags": [
-                "distributed-storage",
-                "hdfs",
-                "metadata"
-            ]
-        },
-        {
-            "id": "k3l4m5n6-o7p8-q9r0-s1t2-u3v4w5x6y7z8",
-            "type": "single",
-            "question": "Which approach is most effective for implementing rate limiting across multiple API servers in a distributed environment?",
-            "options": [
-                "In-memory counters on each server with sticky sessions",
-                "A centralized data store like Redis with atomic operations",
-                "Client-side throttling using HTTP status codes",
-                "Limiting connections at the network load balancer only"
-            ],
-            "answer": 1,
-            "explanation": "A centralized store like Redis with atomic operations (e.g., INCR) allows accurate, globally consistent rate limiting across all API servers.",
-            "tags": [
-                "rate-limiting",
-                "redis",
-                "distributed-systems"
-            ]
-        },
-        {
-            "id": "l4m5n6o7-p8q9-r0s1-t2u3-v4w5x6y7z8a9",
-            "type": "single",
-            "question": "Which database type is most suitable for storing user sessions in a system that expects frequent read/write operations and requires automatic expiration of stale sessions?",
-            "options": [
-                "Relational database with TTL indexes",
-                "Document store with background cleanup jobs",
-                "In-memory key-value store like Redis with TTL",
-                "Column-family database with versioning"
-            ],
-            "answer": 2,
-            "explanation": "Redis with TTL provides fast in-memory access, automatic expiration, and is well-suited for high-throughput session management.",
-            "tags": [
-                "session-management",
-                "redis",
-                "caching"
-            ]
-        },
-        {
-            "id": "m5n6o7p8-q9r0-s1t2-u3v4-w5x6y7z8a9b0",
-            "type": "single",
-            "question": "When designing a payment system, which approach is most critical for ensuring that a transaction is not processed more than once?",
-            "options": [
-                "Using a distributed lock around the payment flow",
-                "Implementing idempotency keys and storing processed transaction IDs",
-                "Relying on database unique constraints only",
-                "Using synchronous two-phase commit across all services"
-            ],
-            "answer": 1,
-            "explanation": "Idempotency keys, stored with processed transaction status, allow the system to safely retry requests without duplication, even across distributed services.",
-            "tags": [
-                "payment",
-                "idempotency",
-                "api-design"
-            ]
-        },
-        {
-            "id": "n6o7p8q9-r0s1-t2u3-v4w5-x6y7z8a9b0c1",
-            "type": "single",
-            "question": "What is the primary advantage of using a consistent hashing algorithm for distributed caching?",
-            "options": [
-                "It guarantees all keys are evenly distributed at all times",
-                "It minimizes key redistribution when nodes are added or removed",
-                "It reduces the need for replication across nodes",
-                "It simplifies the implementation of cache eviction policies"
-            ],
-            "answer": 1,
-            "explanation": "Consistent hashing minimizes the number of keys that need to be remapped when nodes join or leave, making it ideal for dynamic distributed caches.",
-            "tags": [
-                "caching",
-                "distributed-systems",
-                "consistent-hashing"
-            ]
-        },
-        {
-            "id": "o7p8q9r0-s1t2-u3v4-w5x6-y7z8a9b0c1d2",
-            "type": "single",
-            "question": "Which technique is most effective for securely storing and accessing secrets (API keys, database passwords) in a cloud-native application?",
-            "options": [
-                "Hardcoding them in environment variables",
-                "Storing them in a dedicated secrets management service (e.g., HashiCorp Vault, AWS Secrets Manager)",
-                "Encrypting them and storing them in a configuration file",
-                "Embedding them in the application container image"
-            ],
-            "answer": 1,
-            "explanation": "A secrets management service provides centralized, auditable, and fine-grained access control with encryption at rest and in transit, avoiding hardcoded secrets.",
-            "tags": [
-                "security",
-                "secrets-management",
-                "cloud-native",
-                "vault"
-            ]
-        },
-        {
-            "id": "p8q9r0s1-t2u3-v4w5-x6y7-z8a9b0c1d2e3",
-            "type": "single",
-            "question": "In a leaderless replication system (like Cassandra), what mechanism is used to resolve conflicting writes during read operations?",
-            "options": [
-                "Last-write-wins (LWW) using timestamps",
-                "Read repair and hinted handoffs",
-                "Quorum-based voting with vector clocks",
-                "Distributed transactions"
-            ],
-            "answer": 0,
-            "explanation": "Cassandra uses last-write-wins (LWW) with timestamps to resolve conflicts, where the write with the latest timestamp is considered authoritative during reads.",
-            "tags": [
-                "distributed-database",
-                "cassandra",
-                "conflict-resolution"
-            ]
-        }
+  "meta": {
+    "topic": "System Design Quiz",
+    "version": 1,
+    "allowed_tags": [
+      "api",
+      "api-design",
+      "caching",
+      "cap-theorem",
+      "cassandra",
+      "cdn",
+      "chat",
+      "circuit-breaker",
+      "cloud-native",
+      "conflict-resolution",
+      "consensus",
+      "consistency",
+      "consistent-hashing",
+      "database",
+      "distributed-database",
+      "distributed-storage",
+      "distributed-system",
+      "distributed-systems",
+      "dynamodb",
+      "fault-tolerance",
+      "hdfs",
+      "idempotency",
+      "indexing",
+      "kafka",
+      "kubernetes",
+      "leader-election",
+      "load-balancing",
+      "message-queue",
+      "messaging",
+      "metadata",
+      "microservice",
+      "microservices",
+      "networking",
+      "ordering",
+      "payment",
+      "performance",
+      "quorum",
+      "raft",
+      "rate-limiting",
+      "read-replicas",
+      "real-time",
+      "redis",
+      "replication",
+      "resilience",
+      "scalability",
+      "secrets-management",
+      "security",
+      "session-management",
+      "sharding",
+      "streaming",
+      "transaction",
+      "uuid",
+      "vault",
+      "zookeeper"
     ]
+  },
+  "questions": [
+    {
+      "id": "f3a2b1c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "type": "single",
+      "question": "When designing a URL shortening service like bit.ly, which database choice is most suitable for storing the mapping between short codes and long URLs, considering high write throughput and low latency reads?",
+      "options": [
+        "MySQL with a single master",
+        "PostgreSQL with synchronous replication",
+        "A distributed key-value store like DynamoDB or Cassandra",
+        "MongoDB with a single replica set"
+      ],
+      "answer": 2,
+      "explanation": "A distributed key-value store scales horizontally for high write throughput and delivers low-latency reads, matching the needs of a URL shortener.",
+      "tags": ["database", "scalability", "dynamodb", "cassandra"]
+    },
+    {
+      "id": "a4b5c6d7-e8f9-0a1b-2c3d-4e5f6a7b8c9d",
+      "type": "single",
+      "question": "In a distributed messaging system like Kafka, what is the primary role of a partition?",
+      "options": [
+        "To replicate data across multiple brokers for fault tolerance",
+        "To enable ordering of messages within a single consumer group",
+        "To allow horizontal scalability by splitting a topic's data across multiple brokers",
+        "To compress messages to reduce storage overhead"
+      ],
+      "answer": 2,
+      "explanation": "Partitions allow a topic's data to be distributed across brokers, enabling horizontal scalability and parallelism in storage and processing.",
+      "tags": ["messaging", "kafka", "scalability"]
+    },
+    {
+      "id": "b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e",
+      "type": "single",
+      "question": "Which technique is most effective for handling read-heavy workloads in a typical web application database?",
+      "options": [
+        "Vertical scaling of the database server",
+        "Adding read replicas and directing read queries to them",
+        "Using a multi-primary replication setup",
+        "Sharding the database by a primary key"
+      ],
+      "answer": 1,
+      "explanation": "Read replicas offload read traffic from the primary, scaling read capacity without complex application changes.",
+      "tags": ["database", "scalability", "read-replicas"]
+    },
+    {
+      "id": "c5d6e7f8-g9h0-i1j2-k3l4-m5n6o7p8q9r0",
+      "type": "single",
+      "question": "In a leader-based distributed consensus system (like Raft), what happens if the leader node fails?",
+      "options": [
+        "The system becomes unavailable until the leader is manually restored",
+        "A new leader is elected from the followers, and the system resumes operation",
+        "All followers convert to read-only mode permanently",
+        "The system switches to a gossip protocol for consistency"
+      ],
+      "answer": 1,
+      "explanation": "Followers detect leader failure via heartbeat timeouts and trigger a new election, ensuring the system continues with minimal downtime.",
+      "tags": ["distributed-systems", "consensus", "raft"]
+    },
+    {
+      "id": "d6e7f8g9-h0i1-j2k3-l4m5-n6o7p8q9r0s1",
+      "type": "single",
+      "question": "When designing a system for real-time analytics on user clickstreams, which component is essential for ingesting high-velocity data reliably?",
+      "options": [
+        "A batch processing framework like Apache Spark",
+        "A message queue or stream processing platform like Apache Kafka",
+        "An in-memory cache like Redis",
+        "A relational database with indexing"
+      ],
+      "answer": 1,
+      "explanation": "A message queue like Kafka reliably ingests high-velocity clickstream data, decouples producers from consumers, and enables real-time stream processing.",
+      "tags": ["streaming", "kafka", "real-time"]
+    },
+    {
+      "id": "e7f8g9h0-i1j2-k3l4-m5n6-o7p8q9r0s1t2",
+      "type": "single",
+      "question": "What is the primary purpose of a content delivery network (CDN) in system design?",
+      "options": [
+        "To act as a load balancer between application servers",
+        "To store database replicas geographically closer to users",
+        "To cache static assets near end users, reducing latency",
+        "To provide DDoS protection exclusively"
+      ],
+      "answer": 2,
+      "explanation": "A CDN caches static assets (images, CSS, JS) on edge servers worldwide, drastically reducing latency by serving content from locations closer to users.",
+      "tags": ["cdn", "performance", "caching"]
+    },
+    {
+      "id": "f8g9h0i1-j2k3-l4m5-n6o7-p8q9r0s1t2u3",
+      "type": "single",
+      "question": "In a microservices architecture, which pattern is most effective for handling partial failures and preventing cascading failures across services?",
+      "options": [
+        "Retry with exponential backoff",
+        "Database connection pooling",
+        "Circuit breaker",
+        "Two-phase commit"
+      ],
+      "answer": 2,
+      "explanation": "The circuit breaker pattern prevents cascading failures by stopping requests to a failing service and allowing it time to recover, avoiding repeated timeouts.",
+      "tags": ["microservices", "resilience", "circuit-breaker"]
+    },
+    {
+      "id": "g9h0i1j2-k3l4-m5n6-o7p8-q9r0s1t2u3v4",
+      "type": "single",
+      "question": "Which database property is most critical when designing a system that requires strong consistency across globally distributed replicas?",
+      "options": [
+        "Eventual consistency",
+        "Quorum-based writes and reads",
+        "Read-after-write consistency",
+        "ACID transactions with a single primary"
+      ],
+      "answer": 1,
+      "explanation": "Quorum-based writes and reads ensure strong consistency by requiring acknowledgment from a majority of replicas before committing, providing linearizability even in distributed deployments.",
+      "tags": ["distributed-systems", "consistency", "quorum"]
+    },
+    {
+      "id": "h0i1j2k3-l4m5-n6o7-p8q9-r0s1t2u3v4w5",
+      "type": "single",
+      "question": "Which strategy is most suitable for uniquely identifying requests in a distributed system to support idempotency?",
+      "options": [
+        "Auto-incrementing database IDs",
+        "UUID or request-scoped unique identifiers generated by the client",
+        "IP address combined with a timestamp",
+        "Sequence numbers from a centralized Redis counter"
+      ],
+      "answer": 1,
+      "explanation": "UUIDs or client-generated unique request IDs allow the server to detect duplicate requests and safely retry operations without unintended side effects.",
+      "tags": ["api-design", "idempotency", "uuid"]
+    },
+    {
+      "id": "i1j2k3l4-m5n6-o7p8-q9r0-s1t2u3v4w5x6",
+      "type": "single",
+      "question": "When designing a large-scale chat system, which technique is most suitable for ensuring that messages are delivered in the correct order to all participants in a group chat?",
+      "options": [
+        "Using a single message queue per group with a consumer per participant",
+        "Storing messages with a timestamp and having clients sort locally",
+        "Using a consistent hashing ring to assign messages to partitions",
+        "Using a single-threaded dispatcher per conversation with sequence numbers"
+      ],
+      "answer": 1,
+      "explanation": "Using a consistent timestamp (e.g., server-generated) and having clients sort locally is a common, scalable approach; for strict ordering, a single-threaded dispatcher per conversation with sequence numbers is also viable.",
+      "tags": ["messaging", "chat", "ordering"]
+    },
+    {
+      "id": "j2k3l4m5-n6o7-p8q9-r0s1-t2u3v4w5x6y7",
+      "type": "single",
+      "question": "In a distributed file system like HDFS, what is the purpose of a NameNode?",
+      "options": [
+        "To store the actual file data blocks",
+        "To manage metadata and namespace operations",
+        "To replicate data across data nodes",
+        "To balance the load between clients"
+      ],
+      "answer": 1,
+      "explanation": "The NameNode stores metadata (file names, block locations, etc.) and coordinates client access, acting as the central controller for the distributed file system.",
+      "tags": ["distributed-storage", "hdfs", "metadata"]
+    },
+    {
+      "id": "k3l4m5n6-o7p8-q9r0-s1t2-u3v4w5x6y7z8",
+      "type": "single",
+      "question": "Which approach is most effective for implementing rate limiting across multiple API servers in a distributed environment?",
+      "options": [
+        "In-memory counters on each server with sticky sessions",
+        "A centralized data store like Redis with atomic operations",
+        "Client-side throttling using HTTP status codes",
+        "Limiting connections at the network load balancer only"
+      ],
+      "answer": 1,
+      "explanation": "A centralized store like Redis with atomic operations (e.g., INCR) allows accurate, globally consistent rate limiting across all API servers.",
+      "tags": ["rate-limiting", "redis", "distributed-systems"]
+    },
+    {
+      "id": "l4m5n6o7-p8q9-r0s1-t2u3-v4w5x6y7z8a9",
+      "type": "single",
+      "question": "Which database type is most suitable for storing user sessions in a system that expects frequent read/write operations and requires automatic expiration of stale sessions?",
+      "options": [
+        "Relational database with TTL indexes",
+        "Document store with background cleanup jobs",
+        "In-memory key-value store like Redis with TTL",
+        "Column-family database with versioning"
+      ],
+      "answer": 2,
+      "explanation": "Redis with TTL provides fast in-memory access, automatic expiration, and is well-suited for high-throughput session management.",
+      "tags": ["session-management", "redis", "caching"]
+    },
+    {
+      "id": "m5n6o7p8-q9r0-s1t2-u3v4-w5x6y7z8a9b0",
+      "type": "single",
+      "question": "When designing a payment system, which approach is most critical for ensuring that a transaction is not processed more than once?",
+      "options": [
+        "Using a distributed lock around the payment flow",
+        "Implementing idempotency keys and storing processed transaction IDs",
+        "Relying on database unique constraints only",
+        "Using synchronous two-phase commit across all services"
+      ],
+      "answer": 1,
+      "explanation": "Idempotency keys, stored with processed transaction status, allow the system to safely retry requests without duplication, even across distributed services.",
+      "tags": ["payment", "idempotency", "api-design"]
+    },
+    {
+      "id": "n6o7p8q9-r0s1-t2u3-v4w5-x6y7z8a9b0c1",
+      "type": "single",
+      "question": "What is the primary advantage of using a consistent hashing algorithm for distributed caching?",
+      "options": [
+        "It guarantees all keys are evenly distributed at all times",
+        "It minimizes key redistribution when nodes are added or removed",
+        "It reduces the need for replication across nodes",
+        "It simplifies the implementation of cache eviction policies"
+      ],
+      "answer": 1,
+      "explanation": "Consistent hashing minimizes the number of keys that need to be remapped when nodes join or leave, making it ideal for dynamic distributed caches.",
+      "tags": ["caching", "distributed-systems", "consistent-hashing"]
+    },
+    {
+      "id": "o7p8q9r0-s1t2-u3v4-w5x6-y7z8a9b0c1d2",
+      "type": "single",
+      "question": "Which technique is most effective for securely storing and accessing secrets (API keys, database passwords) in a cloud-native application?",
+      "options": [
+        "Hardcoding them in environment variables",
+        "Storing them in a dedicated secrets management service (e.g., HashiCorp Vault, AWS Secrets Manager)",
+        "Encrypting them and storing them in a configuration file",
+        "Embedding them in the application container image"
+      ],
+      "answer": 1,
+      "explanation": "A secrets management service provides centralized, auditable, and fine-grained access control with encryption at rest and in transit, avoiding hardcoded secrets.",
+      "tags": ["security", "secrets-management", "cloud-native", "vault"]
+    },
+    {
+      "id": "p8q9r0s1-t2u3-v4w5-x6y7-z8a9b0c1d2e3",
+      "type": "single",
+      "question": "In a leaderless replication system (like Cassandra), what mechanism is used to resolve conflicting writes during read operations?",
+      "options": [
+        "Last-write-wins (LWW) using timestamps",
+        "Read repair and hinted handoffs",
+        "Quorum-based voting with vector clocks",
+        "Distributed transactions"
+      ],
+      "answer": 0,
+      "explanation": "Cassandra uses last-write-wins (LWW) with timestamps to resolve conflicts, where the write with the latest timestamp is considered authoritative during reads.",
+      "tags": ["distributed-database", "cassandra", "conflict-resolution"]
+    }
+  ]
 }

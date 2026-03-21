@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -15,32 +15,38 @@
         <h3>Amplify Console</h3>
         <ul>
           <li>
-            Login to <a href="https://console.aws.amazon.com/">AWS Management Console</a> and Search for Amplify service<br/>
-            <img src="./static/image/1 search for amplify console.png">
+            Login to
+            <a href="https://console.aws.amazon.com/">AWS Management Console</a>
+            and Search for Amplify service<br />
+            <img src="./static/image/1 search for amplify console.png" />
           </li>
           <li>
-            In AWS Amplify service console, select "Get Started" under "Deploy"<br/>
-            <img src="./static/image/2. get started with deploying.png">
+            In AWS Amplify service console, select "Get Started" under
+            "Deploy"<br />
+            <img src="./static/image/2. get started with deploying.png" />
           </li>
           <li>
-            Select the CMS where repo is deployed. We are taking Github for example here.<br/>
-            <img src="./static/image/3. select repository.png">
+            Select the CMS where repo is deployed. We are taking Github for
+            example here.<br />
+            <img src="./static/image/3. select repository.png" />
           </li>
           <li>
-            Authenticate with the CMS and choose the branch of the appropriate repo<br/>
-            <img src="./static/image/4. add repository branch.png">
+            Authenticate with the CMS and choose the branch of the appropriate
+            repo<br />
+            <img src="./static/image/4. add repository branch.png" />
           </li>
           <li>
-            Accept default build settings and select next<br/>
-            <img src="./static/image/5. accept default build.png">
+            Accept default build settings and select next<br />
+            <img src="./static/image/5. accept default build.png" />
           </li>
           <li>
-            Review final details and select "Save and Deploy"<br/>
-            <img src="./static/image/6. save and deploy.png">
+            Review final details and select "Save and Deploy"<br />
+            <img src="./static/image/6. save and deploy.png" />
           </li>
           <li>
-            Amplify will now build the source code and deploy the app at https://...amplifyapp.com.<br/>
-            <img src="./static/image/7. app deployed.png">
+            Amplify will now build the source code and deploy the app at
+            https://...amplifyapp.com.<br />
+            <img src="./static/image/7. app deployed.png" />
           </li>
         </ul>
 
@@ -59,7 +65,8 @@
             </code></pre>
             <ul>
               <li>opens browser to login the Administrator user</li>
-              <li>Back to console
+              <li>
+                Back to console
                 <pre><code class="language-bash">
     > Specify the AWS Region:
     > Specify the username of the new IAM user:
@@ -70,10 +77,10 @@
               <li>Back to console</li>
               <pre><code class="language-bash">
     > Enter the access key of the newly created user:
-      > accessKeyId: 
-      > secretAccessKey: 
+      > accessKeyId:
+      > secretAccessKey:
     > This would update/create the AWS Profile in your local machine
-      > Profile Name: 
+      > Profile Name:
               </code></pre>
             </ul>
           </li>
@@ -81,10 +88,10 @@
             Initialize amplify
             <pre><code class="language-bash">
     $ amplify init
-    > Enter a name for the project: 
+    > Enter a name for the project:
       &lt;sets default configuration here&gt;
     > Initialize the project with the above configuration?
-    > Select the authentication method you want to use: (Use arrow keys): AWS profile / AWS access keys 
+    > Select the authentication method you want to use: (Use arrow keys): AWS profile / AWS access keys
       &lt;on selecting AWS profile&gt;
         > Please choose the profile you want to use
 
@@ -104,32 +111,42 @@
                 <td>Add any features eg. API</td>
               </tr>
               <tr>
-                <td><pre><code class="language-bash">
+                <td>
+                  <pre><code class="language-bash">
     $ amplify status
                 </code></pre>
                 </td>
                 <td>Check status on local and deployed</td>
               </tr>
               <tr>
-                <td><pre><code class="language-bash">
+                <td>
+                  <pre><code class="language-bash">
     $ amplify push
                 </code></pre>
                 </td>
-                <td>build all your local backend resources and provision it in the cloud</td>
+                <td>
+                  build all your local backend resources and provision it in the
+                  cloud
+                </td>
               </tr>
               <tr>
-                <td><pre><code class="language-bash">
+                <td>
+                  <pre><code class="language-bash">
     $ amplify console
                 </code></pre>
                 </td>
                 <td>open the Amplify Console and view your project status</td>
               </tr>
               <tr>
-                <td><pre><code class="language-bash">
+                <td>
+                  <pre><code class="language-bash">
     $ amplify publish
                 </code></pre>
                 </td>
-                <td>build all your local backend and frontend resources (if you have hosting category added) and provision it in the cloud</td>
+                <td>
+                  build all your local backend and frontend resources (if you
+                  have hosting category added) and provision it in the cloud
+                </td>
               </tr>
             </table>
           </li>
@@ -143,7 +160,7 @@
     <div class="menu-content" id="menu-content"></div>
   </div>
 </div>
-  
+
 <div class="footer">
   <span class="prev"><a href="./02.amazon_cli.html">02. Amazon CLI</a></span>
 </div>

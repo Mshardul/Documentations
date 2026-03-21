@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -16,48 +16,96 @@
         <pre><code class="language-cpp">
     #include &lt;iostream>
     using namespace std;
-    
+
     int main() { // Main() function: where the execution of program begins
       cout&lt;&lt;"Hello World"; // prints hello world
       return 0;
-    }          
+    }
         </code></pre>
         <ul>
           <li>
             <span class="code point">#include:</span>
             <ul>
-              <li>all lines that start with pound (#) sign are called <span class="point">directives</span> and are processed by a preprocessor which is a program invoked by the compiler.</li>
-              <li>The <span class="code">#include</span> directive tells the compiler to include a file.</li>
-              <li><span class="code">#include&lt;iostream></span>. It tells the compiler to include the standard iostream file which contains declarations of all the standard input/output library functions.</li>
+              <li>
+                all lines that start with pound (#) sign are called
+                <span class="point">directives</span> and are processed by a
+                preprocessor which is a program invoked by the compiler.
+              </li>
+              <li>
+                The <span class="code">#include</span> directive tells the
+                compiler to include a file.
+              </li>
+              <li>
+                <span class="code">#include&lt;iostream></span>. It tells the
+                compiler to include the standard iostream file which contains
+                declarations of all the standard input/output library functions.
+              </li>
             </ul>
           </li>
           <li>
             <span class="code point">using namespace std:</span>
             <ul>
-              <li>used to import the entirety of the std namespace into the current namespace of the program.</li>
-              <li>The <span class="code">std</span> namespace is huge. So the statement <span class="code">using namespace std</span> is generally considered a bad practice.</li>
-              <li>The alternative to this statement is to specify the namespace to which the identifier belongs using the scope operator(<span class="code">::</span>) each time we declare a type.</li>
+              <li>
+                used to import the entirety of the std namespace into the
+                current namespace of the program.
+              </li>
+              <li>
+                The <span class="code">std</span> namespace is huge. So the
+                statement <span class="code">using namespace std</span> is
+                generally considered a bad practice.
+              </li>
+              <li>
+                The alternative to this statement is to specify the namespace to
+                which the identifier belongs using the scope operator(<span
+                  class="code"
+                  >::</span
+                >) each time we declare a type.
+              </li>
             </ul>
           </li>
           <li>
             <span class="code point">int main()</span>
             <ul>
-              <li>used to declare a function named &quot;main&quot; which returns data of integer type.</li>
-              <li>Execution of every C++ program begins with the <span class="code">main()</span> function, no matter where the function is located in the program.</li>
+              <li>
+                used to declare a function named &quot;main&quot; which returns
+                data of integer type.
+              </li>
+              <li>
+                Execution of every C++ program begins with the
+                <span class="code">main()</span> function, no matter where the
+                function is located in the program.
+              </li>
             </ul>
           </li>
           <li>
-            <span class="code point">std::cout&lt;&lt;&quot;Hello World&quot;;</span>
+            <span class="code point"
+              >std::cout&lt;&lt;&quot;Hello World&quot;;</span
+            >
             <ul>
-              <li>tells the compiler to display the message &quot;Hello World&quot; on the screen.</li>
-              <li>A semi-colon <span class="code">;</span> is used to end a statement. Semi-colon character at the end of the statement is used to indicate that the statement is ending there.</li>
-              <li>The std::cout is used to identify the standard character output device which is usually the desktop screen. Everything followed by the character <span class="code">&lt;&lt;</span> is displayed to the output device.</li>
+              <li>
+                tells the compiler to display the message &quot;Hello
+                World&quot; on the screen.
+              </li>
+              <li>
+                A semi-colon <span class="code">;</span> is used to end a
+                statement. Semi-colon character at the end of the statement is
+                used to indicate that the statement is ending there.
+              </li>
+              <li>
+                The std::cout is used to identify the standard character output
+                device which is usually the desktop screen. Everything followed
+                by the character <span class="code">&lt;&lt;</span> is displayed
+                to the output device.
+              </li>
             </ul>
           </li>
           <li>
             <span class="code point">return 0;</span>
             <ul>
-              <li>This statement is used to return a value from a function and indicates the finishing of a function.</li>
+              <li>
+                This statement is used to return a value from a function and
+                indicates the finishing of a function.
+              </li>
             </ul>
           </li>
         </ul>
@@ -65,13 +113,20 @@
 
       <div class="notes">
         <ul>
-          <li><span class="code">&lt;iostream></span> must be included to use <span class="code">std::cin</span> and <span class="code">std::cout</span>.</li>
-          <li>It is a good practice to use Indentation and comments in programs for easy understanding.</li>
+          <li>
+            <span class="code">&lt;iostream></span> must be included to use
+            <span class="code">std::cin</span> and
+            <span class="code">std::cout</span>.
+          </li>
+          <li>
+            It is a good practice to use Indentation and comments in programs
+            for easy understanding.
+          </li>
         </ul>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Comments">
       <div class="topic-heading"><h2>Comments</h2></div>
@@ -85,7 +140,6 @@
         </code></pre>
       </div>
     </div>
-
   </div>
 
   <div class="sidebar-right">

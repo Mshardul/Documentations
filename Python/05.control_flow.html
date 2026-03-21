@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -31,7 +31,8 @@
         </code></pre>
 
         <h3>Chaining comparison operator</h3>
-        <span class="code">a op1 b op2 c</span> is equivalent to <span class="code">a op1 b and b op2 c</span>
+        <span class="code">a op1 b op2 c</span> is equivalent to
+        <span class="code">a op1 b and b op2 c</span>
         <pre><code class="language-python">
     if a < b < c : # equivalent to if a < b and b < c
           pass
@@ -39,7 +40,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Loop">
       <div class="topic-heading"><h2>Loop</h2></div>
@@ -49,12 +50,12 @@
     ''' syntax '''
     for var in iterable:
         pass
-      
+
     ''' example '''
     l1 = [1, 2.3, "hi"]
     for ele in l1:
-        print(ele)    
-    
+        print(ele)
+
         </code></pre>
 
         <h3>While loop</h3>
@@ -91,7 +92,7 @@
             print(move)
     for move in moves:
         pass # passes the entire execution
-    
+
     # with else
     alphabets = ["x", "y", "z"]
     for alphabet in alphabets:
@@ -103,20 +104,32 @@
 
         <span class="point code">Pass</span>
         <ul>
-          <li><span class="code">Pass</span> is a statement which does nothing when executed - Because it is a <span class="point">null statement</span>.</li>
-          <li>The statement is not ignored by the interpreter, but the statement results in no operation.</li>
-          <li>It is used when we do not want anything to be executed, but a statement is required.</li>
+          <li>
+            <span class="code">Pass</span> is a statement which does nothing
+            when executed - Because it is a
+            <span class="point">null statement</span>.
+          </li>
+          <li>
+            The statement is not ignored by the interpreter, but the statement
+            results in no operation.
+          </li>
+          <li>
+            It is used when we do not want anything to be executed, but a
+            statement is required.
+          </li>
         </ul>
 
         <h3>Looping techniques</h3>
 
-        Using <span class="point">enumerate()</span>: index number along with value present in that index
+        Using <span class="point">enumerate()</span>: index number along with
+        value present in that index
         <pre><code class="language-python">
     for key, value in enumerate(l1):
         print(key, value)
         </code></pre>
 
-        <span class="point">zip()</span> is used to combine 2 similar containers(list-list or dict-dict) printing the values sequentially.
+        <span class="point">zip()</span> is used to combine 2 similar
+        containers(list-list or dict-dict) printing the values sequentially.
         <pre><code class="language-python">
     questions = ['name', 'colour', 'shape']
     answers = ['apple', 'red', 'a circle']
@@ -124,17 +137,27 @@
         print('What is your {0}?  I am {1}.'.format(question, answer))
         </code></pre>
 
-        <span class="point">iteritem()</span> is used to loop through the dictionary printing the dictionary key-value pair sequentially which is used before Python 3 version.
+        <span class="point">iteritem()</span> is used to loop through the
+        dictionary printing the dictionary key-value pair sequentially which is
+        used before Python 3 version.
         <pre><code class="language-python">
     d = {"name": "apple", "colour": "red", "shape": "a circle"}
     for i, j in d.iteritem():
         print(i, j)
         </code></pre>
 
-        <span class="point">items()</span> performs the similar task on dictionary as iteritems() but have certain disadvantages when compared with iteritems().
+        <span class="point">items()</span> performs the similar task on
+        dictionary as iteritems() but have certain disadvantages when compared
+        with iteritems().
         <ul>
-          <li>It is very time-consuming. Calling it on large dictionaries consumes quite a lot of time.</li>
-          <li>It takes a lot of memory. Sometimes takes double the memory when called on a dictionary.</li>
+          <li>
+            It is very time-consuming. Calling it on large dictionaries consumes
+            quite a lot of time.
+          </li>
+          <li>
+            It takes a lot of memory. Sometimes takes double the memory when
+            called on a dictionary.
+          </li>
         </ul>
         <pre><code class="language-python">
     d = {"name": "apple", "colour": "red", "shape": "a circle"}
@@ -142,14 +165,17 @@
         print(i, j)
         </code></pre>
 
-        <span class="point">sorted()</span> is used to print the container is sorted order. It doesn't sort the original list, just returns one in sorted order.
+        <span class="point">sorted()</span> is used to print the container is
+        sorted order. It doesn't sort the original list, just returns one in
+        sorted order.
         <pre><code class="language-python">
     lis = [1, 3, 5, 6, 2, 1, 3]
     for i in sorted(lis):
         print(i)
         </code></pre>
 
-        <span class="point">reversed()</span> is used to print the values of the container in the reversed order
+        <span class="point">reversed()</span> is used to print the values of the
+        container in the reversed order
         <pre><code class="language-python">
     lis = [1, 3, 5, 6, 2, 1, 3]
     for i in reversed(lis):

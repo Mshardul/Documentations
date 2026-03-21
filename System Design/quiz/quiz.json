@@ -58,7 +58,7 @@
   },
   "questions": [
     {
-      "id": "f3a2b1c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
+      "id": "b8eaeed2-9232-4072-96dd-33c6539570b4",
       "type": "single",
       "question": "When designing a URL shortening service like bit.ly, which database choice is most suitable for storing the mapping between short codes and long URLs, considering high write throughput and low latency reads?",
       "options": [
@@ -72,7 +72,7 @@
       "tags": ["database", "scalability", "dynamodb", "cassandra"]
     },
     {
-      "id": "a4b5c6d7-e8f9-0a1b-2c3d-4e5f6a7b8c9d",
+      "id": "95386cb8-ee84-4fd1-88f7-67a6658e5b30",
       "type": "single",
       "question": "In a distributed messaging system like Kafka, what is the primary role of a partition?",
       "options": [
@@ -86,7 +86,7 @@
       "tags": ["messaging", "kafka", "scalability"]
     },
     {
-      "id": "b1c2d3e4-f5a6-7b8c-9d0e-1f2a3b4c5d6e",
+      "id": "49017f64-f0c7-40c7-a67c-56d99dbc3b4d",
       "type": "single",
       "question": "Which technique is most effective for handling read-heavy workloads in a typical web application database?",
       "options": [
@@ -100,7 +100,7 @@
       "tags": ["database", "scalability", "read-replicas"]
     },
     {
-      "id": "c5d6e7f8-g9h0-i1j2-k3l4-m5n6o7p8q9r0",
+      "id": "3ba41d8a-bd40-4118-84e7-7b4c1507e688",
       "type": "single",
       "question": "In a leader-based distributed consensus system (like Raft), what happens if the leader node fails?",
       "options": [
@@ -114,7 +114,7 @@
       "tags": ["distributed-system", "consensus", "raft"]
     },
     {
-      "id": "d6e7f8g9-h0i1-j2k3-l4m5-n6o7p8q9r0s1",
+      "id": "8c6d7dd0-d2b3-4ce8-8c32-a222b3b3afeb",
       "type": "single",
       "question": "When designing a system for real-time analytics on user clickstreams, which component is essential for ingesting high-velocity data reliably?",
       "options": [
@@ -128,7 +128,7 @@
       "tags": ["streaming", "kafka", "real-time"]
     },
     {
-      "id": "e7f8g9h0-i1j2-k3l4-m5n6-o7p8q9r0s1t2",
+      "id": "02b98613-1289-4367-ab0f-bc1fcc80c9fa",
       "type": "single",
       "question": "What is the primary purpose of a content delivery network (CDN) in system design?",
       "options": [
@@ -142,7 +142,7 @@
       "tags": ["cdn", "performance", "caching"]
     },
     {
-      "id": "f8g9h0i1-j2k3-l4m5-n6o7-p8q9r0s1t2u3",
+      "id": "ec8e70e6-f7bd-4408-a484-8f7ec18fe6c7",
       "type": "single",
       "question": "In a microservices architecture, which pattern is most effective for handling partial failures and preventing cascading failures across services?",
       "options": [
@@ -156,7 +156,7 @@
       "tags": ["microservice", "resilience", "circuit-breaker"]
     },
     {
-      "id": "g9h0i1j2-k3l4-m5n6-o7p8-q9r0s1t2u3v4",
+      "id": "d99150b4-6e61-44c6-8914-ef0d340f5b6e",
       "type": "single",
       "question": "Which database property is most critical when designing a system that requires strong consistency across globally distributed replicas?",
       "options": [
@@ -170,7 +170,7 @@
       "tags": ["distributed-system", "consistency", "quorum"]
     },
     {
-      "id": "h0i1j2k3-l4m5-n6o7-p8q9-r0s1t2u3v4w5",
+      "id": "baec1b8a-7565-481b-bfa8-9f91e09256b0",
       "type": "single",
       "question": "Which strategy is most suitable for uniquely identifying requests in a distributed system to support idempotency?",
       "options": [
@@ -184,7 +184,7 @@
       "tags": ["api-design", "idempotency", "uuid"]
     },
     {
-      "id": "i1j2k3l4-m5n6-o7p8-q9r0-s1t2u3v4w5x6",
+      "id": "891825f0-a4a9-4fdf-9f66-430a41be305d",
       "type": "single",
       "question": "When designing a large-scale chat system, which technique is most suitable for ensuring that messages are delivered in the correct order to all participants in a group chat?",
       "options": [
@@ -198,7 +198,7 @@
       "tags": ["messaging", "chat", "ordering"]
     },
     {
-      "id": "j2k3l4m5-n6o7-p8q9-r0s1-t2u3v4w5x6y7",
+      "id": "486ecc76-5b1a-42a3-970c-8eb39898c585",
       "type": "single",
       "question": "In a distributed file system like HDFS, what is the purpose of a NameNode?",
       "options": [
@@ -212,7 +212,7 @@
       "tags": ["distributed-storage", "hdfs", "metadata"]
     },
     {
-      "id": "k3l4m5n6-o7p8-q9r0-s1t2-u3v4w5x6y7z8",
+      "id": "5ce80d41-c05a-4b93-a16c-65f81d9e4bae",
       "type": "single",
       "question": "Which approach is most effective for implementing rate limiting across multiple API servers in a distributed environment?",
       "options": [
@@ -226,7 +226,7 @@
       "tags": ["rate-limiting", "redis", "distributed-system"]
     },
     {
-      "id": "l4m5n6o7-p8q9-r0s1-t2u3-v4w5x6y7z8a9",
+      "id": "5625152c-3bb3-47df-8220-1d2a2c661661",
       "type": "single",
       "question": "Which database type is most suitable for storing user sessions in a system that expects frequent read/write operations and requires automatic expiration of stale sessions?",
       "options": [
@@ -240,7 +240,7 @@
       "tags": ["session-management", "redis", "caching"]
     },
     {
-      "id": "m5n6o7p8-q9r0-s1t2-u3v4-w5x6y7z8a9b0",
+      "id": "728d613c-fd5d-4c63-9fc3-cbe70ad4f07b",
       "type": "single",
       "question": "When designing a payment system, which approach is most critical for ensuring that a transaction is not processed more than once?",
       "options": [
@@ -254,7 +254,7 @@
       "tags": ["payment", "idempotency", "api-design"]
     },
     {
-      "id": "n6o7p8q9-r0s1-t2u3-v4w5-x6y7z8a9b0c1",
+      "id": "1620773c-dd67-4133-8e84-5ea7bb5b2e1e",
       "type": "single",
       "question": "What is the primary advantage of using a consistent hashing algorithm for distributed caching?",
       "options": [
@@ -268,12 +268,12 @@
       "tags": ["caching", "distributed-system", "consistent-hashing"]
     },
     {
-      "id": "o7p8q9r0-s1t2-u3v4-w5x6-y7z8a9b0c1d2",
+      "id": "d36cafcd-e41c-40f8-a974-f509eab49243",
       "type": "single",
       "question": "Which technique is most effective for securely storing and accessing secrets (API keys, database passwords) in a cloud-native application?",
       "options": [
         "Hardcoding them in environment variables",
-        "Storing them in a dedicated secrets management service (e.g., HashiCorp Vault, AWS Secrets Manager)",
+        "Storing them in a dedicated secrets management service (e.g., HashCorp Vault, AWS Secrets Manager)",
         "Encrypting them and storing them in a configuration file",
         "Embedding them in the application container image"
       ],
@@ -282,7 +282,7 @@
       "tags": ["security", "secrets-management", "cloud-native", "vault"]
     },
     {
-      "id": "p8q9r0s1-t2u3-v4w5-x6y7-z8a9b0c1d2e3",
+      "id": "97ee4ef3-3ac6-4b56-ae15-c3dd9e62cebf",
       "type": "single",
       "question": "In a leaderless replication system (like Cassandra), what mechanism is used to resolve conflicting writes during read operations?",
       "options": [
@@ -296,7 +296,7 @@
       "tags": ["distributed-database", "cassandra", "conflict-resolution"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111101",
+      "id": "1d6f103c-62d5-4bf4-8c3e-2b3b0be04f3d",
       "type": "single",
       "question": "Which consistency model guarantees that all nodes in a distributed system see the same data at the same time?",
       "options": [
@@ -310,7 +310,7 @@
       "tags": ["distributed-system", "consistency"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111102",
+      "id": "fb525c69-69e0-4388-9f28-f976c5cd643e",
       "type": "single",
       "question": "In a URL shortening service (like bit.ly), which database choice is most appropriate for storing the mapping between short and original URLs?",
       "options": [
@@ -324,7 +324,7 @@
       "tags": ["database", "scalability", "redis", "dynamodb"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111103",
+      "id": "8ae15d43-618b-4abb-aaa5-764d7ea700d6",
       "type": "single",
       "question": "What is the primary purpose of a Load Balancer in a distributed system?",
       "options": [
@@ -343,7 +343,7 @@
       ]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111104",
+      "id": "cd844419-b9e4-4f10-9036-95e8553821c3",
       "type": "single",
       "question": "In the CAP theorem, which property does a system that prioritizes Partition Tolerance and Availability sacrifice?",
       "options": [
@@ -363,7 +363,7 @@
       ]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111105",
+      "id": "931f16e2-cacc-4e6d-b718-6f8c1eced594",
       "type": "single",
       "question": "Which caching strategy writes data to the cache and the database simultaneously, ensuring consistency but adding write latency?",
       "options": [
@@ -377,7 +377,7 @@
       "tags": ["caching", "database", "consistency"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111106",
+      "id": "c06be46f-1dd8-4217-9db9-2ef2ceee0fce",
       "type": "single",
       "question": "Which technique is used to evenly distribute data across multiple database nodes while minimizing data movement when nodes are added or removed?",
       "options": [
@@ -391,7 +391,7 @@
       "tags": ["distributed-system", "sharding", "scalability", "database"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111107",
+      "id": "232a0279-47a0-47c0-9073-109a4546a12a",
       "type": "single",
       "question": "What is the main advantage of using a Message Queue (e.g., Kafka, RabbitMQ) in a distributed system?",
       "options": [
@@ -405,7 +405,7 @@
       "tags": ["message-queue", "microservice", "fault-tolerance", "kafka"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111108",
+      "id": "88a5a573-7ea6-42d2-9c4e-a85693024a5f",
       "type": "single",
       "question": "Which of the following best describes the purpose of database indexing?",
       "options": [
@@ -419,7 +419,7 @@
       "tags": ["database", "indexing", "scalability"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111109",
+      "id": "d1ff15b2-2e05-4ab1-8a55-7901d2221ea8",
       "type": "single",
       "question": "In a microservices architecture, which pattern is used to prevent a failing service from cascading failures to other services?",
       "options": [
@@ -429,11 +429,11 @@
         "CQRS Pattern"
       ],
       "answer": 1,
-      "explanation": "The **Circuit Breaker Pattern** monitors failures and 'opens' the circuit when a threshold is hit — stopping calls to the failing service temporarily. After a timeout, it enters a half-open state to test recovery before resuming normal traffic.",
+      "explanation": "The **Circuit Breaker Pattern** monitors failures and \"opens\" the circuit when a threshold is hit — stopping calls to the failing service temporarily. After a timeout, it enters a half-open state to test recovery before resuming normal traffic.",
       "tags": ["microservice", "fault-tolerance", "distributed-system"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111110",
+      "id": "0f98ceb5-b6b3-477d-bd16-4506c0c49753",
       "type": "single",
       "question": "Which of the following is the best approach to handle database scaling when read traffic far exceeds write traffic?",
       "options": [
@@ -447,7 +447,7 @@
       "tags": ["database", "replication", "scalability"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111111",
+      "id": "bc957c56-7f19-479e-964c-fff5c36a8323",
       "type": "single",
       "question": "Which consistency pattern ensures that once a user writes a value, they will always read that same value back — even in a distributed system?",
       "options": [
@@ -461,7 +461,7 @@
       "tags": ["distributed-system", "consistency", "replication"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111112",
+      "id": "115f2e64-9526-4813-b3cb-5c654da4ff04",
       "type": "single",
       "question": "Which of the following best describes horizontal scaling?",
       "options": [
@@ -475,9 +475,9 @@
       "tags": ["scalability", "distributed-system", "cloud-native"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111113",
+      "id": "64c3d112-68f3-4adb-8a74-d4cfb2e9511c",
       "type": "single",
-      "question": "In a distributed system, what is the purpose of a 'heartbeat' mechanism?",
+      "question": "In a distributed system, what is the purpose of a \"heartbeat\" mechanism?",
       "options": [
         "To synchronize clocks across all nodes",
         "To detect whether a node is alive or has failed",
@@ -495,7 +495,7 @@
       ]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111114",
+      "id": "d661dd13-9177-4ec8-878e-ce408403655d",
       "type": "single",
       "question": "Which of the following is the key trade-off when using eventual consistency in a distributed database?",
       "options": [
@@ -515,9 +515,9 @@
       ]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111115",
+      "id": "86d0330f-3535-4d41-957d-44add4098846",
       "type": "single",
-      "question": "What does the term 'idempotency' mean in the context of distributed systems and APIs?",
+      "question": "What does the term \"idempotency\" mean in the context of distributed systems and APIs?",
       "options": [
         "An operation that always executes faster on repeated calls",
         "An operation that produces the same result regardless of how many times it's executed",
@@ -534,7 +534,7 @@
       ]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111116",
+      "id": "85caa18c-1648-450e-9d52-7a7c2347f0fd",
       "type": "single",
       "question": "Which of the following best describes the role of a CDN (Content Delivery Network) in system design?",
       "options": [
@@ -548,9 +548,9 @@
       "tags": ["networking", "cdn", "scalability", "caching"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111117",
+      "id": "b8dfdc94-5f19-4dab-ba6a-c56d0ece5307",
       "type": "single",
-      "question": "In system design, what problem does the 'Two-Phase Commit (2PC)' protocol primarily solve?",
+      "question": "In system design, what problem does the \"Two-Phase Commit (2PC)\" protocol primarily solve?",
       "options": [
         "Preventing hotspots in sharded databases",
         "Ensuring atomicity of transactions across multiple distributed nodes",
@@ -558,11 +558,11 @@
         "Managing leader election in a distributed cluster"
       ],
       "answer": 1,
-      "explanation": "**2PC** ensures all nodes in a distributed transaction either commit or rollback together — maintaining atomicity. A coordinator asks all nodes to 'prepare,' then 'commit' only if all agree. It's reliable but slow and vulnerable to coordinator failure.",
+      "explanation": "**2PC** ensures all nodes in a distributed transaction either commit or rollback together — maintaining atomicity. A coordinator asks all nodes to \"prepare,\" then \"commit\" only if all agree. It's reliable but slow and vulnerable to coordinator failure.",
       "tags": ["distributed-system", "transaction", "database", "consistency"]
     },
     {
-      "id": "f1a2b3c4-d5e6-7801-abcd-111111111118",
+      "id": "41b412e2-f165-4b1d-89f2-90b8ddeac1cf",
       "type": "single",
       "question": "Which of the following is the biggest drawback of synchronous communication between microservices?",
       "options": [

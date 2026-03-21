@@ -3,7 +3,6 @@
     "topic": "System Design Quiz",
     "version": 1,
     "allowed_tags": [
-      "api",
       "api-design",
       "caching",
       "cap-theorem",
@@ -20,7 +19,6 @@
       "distributed-database",
       "distributed-storage",
       "distributed-system",
-      "distributed-systems",
       "dynamodb",
       "fault-tolerance",
       "hdfs",
@@ -34,7 +32,6 @@
       "messaging",
       "metadata",
       "microservice",
-      "microservices",
       "networking",
       "ordering",
       "payment",
@@ -114,7 +111,7 @@
       ],
       "answer": 1,
       "explanation": "Followers detect leader failure via heartbeat timeouts and trigger a new election, ensuring the system continues with minimal downtime.",
-      "tags": ["distributed-systems", "consensus", "raft"]
+      "tags": ["distributed-system", "consensus", "raft"]
     },
     {
       "id": "d6e7f8g9-h0i1-j2k3-l4m5-n6o7p8q9r0s1",
@@ -156,7 +153,7 @@
       ],
       "answer": 2,
       "explanation": "The circuit breaker pattern prevents cascading failures by stopping requests to a failing service and allowing it time to recover, avoiding repeated timeouts.",
-      "tags": ["microservices", "resilience", "circuit-breaker"]
+      "tags": ["microservice", "resilience", "circuit-breaker"]
     },
     {
       "id": "g9h0i1j2-k3l4-m5n6-o7p8-q9r0s1t2u3v4",
@@ -170,7 +167,7 @@
       ],
       "answer": 1,
       "explanation": "Quorum-based writes and reads ensure strong consistency by requiring acknowledgment from a majority of replicas before committing, providing linearizability even in distributed deployments.",
-      "tags": ["distributed-systems", "consistency", "quorum"]
+      "tags": ["distributed-system", "consistency", "quorum"]
     },
     {
       "id": "h0i1j2k3-l4m5-n6o7-p8q9-r0s1t2u3v4w5",
@@ -226,7 +223,7 @@
       ],
       "answer": 1,
       "explanation": "A centralized store like Redis with atomic operations (e.g., INCR) allows accurate, globally consistent rate limiting across all API servers.",
-      "tags": ["rate-limiting", "redis", "distributed-systems"]
+      "tags": ["rate-limiting", "redis", "distributed-system"]
     },
     {
       "id": "l4m5n6o7-p8q9-r0s1-t2u3-v4w5x6y7z8a9",
@@ -268,7 +265,7 @@
       ],
       "answer": 1,
       "explanation": "Consistent hashing minimizes the number of keys that need to be remapped when nodes join or leave, making it ideal for dynamic distributed caches.",
-      "tags": ["caching", "distributed-systems", "consistent-hashing"]
+      "tags": ["caching", "distributed-system", "consistent-hashing"]
     },
     {
       "id": "o7p8q9r0-s1t2-u3v4-w5x6-y7z8a9b0c1d2",
@@ -297,6 +294,291 @@
       "answer": 0,
       "explanation": "Cassandra uses last-write-wins (LWW) with timestamps to resolve conflicts, where the write with the latest timestamp is considered authoritative during reads.",
       "tags": ["distributed-database", "cassandra", "conflict-resolution"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111101",
+      "type": "single",
+      "question": "Which consistency model guarantees that all nodes in a distributed system see the same data at the same time?",
+      "options": [
+        "Eventual Consistency",
+        "Strong Consistency",
+        "Causal Consistency",
+        "Read-your-writes Consistency"
+      ],
+      "answer": 1,
+      "explanation": "**Strong Consistency** guarantees all nodes see the same data simultaneously — every read reflects the latest write. It trades availability and latency for accuracy, making it ideal for banking or inventory systems where stale data is unacceptable.",
+      "tags": ["distributed-system", "consistency"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111102",
+      "type": "single",
+      "question": "In a URL shortening service (like bit.ly), which database choice is most appropriate for storing the mapping between short and original URLs?",
+      "options": [
+        "Graph Database (e.g., Neo4j)",
+        "Relational Database (e.g., PostgreSQL)",
+        "Key-Value Store (e.g., Redis / DynamoDB)",
+        "Time-Series Database (e.g., InfluxDB)"
+      ],
+      "answer": 2,
+      "explanation": "A **Key-Value store** is perfect here — the short code is the key, the original URL is the value. Lookups are O(1), reads are extremely frequent, and there's no relational complexity needed. Redis also adds caching benefits for hot URLs.",
+      "tags": ["database", "scalability", "redis", "dynamodb"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111103",
+      "type": "single",
+      "question": "What is the primary purpose of a Load Balancer in a distributed system?",
+      "options": [
+        "To compress network traffic between services",
+        "To distribute incoming requests evenly across multiple servers",
+        "To encrypt data in transit between client and server",
+        "To cache frequently accessed database queries"
+      ],
+      "answer": 1,
+      "explanation": "A **Load Balancer** distributes incoming traffic across multiple servers to prevent any single server from becoming a bottleneck. It improves availability, fault tolerance, and scalability — if one server goes down, traffic is rerouted to healthy ones automatically.",
+      "tags": [
+        "distributed-system",
+        "load-balancing",
+        "fault-tolerance",
+        "scalability"
+      ]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111104",
+      "type": "single",
+      "question": "In the CAP theorem, which property does a system that prioritizes Partition Tolerance and Availability sacrifice?",
+      "options": [
+        "Consistency and Latency",
+        "Consistency and Durability",
+        "Strong Consistency",
+        "Availability and Consistency are both retained"
+      ],
+      "answer": 2,
+      "explanation": "In **CAP theorem**, you can only guarantee two of three properties. An AP system (Availability + Partition Tolerance) sacrifices strong Consistency — nodes may return stale data during a partition. Examples include DynamoDB and Cassandra, which favor availability over strict consistency.",
+      "tags": [
+        "distributed-system",
+        "cap-theorem",
+        "consistency",
+        "dynamodb",
+        "cassandra"
+      ]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111105",
+      "type": "single",
+      "question": "Which caching strategy writes data to the cache and the database simultaneously, ensuring consistency but adding write latency?",
+      "options": [
+        "Cache-Aside",
+        "Write-Behind",
+        "Read-Through",
+        "Write-Through"
+      ],
+      "answer": 3,
+      "explanation": "**Write-Through** caches write to both cache and database synchronously on every write. This keeps data consistent but adds latency. It's ideal when read performance and consistency both matter, though it can be wasteful if written data is rarely read back.",
+      "tags": ["caching", "database", "consistency"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111106",
+      "type": "single",
+      "question": "Which technique is used to evenly distribute data across multiple database nodes while minimizing data movement when nodes are added or removed?",
+      "options": [
+        "Range-Based Sharding",
+        "Round Robin Distribution",
+        "Consistent Hashing",
+        "Vertical Partitioning"
+      ],
+      "answer": 2,
+      "explanation": "**Consistent Hashing** maps both data and nodes onto a virtual ring, so adding/removing a node only remaps a small fraction of keys. Range-based sharding can cause hotspots and requires significant data reshuffling when nodes change.",
+      "tags": ["distributed-system", "sharding", "scalability", "database"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111107",
+      "type": "single",
+      "question": "What is the main advantage of using a Message Queue (e.g., Kafka, RabbitMQ) in a distributed system?",
+      "options": [
+        "It enforces strong consistency across all services",
+        "It decouples producers and consumers, enabling async communication",
+        "It replaces the need for a load balancer",
+        "It stores data permanently as the primary database"
+      ],
+      "answer": 1,
+      "explanation": "**Message Queues** decouple services so producers don't wait for consumers to process requests. This enables async communication, absorbs traffic spikes, and improves fault tolerance — if a consumer goes down, messages persist in the queue until it recovers.",
+      "tags": ["message-queue", "microservice", "fault-tolerance", "kafka"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111108",
+      "type": "single",
+      "question": "Which of the following best describes the purpose of database indexing?",
+      "options": [
+        "To replicate data across multiple nodes for redundancy",
+        "To speed up read queries by creating a separate lookup structure",
+        "To partition large tables across multiple servers",
+        "To enforce foreign key constraints between tables"
+      ],
+      "answer": 1,
+      "explanation": "**Indexes** create a separate data structure (like a B-tree) that allows the database to locate rows without scanning the entire table. This drastically speeds up reads but adds overhead on writes since the index must also be updated on every insert or update.",
+      "tags": ["database", "indexing", "scalability"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111109",
+      "type": "single",
+      "question": "In a microservices architecture, which pattern is used to prevent a failing service from cascading failures to other services?",
+      "options": [
+        "Saga Pattern",
+        "Circuit Breaker Pattern",
+        "Strangler Fig Pattern",
+        "CQRS Pattern"
+      ],
+      "answer": 1,
+      "explanation": "The **Circuit Breaker Pattern** monitors failures and 'opens' the circuit when a threshold is hit — stopping calls to the failing service temporarily. After a timeout, it enters a half-open state to test recovery before resuming normal traffic.",
+      "tags": ["microservice", "fault-tolerance", "distributed-system"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111110",
+      "type": "single",
+      "question": "Which of the following is the best approach to handle database scaling when read traffic far exceeds write traffic?",
+      "options": [
+        "Vertical Scaling the primary database",
+        "Using Read Replicas",
+        "Switching to a Key-Value store",
+        "Implementing Write-Behind Caching"
+      ],
+      "answer": 1,
+      "explanation": "**Read Replicas** duplicate the primary database and serve all read traffic, freeing the primary to handle writes. Since most applications are read-heavy, this scales read throughput horizontally without complex sharding. It's a common pattern in systems like Instagram and Twitter.",
+      "tags": ["database", "replication", "scalability"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111111",
+      "type": "single",
+      "question": "Which consistency pattern ensures that once a user writes a value, they will always read that same value back — even in a distributed system?",
+      "options": [
+        "Monotonic Read Consistency",
+        "Causal Consistency",
+        "Read-Your-Writes Consistency",
+        "Eventual Consistency"
+      ],
+      "answer": 2,
+      "explanation": "**Read-Your-Writes Consistency** guarantees that after a user performs a write, all subsequent reads by that same user reflect that write. This is critical for user-facing apps — achieved by routing user reads to the same replica.",
+      "tags": ["distributed-system", "consistency", "replication"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111112",
+      "type": "single",
+      "question": "Which of the following best describes horizontal scaling?",
+      "options": [
+        "Adding more CPU and RAM to an existing server",
+        "Replacing HDDs with SSDs on existing servers",
+        "Adding more servers to distribute the load",
+        "Increasing network bandwidth on a single machine"
+      ],
+      "answer": 2,
+      "explanation": "**Horizontal scaling** (scaling out) adds more servers to share the load, making it more cost-effective and fault-tolerant than vertical scaling. Cloud platforms like AWS make it trivial to spin up new instances on demand.",
+      "tags": ["scalability", "distributed-system", "cloud-native"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111113",
+      "type": "single",
+      "question": "In a distributed system, what is the purpose of a 'heartbeat' mechanism?",
+      "options": [
+        "To synchronize clocks across all nodes",
+        "To detect whether a node is alive or has failed",
+        "To balance load evenly across all servers",
+        "To compress data before transmission between nodes"
+      ],
+      "answer": 1,
+      "explanation": "**Heartbeats** are periodic signals sent between nodes to confirm they're alive. If a node stops sending heartbeats within a timeout window, it's marked as failed and traffic is rerouted. Systems like Kafka, ZooKeeper, and Cassandra rely on heartbeats for failure detection.",
+      "tags": [
+        "distributed-system",
+        "fault-tolerance",
+        "kafka",
+        "zookeeper",
+        "cassandra"
+      ]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111114",
+      "type": "single",
+      "question": "Which of the following is the key trade-off when using eventual consistency in a distributed database?",
+      "options": [
+        "Higher write latency in exchange for better fault tolerance",
+        "Temporary data inconsistency across nodes in exchange for higher availability",
+        "Reduced read throughput in exchange for stronger guarantees",
+        "Increased storage costs in exchange for faster reads"
+      ],
+      "answer": 1,
+      "explanation": "**Eventual consistency** allows nodes to temporarily return stale data, but guarantees they'll converge to the same value over time. This trade-off enables high availability and low latency — systems like DNS, DynamoDB, and Cassandra use it to remain operational even during network partitions.",
+      "tags": [
+        "distributed-system",
+        "consistency",
+        "cap-theorem",
+        "dynamodb",
+        "cassandra"
+      ]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111115",
+      "type": "single",
+      "question": "What does the term 'idempotency' mean in the context of distributed systems and APIs?",
+      "options": [
+        "An operation that always executes faster on repeated calls",
+        "An operation that produces the same result regardless of how many times it's executed",
+        "An operation that automatically retries on failure",
+        "An operation that locks a resource until completion"
+      ],
+      "answer": 1,
+      "explanation": "**Idempotency** ensures repeated identical requests produce the same outcome — critical for retries in distributed systems. If a payment API call fails mid-flight, retrying an idempotent endpoint won't charge the user twice. HTTP GET, PUT, and DELETE are idempotent; POST typically is not.",
+      "tags": [
+        "distributed-system",
+        "api-design",
+        "idempotency",
+        "fault-tolerance"
+      ]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111116",
+      "type": "single",
+      "question": "Which of the following best describes the role of a CDN (Content Delivery Network) in system design?",
+      "options": [
+        "It acts as a primary database for static content",
+        "It serves content from geographically closer edge servers to reduce latency",
+        "It encrypts all traffic between client and origin server",
+        "It load balances requests across multiple origin servers"
+      ],
+      "answer": 1,
+      "explanation": "A **CDN** caches static assets (images, JS, CSS, videos) at edge servers geographically closer to users, dramatically reducing latency and origin server load. Instead of a user in Mumbai hitting a server in the US, they're served from a nearby edge node.",
+      "tags": ["networking", "cdn", "scalability", "caching"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111117",
+      "type": "single",
+      "question": "In system design, what problem does the 'Two-Phase Commit (2PC)' protocol primarily solve?",
+      "options": [
+        "Preventing hotspots in sharded databases",
+        "Ensuring atomicity of transactions across multiple distributed nodes",
+        "Replicating data across geographically distributed data centers",
+        "Managing leader election in a distributed cluster"
+      ],
+      "answer": 1,
+      "explanation": "**2PC** ensures all nodes in a distributed transaction either commit or rollback together — maintaining atomicity. A coordinator asks all nodes to 'prepare,' then 'commit' only if all agree. It's reliable but slow and vulnerable to coordinator failure.",
+      "tags": ["distributed-system", "transaction", "database", "consistency"]
+    },
+    {
+      "id": "f1a2b3c4-d5e6-7801-abcd-111111111118",
+      "type": "single",
+      "question": "Which of the following is the biggest drawback of synchronous communication between microservices?",
+      "options": [
+        "It makes distributed tracing impossible",
+        "It prevents the use of load balancers between services",
+        "Failure or slowness in one service directly stalls the calling service",
+        "It requires all services to share the same database schema"
+      ],
+      "answer": 2,
+      "explanation": "**Synchronous communication** creates tight coupling — the caller blocks and waits, so a slow or failed downstream service stalls the entire request chain. This can cascade into system-wide slowdowns. Async communication via message queues or event streams avoids this entirely.",
+      "tags": [
+        "microservice",
+        "distributed-system",
+        "fault-tolerance",
+        "message-queue"
+      ]
     }
   ]
 }

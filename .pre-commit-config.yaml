@@ -8,6 +8,7 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.7
     hooks:
@@ -28,3 +29,9 @@ repos:
     rev: v5.9.3
     hooks:
       - id: isort
+
+  - repo: https://github.com/crate-ci/typos
+    rev: v1.44.0
+    hooks:
+      - id: typos
+        args: [--write-changes]

@@ -239,9 +239,11 @@ $ python manage.py runserver
     ```
 - **Named URLs**
     - Use name for easier template integration
+    {% raw %}
     ```django
     <a href="{% url 'home' %}">Home</a>
     ```
+    {% endraw %}
 - **Consistent Patterns**
     - Maintain consistency in route naming and organization for readability.
 

@@ -1,0 +1,383 @@
+/* ===== VARIABLES (can be overridden by main.css) ===== */
+:root {
+    --primary-color: #3b82f6;      /* submit button, floating buttons */
+    --secondary-color: #e2e8f0;     /* card borders */
+    --card-bg: #ffffff;             /* card background */
+    --chip-bg-light: #eef2ff;
+    --chip-text: #1e40af;
+    --correct-highlight: #dcfce7;
+    --correct-border: #22c55e;
+    --incorrect-highlight: #fee2e2;
+    --incorrect-border: #ef4444;
+    --drawer-bg: #ffffff;
+    --drawer-shadow: rgba(0,0,0,0.1);
+}
+
+/* ===== QUIZ CONTAINER ===== */
+.quiz-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Header (Div1) */
+.quiz-header {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #0f172a;
+}
+
+/* Active filters bar (Div2) */
+.active-filters {
+    background: #f1f5f9;
+    border-radius: 2rem;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+}
+.active-filters span {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+.active-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #e2e8f0;
+    border-radius: 2rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+}
+.filter-count-badge {
+    background: #64748b;
+    color: white;
+    border-radius: 999px;
+    width: 1.8rem;
+    height: 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+/* Question cards (Div3) */
+.quiz-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--secondary-color);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.question-text {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.tag-chip {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: var(--chip-bg-light);
+    color: var(--chip-text);
+}
+
+/* Options */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+.option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.2rem;
+    border-radius: 0.5rem;
+    transition: background 0.1s;
+}
+.option.correct-highlight {
+    background-color: var(--correct-highlight);
+    border-left: 4px solid var(--correct-border);
+}
+.option.incorrect-highlight {
+    background-color: var(--incorrect-highlight);
+    border-left: 4px solid var(--incorrect-border);
+}
+.option input[type="radio"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: var(--primary-color);
+    margin: 0;
+}
+.option label {
+    font-size: 0.95rem;
+    cursor: pointer;
+    flex: 1;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+.btn-group-left, .btn-group-right {
+    display: flex;
+    gap: 0.75rem;
+}
+button {
+    background: none;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.btn-secondary {
+    background-color: #f1f5f9;
+    color: #1e293b;
+    border: 1px solid #cbd5e1;
+}
+.btn-secondary:hover {
+    background-color: #e2e8f0;
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #2563eb;
+}
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Answer & explanation sections */
+.answer-section, .explanation-section {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background-color: #f8fafc;
+    border-radius: 0.5rem;
+    border-left: 4px solid var(--primary-color);
+}
+.answer-section strong, .explanation-section strong {
+    font-weight: 600;
+}
+.explanation-section {
+    font-size: 0.9rem;
+    color: #334155;
+}
+.hidden {
+    display: none;
+}
+
+/* Load more button */
+.load-more-container {
+    text-align: center;
+    margin: 2rem 0 1rem;
+}
+.load-more-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 2rem;
+}
+.load-more-btn:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+}
+
+/* Floating buttons */
+.floating-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 9999px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 100;
+}
+.floating-btn:hover {
+    background-color: #2563eb;
+    transform: scale(1.05);
+}
+.back-to-top {
+    right: 1.5rem;
+}
+.floating-btn.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.floating-btn:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.menu-icon {
+    right: 5rem;
+}
+
+/* Drawer */
+.drawer {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    max-width: 85vw;
+    height: 100%;
+    background-color: var(--drawer-bg);
+    box-shadow: -2px 0 12px var(--drawer-shadow);
+    transition: right 0.3s ease;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+}
+.drawer.open {
+    right: 0;
+}
+.drawer-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem;
+}
+.drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 199;          /* just below drawer's z-index: 200 */
+    backdrop-filter: blur(1px);
+    cursor: pointer;
+}
+[hidden] { display: none; }
+.tag-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+.tag-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.tag-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.tag-checkbox-item input {
+    width: 1rem;
+    height: 1rem;
+}
+.tag-checkbox-item label {
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.25rem 0;
+    flex: 1;
+}
+.drawer-actions {
+    display: flex;
+    gap: 0.75rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1rem;
+}
+.drawer-actions button {
+    flex: 1;
+}
+
+/* Drawer tag chips container */
+.chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Drawer tag chips */
+.tag-checkbox-item {
+    cursor: pointer;
+    border-radius: 9999px;
+    transition: filter 0.15s;
+}
+.tag-checkbox-item input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;   /* visually hidden; chip itself is the click target */
+}
+.tag-checkbox-item .tag-chip {
+    opacity: 0.75;
+    font-weight: 400;
+    transition: filter 0.15s, opacity 0.15s, font-weight 0.1s;
+}
+.tag-checkbox-item.selected .tag-chip {
+    opacity: 1;
+    font-weight: 700;
+    filter: brightness(0.80);
+}
+.tag-checkbox-item:focus-within {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    border-radius: 9999px;
+}
+
+/* Accessibility focus outlines */
+button:focus-visible,
+.tag-checkbox-item input:focus-visible,
+.option input:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .quiz-container {
+        padding: 0 0.75rem;
+    }
+    .action-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .btn-group-left, .btn-group-right {
+        justify-content: space-between;
+    }
+}

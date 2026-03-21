@@ -1,8 +1,8 @@
-/* ===== VARIABLES (can be overridden by main.css) ===== */
+/* ===== VARIABLES ===== */
 :root {
-  --primary-color: #3b82f6; /* submit button, floating buttons */
-  --secondary-color: #e2e8f0; /* card borders */
-  --card-bg: #ffffff; /* card background */
+  --primary-color: #3b82f6;
+  --secondary-color: #e2e8f0;
+  --card-bg: #ffffff;
   --chip-bg-light: #eef2ff;
   --chip-text: #1e40af;
   --correct-highlight: #dcfce7;
@@ -11,6 +11,11 @@
   --incorrect-border: #ef4444;
   --drawer-bg: #ffffff;
   --drawer-shadow: rgba(0, 0, 0, 0.1);
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --surface: #f8fafc;
+  --border-light: #e2e8f0;
 }
 
 /* ===== QUIZ CONTAINER ===== */
@@ -20,16 +25,16 @@
   padding: 0 1rem;
 }
 
-/* Header (Div1) */
+/* ── Header (Div1) ── */
 .quiz-header {
   text-align: center;
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
-/* Active filters bar (Div2) */
+/* ── Active filters bar (Div2) ── */
 .active-filters {
   background: #f1f5f9;
   border-radius: 2rem;
@@ -44,17 +49,21 @@
   font-weight: 500;
   font-size: 0.9rem;
 }
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
 .active-filter-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: #e2e8f0;
   border-radius: 2rem;
   padding: 0.25rem 0.75rem;
   font-size: 0.85rem;
 }
 .filter-count-badge {
-  background: #64748b;
+  background: var(--text-muted);
   color: white;
   border-radius: 999px;
   width: 1.8rem;
@@ -64,26 +73,71 @@
   justify-content: center;
   font-size: 0.9rem;
   font-weight: 600;
-  margin-left: 0.5rem;
+  flex-shrink: 0;
 }
 
-/* Question cards (Div3) */
+/* ── Question cards (Div3) ── */
 .quiz-questions {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
+
+/* Card entrance animation for newly loaded cards */
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .card {
   background: var(--card-bg);
   border: 1px solid var(--secondary-color);
   border-radius: 1rem;
   padding: 1.5rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease;
+  animation: card-enter 0.3s ease both;
 }
+
+/* Card glow after submit — blooms then settles into a permanent tint */
+@keyframes glow-correct {
+  0% {
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 2px var(--correct-border),
+      0 4px 14px rgba(34, 197, 94, 0.12);
+  }
+}
+@keyframes glow-incorrect {
+  0% {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 2px var(--incorrect-border),
+      0 4px 14px rgba(239, 68, 68, 0.12);
+  }
+}
+
+.card--correct {
+  animation: glow-correct 0.4s ease forwards;
+}
+.card--incorrect {
+  animation: glow-incorrect 0.4s ease forwards;
+}
+
 .question-text {
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  line-height: 1.55;
 }
 .tags-container {
   display: flex;
@@ -97,26 +151,28 @@
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 500;
-  background-color: var(--chip-bg-light);
-  color: var(--chip-text);
+  color: var(--text-primary);
 }
 
-/* Options */
+/* ── Options ── */
 .options {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
+
 .option {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.2rem;
+  gap: 0.5rem;
+  padding: 0.5rem;
   border-radius: 0.5rem;
-  transition: background 0.1s;
-  border-left: 4px solid transparent; /* always present */
+  border-left: 4px solid transparent; /* reserved space — prevents layout shift on highlight */
+  transition: background 0.15s ease;
+  /* cursor: pointer; */
+  cursor: default;
 }
+
 .option.correct-highlight {
   background-color: var(--correct-highlight);
   border-left-color: var(--correct-border);
@@ -130,14 +186,63 @@
   height: 1.1rem;
   accent-color: var(--primary-color);
   margin: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.option input[type="radio"]:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 .option label {
   font-size: 0.95rem;
   cursor: pointer;
   flex: 1;
+  line-height: 1.5;
+  color: var(--text-secondary);
 }
 
-/* Action buttons */
+/* ── Option icons (check / cross) ── */
+
+/* Spring-in animation for first appearance */
+@keyframes icon-spring {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  55% {
+    transform: scale(1.22);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.option-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: auto;
+  transform: scale(0);
+  opacity: 0;
+  animation: icon-spring 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  font-size: 0.9rem; /* controls SVG size via em inheritance if needed */
+}
+.option-icon--correct {
+  color: var(--correct-border);
+}
+.option-icon--incorrect {
+  color: var(--incorrect-border);
+}
+/* Skip animation when icon is re-injected after a re-render (toggle/clear) */
+.option-icon--instant {
+  animation: none;
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* ── Action buttons ── */
 .action-buttons {
   display: flex;
   justify-content: space-between;
@@ -151,58 +256,102 @@
   display: flex;
   gap: 0.75rem;
 }
+
 button {
   background: none;
   border: none;
   font-size: 0.85rem;
   font-weight: 500;
-  padding: 0.4rem 0.8rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 0.5rem;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
 }
 .btn-secondary {
   background-color: #f1f5f9;
-  color: #1e293b;
+  color: var(--text-primary);
   border: 1px solid #cbd5e1;
 }
-.btn-secondary:hover {
-  background-color: #e2e8f0;
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--secondary-color);
 }
 .btn-primary {
   background-color: var(--primary-color);
   color: white;
 }
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   background-color: #2563eb;
 }
 button:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
 }
+button:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
 
-/* Answer & explanation sections */
+/* ── Answer & explanation reveal ── */
+
+/* Slide-in animation for the reveal container */
+@keyframes reveal-slide {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.answer-explanation-container:not(:empty) {
+  animation: reveal-slide 0.25s ease both;
+}
+
+/* Applied via JS to trigger animation on submit */
+.reveal-animate {
+  animation: reveal-slide 0.25s ease both;
+}
+
 .answer-section,
 .explanation-section {
   margin-top: 0.75rem;
-  padding: 0.75rem;
-  background-color: #f8fafc;
+  padding: 0.75rem 1rem;
+  background-color: var(--surface);
   border-radius: 0.5rem;
   border-left: 4px solid var(--primary-color);
+  font-size: 0.9rem;
 }
 .answer-section strong,
 .explanation-section strong {
   font-weight: 600;
+  color: var(--text-primary);
 }
 .explanation-section {
-  font-size: 0.9rem;
-  color: #334155;
+  color: var(--text-secondary);
+  line-height: 1.65;
 }
+.explanation-section code {
+  background: #eff1f3;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-family: ui-monospace, monospace;
+  color: #c7254e;
+}
+.explanation-section p {
+  margin: 0 0 0.4rem;
+}
+.explanation-section p:last-child {
+  margin-bottom: 0;
+}
+
 .hidden {
   display: none;
 }
 
-/* Load more button */
+/* ── Load more ── */
 .load-more-container {
   text-align: center;
   margin: 2rem 0 1rem;
@@ -210,16 +359,20 @@ button:disabled {
 .load-more-btn {
   background-color: var(--primary-color);
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 2rem;
   font-size: 1rem;
   border-radius: 2rem;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+.load-more-btn:hover:not(:disabled) {
+  background-color: #2563eb;
 }
 .load-more-btn:disabled {
   background-color: #94a3b8;
   cursor: not-allowed;
 }
 
-/* Floating buttons */
+/* ── Floating buttons ── */
 .floating-btn {
   position: fixed;
   bottom: 1.5rem;
@@ -235,12 +388,16 @@ button:disabled {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   border: none;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
   z-index: 100;
 }
 .floating-btn:hover {
   background-color: #2563eb;
-  transform: scale(1.05);
+  transform: scale(1.07);
+}
+.floating-btn:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
 }
 .back-to-top {
   right: 1.5rem;
@@ -248,20 +405,31 @@ button:disabled {
 .floating-btn.hidden {
   opacity: 0;
   pointer-events: none;
-  transform: translateY(8px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateY(6px);
 }
 .floating-btn:not(.hidden) {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
-  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 .menu-icon {
   right: 5rem;
 }
 
-/* Drawer */
+/* ── Drawer overlay ── */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 199;
+  backdrop-filter: blur(1px);
+  cursor: pointer;
+}
+[hidden] {
+  display: none;
+}
+
+/* ── Drawer ── */
 .drawer {
   position: fixed;
   top: 0;
@@ -270,7 +438,7 @@ button:disabled {
   max-width: 85vw;
   height: 100%;
   background-color: var(--drawer-bg);
-  box-shadow: -2px 0 12px var(--drawer-shadow);
+  box-shadow: -2px 0 16px var(--drawer-shadow);
   transition: right 0.3s ease;
   z-index: 200;
   display: flex;
@@ -283,82 +451,56 @@ button:disabled {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 1rem;
-}
-.drawer-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.25);
-  z-index: 199; /* just below drawer's z-index: 200 */
-  backdrop-filter: blur(1px);
-  cursor: pointer;
-}
-[hidden] {
-  display: none;
+  padding: 1.25rem 1rem 1rem;
 }
 .tag-list-container {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 1rem;
 }
-.tag-checkboxes {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-.tag-checkbox-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.tag-checkbox-item input {
-  width: 1rem;
-  height: 1rem;
-}
-.tag-checkbox-item label {
-  font-size: 0.9rem;
-  cursor: pointer;
-  padding: 0.25rem 0;
-  flex: 1;
-}
-.drawer-actions {
-  display: flex;
-  gap: 0.75rem;
-  border-top: 1px solid #e2e8f0;
-  padding-top: 1rem;
-}
-.drawer-actions button {
-  flex: 1;
+.tag-list-container h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
 }
 
-/* Drawer tag chips container */
-.chips-container {
+/* Drawer tag chips — flex wrap layout (was incorrectly set via inline JS) */
+.tag-checkboxes {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   gap: 0.5rem;
 }
 
-/* Drawer tag chips */
+/* Each tag in the drawer is a chip-style label */
 .tag-checkbox-item {
   cursor: pointer;
   border-radius: 9999px;
-  transition: filter 0.15s;
+  display: inline-flex;
+  align-items: center;
 }
 .tag-checkbox-item input[type="checkbox"] {
   position: absolute;
   opacity: 0;
-  pointer-events: none; /* visually hidden; chip itself is the click target */
+  pointer-events: none;
+  width: 0;
+  height: 0;
 }
 .tag-checkbox-item .tag-chip {
-  opacity: 0.75;
+  opacity: 0.7;
   font-weight: 400;
-  transition: filter 0.15s, opacity 0.15s, font-weight 0.1s;
+  transition: opacity 0.15s, filter 0.15s;
+  cursor: pointer;
+}
+.tag-checkbox-item:hover .tag-chip {
+  opacity: 0.9;
 }
 .tag-checkbox-item.selected .tag-chip {
   opacity: 1;
   font-weight: 700;
-  filter: brightness(0.8);
+  filter: brightness(0.82);
 }
 .tag-checkbox-item:focus-within {
   outline: 2px solid var(--primary-color);
@@ -366,15 +508,19 @@ button:disabled {
   border-radius: 9999px;
 }
 
-/* Accessibility focus outlines */
-button:focus-visible,
-.tag-checkbox-item input:focus-visible,
-.option input:focus-visible {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
+.drawer-actions {
+  display: flex;
+  gap: 0.75rem;
+  border-top: 1px solid var(--border-light);
+  padding-top: 1rem;
+  flex-shrink: 0;
+}
+.drawer-actions button {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
 }
 
-/* Responsive */
+/* ── Responsive ── */
 @media (max-width: 640px) {
   .quiz-container {
     padding: 0 0.75rem;
@@ -386,5 +532,9 @@ button:focus-visible,
   .btn-group-left,
   .btn-group-right {
     justify-content: space-between;
+  }
+  .drawer {
+    width: 100vw;
+    max-width: 100vw;
   }
 }

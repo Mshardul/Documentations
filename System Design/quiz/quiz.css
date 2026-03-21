@@ -115,14 +115,15 @@
     padding: 0.2rem;
     border-radius: 0.5rem;
     transition: background 0.1s;
+    border-left: 4px solid transparent; /* always present */
 }
 .option.correct-highlight {
     background-color: var(--correct-highlight);
-    border-left: 4px solid var(--correct-border);
+    border-left-color: var(--correct-border);
 }
 .option.incorrect-highlight {
     background-color: var(--incorrect-highlight);
-    border-left: 4px solid var(--incorrect-border);
+    border-left-color: var(--incorrect-border);
 }
 .option input[type="radio"] {
     width: 1.1rem;

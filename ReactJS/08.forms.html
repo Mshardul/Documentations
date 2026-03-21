@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -12,8 +12,21 @@
     <div class="topic" id="ControlledComponents">
       <div class="topic-heading"><h2>Controlled Components</h2></div>
       <div class="topic-body">
-        <p>In HTML, form elements such as &lt;input&gt;, &lt;textarea&gt;, and &lt;select&gt; typically maintain their own state and update it based on user input. In React, mutable state is typically kept in the state property of components, and only updated with setState(). We can combine the two by making the React state be the &quot;single source of truth&quot;. Then the React component that renders a form also controls what happens in that form on subsequent user input. An input form element whose value is controlled by React in this way is called a <span class="code">controlled component</span>.</p>
-        <p>With a controlled component, the input’s value is always driven by the React state.</p>
+        <p>
+          In HTML, form elements such as &lt;input&gt;, &lt;textarea&gt;, and
+          &lt;select&gt; typically maintain their own state and update it based
+          on user input. In React, mutable state is typically kept in the state
+          property of components, and only updated with setState(). We can
+          combine the two by making the React state be the &quot;single source
+          of truth&quot;. Then the React component that renders a form also
+          controls what happens in that form on subsequent user input. An input
+          form element whose value is controlled by React in this way is called
+          a <span class="code">controlled component</span>.
+        </p>
+        <p>
+          With a controlled component, the input’s value is always driven by the
+          React state.
+        </p>
         <pre><code class="language-javascript">
     class NameForm extends React.Component {
         constructor(props) {
@@ -25,7 +38,7 @@
             this.handleInputChange = this.handleInputChange.bind(this);
             this.handleSubmit = this.handleSubmit.bind(this);
         }
-    
+
         handleNameChange(event) { this.setState({nameValue: event.target.value}); }
         handleEssayChange(event) { this.setState({essayValue: event.target.value}); }
         handleGenderChange(event) { this.setState({value: event.target.value}); }
@@ -33,11 +46,11 @@
           const target = event.target;
           const value = target.type === 'checkbox' ? target.checked : target.value;
           const name = target.name;
-          this.setState({ [name]: value }); 
+          this.setState({ [name]: value });
         }
-      
+
         handleSubmit(event) { event.preventDefault(); }
-    
+
         render() {
             return (
                 &lt;form onSubmit={this.handleSubmit}&gt;
@@ -63,13 +76,11 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="UncontrolledComponents">
       <div class="topic-heading"><h2>Uncontrolled Components</h2></div>
-      <div class="topic-body">
-        // will learn later
-      </div>
+      <div class="topic-body">// will learn later</div>
     </div>
   </div>
 
@@ -80,6 +91,12 @@
 </div>
 
 <div class="footer">
-  <span class="prev"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
-  <span class="next"><a href="./09.composition_vs_inheirtance.html">09. Composition vs Inheritance</a></span>
+  <span class="prev"
+    ><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span
+  >
+  <span class="next"
+    ><a href="./09.composition_vs_inheirtance.html"
+      >09. Composition vs Inheritance</a
+    ></span
+  >
 </div>

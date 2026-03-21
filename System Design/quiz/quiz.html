@@ -1,62 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
     <title>Quiz Revision App</title>
     <!-- Global site styles (navbar, footer, etc.) -->
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles.css" />
     <!-- Quiz‑specific styles -->
-    <link rel="stylesheet" href="quiz.css">
+    <link rel="stylesheet" href="quiz.css" />
     <!-- Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Site header (as per existing layout) -->
     <div class="navbar">
-        <span class="prev"><a href="../main.html">Notes</a></span>
-        <span class="center"><a href="#">Index</a></span>
-        <span class="next"><a href="./00.main.html">Dynamo DB</a></span>
+      <span class="prev"><a href="../main.html">Notes</a></span>
+      <span class="center"><a href="#">Index</a></span>
+      <span class="next"><a href="./00.main.html">Dynamo DB</a></span>
     </div>
 
     <!-- Quiz container -->
     <div class="quiz-container">
-        <div id="quiz-header" class="quiz-header">Loading...</div>          <!-- Div1: title -->
-        <div id="active-filters" class="active-filters hidden"></div>     <!-- Div2: active filter chips -->
-        <div id="quiz-questions" aria-live="polite" class="quiz-questions"></div>            <!-- Div3: questions cards -->
-        <div id="load-more-container" class="load-more-container">
-            <button id="load-more-btn" class="load-more-btn">Load more questions</button>
-        </div>
+      <div id="quiz-header" class="quiz-header">Loading...</div>
+      <!-- Div1: title -->
+      <div id="active-filters" class="active-filters hidden"></div>
+      <!-- Div2: active filter chips -->
+      <div id="quiz-questions" aria-live="polite" class="quiz-questions"></div>
+      <!-- Div3: questions cards -->
+      <div id="load-more-container" class="load-more-container">
+        <button id="load-more-btn" class="load-more-btn">
+          Load more questions
+        </button>
+      </div>
     </div>
 
     <!-- Floating buttons -->
-    <button id="back-to-top" class="floating-btn back-to-top hidden" aria-label="Back to top">↑</button>
-    <button id="menu-icon" class="floating-btn menu-icon" aria-label="Open tag filter menu" aria-expanded="false" aria-haspopup="dialog">🏷️</button>
+    <button
+      id="back-to-top"
+      class="floating-btn back-to-top hidden"
+      aria-label="Back to top"
+    >
+      ↑
+    </button>
+    <button
+      id="menu-icon"
+      class="floating-btn menu-icon"
+      aria-label="Open tag filter menu"
+      aria-expanded="false"
+      aria-haspopup="dialog"
+    >
+      🏷️
+    </button>
 
     <!-- Tag filter drawer -->
-    <div id="tag-drawer" class="drawer" role="dialog" aria-modal="true" aria-label="Filter by tags" aria-hidden="true">
-        <div class="drawer-content">
-            <div class="tag-list-container">
-                <h3>Filter by tags</h3>
-                <div id="tag-checkboxes" class="tag-checkboxes"></div>
-            </div>
-            <div class="drawer-actions">
-                <button id="apply-btn" class="btn-primary">Apply</button>
-                <button id="reset-btn" class="btn-secondary">Reset</button>
-            </div>
+    <div
+      id="tag-drawer"
+      class="drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Filter by tags"
+      aria-hidden="true"
+    >
+      <div class="drawer-content">
+        <div class="tag-list-container">
+          <h3>Filter by tags</h3>
+          <div id="tag-checkboxes" class="tag-checkboxes"></div>
         </div>
+        <div class="drawer-actions">
+          <button id="apply-btn" class="btn-primary">Apply</button>
+          <button id="reset-btn" class="btn-secondary">Reset</button>
+        </div>
+      </div>
     </div>
 
     <!-- Tag Filter Drawer Overlay -->
-     <div id="drawer-overlay" class="drawer-overlay" hidden></div>
+    <div id="drawer-overlay" class="drawer-overlay" hidden></div>
 
     <!-- Site footer -->
     <div class="footer">
-        <span class="prev"><a href="./-1.sources.html">Source</a></span>
-        <span class="next"><a href="./01.introduction.html">01. Introduction</a></span>
+      <span class="prev"><a href="./-1.sources.html">Source</a></span>
+      <span class="next"
+        ><a href="./01.introduction.html">01. Introduction</a></span
+      >
     </div>
 
     <script src="quiz.js"></script>
-</body>
+  </body>
 </html>

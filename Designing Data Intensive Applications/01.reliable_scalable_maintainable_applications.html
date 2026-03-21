@@ -1,78 +1,171 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
-  <span class="center"><a href="#">Reliable, Scalable, and Maintainable Applications</a></span>
-  <span class="next"><a href="./00.main.html">Designing Data-intensive Applications</a></span>
+  <span class="center"
+    ><a href="#">Reliable, Scalable, and Maintainable Applications</a></span
+  >
+  <span class="next"
+    ><a href="./00.main.html">Designing Data-intensive Applications</a></span
+  >
 </div>
 
 <div class="main-content">
   <div class="content">
-    <div class="topic"  id="DataIntensiveApplications">
+    <div class="topic" id="DataIntensiveApplications">
       <div class="topic-heading"><h2>Data-intensive Applications</h2></div>
 
       <div class="topic-body">
-        <p>A data-intensive application is typically build from standard building blocks that provide commonly needed functionality. For example, many applications need:</p>
-        <ul>
-          <li><span class="point">Databases</span>: Sore data so that they, or another application, can find it again later</li>
-          <li><span class="point">Caches</span>: Remember the result of an expensive operation, to speed up reads.</li>
-          <li><span class="point">Search Indexes</span>: Allow users to search data by keyword of filter it in various ways.</li>
-          <li><span class="point">Stream Processing</span>: Send a message to another process, to be handled asynchronously.</li>
-          <li><span class="point">Batch Processing</span>: Periodically crunch a large amount of accumulated data.</li>
-        </ul>
-
-        <p>While building an app, we need to figure out which tools and which approaches are the most appropriate for the task at hand.
-
-        <h3>Why lump everything together under an umbrella term like data systems?</h3>
+        <p>
+          A data-intensive application is typically build from standard building
+          blocks that provide commonly needed functionality. For example, many
+          applications need:
+        </p>
         <ul>
           <li>
-            Many new tools for data storage and processing have emerged in recent years. They are optimized for a variety of different use cases, and they no longer neatly fit into traditional categories. For example,
+            <span class="point">Databases</span>: Sore data so that they, or
+            another application, can find it again later
+          </li>
+          <li>
+            <span class="point">Caches</span>: Remember the result of an
+            expensive operation, to speed up reads.
+          </li>
+          <li>
+            <span class="point">Search Indexes</span>: Allow users to search
+            data by keyword of filter it in various ways.
+          </li>
+          <li>
+            <span class="point">Stream Processing</span>: Send a message to
+            another process, to be handled asynchronously.
+          </li>
+          <li>
+            <span class="point">Batch Processing</span>: Periodically crunch a
+            large amount of accumulated data.
+          </li>
+        </ul>
+
+        <p>
+          While building an app, we need to figure out which tools and which
+          approaches are the most appropriate for the task at hand.
+        </p>
+
+        <h3>
+          Why lump everything together under an umbrella term like data systems?
+        </h3>
+        <ul>
+          <li>
+            Many new tools for data storage and processing have emerged in
+            recent years. They are optimized for a variety of different use
+            cases, and they no longer neatly fit into traditional categories.
+            For example,
             <ul>
-              <li>There are datastores that are also used as message queues (Redis) and there are message queues with database-like durability guarantees (Kafka). The boundaries between these tools are becoming blurred.</li>
+              <li>
+                There are datastores that are also used as message queues
+                (Redis) and there are message queues with database-like
+                durability guarantees (Kafka). The boundaries between these
+                tools are becoming blurred.
+              </li>
             </ul>
           </li>
           <li>
-            Increasingly many aps now have such demanding or wide-ranging requirements that a single tool can no longer meet all of its data processing and storage needs. Instead, the work is broken down into tasks that are handled by special-purpose tools. For example,
+            Increasingly many aps now have such demanding or wide-ranging
+            requirements that a single tool can no longer meet all of its data
+            processing and storage needs. Instead, the work is broken down into
+            tasks that are handled by special-purpose tools. For example,
             <ul>
-              <li>If you have an application-managed caching layer (using Memcached), or a full-text search server (such as Elasticsearch or Solr) separate from your main DB, it is normally the application code's responsibility to keep those caches and indexes in sync with the main DB.</li>
+              <li>
+                If you have an application-managed caching layer (using
+                Memcached), or a full-text search server (such as Elasticsearch
+                or Solr) separate from your main DB, it is normally the
+                application code's responsibility to keep those caches and
+                indexes in sync with the main DB.
+              </li>
             </ul>
           </li>
         </ul>
 
         <h3>Factors</h3>
-        There are many factors that may influence the design of a data system. These factors depend very much on the situation. Here we focus on three concerns that are important in most software systems.
+        There are many factors that may influence the design of a data system.
+        These factors depend very much on the situation. Here we focus on three
+        concerns that are important in most software systems.
         <ul>
-          <li><a href="#Reliability">Reliability</a>: System should continue to work correctly (performing correct function at desired level of performance) even in the face of adversity (faults).</li>
-          <li><a href="#Scalability">Scalability</a>: There should be reasonable way of dealing with system growth (in data volume, traffic volume, or complexity).</li>
-          <li><a href="#Maintainability">Maintainability</a>: Multiple people (engineering and operations) should be able to work productively on a system.</li>
+          <li>
+            <a href="#Reliability">Reliability</a>: System should continue to
+            work correctly (performing correct function at desired level of
+            performance) even in the face of adversity (faults).
+          </li>
+          <li>
+            <a href="#Scalability">Scalability</a>: There should be reasonable
+            way of dealing with system growth (in data volume, traffic volume,
+            or complexity).
+          </li>
+          <li>
+            <a href="#Maintainability">Maintainability</a>: Multiple people
+            (engineering and operations) should be able to work productively on
+            a system.
+          </li>
         </ul>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
-    <div class="topic"  id="Reliability">
+    <div class="topic" id="Reliability">
       <div class="topic-heading"><h2>Reliability</h2></div>
 
       <div class="topic-body">
         <p>Typical expectations for a system to be reliable:</p>
         <ul>
           <li>Performing functions that the user expects</li>
-          <li>Tolerating user making mistakes or using the app in unexpected ways.</li>
-          <li>Good enough performance for the required use case, under the expected load and data volume.</li>
+          <li>
+            Tolerating user making mistakes or using the app in unexpected ways.
+          </li>
+          <li>
+            Good enough performance for the required use case, under the
+            expected load and data volume.
+          </li>
           <li>Preventing any unauthorized access and abuse.</li>
         </ul>
 
         <h3>Faults</h3>
         <ul>
-          <li>The things that can go wrong are called <span class="point">faults</span>, and systems that anticipate faults and can cope with them are called <span class="point">fault-tolerant</span> or <span class="point">resilient</span>.</li>
-          <li>A <span class="point">Fault</span> is usually defined as one component of the system deviating from its spec, whereas a <span class="point">failure</span> is when the system as a whole stops providing the required service to the user. It is impossible to reduce the probability of a fault to zero; therefore it is usually best to design <span class="point">fault-tolerance</span> mechanism that prevents faults from causing failures.</li>
-            <ul>
-              <li>Increase rate of faults by triggering them deliberately - for example, by randomly killing individual process without warning. Many critical bugs are actually due to poor error handling</li>
-              <li>By deliberately inducing faults, you ensure that the fault-tolerance machinery is continually exercised and tested, which can increase ur confidence that faults will be handled correctly when they occur naturally. eg. the Netflix Chaos Monkey.</li>
-              <li> There are cases where prevention is better than cure (eg because no cure exists). This is the case with security matters, eg. if an attacker has compromised a system and gained access to sensitive data.</li>
-            </ul>
+          <li>
+            The things that can go wrong are called
+            <span class="point">faults</span>, and systems that anticipate
+            faults and can cope with them are called
+            <span class="point">fault-tolerant</span> or
+            <span class="point">resilient</span>.
+          </li>
+          <li>
+            A <span class="point">Fault</span> is usually defined as one
+            component of the system deviating from its spec, whereas a
+            <span class="point">failure</span> is when the system as a whole
+            stops providing the required service to the user. It is impossible
+            to reduce the probability of a fault to zero; therefore it is
+            usually best to design
+            <span class="point">fault-tolerance</span> mechanism that prevents
+            faults from causing failures.
+          </li>
+          <ul>
+            <li>
+              Increase rate of faults by triggering them deliberately - for
+              example, by randomly killing individual process without warning.
+              Many critical bugs are actually due to poor error handling
+            </li>
+            <li>
+              By deliberately inducing faults, you ensure that the
+              fault-tolerance machinery is continually exercised and tested,
+              which can increase ur confidence that faults will be handled
+              correctly when they occur naturally. eg. the Netflix Chaos Monkey.
+            </li>
+            <li>
+              There are cases where prevention is better than cure (eg because
+              no cure exists). This is the case with security matters, eg. if an
+              attacker has compromised a system and gained access to sensitive
+              data.
+            </li>
+          </ul>
           <li>Faults can be of 3 types</li>
           <ul>
             <li>Hardware Faults</li>
@@ -83,64 +176,151 @@
 
         <h3>Hardware Faults</h3>
         <ul>
-          <li>HDDs are reported as having a MTTF (Mean Time To Failure) of about 10-15 yrs. On a storage cluster with 10000 disks, we should expect on average one disk to die per day.</li>
-            <ul>
-              <li>Oure first response is usually to add redundancy to the individual hardware components in order to reduce the failure rate of the system.</li>
-              <li>As data volumes and app's computing demands have increased, more apps have begun using larger numbers of machines, which proportionally increases the rate of hardware faults.</li>
-              <li>Moreover some cloud platforms (eg AWS) make VM instances unavailable without warning, as they are designed to prioritize flexibility and elasticity over single-machine reliability.</li>
-            </ul>
-          <li>A <span class="point">single-server system</span> requires planned downtime if you need to reboot the machine (eg. to apply OS security patches), whereas a system that can tolerate machine failure can be patched one node at a time, without downtime of the entire system, known as a <span class="point">rolling upgrade</span></li>
+          <li>
+            HDDs are reported as having a MTTF (Mean Time To Failure) of about
+            10-15 yrs. On a storage cluster with 10000 disks, we should expect
+            on average one disk to die per day.
+          </li>
+          <ul>
+            <li>
+              Oure first response is usually to add redundancy to the individual
+              hardware components in order to reduce the failure rate of the
+              system.
+            </li>
+            <li>
+              As data volumes and app's computing demands have increased, more
+              apps have begun using larger numbers of machines, which
+              proportionally increases the rate of hardware faults.
+            </li>
+            <li>
+              Moreover some cloud platforms (eg AWS) make VM instances
+              unavailable without warning, as they are designed to prioritize
+              flexibility and elasticity over single-machine reliability.
+            </li>
+          </ul>
+          <li>
+            A <span class="point">single-server system</span> requires planned
+            downtime if you need to reboot the machine (eg. to apply OS security
+            patches), whereas a system that can tolerate machine failure can be
+            patched one node at a time, without downtime of the entire system,
+            known as a <span class="point">rolling upgrade</span>
+          </li>
         </ul>
 
         <h3>Software Errors</h3>
         <ul>
-          <li>Software Errors are harder to anticipate, and bcoz they are correlated across nodes (unlike hardware faults), they tend to cause many more system failures.</li>
-          <li>There is now quick solution to this. But a lot of small things can help</li>
+          <li>
+            Software Errors are harder to anticipate, and bcoz they are
+            correlated across nodes (unlike hardware faults), they tend to cause
+            many more system failures.
+          </li>
+          <li>
+            There is now quick solution to this. But a lot of small things can
+            help
+          </li>
           <ul>
-            <li>carefully thinking about assumptions and interactions in the system; thorough testing; process isolation; allowing processes to crash and restart; measuring, monitoring and analyzing system behavior in prod.</li>
-            <li>eg. in a message queue, the number of incoming messages equals the number of outgoing messages, it can constantly check itself while it is running and raise an alert if a discrepancy is found</li>
+            <li>
+              carefully thinking about assumptions and interactions in the
+              system; thorough testing; process isolation; allowing processes to
+              crash and restart; measuring, monitoring and analyzing system
+              behavior in prod.
+            </li>
+            <li>
+              eg. in a message queue, the number of incoming messages equals the
+              number of outgoing messages, it can constantly check itself while
+              it is running and raise an alert if a discrepancy is found
+            </li>
           </ul>
         </ul>
 
         <h3>Human Errors</h3>
-        There can be several approaches to make the system reliable, in spite of human errors.
+        There can be several approaches to make the system reliable, in spite of
+        human errors.
         <ul>
-          <li>Design system in a way that minimizes opportunities for error. eg. well-designed abstractions, APIs and admin interfaces make it easy to do "the right thing" and discourages "the wrong thing".</li>
+          <li>
+            Design system in a way that minimizes opportunities for error. eg.
+            well-designed abstractions, APIs and admin interfaces make it easy
+            to do "the right thing" and discourages "the wrong thing".
+          </li>
           <ul>
-            <li>However if the interfaces are too restrictive people will work around them, negating their benefit, so this is a tricky balance to get right.</li>
+            <li>
+              However if the interfaces are too restrictive people will work
+              around them, negating their benefit, so this is a tricky balance
+              to get right.
+            </li>
           </ul>
-          <li>Decouple the places where people make the most mistakes from the places where they can cause failures. eg. providing sandbox environment where people can explore and experiment safely using real data without affecting real users.</li>
-          <li>Test thoroughly at all levels, from unit tests to whole-system integration tests and manual testing.</li>
-          <li>Allow quick and easy recovery from human errors, to minimize the impact in case of failure. eg. roll backs, and incremental roll outs.</li>
-          <li>Set up detailed and clear monitoring, such as performance metrics and error rates. This can show us early warning signals.</li>
+          <li>
+            Decouple the places where people make the most mistakes from the
+            places where they can cause failures. eg. providing sandbox
+            environment where people can explore and experiment safely using
+            real data without affecting real users.
+          </li>
+          <li>
+            Test thoroughly at all levels, from unit tests to whole-system
+            integration tests and manual testing.
+          </li>
+          <li>
+            Allow quick and easy recovery from human errors, to minimize the
+            impact in case of failure. eg. roll backs, and incremental roll
+            outs.
+          </li>
+          <li>
+            Set up detailed and clear monitoring, such as performance metrics
+            and error rates. This can show us early warning signals.
+          </li>
           <li>IMplement good management practices and training.</li>
         </ul>
-        <p>One study of large internet services found that configuration errors by operators were the leading cause of outages, whereas hardware faults (servers or network) played a role in only 10-25% of outages.</p>
+        <p>
+          One study of large internet services found that configuration errors
+          by operators were the leading cause of outages, whereas hardware
+          faults (servers or network) played a role in only 10-25% of outages.
+        </p>
       </div>
     </div>
 
-
-    <hr/>
+    <hr />
 
     <div class="topic" id="Scalability">
       <div class="topic-heading"><h2>Scalability</h2></div>
 
       <div class="topic-body">
         <ul>
-          <li><span class="point">Scalability</span> is used to describe a system's ability to cope with increased load.</li>
-          <li>Discussing scalability means considering questions like "If the system grows is a particular way, what are our options for coping with the growth?" and "How can we add computing resources to handle the additional load?"</li>
+          <li>
+            <span class="point">Scalability</span> is used to describe a
+            system's ability to cope with increased load.
+          </li>
+          <li>
+            Discussing scalability means considering questions like "If the
+            system grows is a particular way, what are our options for coping
+            with the growth?" and "How can we add computing resources to handle
+            the additional load?"
+          </li>
         </ul>
 
         <h3>Load</h3>
         <ul>
-          <li>Load can be describe with a few numbers which we call <span class="point">load parameters</span>. The best choice of parameters depends on the architecture of your system. eg requests per second to a server, ratio of reads to writes in a db, number of simultaneously active users in a chatroom, hit rate on a cache.</li>
+          <li>
+            Load can be describe with a few numbers which we call
+            <span class="point">load parameters</span>. The best choice of
+            parameters depends on the architecture of your system. eg requests
+            per second to a server, ratio of reads to writes in a db, number of
+            simultaneously active users in a chatroom, hit rate on a cache.
+          </li>
         </ul>
 
         <h4>Twitter case study</h4>
-        Assuming only 2 features: <span class="point">posting tweets</span> and <span class="point">viewing the timeline</span> of people you follow. With 12k writes per second, Twitter's scaling challenge is not primarily due to tweet volume, but due to fan-out - each user follows many people, and each user is followed by many people. there are broadly 2 ways of implementing these 2 operations:
+        Assuming only 2 features: <span class="point">posting tweets</span> and
+        <span class="point">viewing the timeline</span> of people you follow.
+        With 12k writes per second, Twitter's scaling challenge is not primarily
+        due to tweet volume, but due to fan-out - each user follows many people,
+        and each user is followed by many people. there are broadly 2 ways of
+        implementing these 2 operations:
         <ol>
           <li>
-            Posting a tweet simply inserter new tweet into db. Reading the timeline requires finding all the people a user follows, retrieving each of their tweets, and merging them into a sorted list. In a relational db, it would look something like,
+            Posting a tweet simply inserter new tweet into db. Reading the
+            timeline requires finding all the people a user follows, retrieving
+            each of their tweets, and merging them into a sorted list. In a
+            relational db, it would look something like,
             <pre><code class="language-javascript">
     SELECT tweets.*, users.* FROM tweets
       JOIN users ON tweets.sender_id = users.id
@@ -148,33 +328,82 @@
       WHERE follows.follower_id = CURRENT_USER;
             </code></pre>
           </li>
-          <li>Maintain a cache for each users' home timeline - like a mailbox of tweets for each recipient user. When a user posts a tweet, look up all the people who follow that user, and insert the new tweet into each of their home timeline caches.</li>
+          <li>
+            Maintain a cache for each users' home timeline - like a mailbox of
+            tweets for each recipient user. When a user posts a tweet, look up
+            all the people who follow that user, and insert the new tweet into
+            each of their home timeline caches.
+          </li>
           <ul>
-            <li>Request to read the home timeline is then cheap, bcoz its result has been computed ahead of time.</li>
+            <li>
+              Request to read the home timeline is then cheap, bcoz its result
+              has been computed ahead of time.
+            </li>
           </ul>
         </ol>
 
         <h4>Conclusion</h4>
         <ul>
-          <li>The first version of Twitter used approach 1, but the systems struggled to keep up with the load of home timeline queries, so the company switched to approach 2. This works better bcoz the average rate of published tweets is almost 2 orders of magnitude lower than the rate of home timeline reads.</li>
-          <li>However, the downside of approach 2 is that posting a tweet now requires a lot of extra work. eg. for a person with 30M followers, a single tweet may result in over 30M writes. Doing this in a timely manner (Twitter tries to deliver tweets to followers within 5 secs) is a significant challenge</li>
-          <li>In case of Twitter, distribution of followers per user is a key load param for discussing scalability, since it determines the fan-out load.</li>
-          <li>Now Twitter is moving to a hybrid of both approaches. Most users' tweets continue to be fanned out to home timelines as soon as they are posted, but a small number of users (with very large number of followers) are excepted from this fan-out. These tweets are fetched separately and merged with that users' home timeline when it is read.</li>
+          <li>
+            The first version of Twitter used approach 1, but the systems
+            struggled to keep up with the load of home timeline queries, so the
+            company switched to approach 2. This works better bcoz the average
+            rate of published tweets is almost 2 orders of magnitude lower than
+            the rate of home timeline reads.
+          </li>
+          <li>
+            However, the downside of approach 2 is that posting a tweet now
+            requires a lot of extra work. eg. for a person with 30M followers, a
+            single tweet may result in over 30M writes. Doing this in a timely
+            manner (Twitter tries to deliver tweets to followers within 5 secs)
+            is a significant challenge
+          </li>
+          <li>
+            In case of Twitter, distribution of followers per user is a key load
+            param for discussing scalability, since it determines the fan-out
+            load.
+          </li>
+          <li>
+            Now Twitter is moving to a hybrid of both approaches. Most users'
+            tweets continue to be fanned out to home timelines as soon as they
+            are posted, but a small number of users (with very large number of
+            followers) are excepted from this fan-out. These tweets are fetched
+            separately and merged with that users' home timeline when it is
+            read.
+          </li>
         </ul>
 
         <h3>Describing Performance</h3>
         <ul>
-          <li>Think of response time as a distribution of values that can be measured, instead of a single number.</li>
-          <li>Most requests are reasonably fast, but there are occasional outliers.</li>
+          <li>
+            Think of response time as a distribution of values that can be
+            measured, instead of a single number.
+          </li>
+          <li>
+            Most requests are reasonably fast, but there are occasional
+            outliers.
+          </li>
           <li>Hence, percentile is a better metric than arithmetic mean.</li>
-          <li>Queueing delays often account for a large part of the response time at high percentiles. As a server can process a small number of things in parallel (limited, for example by its number of CPUs).</li>
-          <li>So, it is important to measure response time on the client side.</li>
+          <li>
+            Queueing delays often account for a large part of the response time
+            at high percentiles. As a server can process a small number of
+            things in parallel (limited, for example by its number of CPUs).
+          </li>
+          <li>
+            So, it is important to measure response time on the client side.
+          </li>
         </ul>
         <div class="notes">
           <ul>
             <li>Service Time: the actual time to process the request</li>
-            <li>Response time: what the client sees. besides the service time, it includes network delays and queueing delays.</li>
-            <li>Latency: The duration that a request is waiting to be handled - during which it is latent (awaiting service)</li>
+            <li>
+              Response time: what the client sees. besides the service time, it
+              includes network delays and queueing delays.
+            </li>
+            <li>
+              Latency: The duration that a request is waiting to be handled -
+              during which it is latent (awaiting service)
+            </li>
           </ul>
         </div>
 
@@ -182,21 +411,41 @@
         <ul>
           <li><span class="point">Types of Scaling</span></li>
           <ul>
-            <li><span class="point">Vertical Scaling</span> (aka Scaling up): moving to a more powerful machine.</li>
-            <li><span class="point">Horizontal Scaling</span> (or Scaling out): Distributing the load across multiple smaller machines.</li>
-            <li>Distributing load across multiple machines is also known as a <span class="point">shared-nothing architecture</span>.</li>
+            <li>
+              <span class="point">Vertical Scaling</span> (aka Scaling up):
+              moving to a more powerful machine.
+            </li>
+            <li>
+              <span class="point">Horizontal Scaling</span> (or Scaling out):
+              Distributing the load across multiple smaller machines.
+            </li>
+            <li>
+              Distributing load across multiple machines is also known as a
+              <span class="point">shared-nothing architecture</span>.
+            </li>
           </ul>
           <li><span class="point">Ways of Scaling</span></li>
           <ul>
-            <li><span class="point">Elastic Scaling</span> can automatically add computing resources when they detect a load increase.</li>
-            <li><span class="point">Manual Scaling</span> relies on a human intervention to analyze the capacity and deciding to add more machine to the systems.</li>
-            <li>An elastic system can be useful if load is highly unpredictable, but manual scaling is simpler and may have fewer operational surprises.</li>
+            <li>
+              <span class="point">Elastic Scaling</span> can automatically add
+              computing resources when they detect a load increase.
+            </li>
+            <li>
+              <span class="point">Manual Scaling</span> relies on a human
+              intervention to analyze the capacity and deciding to add more
+              machine to the systems.
+            </li>
+            <li>
+              An elastic system can be useful if load is highly unpredictable,
+              but manual scaling is simpler and may have fewer operational
+              surprises.
+            </li>
           </ul>
         </ul>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Maintainability">
       <div class="topic-heading"><h2>Maintainability</h2></div>
@@ -204,68 +453,164 @@
       <div class="topic-body">
         3 design principles to make systems easy to maintain.
         <ul>
-          <li><span class="point">Operability</span>: Make it easy for operations teams to keep the system running smoothly.</li>
-          <li><span class="point">Simplicity</span>: Make it easy for new engineers to understand the system, by removing as much complexity as possible.</li>
-          <li><span class="point">Evolvability</span>: Make it easy for engineers to make changes to the system in the future, adapting for unanticipated use cases as requirement changes. aka extensibility, modifiability, or plasticity.</li>
+          <li>
+            <span class="point">Operability</span>: Make it easy for operations
+            teams to keep the system running smoothly.
+          </li>
+          <li>
+            <span class="point">Simplicity</span>: Make it easy for new
+            engineers to understand the system, by removing as much complexity
+            as possible.
+          </li>
+          <li>
+            <span class="point">Evolvability</span>: Make it easy for engineers
+            to make changes to the system in the future, adapting for
+            unanticipated use cases as requirement changes. aka extensibility,
+            modifiability, or plasticity.
+          </li>
         </ul>
 
         <h3>Operability</h3>
-        <p>"Good operations can often work around the limitations of bad (or incomplete) software, but good software cannot run reliably with bad operations."</p>
+        <p>
+          "Good operations can often work around the limitations of bad (or
+          incomplete) software, but good software cannot run reliably with bad
+          operations."
+        </p>
 
         <p>Operations team is typically responsible for following tasks:</p>
         <ul>
-          <li>Monitoring health of system, and quickly restoring service if it goes into a bad state.</li>
-          <li>Tracking down the cause of problems, such as system failures or degraded performance.</li>
-          <li>Keeping software and platforms up to date, including security patches.</li>
-          <li>Keeping tabs on how different systems affect each other, so that a problematic change can be avoided before it causes damage.</li>
-          <li>Anticipating future problems and solving them before they occur (eg capacity planning).</li>
-          <li>Establishing good practices and tools for deployment, configuration management, and more.</li>
-          <li>Performing complex maintenance tasks. eg. moving app from one platform to another.</li>
-          <li>Maintaining the security of the system as configuration changes are made.</li>
-          <li>Defining processes that make operations predictable and help keep the production environment stable.</li>
-          <li>Preserving the org's knowledge about the system, even as individuals come and go.</li>
+          <li>
+            Monitoring health of system, and quickly restoring service if it
+            goes into a bad state.
+          </li>
+          <li>
+            Tracking down the cause of problems, such as system failures or
+            degraded performance.
+          </li>
+          <li>
+            Keeping software and platforms up to date, including security
+            patches.
+          </li>
+          <li>
+            Keeping tabs on how different systems affect each other, so that a
+            problematic change can be avoided before it causes damage.
+          </li>
+          <li>
+            Anticipating future problems and solving them before they occur (eg
+            capacity planning).
+          </li>
+          <li>
+            Establishing good practices and tools for deployment, configuration
+            management, and more.
+          </li>
+          <li>
+            Performing complex maintenance tasks. eg. moving app from one
+            platform to another.
+          </li>
+          <li>
+            Maintaining the security of the system as configuration changes are
+            made.
+          </li>
+          <li>
+            Defining processes that make operations predictable and help keep
+            the production environment stable.
+          </li>
+          <li>
+            Preserving the org's knowledge about the system, even as individuals
+            come and go.
+          </li>
         </ul>
 
-        <p>Data Systems can do various things to make routine tasks for Good operability easy:</p>
+        <p>
+          Data Systems can do various things to make routine tasks for Good
+          operability easy:
+        </p>
         <ul>
-          <li>Providing visibility into the runtime behavior and internals of the system, with <span class="point">good monitoring</span>.</li>
-          <li>Providing <span class="point">good support for automation</span> and integration with standard tools.</li>
-          <li><span class="point">Avoiding dependency on individual machines</span> (allowing machines to be take down for maintenance while the system as a whole continues running uninterrupted)</li>
-          <li>Providing <span class="point">good documentation</span> and an easy-to-understand operational model.</li>
-          <li>Providing <span class="point">good default behavior</span>, but also giving administrators the freedom to override defaults when needed</li>
-          <li><span class="point">Self-healing</span> when appropriate, but also giving admins manual control over the system state when needed.</li>
-          <li>Exhibiting <span class="point">predictable behavior</span>, minimizing surprises.</li>
-
+          <li>
+            Providing visibility into the runtime behavior and internals of the
+            system, with <span class="point">good monitoring</span>.
+          </li>
+          <li>
+            Providing <span class="point">good support for automation</span> and
+            integration with standard tools.
+          </li>
+          <li>
+            <span class="point"
+              >Avoiding dependency on individual machines</span
+            >
+            (allowing machines to be take down for maintenance while the system
+            as a whole continues running uninterrupted)
+          </li>
+          <li>
+            Providing <span class="point">good documentation</span> and an
+            easy-to-understand operational model.
+          </li>
+          <li>
+            Providing <span class="point">good default behavior</span>, but also
+            giving administrators the freedom to override defaults when needed
+          </li>
+          <li>
+            <span class="point">Self-healing</span> when appropriate, but also
+            giving admins manual control over the system state when needed.
+          </li>
+          <li>
+            Exhibiting <span class="point">predictable behavior</span>,
+            minimizing surprises.
+          </li>
         </ul>
 
         <h3>Simplicity</h3>
         <ul>
-          <li>There are various possible <span class="point">symptoms of complexity</span>: explosion of the state space, tight coupling of modules, tangled dependencies, inconsistent naming and terminology, hacks aimed at solving performance problems, special-casing to work around issues elsewhere and many more.</li>
-          <li>making a system simpler does not necessarily mean reducing its functionality; it can also mean removing <span class="point">accidental complexity</span>.</li>
+          <li>
+            There are various possible
+            <span class="point">symptoms of complexity</span>: explosion of the
+            state space, tight coupling of modules, tangled dependencies,
+            inconsistent naming and terminology, hacks aimed at solving
+            performance problems, special-casing to work around issues elsewhere
+            and many more.
+          </li>
+          <li>
+            making a system simpler does not necessarily mean reducing its
+            functionality; it can also mean removing
+            <span class="point">accidental complexity</span>.
+          </li>
           <ul>
-            <li>Moseley and Marks define complexity as accidental if it is not inherent in the problem that the software solves (as seen by the users) but arises only from the implementation.</li>
-            <li>One of the best tool for removing accidental complexity is <span class="point">abstraction</span>. A good abstraction can hide a great deal of implementation detail behind a clean, simple-to-understand facade.</li>
+            <li>
+              Moseley and Marks define complexity as accidental if it is not
+              inherent in the problem that the software solves (as seen by the
+              users) but arises only from the implementation.
+            </li>
+            <li>
+              One of the best tool for removing accidental complexity is
+              <span class="point">abstraction</span>. A good abstraction can
+              hide a great deal of implementation detail behind a clean,
+              simple-to-understand facade.
+            </li>
           </ul>
         </ul>
 
         <h3>Evolvability</h3>
         <ul>
-          <li>In terms of organizational processes, Agile working patterns provide a framework for adapting to change.</li>
+          <li>
+            In terms of organizational processes, Agile working patterns provide
+            a framework for adapting to change.
+          </li>
         </ul>
-
       </div>
     </div>
-
   </div>
 
   <div class="sidebar-right">
     <div class="menu-header" id="menu-header">Table of Content</div>
     <div class="menu-content" id="menu-content"></div>
   </div>
-
 </div>
 
 <div class="footer">
   <span class="prev"><a href="./00.main.html">00. Index</a></span>
-  <span class="next"><a href="./02.data_models_and_query_languages.html">02. Data Models and Query Languages</a></span>
+  <span class="next"
+    ><a href="./02.data_models_and_query_languages.html"
+      >02. Data Models and Query Languages</a
+    ></span
+  >
 </div>

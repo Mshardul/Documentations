@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -9,87 +9,151 @@
 
 <div class="main-content">
   <div class="content">
-
     <div class="topic" id="Basics">
       <div class="topic-heading"><h2>Basics</h2></div>
       <div class="topic-body">
-
         <div class="question_answer_div">
           <h3 class="question">What is Python? and explain its features?</h3>
-          <p class="answer"></p>
+          <div class="answer"></div>
         </div>
 
-        <hr/>
-        
+        <hr />
+
         <div class="question_answer_div">
           <h3 class="question">How is Python interpreted?</h3>
-          <p class="answer">Source Code -> Intermediate Language -> Native (or machine) Language -> Execution</p>
+          <div class="answer">
+            Source Code -> Intermediate Language -> Native (or machine) Language
+            -> Execution
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">What are Python wheels?</h3>
-          <p class="answer">
+          <div class="answer">
             <ul>
-              <li>Python wheels are a package format for Python libraries and applications</li>
-              <li>Designed as a successor to the older Egg format, wheels aim to improve the ease and speed of distributing Python software.</li>
-              <li>They are a built-package format, which means they are distributions that have already been packaged in a way that is ready for installation.</li>
-              <li>This can significantly speed up the installation process because it avoids the need for compiling and building processes which are often necessary with source distributions.</li>
+              <li>
+                Python wheels are a package format for Python libraries and
+                applications
+              </li>
+              <li>
+                Designed as a successor to the older Egg format, wheels aim to
+                improve the ease and speed of distributing Python software.
+              </li>
+              <li>
+                They are a built-package format, which means they are
+                distributions that have already been packaged in a way that is
+                ready for installation.
+              </li>
+              <li>
+                This can significantly speed up the installation process because
+                it avoids the need for compiling and building processes which
+                are often necessary with source distributions.
+              </li>
             </ul>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">How do you create a Python package?</h3>
-          <p class="answer">
+          <div class="answer">
             <ul>
-              <li>Structure the package (assuming name to be <source class="code">my_pkg</source>).
+              <li>
+                Structure the package (assuming name to be
+                <span class="code">my_pkg</span>).
                 <ul>
-                  <li><span class="code">my_pkg</span>: root directory of the package.</li>
-                  <li><span class="code">my_pkg/my_pkg</span>: holds the actual package modules.</li>
-                  <li><span class="code">my_pkg/my_pkg/__init__.py</span>: This file makes Python treat the directories as containing packages. It can be empty or can contain package initialization code.</li>
-                  <li><span class="code">my_pkg/my_pkg/&lt;module_name&gt;.py</span>: Python module with actual code.</li>
-                  <li><span class="code">my_pkg/tests</span>: holds tests for the package.</li>
-                  <li><span class="code">my_pkg/setup.py</span>: specify metadata about the package and the files that should be included.</li>
-                  <li><span class="code">my_pkg/README.md</span>: Markdown file to describes the package.</li>
+                  <li>
+                    <span class="code">my_pkg</span>: root directory of the
+                    package.
+                  </li>
+                  <li>
+                    <span class="code">my_pkg/my_pkg</span>: holds the actual
+                    package modules.
+                  </li>
+                  <li>
+                    <span class="code">my_pkg/my_pkg/__init__.py</span>: This
+                    file makes Python treat the directories as containing
+                    packages. It can be empty or can contain package
+                    initialization code.
+                  </li>
+                  <li>
+                    <span class="code"
+                      >my_pkg/my_pkg/&lt;module_name&gt;.py</span
+                    >: Python module with actual code.
+                  </li>
+                  <li>
+                    <span class="code">my_pkg/tests</span>: holds tests for the
+                    package.
+                  </li>
+                  <li>
+                    <span class="code">my_pkg/setup.py</span>: specify metadata
+                    about the package and the files that should be included.
+                  </li>
+                  <li>
+                    <span class="code">my_pkg/README.md</span>: Markdown file to
+                    describes the package.
+                  </li>
                 </ul>
               </li>
-              <li>Register the Package (optional)
+              <li>
+                Register the Package (optional)
                 <ul>
                   <li>Create accounts for Test PyPI and PyPI.</li>
-                  <li>Build package: <span class="code">python setup.py sdist bdist_wheel</span>. creates a source distribution and a wheel of your package in a dist/ directory.</li>
-                  <li>Upload package using Twine: <span class="code">pip install twine; twine upload dist/*</span></li>
+                  <li>
+                    Build package:
+                    <span class="code">python setup.py sdist bdist_wheel</span>.
+                    creates a source distribution and a wheel of your package in
+                    a dist/ directory.
+                  </li>
+                  <li>
+                    Upload package using Twine:
+                    <span class="code"
+                      >pip install twine; twine upload dist/*</span
+                    >
+                  </li>
                 </ul>
               </li>
-              <li>Install the Package
+              <li>
+                Install the Package
                 <ul>
-                  <li>Once uploaded to Twine, it can be installed using <span class="code">pip install my_pkg</span></li>
+                  <li>
+                    Once uploaded to Twine, it can be installed using
+                    <span class="code">pip install my_pkg</span>
+                  </li>
                 </ul>
               </li>
-
             </ul>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
-          <h3 class="question">Explain the use of the pass statement in Python.</h3>
-          <p class="answer">
+          <h3 class="question">
+            Explain the use of the pass statement in Python.
+          </h3>
+          <div class="answer">
             <ul>
-              <li><span class="point">pass</span> is a null operation, meaning it does nothing.</li>
-              <li>It is used when a statement is required syntactically but you do not want any command or code to execute.</li>
-              <li>It is often used as a placeholder in empty classes or functions.</li>
+              <li>
+                <span class="point">pass</span> is a null operation, meaning it
+                does nothing.
+              </li>
+              <li>
+                It is used when a statement is required syntactically but you do
+                not want any command or code to execute.
+              </li>
+              <li>
+                It is often used as a placeholder in empty classes or functions.
+              </li>
             </ul>
-          </p>
-          <pre><code class="language-python">
+            <pre><code class="language-python">
     """ Placeholder for future code """
     def my_function():
         pass
-    
+
     """ Implementing Abstract Methods """
     class MyAbstractClass(ABC):
         @abstractmethod
@@ -100,55 +164,68 @@
     try:
         risky_call()
     except ValueError:
-        pass 
+        pass
 
     """ Loops or Conditional Blocks """
     if condition_met:
         pass
-          </code></pre>
+            </code></pre>
+          </div>
         </div>
-
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="DataStructures">
       <div class="topic-heading"><h2>Data Structures</h2></div>
       <div class="topic-body">
-
         <div class="question_answer_div">
           <h3 class="question">Explain list, dictionary and tuple?</h3>
-          <p class="answer">
+          <div class="answer">
             <ul>
-              <li>List
+              <li>
+                List
                 <ul>
                   <li></li>
                 </ul>
               </li>
-              <li>Dictionary
+              <li>
+                Dictionary
                 <ul>
-                  <li>stores key-value pair. Stored as <span class="code">{key1: value1, key2: value2}</span></li>
+                  <li>
+                    stores key-value pair. Stored as
+                    <span class="code">{key1: value1, key2: value2}</span>
+                  </li>
                   <li>Members can be accessed using key.</li>
                   <li>All the keys have to be unique</li>
                 </ul>
               </li>
-              <li>Tuple
+              <li>
+                Tuple
                 <ul>
-                  <li>Immutable list of Python objects. Hence, used to store read-only items. <span class="code">(item1, item2)</span></li>
+                  <li>
+                    Immutable list of Python objects. Hence, used to store
+                    read-only items. <span class="code">(item1, item2)</span>
+                  </li>
                 </ul>
               </li>
             </ul>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">Explain remove, del and pop for lists</h3>
-          <p class="answer">
+          <div class="answer">
             <table>
-              <thead><td>Property</td><td>remove</td><td>del</td><td>pop</td></thead>
+              <thead>
+                <td>Property</td>
+                <td>remove</td>
+                <td>del</td>
+                <td>pop</td>
+              </thead>
               <tbody>
                 <tr>
                   <td>Working</td>
@@ -158,56 +235,89 @@
                 </tr>
                 <tr>
                   <td>Parameter required</td>
-                  <td>value</td><td>index</td><td>index</td>
+                  <td>value</td>
+                  <td>index</td>
+                  <td>index</td>
                 </tr>
                 <tr>
                   <td>Returned value</td>
-                  <td>None</td><td>Doesn't return anything</td><td>Deleted element</td>
+                  <td>None</td>
+                  <td>Doesn't return anything</td>
+                  <td>Deleted element</td>
                 </tr>
                 <tr>
                   <td>Example</td>
-                  <td><pre><code class="language-python">
+                  <td>
+                    <pre><code class="language-python">
     l1 = [10, 20, 30]
     a = l1.remove(20) # a = None, l1 = [10, 30]
-                  </code></pre></td>
-                  <td><pre><code class="language-python">
+                  </code></pre>
+                  </td>
+                  <td>
+                    <pre><code class="language-python">
     l1 = [10, 20, 30]
     del l1[1] # l1 = [10, 30]
-                  </code></pre></td>
-                  <td><pre><code class="language-python">
+                  </code></pre>
+                  </td>
+                  <td>
+                    <pre><code class="language-python">
     l1 = [10, 20, 30]
     c = l1.remove(1) # c = 20, l1 = [10, 30]
-                  </code></pre></td>
+                  </code></pre>
+                  </td>
                 </tr>
               </tbody>
             </table>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">Explain append vs extend</h3>
-          <p class="answer">
+          <div class="answer">
             <table>
-              <thead><td>Property</td><td>append</td><td>extend</td></thead>
+              <thead>
+                <td>Property</td>
+                <td>append</td>
+                <td>extend</td>
+              </thead>
               <tbody>
-                <tr><td>No of items added</td><td>single element</td><td>all elements of iterables</td></tr>
-                <tr><td>Position at which items are added</td><td>end of the list</td><td>end of the list</td></tr>
-                <tr><td>Types of items to be added</td><td>any data structures</td><td>only elements of iterables</td></tr>
+                <tr>
+                  <td>No of items added</td>
+                  <td>single element</td>
+                  <td>all elements of iterables</td>
+                </tr>
+                <tr>
+                  <td>Position at which items are added</td>
+                  <td>end of the list</td>
+                  <td>end of the list</td>
+                </tr>
+                <tr>
+                  <td>Types of items to be added</td>
+                  <td>any data structures</td>
+                  <td>only elements of iterables</td>
+                </tr>
               </tbody>
             </table>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">Explain deep copy vs shallow copy</h3>
-          <p class="answer">
+          <div class="answer">
             <ul>
-              <li><span class="point">Shallow Copy:</span> Copies the reference pointers just like copying pointers.</li>
-              <li><span class="point">Deep Copy</span>: Creates a new duplicate object and recursively adds the copies of nested objects present in the original elements.</li>
+              <li>
+                <span class="point">Shallow Copy:</span> Copies the reference
+                pointers just like copying pointers.
+              </li>
+              <li>
+                <span class="point">Deep Copy</span>: Creates a new duplicate
+                object and recursively adds the copies of nested objects present
+                in the original elements.
+              </li>
             </ul>
             <pre><code class="language-python">
     import copy
@@ -218,16 +328,20 @@
     print(shallow)                  # [1, ['changed', 3], 4]
     print(deep)                     # [1, [2, 3], 4]
             </code></pre>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">Explain Python's type coercion rules.</h3>
-          <p class="answer">
+          <div class="answer">
             <ul>
-              <li>Python's <span class="point">type coercion</span> refers to the implicit conversion of values from one data type to another in an expression involving multiple types.</li>
+              <li>
+                Python's <span class="point">type coercion</span> refers to the
+                implicit conversion of values from one data type to another in
+                an expression involving multiple types.
+              </li>
             </ul>
             <pre><code class="language-python">
     """ Numeric Type Coercion """
@@ -247,20 +361,41 @@
     if (check or 0):                    # Numeric zero values (0, 0.0, 0j), empty sequences ([], (), "", {}), and None are considered False.
     if (check and 10)                   # Non-zero numbers, non-empty sequences, and almost everything else are treated as True.
             </code></pre>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
-          <h3 class="question">What is Python's None type, and how is it used?</h3>
-          <p class="answer">
+          <h3 class="question">
+            What is Python's None type, and how is it used?
+          </h3>
+          <div class="answer">
             <ul>
-              <li><span class="code">None</span> is a special constant representing the absence of a value or a null value.</li>
-              <li>It is an object of its own datatype, the <span class="code">NoneType</span>.</li>
-              <li><span class="code">None</span> is often used to signify 'empty' or 'no value here' and is commonly returned by functions that do not explicitly return a value.</li>
-              <li><span class="code">None</span> is a singleton in Python, which means there is only one instance of <span class="code">None</span></li>
-              <li>To check if a variable is <span class="code">None</span>, you should always use <span class="code">is</span> or <span class="code">is not</span>, which checks for object identity.</li>
+              <li>
+                <span class="code">None</span> is a special constant
+                representing the absence of a value or a null value.
+              </li>
+              <li>
+                It is an object of its own datatype, the
+                <span class="code">NoneType</span>.
+              </li>
+              <li>
+                <span class="code">None</span> is often used to signify 'empty'
+                or 'no value here' and is commonly returned by functions that do
+                not explicitly return a value.
+              </li>
+              <li>
+                <span class="code">None</span> is a singleton in Python, which
+                means there is only one instance of
+                <span class="code">None</span>
+              </li>
+              <li>
+                To check if a variable is <span class="code">None</span>, you
+                should always use <span class="code">is</span> or
+                <span class="code">is not</span>, which checks for object
+                identity.
+              </li>
             </ul>
             <pre><code class="language-python">
     """ Default Function Arguments """
@@ -298,95 +433,156 @@
         print("x has a value")
 
             </code></pre>
-          </p>
+          </div>
         </div>
-
-
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Execution">
       <div class="topic-heading"><h2>Execution</h2></div>
       <div class="topic-body">
         <div class="question_answer_div">
           <h3 class="question">Explain Python's execution model</h3>
-          <p class="answer">
+          <div class="answer">
             <ul>
-              <li>Source Code
+              <li>
+                Source Code
                 <ul>
-                  <li>Everything starts with the Python source code (<span class="code">.py</span> file extension).</li>
+                  <li>
+                    Everything starts with the Python source code (<span
+                      class="code"
+                      >.py</span
+                    >
+                    file extension).
+                  </li>
                 </ul>
               </li>
-              <li>Parsing
+              <li>
+                Parsing
                 <ul>
-                  <li>Interpreter parses the source code into a data structure known as an Abstract Syntax Tree (AST)</li>
-                  <li>The AST represents the syntactic structure of the code in a tree-like format, where each node represents a construct occurring in the source code.</li>
-                  <li>This step checks the syntax of your code; if there's a syntax error, Python will raise an exception at this stage and halt further execution.</li>
+                  <li>
+                    Interpreter parses the source code into a data structure
+                    known as an Abstract Syntax Tree (AST)
+                  </li>
+                  <li>
+                    The AST represents the syntactic structure of the code in a
+                    tree-like format, where each node represents a construct
+                    occurring in the source code.
+                  </li>
+                  <li>
+                    This step checks the syntax of your code; if there's a
+                    syntax error, Python will raise an exception at this stage
+                    and halt further execution.
+                  </li>
                 </ul>
               </li>
-              <li>Compilation
+              <li>
+                Compilation
                 <ul>
                   <li>For the next step, the AST is compiled into bytecode.</li>
-                  <li>Bytecode is a low-level set of instructions that is executed by the Python virtual machine (PVM).</li>
+                  <li>
+                    Bytecode is a low-level set of instructions that is executed
+                    by the Python virtual machine (PVM).
+                  </li>
                 </ul>
               </li>
-              <li>Python Virtual Machine (PVM)
+              <li>
+                Python Virtual Machine (PVM)
                 <ul>
-                  <li>The PVM is the runtime engine of Python; it's an interpreter which executes the bytecode.</li>
-                  <li>The PVM handles all the dynamic aspects of Python such as loops, function calls, memory management, and exception handling.</li>
+                  <li>
+                    The PVM is the runtime engine of Python; it's an interpreter
+                    which executes the bytecode.
+                  </li>
+                  <li>
+                    The PVM handles all the dynamic aspects of Python such as
+                    loops, function calls, memory management, and exception
+                    handling.
+                  </li>
                 </ul>
               </li>
-              <li>Bytecode Optimization
+              <li>
+                Bytecode Optimization
                 <ul>
-                  <li>Python includes a peephole optimizer in its compilation process, which performs limited optimization steps on the bytecode.</li>
-                  <li>These optimizations may include eliminating unnecessary instructions, constant folding, and more</li>
-                  <li>These optimizations are relatively minor compared to those performed by compilers for statically-typed languages.</li>
+                  <li>
+                    Python includes a peephole optimizer in its compilation
+                    process, which performs limited optimization steps on the
+                    bytecode.
+                  </li>
+                  <li>
+                    These optimizations may include eliminating unnecessary
+                    instructions, constant folding, and more
+                  </li>
+                  <li>
+                    These optimizations are relatively minor compared to those
+                    performed by compilers for statically-typed languages.
+                  </li>
                 </ul>
               </li>
             </ul>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">How is memory managed in Python?</h3>
-          <p class="answer">
+          <div class="answer">
             <ul>
-              <li>Involves a private heap containing all Python objects and Data Structures.</li>
-              <li>Interpreter takes care of this heap, and programmer has no access to it - Allocation of heap space for Python objects is taken care of by Python memory manager.</li>
-              <li>Built-in garbage collector recycles all unused memory. </li>
+              <li>
+                Involves a private heap containing all Python objects and Data
+                Structures.
+              </li>
+              <li>
+                Interpreter takes care of this heap, and programmer has no
+                access to it - Allocation of heap space for Python objects is
+                taken care of by Python memory manager.
+              </li>
+              <li>Built-in garbage collector recycles all unused memory.</li>
             </ul>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
-          <h3 class="question">What is the garbage collection mechanism in Python?</h3>
-          <p class="answer">
+          <h3 class="question">
+            What is the garbage collection mechanism in Python?
+          </h3>
+          <div class="answer">
             <ul>
-              <li>It is a cyclic garbage collector that tracks objects and their references to determine which objects are no longer needed.</li>
-              <li>When an object is no longer referenced, the garbage collector reclaims the memory used by that object.</li>
+              <li>
+                It is a cyclic garbage collector that tracks objects and their
+                references to determine which objects are no longer needed.
+              </li>
+              <li>
+                When an object is no longer referenced, the garbage collector
+                reclaims the memory used by that object.
+              </li>
             </ul>
-          </p>
+          </div>
         </div>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Function">
       <div class="topic-heading"><h2>Function</h2></div>
       <div class="topic-body">
         <div class="question_answer_div">
           <h3 class="question">What are decorators in Python?</h3>
-          <p class="answer">
+          <div class="answer">
             <ul>
-              <li><span class="point">Decorators</span> are functions that modify the behavior of another function.</li>
-              <li>They are typically used to extend the functionality of the decorated function without permanently modifying it.</li>
+              <li>
+                <span class="point">Decorators</span> are functions that modify
+                the behavior of another function.
+              </li>
+              <li>
+                They are typically used to extend the functionality of the
+                decorated function without permanently modifying it.
+              </li>
             </ul>
             <pre><code class="language-python">
     def decorator(func):
@@ -395,49 +591,58 @@
             func()
             print("Something is happening after the function is called.")
         return wrapper
-          
+
     @decorator
     def say_hello():
         print("Hello!")
-          
+
     say_hello()
             </code></pre>
-          </p>
-          <p class="answer_source">
-            <a href="./06.functions.html#Decorators">06. Functions - Decorators</a>
-          </p>
+          </div>
+          <div class="answer_source">
+            <a href="./06.functions.html#Decorators"
+              >06. Functions - Decorators</a
+            >
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">What are lambdas in Python?</h3>
-          <p class="answer"></p>
-          <p class="answer_source">
+          <div class="answer"></div>
+          <div class="answer_source">
             <a href="./06.functions.html#Lambda">06. Functions - Lambda</a>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
-          <h3 class="question">What are list comprehensions and dict comprehensions and a generator?</h3>
-          <p class="answer"></p>
+          <h3 class="question">
+            What are list comprehensions and dict comprehensions and a
+            generator?
+          </h3>
+          <div class="answer"></div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">Generator vs Iterator?</h3>
-          <p class="answer"></p>
+          <div class="answer"></div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">What is a Closure in Python?</h3>
-          <p class="answer">
-            <p>A <span class="point">Closure</span> is a function object that remembers values in enclosing scopes even after the outer function has finished executing.</p>
+          <div class="answer">
+            <p>
+              A <span class="point">Closure</span> is a function object that
+              remembers values in enclosing scopes even after the outer function
+              has finished executing.
+            </p>
             <pre><code class="language-python">
     def outer(x):
         def inner(y):
@@ -447,40 +652,72 @@
     add_five = outer(5)
     print(add_five(3))  # Output: 8
             </code></pre>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">Abstract Method vs Virtual Method in Python?</h3>
-          <p class="answer">
+          <div class="answer">
             <h3>Abstract Method</h3>
             <ul>
-              <li>An abstract method is a method that is declared in a class, but it does not have an implementation in that class.</li>
-              <li>The class containing an abstract method is typically known as an abstract class, and it cannot be instantiated on its own.</li>
-              <li>Abstract methods must be implemented by any subclass that derives from the abstract class.</li>
-              <li>Must be declared in an abstract class using the abc module and must be implemented by any subclass.</li>
+              <li>
+                An abstract method is a method that is declared in a class, but
+                it does not have an implementation in that class.
+              </li>
+              <li>
+                The class containing an abstract method is typically known as an
+                abstract class, and it cannot be instantiated on its own.
+              </li>
+              <li>
+                Abstract methods must be implemented by any subclass that
+                derives from the abstract class.
+              </li>
+              <li>
+                Must be declared in an abstract class using the abc module and
+                must be implemented by any subclass.
+              </li>
             </ul>
 
             <h3>Virtual Method</h3>
             <ul>
-              <li>A virtual method is a method that has an implementation in a base class but can be overridden in a derived class.</li>
-              <li>Python handles method overriding differently and does not have the "virtual" keyword.</li>
-              <li>In Python, all methods in classes are effectively virtual, which means any method can be overridden in a subclass.</li>
+              <li>
+                A virtual method is a method that has an implementation in a
+                base class but can be overridden in a derived class.
+              </li>
+              <li>
+                Python handles method overriding differently and does not have
+                the "virtual" keyword.
+              </li>
+              <li>
+                In Python, all methods in classes are effectively virtual, which
+                means any method can be overridden in a subclass.
+              </li>
             </ul>
-          </p>
-          <p class="answer_source">
-            <a href="./99.programming_questions-functions.html#AbstractMethodVsVirtualMethod">Programming Questions - Abstract Method vs Virtual Method</a>
-          </p>
+          </div>
+          <div class="answer_source">
+            <a
+              href="./99.programming_questions-functions.html#AbstractMethodVsVirtualMethod"
+              >Programming Questions - Abstract Method vs Virtual Method</a
+            >
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
-          <div class="question">How are arguments passed by value or by reference in Python?</div>
-          <p class="answer">
-            Neither. Python uses a mechanism known as "pass-by-object-reference" or "pass-by-assignment". When you pass arguments to a function in Python, you are actually passing object references, not the actual object itself nor an explicit pointer to it. However, these references are passed by value. This means the function receives a copy of the reference, pointing to the same object in memory as the original one.
+          <div class="question">
+            How are arguments passed by value or by reference in Python?
+          </div>
+          <div class="answer">
+            Neither. Python uses a mechanism known as "pass-by-object-reference"
+            or "pass-by-assignment". When you pass arguments to a function in
+            Python, you are actually passing object references, not the actual
+            object itself nor an explicit pointer to it. However, these
+            references are passed by value. This means the function receives a
+            copy of the reference, pointing to the same object in memory as the
+            original one.
             <pre><code class="language-python">
     def modify_num(num):
         num = num + 10
@@ -500,25 +737,41 @@
             </code></pre>
             <h3>Key Points</h3>
             <ul>
-              <li><span class="point">No New Objects Are Created on Passing:</span> When you pass an argument, Python does not create a new object; it only passes the reference. Whether the function can modify the original object depends on whether the object is mutable or immutable.</li>
-              <li><span class="point">Reassignment Does Not Affect Original:</span> Reassigning a parameter to a new value within a function creates a new local variable. It does not affect the original variable outside the function.</li>
+              <li>
+                <span class="point"
+                  >No New Objects Are Created on Passing:</span
+                >
+                When you pass an argument, Python does not create a new object;
+                it only passes the reference. Whether the function can modify
+                the original object depends on whether the object is mutable or
+                immutable.
+              </li>
+              <li>
+                <span class="point"
+                  >Reassignment Does Not Affect Original:</span
+                >
+                Reassigning a parameter to a new value within a function creates
+                a new local variable. It does not affect the original variable
+                outside the function.
+              </li>
             </ul>
-          </p>
+          </div>
         </div>
 
-        <hr/>
-
+        <hr />
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="FileHandling">
       <div class="topic-heading"><h2>File handling</h2></div>
       <div class="topic-body">
         <div class="question_answer_div">
-          <h3 class="question">What are file processing modes supported by Python?</h3>
-          <p class="answer">
+          <h3 class="question">
+            What are file processing modes supported by Python?
+          </h3>
+          <div class="answer">
             There are 4 file processing modes supported by Python
             <ul>
               <li>read-only (r)</li>
@@ -526,76 +779,97 @@
               <li>read-write (rw)</li>
               <li>append (a)</li>
             </ul>
-          </p>
+          </div>
         </div>
 
-        <hr/>
+        <hr />
 
         <div class="question_answer_div">
           <h3 class="question">How to delete a file in Python?</h3>
-          <p class="answer">
+          <div class="answer">
             Files can be deleted in Python using one of the following commands
             <ul>
               <li>os.remove(filename)</li>
               <li>os.unlink(filename)</li>
             </ul>
-          </p>
+          </div>
         </div>
       </div>
     </div>
 
-    <hr/>
-  
+    <hr />
+
     <div class="topic" id="Oop">
       <div class="topic-heading"><h2>OOP</h2></div>
       <div class="topic-body">
         <div class="question_answer_div">
           <h3 class="question">How to create an empty class in Python?</h3>
-          <p class="answer">
-            Use <span class="code">pass</span> after the definition of the class object
-          </p>
+          <div class="answer">
+            Use <span class="code">pass</span> after the definition of the class
+            object
+          </div>
         </div>
 
-        <hr/>
-  
+        <hr />
+
         <div class="question_answer_div">
           <h3 class="question">What is early binding?</h3>
-          <p class="answer"></p>
+          <div class="answer"></div>
         </div>
-
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Multithreading">
       <div class="topic-heading"><h2>Multi Threading</h2></div>
       <div class="topic-body">
         <div class="question_answer_div">
-          <h3 class="question">How does the Global Interpreter Lock (GIL) affect Python concurrency?</h3>
-          <p class="answer">
+          <h3 class="question">
+            How does the Global Interpreter Lock (GIL) affect Python
+            concurrency?
+          </h3>
+          <div class="answer">
             <ul>
-              <li><span class="point">GIL</span> stands for Global Interpreter Lock.</li>
-              <li>It is a mutex that protects access to Python objects, preventing multiple threads from executing Python bytecodes at once.</li>
-              <li>It is necessary because CPython memory management is not thread-safe. GIL is a performance bottleneck in multi-threaded programs.</li>
-              <li>The GIL allows only one thread to execute Python bytecode at a time, which can be a bottleneck in CPU-bound and multi-threaded programs. However, it does not affect performance in I/O-bound or multi-process applications.</li>
+              <li>
+                <span class="point">GIL</span> stands for Global Interpreter
+                Lock.
+              </li>
+              <li>
+                It is a mutex that protects access to Python objects, preventing
+                multiple threads from executing Python bytecodes at once.
+              </li>
+              <li>
+                It is necessary because CPython memory management is not
+                thread-safe. GIL is a performance bottleneck in multi-threaded
+                programs.
+              </li>
+              <li>
+                The GIL allows only one thread to execute Python bytecode at a
+                time, which can be a bottleneck in CPU-bound and multi-threaded
+                programs. However, it does not affect performance in I/O-bound
+                or multi-process applications.
+              </li>
             </ul>
-          </p>
+          </div>
         </div>
       </div>
     </div>
 
-    <hr/>
-
+    <hr />
   </div>
-    
+
   <div class="sidebar-right">
     <div class="menu-header" id="menu-header">Table of Content</div>
     <div class="menu-content" id="menu-content"></div>
   </div>
 </div>
-    
+
 <div class="footer">
-  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
-  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+  <span class="prev"
+    ><a href="./05.event_handling.html">05. Event Handling</a></span
+  >
+  <span class="next"
+    ><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span
+  >
 </div>

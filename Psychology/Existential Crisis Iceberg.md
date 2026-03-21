@@ -1,36 +1,36 @@
 # Existential Crisis Iceberg
 
 - [Level 1](#level-1)
-	- [Everyone has their own complex life](#everyone-has-their-own-complex-life)
-	- [Worry about the Future](#worry-about-the-future)
+  - [Everyone has their own complex life](#everyone-has-their-own-complex-life)
+  - [Worry about the Future](#worry-about-the-future)
 - [Level 2](#level-2)
-	- [Simulation theory](#simulation-theory)
-	- [Why does anything exist?](#why-does-anything-exist)
-	- [Acknowledgement of Death](#acknowledgement-of-death)
+  - [Simulation theory](#simulation-theory)
+  - [Why does anything exist?](#why-does-anything-exist)
+  - [Acknowledgement of Death](#acknowledgement-of-death)
 - [Level 3](#level-3)
-	- [Sympathy is created by self-pity](#sympathy-is-created-by-self-pity)
-	- [Last Thursday-ism](#last-thursday-ism)
-	- [Your are alone in your brain](#your-are-alone-in-your-brain)
-	- [We are not alone](#we-are-not-alone)
-	- [Afterlife Skepticism](#afterlife-skepticism)
+  - [Sympathy is created by self-pity](#sympathy-is-created-by-self-pity)
+  - [Last Thursday-ism](#last-thursday-ism)
+  - [Your are alone in your brain](#your-are-alone-in-your-brain)
+  - [We are not alone](#we-are-not-alone)
+  - [Afterlife Skepticism](#afterlife-skepticism)
 - [Level 4](#level-4)
-	- [Nihilism](#nihilism)
-	- [We are alone](#we-are-alone)
-	- [Being born before immortality](#being-born-before-immortality)
+  - [Nihilism](#nihilism)
+  - [We are alone](#we-are-alone)
+  - [Being born before immortality](#being-born-before-immortality)
 - [Level 5](#level-5)
-	- [Dual Consciousness Theory](#dual-consciousness-theory)
-	- [Observation creates the universe](#observation-creates-the-universe)
-	- [Mystery of conciousness](#mystery-of-conciousness)
+  - [Dual Consciousness Theory](#dual-consciousness-theory)
+  - [Observation creates the universe](#observation-creates-the-universe)
+  - [Mystery of conciousness](#mystery-of-conciousness)
 - [Level 6](#level-6)
-	- [Past and Future exist simultaneously](#past-and-future-exist-simultaneously)
-	- [Superdetermenism](#superdetermenism)
-	- [Human life is a momentarily universal anomaly](#human-life-is-a-momentarily-universal-anomaly)
+  - [Past and Future exist simultaneously](#past-and-future-exist-simultaneously)
+  - [Superdetermenism](#superdetermenism)
+  - [Human life is a momentarily universal anomaly](#human-life-is-a-momentarily-universal-anomaly)
 - [Level 7](#level-7)
-	- [The brain creates the flow of time](#the-brain-creates-the-flow-of-time)
-	- [Boltzmann Brain](#boltzmann-brain)
+  - [The brain creates the flow of time](#the-brain-creates-the-flow-of-time)
+  - [Boltzmann Brain](#boltzmann-brain)
 - [Level 8](#level-8)
-	- [Quantum Immortality](#quantum-immortality)
-	- [You can not die from your perspective.](#you-can-not-die-from-your-perspective)
+  - [Quantum Immortality](#quantum-immortality)
+  - [You can not die from your perspective.](#you-can-not-die-from-your-perspective)
 
 ## Level 1
 
@@ -101,7 +101,7 @@
 #### Symptoms
 
 - Chronic Anxiety, Inability to Act, Doomscrolling
-  
+
 #### Reasoning
 
 - We live in a "Delayed Return Environment", while our brains evolved for immediate returns - Our anxiety engine is revving for a tiger attack, but we are just sitting at a desk.
@@ -278,6 +278,7 @@
 ### Sympathy is created by self-pity
 
 #### What is it?
+
 - a cynical but psychologically grounded theory (often linked to Psychological Egoism).
 - argues that true altruism is impossible.
 - When you feel "sad" for a homeless person, you aren't actually feeling their pain. You are imagining yourself in their position and feeling pity for that hypothetical version of you.
@@ -306,7 +307,7 @@
 #### Cure
 
 - **Reframing**: Does the motivation matter if the outcome is good? If "selfish" empathy leads to feeding the hungry, then selfishness is a useful tool.
-    - As Kant argued, duty is what matters, not just the feeling.
+  - As Kant argued, duty is what matters, not just the feeling.
 
 #### Related Topics
 
@@ -353,9 +354,9 @@
 #### Cure
 
 - **Occam's Razor**:
-    - It is technically possible, but it requires massive, unnecessary complexity.
-    - It is simpler to assume the past is real.
-    - If the fake past is indistinguishable from a real past, you might as well treat it as real.
+  - It is technically possible, but it requires massive, unnecessary complexity.
+  - It is simpler to assume the past is real.
+  - If the fake past is indistinguishable from a real past, you might as well treat it as real.
 
 #### Related Topics
 
@@ -425,8 +426,8 @@
 
 - If we aren't alone, that might be worse
 - Dark Forest Theory
-    - from Liu Cixin
-    - suggests the universe is full of life, but it is silent because everyone is hiding. Any civilization that reveals itself (like Earth is doing) is instantly destroyed by advanced predators.
+  - from Liu Cixin
+  - suggests the universe is full of life, but it is silent because everyone is hiding. Any civilization that reveals itself (like Earth is doing) is instantly destroyed by advanced predators.
 
 #### Examples
 
@@ -451,7 +452,7 @@
 #### Cure
 
 - **Optimism**: This assumes aliens think like humans (conquerors).
-    - Advanced intelligence might evolve past violence.
+  - Advanced intelligence might evolve past violence.
 
 #### Related Topics
 
@@ -473,8 +474,8 @@
 #### What is it?
 
 - This is the **materialist hard-stop**: The view that consciousness is purely a byproduct of the brain's chemistry.
-    - When the brain dies, the "show" doesn't move to a new theater; the projector just breaks.
-    - There is no darkness, no waiting—just non-existence.
+  - When the brain dies, the "show" doesn't move to a new theater; the projector just breaks.
+  - There is no darkness, no waiting—just non-existence.
 
 #### Examples
 
@@ -499,7 +500,7 @@
 #### Cure
 
 - **Urgency**: If there is no afterlife, this life becomes infinitely precious. It is the only chance you get.
-    - "YOLO" is actually a profound philosophical stance.
+  - "YOLO" is actually a profound philosophical stance.
 
 #### Related Topics
 
@@ -535,7 +536,6 @@
 - **Moral Relativism**: In nature, a lion eating a gazelle isn't "evil," it's just lunch. Humans created the concepts of "good" and "evil"; the universe only has physics.
 - **The Heat Death**: Eventually, all stars will die, and the universe will be a cold, dark void forever. Nothing we build will survive this end.
 
-
 #### Quotes
 
 - "God is dead. God remains dead. And we have killed him." — Friedrich Nietzsche
@@ -545,17 +545,17 @@
 #### Symptom
 
 - **Existential Ennui**: A deep, unshakeable boredom or feeling that efforts are futile.
-    - "Why wash the dishes if they just get dirty again?" applied to life itself.
+  - "Why wash the dishes if they just get dirty again?" applied to life itself.
 
 #### Reasoning
 
 - **Scientific materialism** strips away magic/divinity, leaving only cold mechanism.
-    - Without a "God" or "Fate," meaning evaporates.
+  - Without a "God" or "Fate," meaning evaporates.
 
 #### Cure
 
 - **Existentialism/Absurdism**: Admit life has no inherent meaning, then revolt by creating your own.
-    - You wash the dishes not because the universe cares, but because you prefer clean plates.
+  - You wash the dishes not because the universe cares, but because you prefer clean plates.
 
 #### Related Topics
 
@@ -571,7 +571,6 @@
 
 - If you knew the world would end in exactly 100 years, making all legacy impossible, how would you change your life today?
 - Is a "meaningless" happiness (like playing video games) less valuable than a "meaningful" struggle (like raising a child)? Why?
-
 
 ### We are alone
 
@@ -597,7 +596,7 @@
 #### Symptom
 
 - **Crushing Responsibility**: If we die, the universe goes blind.
-    - Art, music, and love disappear from reality entirely.
+  - Art, music, and love disappear from reality entirely.
 
 #### Reasoning
 
@@ -607,7 +606,7 @@
 #### Cure
 
 - **Stewardship**: Instead of feeling lonely, feel important.
-    - We are the "Guardians of the Flame" - We must survive because we carry the only light.
+  - We are the "Guardians of the Flame" - We must survive because we carry the only light.
 
 #### Related Topics
 
@@ -672,10 +671,10 @@
 - Would you be angry if your grandchildren were immortal, or would you be happy for them?
 
 ## Level 5
+
 ### Dual Consciousness Theory
 
 #### Thought-Provoking Questions
-
 
 ### Observation creates the universe
 
@@ -683,12 +682,11 @@
 
 ### Mystery of conciousness
 
-
 #### Thought-Provoking Questions
 
 ## Level 6
-### Past and Future exist simultaneously
 
+### Past and Future exist simultaneously
 
 #### Thought-Provoking Questions
 
@@ -701,6 +699,7 @@
 #### Thought-Provoking Questions
 
 ## Level 7
+
 ### The brain creates the flow of time
 
 #### Thought-Provoking Questions
@@ -710,6 +709,7 @@
 #### Thought-Provoking Questions
 
 ## Level 8
+
 ### Quantum Immortality
 
 #### Thought-Provoking Questions

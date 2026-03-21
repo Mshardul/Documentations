@@ -1,16 +1,17 @@
 # Table Of Content
+
 - [Table Of Content](#table-of-content)
 - [Arrays](#arrays)
 - [Strings](#strings)
 - [Searching Algorithms](#searching-algorithms)
-    - [Linear Search](#linear-search)
-    - [Binary Search](#binary-search)
+  - [Linear Search](#linear-search)
+  - [Binary Search](#binary-search)
 - [Sorting Algorithms](#sorting-algorithms)
-    - [Bubble Sort](#bubble-sort)
-    - [Insertion Sort](#insertion-sort)
-    - [Selection Sort](#selection-sort)
-    - [Merge Sort](#merge-sort)
-    - [Quick Sort](#quick-sort)
+  - [Bubble Sort](#bubble-sort)
+  - [Insertion Sort](#insertion-sort)
+  - [Selection Sort](#selection-sort)
+  - [Merge Sort](#merge-sort)
+  - [Quick Sort](#quick-sort)
 - [Two-Pointer Technique](#two-pointer-technique)
 - [Competitive Programming Questions](#competitive-programming-questions)
   - [Search in a Rotated Sorted Array](#search-in-a-rotated-sorted-array)
@@ -21,40 +22,47 @@
   - [Find Peak Element](#find-peak-element)
 
 # Arrays
+
 - a linear data structure that stores elements in contiguous memory locations.
 - Each element can be accessed by its index, with indexing typically starting at 0.
 
 ## Common Operations
-- **Insertion at the end**:  `O(1)  amortized` (in dynamic arrays);  O(1)  if space is available in static arrays.
-- **Deletion from the end**:  `O(1)`.
-- **Insertion/Deletion from the middle**:  `O(n)`  because all subsequent elements must be shifted.
-- **Search**:  `O(n)`  in the worst case, when sequential.
-- **Random Access:**  `O(1)`.
+
+- **Insertion at the end**: `O(1) amortized` (in dynamic arrays); O(1) if space is available in static arrays.
+- **Deletion from the end**: `O(1)`.
+- **Insertion/Deletion from the middle**: `O(n)` because all subsequent elements must be shifted.
+- **Search**: `O(n)` in the worst case, when sequential.
+- **Random Access:** `O(1)`.
 
 # Strings
+
 - is a sequence of characters.
 - In many languages (like C++), it’s essentially an array of characters.
 - In Python, strings are immutable objects, meaning once created, they cannot be changed in-place.
 
 ## Common Operations
-- **Access a character by index**:  `O(1)`.
+
+- **Access a character by index**: `O(1)`.
 - **Concatenation**:
-    - In `Python`, `O(n^2)`  in worst scenarios
-    - Better to use a StringBuilder in Java or a list join in Python.
+  - In `Python`, `O(n^2)` in worst scenarios
+  - Better to use a StringBuilder in Java or a list join in Python.
 - `Substring`:
-    - `O(1)` if pointers are stored to the original array (like older Java versions did)
-    - `O(n)`  if substring is copied each time.
+  - `O(1)` if pointers are stored to the original array (like older Java versions did)
+  - `O(n)` if substring is copied each time.
 
 # Searching Algorithms
 
 ## Linear Search
+
 - Check each element sequentially until you find the target or reach the end.
 
 ### Complexities
+
 - **Time Complexity**: `O(n)`
 - **Time Complexity**: `O(1)`
 
 ### When to use
+
 - When the array is unsorted and there is no additional information to speed up search.
 - For very small arrays where the overhead of more complex algorithms isn’t justified.
 
@@ -69,15 +77,18 @@ def linear_search(arr, target):
 ```
 
 ## Binary Search
+
 - Works on sorted arrays.
 - Repeatedly divide the search interval in half.
 - If the value of the search key is less than the middle element, narrow the interval to the lower half; otherwise narrow it to the upper half.
 
 ### Complexities
+
 - **Time Complexity**: `O(log n)`
-- **Time Complexity**: `O(1)`  // iterative version
+- **Time Complexity**: `O(1)` // iterative version
 
 ### Requirements
+
 - The array must be sorted.
 
 ### Python code
@@ -102,10 +113,12 @@ def binary_search(sorted_arr, target):
 # Sorting Algorithms
 
 ## Bubble Sort
+
 - Repeatedly swap adjacent elements if they are in the wrong order.
 - After each pass, the largest element “bubbles up” to the correct position.
 
 ### Complexities
+
 - **Time Complexity**: `O(n^2)` for average/worst case; `O(n)` for best case (already sorted)
 - **Time Complexity**: `O(1)`
 
@@ -124,12 +137,13 @@ def bubble_sort(arr):
             break
 ```
 
-
 ## Insertion Sort
+
 - Build the sorted array (or subarray) one item at a time.
 - Take the next element and insert it into the correct position in the already-sorted subarray.
 
 ### Complexities
+
 - **Time Complexity**: `O(n^2)` for average/worst case; `O(n)` for best case (already sorted)
 - **Time Complexity**: `O(1)`
 
@@ -147,11 +161,13 @@ def insertion_sort(arr):
 ```
 
 ## Selection Sort
+
 - Find the minimum element in the unsorted part and swap it with the leftmost unsorted element.
 - Move the boundary of the unsorted part by one.
 - It makes the minimum number of swaps: `O(n)`
 
 ### Complexities
+
 - **Time Complexity**: `O(n^2)`
 - **Time Complexity**: `O(1)`
 
@@ -169,9 +185,11 @@ def selection_sort(arr):
 ```
 
 ## Merge Sort
+
 - A divide-and-conquer algorithm that divides the array into halves, recursively sorts each half, and merges the sorted halves.
 
 ### Complexities
+
 - **Time Complexity**: `O(n log n)`
 - **Time Complexity**: `O(n)` for additional space for merging
 
@@ -203,9 +221,11 @@ def merge(left, right):
 ```
 
 ## Quick Sort
+
 - A divide-and-conquer algorithm that selects a “pivot” element, then partitions the array around the pivot, recursively sorts the two sub-partitions.
 
 ### Complexities
+
 - **Time Complexity**: `O(n log n)` for average case; `O(n*2)` for worst case
 - **Time Complexity**: `O(n)` for recursion stack
 
@@ -230,11 +250,13 @@ def partition(arr, low, high):
 ```
 
 # Two-Pointer Technique
+
 - The two-pointer method uses two (or more) index variables to traverse data structures—often arrays or strings.
 
 ## Example Use Cases
 
 ### Finding a Pair That Sums to a Target (Sorted Array)
+
 - If the sum of two pointers is greater than the target, move the right pointer left;
 - If it’s less, move the left pointer right.
 
@@ -254,6 +276,7 @@ def two_sum_sorted(arr, target):
 ```
 
 ### Reversing an Array In-Place
+
 - Use two pointers, one at the start and one at the end, and swap elements until they meet in the middle.
 
 ```python
@@ -267,6 +290,7 @@ def reverse_array(arr):
 ```
 
 ### Move Zeros to the End (Variation)
+
 - Use two pointers to separate non-zero elements from zero elements in an array (useful in “partition-like” operations).
 
 ```python
@@ -282,6 +306,7 @@ def move_zeros_to_end(arr):
 ```
 
 ### String Palindrome Check
+
 - Compare characters from the start and end moving toward the center.
 
 ```python
@@ -294,40 +319,46 @@ def is_palindrome(s):
         right -= 1
     return True
 ```
+
 ## Special Considerations & Edge Cases
+
 - **Array Boundaries**
-    - Always check for out-of-bounds errors, especially in lower-level languages.
-    - Watch for empty arrays (`length = 0`) or arrays with a single element.
+  - Always check for out-of-bounds errors, especially in lower-level languages.
+  - Watch for empty arrays (`length = 0`) or arrays with a single element.
 - **String Edge Cases**
-    - Empty strings (`length = 0`).
-    - Special character handling, case sensitivity, or localization issues for real-world applications.
-    - Immutability in certain languages (like Python, Java). Modifying a string might need additional memory or usage of specialized classes (e.g., StringBuilder in Java).
+  - Empty strings (`length = 0`).
+  - Special character handling, case sensitivity, or localization issues for real-world applications.
+  - Immutability in certain languages (like Python, Java). Modifying a string might need additional memory or usage of specialized classes (e.g., StringBuilder in Java).
 - **Sorting Stability**
-    - Stable sort algorithms (like Merge Sort, Insertion Sort) maintain the relative order of elements that compare equal. This can be important in some applications.
-    - Quick Sort is generally unstable in its typical form.
+  - Stable sort algorithms (like Merge Sort, Insertion Sort) maintain the relative order of elements that compare equal. This can be important in some applications.
+  - Quick Sort is generally unstable in its typical form.
 - **Pivot Selection in Quick Sort**
-   - Random pivot or median-of-three strategy can help reduce the likelihood of worst-case  O(n^2) .
+  - Random pivot or median-of-three strategy can help reduce the likelihood of worst-case O(n^2) .
 - **Binary Search Precondition**
-    - Must ensure the array is sorted. Using binary search on an unsorted array yields incorrect results.
+  - Must ensure the array is sorted. Using binary search on an unsorted array yields incorrect results.
 - **Time vs. Space Trade-Off**
-    - Merge Sort is  O(n \log n)  but requires extra space  O(n) .
-    - Quick Sort can be in-place but has a worst-case scenario of  O(n^2) .
+  - Merge Sort is O(n \log n) but requires extra space O(n) .
+  - Quick Sort can be in-place but has a worst-case scenario of O(n^2) .
 - **Overflow Issues**
-    - Watch for potential overflow when calculating the midpoint in binary search: mid = (left + right) // 2 is usually fine in Python because of arbitrary precision integers, but in some languages, you might do mid = left + (right - left) / 2 to avoid overflow.
+  - Watch for potential overflow when calculating the midpoint in binary search: mid = (left + right) // 2 is usually fine in Python because of arbitrary precision integers, but in some languages, you might do mid = left + (right - left) / 2 to avoid overflow.
 - **Data Type**
-    - Arrays can store primitives (like int, char, etc.) or objects (in high-level languages). This might affect memory usage and performance.
+  - Arrays can store primitives (like int, char, etc.) or objects (in high-level languages). This might affect memory usage and performance.
 
 # Competitive Programming Questions
 
 ## Search in a Rotated Sorted Array
+
 ### Problem Statement
-- Given a rotated sorted array `nums` of unique integers and a `target` value. 
-    - Determine if the target exists in the array. 
-    - If it does, return its `index`; otherwise, return `-1`.
+
+- Given a rotated sorted array `nums` of unique integers and a `target` value.
+  - Determine if the target exists in the array.
+  - If it does, return its `index`; otherwise, return `-1`.
 - Example 1
-    - **Input**: nums = `[4, 5, 6, 7, 0, 1, 2]`, target = `0`
-    - **Output**: `4`  // since nums[4] == 0
+  - **Input**: nums = `[4, 5, 6, 7, 0, 1, 2]`, target = `0`
+  - **Output**: `4` // since nums[4] == 0
+
 ### Solution
+
 ```python
 """
 - Use a modified binary search.
@@ -339,7 +370,7 @@ def search_in_rotated_sorted_array(nums, target):
         mid = (left + right) // 2
         if nums[mid] == target:
             return mid
-        
+
         # If left portion is sorted
         if nums[left] <= nums[mid]:
             if nums[left] <= target < nums[mid]:
@@ -352,22 +383,28 @@ def search_in_rotated_sorted_array(nums, target):
                 left = mid + 1
             else:
                 right = mid - 1
-    
+
     return -1
 ```
+
 ### Complexities
+
 - **Time Complexity**: `O(log n)`
 - **Time Complexity**: `O(1)`
 
 ## 3-Sum
+
 ### Problem Statement
-- Given an integer array `nums`, return all the unique triplets `[nums[i], nums[j], nums[k]]`, such that 
-    - `i`, `j`, and `k` are distinct indices, and 
-    - `nums[i] + nums[j] + nums[k] == 0`.
+
+- Given an integer array `nums`, return all the unique triplets `[nums[i], nums[j], nums[k]]`, such that
+  - `i`, `j`, and `k` are distinct indices, and
+  - `nums[i] + nums[j] + nums[k] == 0`.
 - Example 1
-    - **Input**: nums = `[-1, 0, 1, 2, -1, -4]`
-    - **Output**: `[[-1, -1, 2], [-1, 0, 1]]`
+  - **Input**: nums = `[-1, 0, 1, 2, -1, -4]`
+  - **Output**: `[[-1, -1, 2], [-1, 0, 1]]`
+
 ### Solution
+
 ```python
 """
 1. Sort the array.
@@ -402,21 +439,27 @@ def three_sum(nums):
                 right -= 1
     return result
 ```
+
 ### Complexities
+
 - **Time Complexity**: `O(n^2)`
 - **Time Complexity**: `O(log n)`
 
 ## K-th Smallest Element (Using Quickselect)
+
 ### Problem Statement
-- Given an unsorted array `nums` and an integer `k`, 
-    - find the k-th smallest element in the array (1-based).
-    - For instance, if `k=1`, we want the smallest element;
-    - if `k=2`, we want the second smallest,
-    - and so on.
+
+- Given an unsorted array `nums` and an integer `k`,
+  - find the k-th smallest element in the array (1-based).
+  - For instance, if `k=1`, we want the smallest element;
+  - if `k=2`, we want the second smallest,
+  - and so on.
 - Example 1
-    - **Input**: nums = `[3, 2, 1, 5, 6, 4]`, k = `2`
-    - **Output**: `2`  // the 2nd smallest element is 2
+  - **Input**: nums = `[3, 2, 1, 5, 6, 4]`, k = `2`
+  - **Output**: `2` // the 2nd smallest element is 2
+
 ### Solution
+
 ```python
 """
 - Quickselect is a variation of Quicksort partitioning
@@ -432,7 +475,7 @@ def kth_smallest(nums, k):
 
 def quickselect(arr, left, right, k_index):
     pivot_index = random_partition(arr, left, right)
-    
+
     if pivot_index == k_index:
         return arr[pivot_index]
     elif pivot_index < k_index:
@@ -455,19 +498,24 @@ def partition(arr, left, right):
     arr[i + 1], arr[right] = arr[right], arr[i + 1]
     return i + 1
 ```
+
 ### Complexities
+
 - **Time Complexity**: `O(n^2)` worst case; `O(n)` average case
-- **Time Complexity**: `O(1)`  // in-place
+- **Time Complexity**: `O(1)` // in-place
 
 ## Minimum Absolute Difference Pair
+
 ### Problem Statement
-- Given an array of integers `nums`, 
-    - find the minimum absolute difference between any pair of elements in the array.
+
+- Given an array of integers `nums`,
+  - find the minimum absolute difference between any pair of elements in the array.
 - Example 1
-    - **Input**: nums = `[3, 8, 15, 17]`
-    - **Output**: `2` (the pair `(15, 17)` yields the minimum difference)
+  - **Input**: nums = `[3, 8, 15, 17]`
+  - **Output**: `2` (the pair `(15, 17)` yields the minimum difference)
 
 ### Solution
+
 ```python
 """
 1. Sort the array.
@@ -483,18 +531,24 @@ def minimum_absolute_difference(nums):
             min_diff = diff
     return min_diff
 ```
+
 ### Complexities
-- **Time Complexity**: `O(n log n)`  // due to sorting
-- **Time Complexity**: `O(1)`  // if in-place sorting
+
+- **Time Complexity**: `O(n log n)` // due to sorting
+- **Time Complexity**: `O(1)` // if in-place sorting
 
 ## Search in a Sorted 2D Matrix
+
 ### Problem Statement
+
 - Given an `m * n` matrix matrix where each row is sorted in ascending order (left to right) and each column is sorted in ascending order (top to bottom)
-    - Write a function that searches for a target value in the matrix and returns `True` if it exists, otherwise `False`.
+  - Write a function that searches for a target value in the matrix and returns `True` if it exists, otherwise `False`.
 - Example 1
-    - **Input**: matrix = `[ [1, 4, 7, 11], [2, 5, 8, 12], [3, 6, 9, 16], [10, 13, 14, 17] ]`, target = `5`
-    - **Output**: `True`
+  - **Input**: matrix = `[ [1, 4, 7, 11], [2, 5, 8, 12], [3, 6, 9, 16], [10, 13, 14, 17] ]`, target = `5`
+  - **Output**: `True`
+
 ### Solution
+
 ```python
 """
 1. Start from the top-right corner (or bottom-left corner).
@@ -505,14 +559,14 @@ def minimum_absolute_difference(nums):
 def search_matrix(matrix, target):
     if not matrix or not matrix[0]:
         return False
-    
+
     rows = len(matrix)
     cols = len(matrix[0])
-    
+
     # Start from top-right corner
     r = 0
     c = cols - 1
-    
+
     while r < rows and c >= 0:
         if matrix[r][c] == target:
             return True
@@ -520,24 +574,29 @@ def search_matrix(matrix, target):
             c -= 1
         else:
             r += 1
-    
+
     return False
 ```
+
 ### Complexities
+
 - **Time Complexity**: `O(m + n)`
 - **Time Complexity**: `O(1)`
 
 ## Find Peak Element
+
 ### Problem Statement
-- A peak element is an element strictly greater than its neighbors. 
-- Given an array nums, 
-    - find the index of a peak element. 
+
+- A peak element is an element strictly greater than its neighbors.
+- Given an array nums,
+  - find the index of a peak element.
 - The array may contain multiple peaks; return the `index` of any peak.
 - Example 1
-    - **Input**: nums = `[1, 2, 1, 3, 5, 6, 4]`
-    - **Output**: `1` or `5`  // both `nums[1] = 2`  and `nums[5] = 6` are a peak relative to their neighbors
+  - **Input**: nums = `[1, 2, 1, 3, 5, 6, 4]`
+  - **Output**: `1` or `5` // both `nums[1] = 2` and `nums[5] = 6` are a peak relative to their neighbors
 
 ### Solution
+
 ```python
 """
 - Use a variant of binary search:
@@ -555,6 +614,8 @@ def find_peak_element(nums):
             right = mid
     return left  # or right, they converge
 ```
+
 ### Complexities
+
 - **Time Complexity**: `O(log n)`
 - **Time Complexity**: `O(1)`

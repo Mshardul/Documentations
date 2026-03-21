@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -13,7 +13,7 @@
       <div class="topic-heading"><h2>Process</h2></div>
       <div class="topic-body">
         <div class="notes">
-          // Process does not require a "require", it's automatically available. 
+          // Process does not require a "require", it's automatically available.
         </div>
 
         <h3>Exit from a Node program</h3>
@@ -40,7 +40,8 @@
         </ul>
 
         <div class="notes">
-          // calling process.exit(), results in aborigin any currently pending or running request
+          // calling process.exit(), results in aborigin any currently pending
+          or running request
         </div>
         Alternatively,
         <pre><code class="language-javascript">
@@ -60,58 +61,71 @@
       </div>
     </div>
 
-    <hr/>
-    
+    <hr />
+
     <div class="topic" id="Express">
       <div class="topic-heading"><h2>Express</h2></div>
       <div class="topic-body">
-        Express is a framework that uses the http module under the hood, app.listen() returns an instance of http. You would use https.createServer if you needed to serve your app using HTTPS, as app.listen only uses the http module.
+        Express is a framework that uses the http module under the hood,
+        app.listen() returns an instance of http. You would use
+        https.createServer if you needed to serve your app using HTTPS, as
+        app.listen only uses the http module.
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Module">
       <div class="topic-heading"><h2>Module</h2></div>
       <div class="topic-body">
         <h3>Exports</h3>
-        <p>functionality must be exposed before it can be imported by other files. Any other object or variable defined in the file by default is private</p>
+        <p>
+          functionality must be exposed before it can be imported by other
+          files. Any other object or variable defined in the file by default is
+          private
+        </p>
         <p>There are 2 ways to export property.</p>
         <table>
-          <tr><th>Module.exports</th><th>exports</th></tr>
-          <tr><td>exposes the object it points to.</td><td>exposes the properties of the object it points to</td></tr>
+          <tr>
+            <th>Module.exports</th>
+            <th>exports</th>
+          </tr>
+          <tr>
+            <td>exposes the object it points to.</td>
+            <td>exposes the properties of the object it points to</td>
+          </tr>
           <tr>
             <td>
               <pre><code class="language-javascript">
     const car = { brand: 'Ford', model: 'Fiesta' }
     module.exports = car
               </code></pre>
-          </td>
-          <td>
-            <pre><code class="language-javascript">
+            </td>
+            <td>
+              <pre><code class="language-javascript">
     const car = { brand: 'Ford', model: 'Fiesta' }
     exports.car = car
             </code></pre>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <pre><code class="language-javascript">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <pre><code class="language-javascript">
     const car = require('./car')
             </code></pre>
-          </td>
-          <td>
-            <pre><code class="language-javascript">
+            </td>
+            <td>
+              <pre><code class="language-javascript">
     const car = require('./items').car
             </code></pre>
-          </td>
-        </tr>
+            </td>
+          </tr>
         </table>
       </div>
     </div>
 
-    <hr/>
-    
+    <hr />
+
     <div class="topic" id="Events">
       <div class="topic-heading"><h2>Events</h2></div>
       <div class="topic-body">
@@ -133,15 +147,23 @@
 
         <p>Other methods exposed by EventEmitter</p>
         <ul>
-          <li><span class="point code">once()</span>: add a one-time listener</li>
-          <li><span class="point code">removeListener()</span> / <span class="point code">off()</span>: remove an event listener from an event</li>
-          <li><span class="point code">removeAllListeners()</span>: remove all listeners for an event</li>
+          <li>
+            <span class="point code">once()</span>: add a one-time listener
+          </li>
+          <li>
+            <span class="point code">removeListener()</span> /
+            <span class="point code">off()</span>: remove an event listener from
+            an event
+          </li>
+          <li>
+            <span class="point code">removeAllListeners()</span>: remove all
+            listeners for an event
+          </li>
         </ul>
       </div>
-
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="HTTP">
       <div class="topic-heading"><h2>HTTP</h2></div>
@@ -149,8 +171,6 @@
         <h3>Building an HTTP Server</h3>
       </div>
     </div>
-
-
   </div>
 
   <div class="sidebar-right">
@@ -158,9 +178,10 @@
     <div class="menu-content" id="menu-content"></div>
   </div>
 </div>
-  
-  
+
 <div class="footer">
-  <span class="prev"><a href="./02.synchronicity.html">02. Synchronicity</a></span>
+  <span class="prev"
+    ><a href="./02.synchronicity.html">02. Synchronicity</a></span
+  >
   <!-- <span class="next"><a href="./02.event_loop.html">02. Event Loop</a></span> -->
 </div>

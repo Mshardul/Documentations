@@ -1,27 +1,22 @@
 const questions = [
-	{
-	  	question: `What does the following code output?
-  
+  {
+    question: `What does the following code output?
+
   		\`\`\`python
   		def greet():
 	  		print("Hello, world!")
-  
+
   		greet()
   		\`\`\`
   		`,
-	  	options: [
-			'`Hello, world!`',
-			'`An error message`',
-			'`Nothing`',
-			'`greet`',
-	  	],
-	  	answer: 0,
-	  	tags: ['Python', 'Functions'],
-	},
-	{
-		question: `Which of the following code snippets correctly uses Python's metaclasses or class features to automatically register all subclasses of a base class into a registry dictionary?`,
-		options: [
-			`
+    options: ["`Hello, world!`", "`An error message`", "`Nothing`", "`greet`"],
+    answer: 0,
+    tags: ["Python", "Functions"],
+  },
+  {
+    question: `Which of the following code snippets correctly uses Python's metaclasses or class features to automatically register all subclasses of a base class into a registry dictionary?`,
+    options: [
+      `
 			\`\`\`python
 			registry = {}
 
@@ -35,7 +30,7 @@ const questions = [
 				pass
 			\`\`\`
 			`,
-			`
+      `
 			\`\`\`python
 			registry = {}
 
@@ -45,7 +40,7 @@ const questions = [
 					registry[cls.__name__] = cls
 			\`\`\`
 			`,
-			`
+      `
 			\`\`\`python
 			registry = {}
 
@@ -61,7 +56,7 @@ const questions = [
 				pass
 			\`\`\`
 			`,
-			`
+      `
 			\`\`\`python
 			registry = {}
 
@@ -75,8 +70,8 @@ const questions = [
 				pass
 			\`\`\`
 			`,
-		]
-	}
+    ],
+  },
 ];
-  
+
 export default questions;

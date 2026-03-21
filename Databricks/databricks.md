@@ -91,27 +91,27 @@
 
 - is continuously checking predefined conditions and thresholds to see if a system is "healthy enough" according to known expectations.
 - Typical artifacts example
-    - CPU > 90% for 5 minutes
-    - HTTP 5xx error rate > 2% in prod
-    - Disk Usage > 80%
-- In Datadog terms, 
-    - **monitoring** = monitors on metrics/logs/traces/synthetics firing to paging tools, dashboards showing red/green states, and SLO error-budget burn alerts.
+  - CPU > 90% for 5 minutes
+  - HTTP 5xx error rate > 2% in prod
+  - Disk Usage > 80%
+- In Datadog terms,
+  - **monitoring** = monitors on metrics/logs/traces/synthetics firing to paging tools, dashboards showing red/green states, and SLO error-budget burn alerts.
 
 ##### Observability
 
 - how easily you can understand the internal state of a system purely from its external outputs (telemetry)
 - Example questions that can be answered
-    - Why did latency spike only for users in ap-south-1 on checkout between 18:00 - 18:10?
-    - Which downstream dependency is causing retries in the payment service?
+  - Why did latency spike only for users in ap-south-1 on checkout between 18:00 - 18:10?
+  - Which downstream dependency is causing retries in the payment service?
 - In Datadog terms,
-    - **observability** = rich, high-quality metrics, logs, traces, events, RUM, synthetics, and profiles with good tags, plus tools to correlate and query them flexibly.
+  - **observability** = rich, high-quality metrics, logs, traces, events, RUM, synthetics, and profiles with good tags, plus tools to correlate and query them flexibly.
 
 ##### How they relate?
 
 - Monitoring is an application of observability - you observe first, then define rules and SLOs out of those observations.
 - In practice,
-    - Observability data -> dashboards + ad-hoc queries (exploration).
-    - Monitoring rules -> alerts and SLOs built on top of that data.
+  - Observability data -> dashboards + ad-hoc queries (exploration).
+  - Monitoring rules -> alerts and SLOs built on top of that data.
 - **Monitoring checks known failure conditions. Observability gives you enough rich signals to debug unknown failure modes without code changes.**
 
 #### The three pillars: metrics, logs, traces
@@ -122,8 +122,8 @@
 - Examples: `system.cpu.user`, `nginx.net.request_per_s`, `checkout.request.count`, `checkout.error.rate`, `checkout.latency.p95`
 - Compact and cheap to store; Great for dashboards and monitors. Often aggregated (per service, per region, per endpoint)
 - **In Datadog:**
-    - Collected by the `Agent (infra metrics)` + `libraries (DogStatsD, client libraries)`.
-    - Visualized on Dashboards and used in metric monitors / SLOs.
+  - Collected by the `Agent (infra metrics)` + `libraries (DogStatsD, client libraries)`.
+  - Visualized on Dashboards and used in metric monitors / SLOs.
 
 ##### Logs
 
@@ -131,31 +131,31 @@
 - Examples: Access log line for each HTTP req; Application error with Stack Trace; Audit Log
 - Very detailed (includes context). High Volume and more expensive to retain.
 - **In Datadog:**
-    - Collected by Agent or directly via APIs.
-    - Processed through `log pipelines (parse, enrich, route, archive`.
-    - Queried in `Log Explorer`, used for log monitors and security detection.
+  - Collected by Agent or directly via APIs.
+  - Processed through `log pipelines (parse, enrich, route, archive`.
+  - Queried in `Log Explorer`, used for log monitors and security detection.
 
 ##### Traces (APM)
 
 - end-to-end record of a single request as it flows through services.
 - A `Trace` is made of `spans`, each representing a unit of work.
 - Example: User hits `/checkout` -> `web` service -> `order` service -> `payment` service -> DB
-    - one trace with spans: `web.handle_request`, `order.create_order`, `payment.charge_code`, `db.query.orders`
+  - one trace with spans: `web.handle_request`, `order.create_order`, `payment.charge_code`, `db.query.orders`
 - Things to take care
-    - Show **casual chain** and **per-span timings**.
-    - Reveal exactly where latency or errors are introduced.
-    - Bridge infra and app: you can go from a metric spike to a specific slow trace.
+  - Show **casual chain** and **per-span timings**.
+  - Reveal exactly where latency or errors are introduced.
+  - Bridge infra and app: you can go from a metric spike to a specific slow trace.
 - **In Datadog:**
-    - Collected by language-specific APM agents (auto-instrumentation).
-    - Correlated with metrics/logs via tags like `env`, `service`, `version`, `trace_id`.
+  - Collected by language-specific APM agents (auto-instrumentation).
+  - Correlated with metrics/logs via tags like `env`, `service`, `version`, `trace_id`.
 
 ##### How they work together in Datadog
 
 - Metrics tell you that something is wrong, traces show where, logs show why.
 - Imagine your checkout API experiences a latency spike
-    - Dashboard shows p95 latency is high for `service:checkout` metric.
-    - Click into traces: See slow traces, each with spans showing `payment-service` calls are slow.
-    - Jump to logs: For those `trace_ids`, log search reveal DB connection timeouts in `payment-service`.
+  - Dashboard shows p95 latency is high for `service:checkout` metric.
+  - Click into traces: See slow traces, each with spans showing `payment-service` calls are slow.
+  - Jump to logs: For those `trace_ids`, log search reveal DB connection timeouts in `payment-service`.
 
 #### Events, RUM, synthetics, profiles
 
@@ -165,80 +165,80 @@
 
 - What: Discrete noteworth happenings.
 - Examples
-    - Deployment of checkout-service v2.3.1 to prod
+  - Deployment of checkout-service v2.3.1 to prod
 - **In Datadog**,
-    - appears as event stream adn markers on timeseries graphs.
-    - very useful in correlating "metric spike started exactly at deploy X"
+  - appears as event stream adn markers on timeseries graphs.
+  - very useful in correlating "metric spike started exactly at deploy X"
 
 ##### RUM (Real User Monitoring)
 
 - What: Telemetry from real users’ browsers or mobile apps
-    - page loads, resources, JS errors, user actions, performance metrics.
+  - page loads, resources, JS errors, user actions, performance metrics.
 - It answers questions like,
-    - What are users actually experiencing?
-    - Is frontend performance bad only in certain regions/devices?
+  - What are users actually experiencing?
+  - Is frontend performance bad only in certain regions/devices?
 - **In Datadog**,
-    - JS/mobile SDKs send user‑side metrics and events;
-    - tied to backend traces when configured.
+  - JS/mobile SDKs send user‑side metrics and events;
+  - tied to backend traces when configured.
 
 ##### Synthetics
 
 - What: Scripted, scheduled tests that hit your API or web UI from various locations, even when no real users are active.
 - Types:
-    - Uptime (simple HTTP/ICMP).
-    - API tests (assert status, body, latency).
-    - Browser tests (simulate full user journeys).
+  - Uptime (simple HTTP/ICMP).
+  - API tests (assert status, body, latency).
+  - Browser tests (simulate full user journeys).
 - Role:
-    - Early detection before real users complain.
-    - External perspective, including DNS/CDN/routing issues.
+  - Early detection before real users complain.
+  - External perspective, including DNS/CDN/routing issues.
 
 ##### Profiles (Continuous Profiling)
 
 - What: Fine‑grained samples of CPU, memory, etc., tied to code (which functions, which lines).
 - Deep performance tuning and cost optimization.
-    - E.g., “90% of CPU time is in JSON serialization function X.”
+  - E.g., “90% of CPU time is in JSON serialization function X.”
 
 #### Typical production architecture (3‑tier, microservices) and where Datadog fits
 
 ##### Architecture 1: 3-tier web application
 
 - Tiers
-    - Web UI (browser + maybe mobile app).
-    - Application server (monolith or a couple of services).
-    - Database (and maybe a cache like Redis).
+  - Web UI (browser + maybe mobile app).
+  - Application server (monolith or a couple of services).
+  - Database (and maybe a cache like Redis).
 - Where Datadog plugs in:
-    - Frontend:
-        - RUM SDK in browser/mobile.
-        - Synthetics hitting key pages (login, checkout).
-    - App servers:
-        - Datadog Agent on host/VM or as sidecar in containers.
-        - APM tracer for the application language.
-        - Application logs forwarded via Agent or logging library.
-    - DB and cache:
-        - DB integration (Postgres/MySQL/Mongo, Redis) via Agent or dedicated integration
+  - Frontend:
+    - RUM SDK in browser/mobile.
+    - Synthetics hitting key pages (login, checkout).
+  - App servers:
+    - Datadog Agent on host/VM or as sidecar in containers.
+    - APM tracer for the application language.
+    - Application logs forwarded via Agent or logging library.
+  - DB and cache:
+    - DB integration (Postgres/MySQL/Mongo, Redis) via Agent or dedicated integration
 - Data flow:
-    - Metrics: Host metrics (CPU, memory, network) + DB/cache metrics + custom app metrics.
-    - Logs: Access logs, application logs, DB logs.
-    - Traces: One trace per request, spanning app → DB/cache calls.
-    - Events: Deployments, migrations, incidents.
-    - RUM/synthetics: User experience + uptime.
+  - Metrics: Host metrics (CPU, memory, network) + DB/cache metrics + custom app metrics.
+  - Logs: Access logs, application logs, DB logs.
+  - Traces: One trace per request, spanning app → DB/cache calls.
+  - Events: Deployments, migrations, incidents.
+  - RUM/synthetics: User experience + uptime.
 
 ##### Architecture 2: Microservice Architecture
 
 - Components:
-    - Many services (checkout, cart, catalog, payments, notification, etc.).
-    - Message queues, multiple data stores, API gateway, service mesh.
+  - Many services (checkout, cart, catalog, payments, notification, etc.).
+  - Message queues, multiple data stores, API gateway, service mesh.
 - Where Datadog plugs in:
-    - Each node/Kubernetes worker runs an Agent for infra metrics, logs, Autodiscovery.
-    - Each service has:
-        - APM tracer.
-        - Logs shipped with `env`, `service`, `version`, `team` tags.
-    - Service mesh / ingress / gateway also integrated (e.g., Envoy, NGINX, AWS ALB).
-    - RUM and synthetics cover the edge experience.
+  - Each node/Kubernetes worker runs an Agent for infra metrics, logs, Autodiscovery.
+  - Each service has:
+    - APM tracer.
+    - Logs shipped with `env`, `service`, `version`, `team` tags.
+  - Service mesh / ingress / gateway also integrated (e.g., Envoy, NGINX, AWS ALB).
+  - RUM and synthetics cover the edge experience.
 - Resulting capabilities:
-    - Service Map: auto‑generated graph of which services call which others.
-    - RUM → trace linking: see which backend trace served a given user action.
-    - Infra views: pod/node health, cluster overview, autoscaling effects.
+  - Service Map: auto‑generated graph of which services call which others.
+  - RUM → trace linking: see which backend trace served a given user action.
+  - Infra views: pod/node health, cluster overview, autoscaling effects.
 
 ##### How Datadog becomes the central pane
 
@@ -246,13 +246,13 @@
 - You move fluidly from symptoms (metric spike) → path (trace graph) → root cause (logs, events, profiles).
 
 ### Datadog at a Glance
-  
+
 - SaaS nature, regions, organizations, accounts
 - High‑level feature map: Infra, APM, Logs, RUM, Synthetics, Security, Network, DB
 - Typical personas: backend engineer, SRE, DevOps, security, product
 
 ### Prerequisites and Setup Mindset
-  
+
 - Basic Linux, networking, HTTP knowledge
 - Understanding of containers, Docker, and Kubernetes (at least conceptually)
 - Git/CI basics for later automation modules
@@ -274,7 +274,7 @@
 - RUM sessions and synthetic tests (as special data types)
 
 ### Tagging and Metadata
-  
+
 - Tag format: key:value
 - Mandatory tags: env, service, version, region, team
 - Tag cardinality and performance/cost implications

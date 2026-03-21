@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -9,7 +9,6 @@
 
 <div class="main-content">
   <div class="content">
-
     <div class="topic" id="Basics">
       <div class="topic-heading"><h2>Basics</h2></div>
       <div class="topic-body">
@@ -23,7 +22,7 @@
           <li>Named Return Values</li>
           <li>Blank Returns - Never Use These!</li>
         </ul>
-        <br>
+        <br />
         <h3>Example</h3>
         <pre><code class="language-golang">
     func div(numerator int, denominator int) int {
@@ -43,7 +42,11 @@
         <h3>Simulating Named and Optional Parameters</h3>
         <ul>
           <li>Go doesn't have named and optional input parameters</li>
-          <li>If you want to emulate named and optional parameters, define a struct that has fields that match the desired parameters, and pass the struct to your function.</li>
+          <li>
+            If you want to emulate named and optional parameters, define a
+            struct that has fields that match the desired parameters, and pass
+            the struct to your function.
+          </li>
         </ul>
         <pre><code class="language-golang">
     /* Using a struct to simulate named parameters */
@@ -52,11 +55,11 @@
         LastName string
         Age int
     }
-    
+
     func MyFunc(opts MyFuncOpts) error {
         // do something here
     }
-    
+
     func main() {
         MyFunc(MyFuncOpts {
             LastName: "xyz",
@@ -72,7 +75,10 @@
         <h3>Variadic Input Parameters and Slices</h3>
         <ul>
           <li>Go supports variadic parameters.</li>
-          <li>The variadic parameter must be the last (or only) parameter in the input parameter list.</li>
+          <li>
+            The variadic parameter must be the last (or only) parameter in the
+            input parameter list.
+          </li>
           <li>You indicate it with three dots (…) before the type.</li>
         </ul>
         <pre><code class="language-golang">
@@ -88,9 +94,18 @@
         <h3>Multiple Return Values</h3>
         <ul>
           <li>Go allows multiple return values.</li>
-          <li>When a Go function returns multiple values, the types of the return values are listed in parentheses, separated by commas.</li>
-          <li>Also, if a function returns multiple values, you must return all of them, separated by commas.</li>
-          <li>Don't put parentheses around the returned values; that's a compile-time error.</li>
+          <li>
+            When a Go function returns multiple values, the types of the return
+            values are listed in parentheses, separated by commas.
+          </li>
+          <li>
+            Also, if a function returns multiple values, you must return all of
+            them, separated by commas.
+          </li>
+          <li>
+            Don't put parentheses around the returned values; that's a
+            compile-time error.
+          </li>
         </ul>
         <pre><code class="language-golang">
     func divAndRemainder(numerator int, denominator int) (int, int, error) {
@@ -103,7 +118,12 @@
 
         <h3>Multiple Return Values Are Multiple Values</h3>
         <ul>
-          <li>Python function returns multiple values in a tuple to a single variable. That's not how Go works. You must assign each value returned from a function. If you try to assign multiple return values to one variable, you get a compile-time error</li>
+          <li>
+            Python function returns multiple values in a tuple to a single
+            variable. That's not how Go works. You must assign each value
+            returned from a function. If you try to assign multiple return
+            values to one variable, you get a compile-time error
+          </li>
         </ul>
         <pre><code class="language-golang">
     q, r, err := divAndRemainder(10, 3) # q = 3, r = 1, err = nil
@@ -111,8 +131,15 @@
 
         <h3>Ignoring Returned Values</h3>
         <ul>
-          <li>Go does not allow unused variables. If a function returns multiple values, but you don't need to read one or more of the values, assign the unused values to the name <span class="code">_</span></li>
-          <li>Go does let you implicitly ignore all of the return values for a function.</li>
+          <li>
+            Go does not allow unused variables. If a function returns multiple
+            values, but you don't need to read one or more of the values, assign
+            the unused values to the name <span class="code">_</span>
+          </li>
+          <li>
+            Go does let you implicitly ignore all of the return values for a
+            function.
+          </li>
         </ul>
         <pre><code class="language-golang">
     q, _, err := divAndRemainder(10, 3) # q = 3, r = 1, err = nil
@@ -121,15 +148,38 @@
         <h3>Named Return Values</h3>
         <ul>
           <li>Go allows you to specify names for your return values.</li>
-          <li>Naming return values means pre-declaring variables that you use within the function to hold the return values</li>
-          <li>You must surround named return values with parentheses, even if there is only a single return value.</li>
-          <li>Named return values are initialized to their zero values when created. This means that we can return them before any explicit use or assignment.</li>
-          <li>If you only want to name some of the return values, you can do so by using <span class="code">_</span> as the name for any return values you want to remain nameless.</li>
-          <li>Go compiler inserts code that assigns whatever is returned to the return parameters. (see first example below for clarity) - The named return parameters give a way to declare an intent to use variables to hold the return values, but don't require you to use them.</li>
+          <li>
+            Naming return values means pre-declaring variables that you use
+            within the function to hold the return values
+          </li>
+          <li>
+            You must surround named return values with parentheses, even if
+            there is only a single return value.
+          </li>
+          <li>
+            Named return values are initialized to their zero values when
+            created. This means that we can return them before any explicit use
+            or assignment.
+          </li>
+          <li>
+            If you only want to name some of the return values, you can do so by
+            using <span class="code">_</span> as the name for any return values
+            you want to remain nameless.
+          </li>
+          <li>
+            Go compiler inserts code that assigns whatever is returned to the
+            return parameters. (see first example below for clarity) - The named
+            return parameters give a way to declare an intent to use variables
+            to hold the return values, but don't require you to use them.
+          </li>
         </ul>
         Problems associated with named return variables
         <ul>
-          <li><span class="point">Shadowing</span>: Just like any other variable, you can shadow a named return value. Be sure that you are assigning to the return value and not to a shadow of it.</li>
+          <li>
+            <span class="point">Shadowing</span>: Just like any other variable,
+            you can shadow a named return value. Be sure that you are assigning
+            to the return value and not to a shadow of it.
+          </li>
           <li>you don't have to return them.</li>
         </ul>
         <pre><code class="language-golang">
@@ -146,13 +196,27 @@
 
         <h3>Blank Returns - Never Use These!</h3>
         <ul>
-          <li>If you have named return values, you can just write return without specifying the values that are returned. This returns the last values assigned to the named return values.</li>
-          <li>If your function returns values, never use a blank return. It can make it very confusing to figure out what value is actually returned.</li>
+          <li>
+            If you have named return values, you can just write return without
+            specifying the values that are returned. This returns the last
+            values assigned to the named return values.
+          </li>
+          <li>
+            If your function returns values, never use a blank return. It can
+            make it very confusing to figure out what value is actually
+            returned.
+          </li>
         </ul>
         Problems associated with blank returns
         <ul>
-          <li>In case we return without assiging any values to named return values, their zero values are returned.</li>
-          <li>Even though the return is blank, we still need to have a return at the end of the function. Otherwise it's a compile error.</li>
+          <li>
+            In case we return without assiging any values to named return
+            values, their zero values are returned.
+          </li>
+          <li>
+            Even though the return is blank, we still need to have a return at
+            the end of the function. Otherwise it's a compile error.
+          </li>
         </ul>
         <pre><code class="language-golang">
     func divAndRemainder(numerator, denominator int) (result int, remainder int, err error) {
@@ -167,13 +231,17 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="FunctionsAreValues">
       <div class="topic-heading"><h2>Functions are values</h2></div>
       <div class="topic-body">
         <ul>
-          <li>The type of a function is built out of the keyword func and the types of the parameters and return values. This combination is called the <span class="code">signature</span> of the function.</li>
+          <li>
+            The type of a function is built out of the keyword func and the
+            types of the parameters and return values. This combination is
+            called the <span class="code">signature</span> of the function.
+          </li>
         </ul>
         <pre><code class="language-golang">
     /* declare methods */
@@ -202,7 +270,8 @@
         </code></pre>
 
         <h3>Function type declaration</h3>
-        In the above example, instead of function signature, we can use function type.
+        In the above example, instead of function signature, we can use function
+        type.
         <pre><code class="language-golang">
     /* alternatively use function type declaration */
     type opFuncType func(int,int) int // declaring this signature as a variable "opFuncType"
@@ -216,9 +285,19 @@
 
         <h3>Anonymous function</h3>
         <ul>
-          <li>Declare an anonymous function with the keyword func immediately followed by the input parameters, the return values, and the opening brace.</li>
-          <li>It is a compile-time error to try to put a function name between func and the input parameters</li>
-          <li>Just like any other function, an anonymous function is called by using parenthesis.</li>
+          <li>
+            Declare an anonymous function with the keyword func immediately
+            followed by the input parameters, the return values, and the opening
+            brace.
+          </li>
+          <li>
+            It is a compile-time error to try to put a function name between
+            func and the input parameters
+          </li>
+          <li>
+            Just like any other function, an anonymous function is called by
+            using parenthesis.
+          </li>
         </ul>
         <pre><code class="language-golang">
     for i := 0; i < 5; i++ {
@@ -230,19 +309,30 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Closures">
       <div class="topic-heading"><h2>Closures</h2></div>
       <div class="topic-body">
         <ul>
-          <li>The functions declared inside of functions are able to access and modify variables declared in the outer function.</li>
-          <li>limits a function's scope. If a function is only going to be called from one other function, but it's called multiple times, you can use an inner function to “hide” the called function.</li>
+          <li>
+            The functions declared inside of functions are able to access and
+            modify variables declared in the outer function.
+          </li>
+          <li>
+            limits a function's scope. If a function is only going to be called
+            from one other function, but it's called multiple times, you can use
+            an inner function to “hide” the called function.
+          </li>
         </ul>
-        
+
         <h3>Passing Functions as Parameters</h3>
         <ul>
-          <li>Since functions are values and you can specify the type of a function using its parameter and return types, you can pass functions as parameters into functions.</li>
+          <li>
+            Since functions are values and you can specify the type of a
+            function using its parameter and return types, you can pass
+            functions as parameters into functions.
+          </li>
         </ul>
         <pre><code class="language-golang">
     type convert func(int) string
@@ -276,18 +366,35 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Defer">
       <div class="topic-heading"><h2>Defer</h2></div>
       <div class="topic-body">
         <ul>
-          <li>Normally, a function call runs immediately, but defer delays the invocation until the surrounding function exits. - Hence used for cleanup.</li>
+          <li>
+            Normally, a function call runs immediately, but defer delays the
+            invocation until the surrounding function exits. - Hence used for
+            cleanup.
+          </li>
           <li>you can supply a function with input parameters to a defer.</li>
-          <li>you can defer multiple closures in a Go function. They run in last-in-first-out order; the last defer registered runs first.</li>
-          <li>The code within defer closures runs after the return statement.</li>
-          <li>there's a way for a deferred function to examine or modify the return values of its surrounding function and it's the best reason to use named return values.</li>
-          <li>A common pattern in Go is for a function that allocates a resource to also return a closure that cleans up the resource. - and that's where <span class="code">defer</span> comes into picture.</li>
+          <li>
+            you can defer multiple closures in a Go function. They run in
+            last-in-first-out order; the last defer registered runs first.
+          </li>
+          <li>
+            The code within defer closures runs after the return statement.
+          </li>
+          <li>
+            there's a way for a deferred function to examine or modify the
+            return values of its surrounding function and it's the best reason
+            to use named return values.
+          </li>
+          <li>
+            A common pattern in Go is for a function that allocates a resource
+            to also return a closure that cleans up the resource. - and that's
+            where <span class="code">defer</span> comes into picture.
+          </li>
         </ul>
         <pre><code class="language-golang">
     ''' cleanup using defer '''
@@ -336,20 +443,30 @@
         </code></pre>
         <div class="notes">
           <ul>
-            <li>You can supply a function that returns values to a defer, but there's no way to read those values.</li>
+            <li>
+              You can supply a function that returns values to a defer, but
+              there's no way to read those values.
+            </li>
           </ul>
         </div>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="GoIsCallByValue">
       <div class="topic-heading"><h2>Go is Call-By-Value</h2></div>
       <div class="topic-body">
         <ul>
-          <li>It means that when you supply a variable for a parameter to a function, Go always makes a copy of the value of the variable.</li>
-          <li>except for maps and slices, which can be modified (bcoz they are implemented with pointers). However for a slice, you can modify any element, but can't lengthen the slice.</li>
+          <li>
+            It means that when you supply a variable for a parameter to a
+            function, Go always makes a copy of the value of the variable.
+          </li>
+          <li>
+            except for maps and slices, which can be modified (bcoz they are
+            implemented with pointers). However for a slice, you can modify any
+            element, but can't lengthen the slice.
+          </li>
         </ul>
         <pre><code class="language-golang">
     /* no modification for int, string and struct */
@@ -375,7 +492,7 @@
         m[3] = "goodbye"
         delete(m, 1)
     }
-  
+
     func modSlice(s []int) {
         for k, v := range s {
             s[k] = v * 2
@@ -390,7 +507,7 @@
         }
         modMap(m)
         fmt.Println(m) // map[2:hello 3:goodbye]
-    
+
         s := []int{1, 2, 3}
         modSlice(s)
         fmt.Println(s) // [2 4 6]
@@ -398,7 +515,10 @@
         </code></pre>
         <div class="notes">
           <ul>
-            <li>Every type in Go is a value type. It's just that sometimes the value is a pointer.</li>
+            <li>
+              Every type in Go is a value type. It's just that sometimes the
+              value is a pointer.
+            </li>
           </ul>
         </div>
       </div>
@@ -412,6 +532,8 @@
 </div>
 
 <div class="footer">
-<span class="prev"><a href="./03.control_structures.html">Control Structures</a></span>
-<!-- <span class="next"><a href="./04.functions.html">04. Functions</a></span> -->
+  <span class="prev"
+    ><a href="./03.control_structures.html">Control Structures</a></span
+  >
+  <!-- <span class="next"><a href="./04.functions.html">04. Functions</a></span> -->
 </div>

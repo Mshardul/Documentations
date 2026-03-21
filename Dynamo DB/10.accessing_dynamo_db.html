@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
@@ -13,22 +13,41 @@
       <div class="topic-body">
         <p>use the console to do the following in DynamoDB:</p>
         <ul>
-          <li>Monitor recent alerts, total capacity, service health, and the latest DynamoDB news on the DynamoDB dashboard.</li>
-          <li>Create, update, and delete tables. The capacity calculator provides estimates of how many capacity units to request based on the usage information you provide.</li>
+          <li>
+            Monitor recent alerts, total capacity, service health, and the
+            latest DynamoDB news on the DynamoDB dashboard.
+          </li>
+          <li>
+            Create, update, and delete tables. The capacity calculator provides
+            estimates of how many capacity units to request based on the usage
+            information you provide.
+          </li>
           <li>Manage streams.</li>
-          <li>View, add, update, and delete items that are stored in tables. Manage Time to Live (TTL) to define when items in a table expire so that they can be automatically deleted from the database.</li>
+          <li>
+            View, add, update, and delete items that are stored in tables.
+            Manage Time to Live (TTL) to define when items in a table expire so
+            that they can be automatically deleted from the database.
+          </li>
           <li>Query and scan a table.</li>
-          <li>Set up and view alarms to monitor your table&#39;s capacity usage. View your table&#39;s top monitoring metrics on real-time graphs from CloudWatch.</li>
+          <li>
+            Set up and view alarms to monitor your table&#39;s capacity usage.
+            View your table&#39;s top monitoring metrics on real-time graphs
+            from CloudWatch.
+          </li>
           <li>Modify a table&#39;s provisioned capacity.</li>
           <li>Create and delete global secondary indexes.</li>
-          <li>Create triggers to connect DynamoDB streams to AWS Lambda functions.</li>
-          <li>Apply tags to your resources to help organize and identify them.</li>
+          <li>
+            Create triggers to connect DynamoDB streams to AWS Lambda functions.
+          </li>
+          <li>
+            Apply tags to your resources to help organize and identify them.
+          </li>
           <li>Purchase reserved capacity</li>
         </ul>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="UsingAWSCLI">
       <div class="topic-heading"><h2>Using AWS CLI</h2></div>
@@ -42,19 +61,22 @@
     --table-name Music \
     --item \
         '{"Artist": {"S": "No One You Know"}, "SongTitle": {"S": "Call Me Today"} }' \
-    --return-consumed-capacity TOTAL 
+    --return-consumed-capacity TOTAL
         </code></pre>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="UsingTheAPIs">
       <div class="topic-heading"><h2>Using the APIs</h2></div>
-      <p>The AWS SDKs provide broad support for DynamoDB in Java, JavaScript in the browser, .NET, Node.js, PHP, Python, Ruby, C++, Go, Android, and iOS</p>
+      <p>
+        The AWS SDKs provide broad support for DynamoDB in Java, JavaScript in
+        the browser, .NET, Node.js, PHP, Python, Ruby, C++, Go, Android, and iOS
+      </p>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="UsingNoSQLWorkbench">
       <div class="topic-heading"><h2>Using NoSQL Workbench</h2></div>
@@ -71,6 +93,12 @@
 </div>
 
 <div class="footer">
-  <span class="prev"><a href="./09.cli_examples.html">09. CLI Examples</a></span>
-  <span class="next"><a href="./11.programming_with_dynamo_db.html">11. Programming with DynamoDB</a></span>
+  <span class="prev"
+    ><a href="./09.cli_examples.html">09. CLI Examples</a></span
+  >
+  <span class="next"
+    ><a href="./11.programming_with_dynamo_db.html"
+      >11. Programming with DynamoDB</a
+    ></span
+  >
 </div>

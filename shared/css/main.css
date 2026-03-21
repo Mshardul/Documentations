@@ -1,17 +1,17 @@
 @import "../highlight/styles/default.min.css";
 
 :root {
-  --navbar-background-color: #8181F5;
-  --footer-background-color: #8181F5;
-  --index-link-color: #5121F5;
-  --topic-border-color: #8181F5;
+  --navbar-background-color: #8181f5;
+  --footer-background-color: #8181f5;
+  --index-link-color: #5121f5;
+  --topic-border-color: #8181f5;
   --note-background-color: lavender;
   --code-background-color: #f2f3f3;
   --sidebar-background-color: rgb(192, 192, 247, 0.9);
-  --sidebar-title-background-color: #8181F5;
+  --sidebar-title-background-color: #8181f5;
   --table-cell-border: rgb(192, 192, 200);
-  --link-color: #5121F5;
-  --link-visited-color: #5121F5;
+  --link-color: #5121f5;
+  --link-visited-color: #5121f5;
 }
 
 body {
@@ -39,10 +39,20 @@ body {
   padding: 10px;
 }
 
-.prev, .next, .center {display:inline}
-.prev {float: left}
-.next {float: right}
-.center {float: none;}
+.prev,
+.next,
+.center {
+  display: inline;
+}
+.prev {
+  float: left;
+}
+.next {
+  float: right;
+}
+.center {
+  float: none;
+}
 
 /* index body div */
 .index-content {
@@ -57,16 +67,18 @@ body {
   overflow: hidden;
   height: calc(100% - 126px);
 }
-.content { /* content */
+.content {
+  /* content */
   float: left;
-  margin: 0 .5%;
+  margin: 0 0.5%;
   width: 85%;
   overflow-y: auto;
   height: 100%;
 }
-.sidebar-right { /* right sidebar */
+.sidebar-right {
+  /* right sidebar */
   float: right;
-  margin: 0 .5%;
+  margin: 0 0.5%;
   width: 12%;
   overflow-y: auto;
   height: 100%;
@@ -107,14 +119,15 @@ thead {
   font-weight: bold;
 }
 
-td, th {
+td,
+th {
   border: 2px solid var(--table-cell-border);
   text-align: center;
   padding: 1px;
 }
 
 pre {
-  overflow:auto
+  overflow: auto;
 }
 
 a {
@@ -162,4 +175,3 @@ a :visited {
   visibility: visible;
   opacity: 1;
 }
-

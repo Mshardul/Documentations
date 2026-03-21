@@ -1,16 +1,20 @@
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" />
 <script src="./script.js"></script>
 
 <div class="navbar">
   <span class="prev"><a href="../main.html">Notes</a></span>
-  <span class="center"><a href="#">Programming questions - Input / Output</a></span>
+  <span class="center"
+    ><a href="#">Programming questions - Input / Output</a></span
+  >
   <span class="next"><a href="./00.main.html">Python - Interview Prep</a></span>
 </div>
 
 <div class="main-content">
   <div class="content">
     <div class="topic" id="EndParamInPrint">
-      <div class="topic-heading"><h2>Destructor with circular reference</h2></div>
+      <div class="topic-heading">
+        <h2>Destructor with circular reference</h2>
+      </div>
       <div class="topic-body">
         <pre><code class="language-python">
     class A:
@@ -21,10 +25,10 @@
             self. a = A(self)
         def __del__(self):
             print ("die")
-    
+
     def fun():
         b = B()
-    
+
     fun() # die
 
     '''
@@ -37,10 +41,12 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="AccessingParentsVariableWithoutInvokingParentsInit">
-      <div class="topic-heading"><h2>Accessing Parents Variable Without Invoking Parents __init__</h2></div>
+      <div class="topic-heading">
+        <h2>Accessing Parents Variable Without Invoking Parents __init__</h2>
+      </div>
       <div class="topic-body">
         <pre><code class="language-python">
     class A:
@@ -56,7 +62,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ParentsPrivateVariable">
       <div class="topic-heading"><h2>Parent's private variable</h2></div>
@@ -65,7 +71,7 @@
     class C(object):
         def __init__(self):
             self.c = 21
-            self.__d = 42   
+            self.__d = 42
     class D(C):
         def __init__(self):
             self.e = 84
@@ -77,7 +83,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="InheritancePrecedence">
       <div class="topic-heading"><h2>Inheritance precedence</h2></div>
@@ -106,7 +112,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ProtectedAndPrivateMembers">
       <div class="topic-heading"><h2>Protected and Private members</h2></div>
@@ -132,7 +138,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="ClassVariableValueChange">
       <div class="topic-heading"><h2>Class Variable Value Change</h2></div>
@@ -141,7 +147,7 @@
     class CSStudent:
         stream = 'cse' # Class Variable
         def __init__(self, name):
-            self.name = name # Instance Variable 
+            self.name = name # Instance Variable
     a = CSStudent('abc')
     b = CSStudent('bcd')
 
@@ -159,7 +165,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="WhatIsNameMangling">
       <div class="topic-heading"><h2>What is name mangling?</h2></div>
@@ -175,13 +181,19 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Slots">
-      <div class="topic-heading"><h2><span class="code">__slots__</span> in Python</h2></div>
+      <div class="topic-heading">
+        <h2><span class="code">__slots__</span> in Python</h2>
+      </div>
       <div class="topic-body">
         <ul>
-          <li><span class="code">__slots__</span> is used to limit the attributes that an object can have, saving memory and potentially speeding attribute access.</li>
+          <li>
+            <span class="code">__slots__</span> is used to limit the attributes
+            that an object can have, saving memory and potentially speeding
+            attribute access.
+          </li>
         </ul>
         <pre><code class="language-python">
 
@@ -198,14 +210,20 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Slots">
       <div class="topic-heading"><h2>Abstract Base Class</h2></div>
       <div class="topic-body">
         <ul>
-          <li><span class="point">Abstract base classes</span> define methods that must be implemented by any subclass</li>
-          <li>They ensure a certain degree of conformity in how different classes are designed and interacted with.</li>
+          <li>
+            <span class="point">Abstract base classes</span> define methods that
+            must be implemented by any subclass
+          </li>
+          <li>
+            They ensure a certain degree of conformity in how different classes
+            are designed and interacted with.
+          </li>
         </ul>
         <pre><code language="python">
   from abc import ABC, abstractmethod
@@ -214,27 +232,36 @@
       @abstractmethod
       def my_method(self):
           pass
-  
+
   class ConcreteClass(AbstractClass):
       def my_method(self):
           print("Implementation of my_method")
-  
+
   obj = ConcreteClass()
   obj.my_method()  # Output: Implementation of my_method
         </code></pre>
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="Slots">
       <div class="topic-heading"><h2>Method Resolution Order (MRO)</h2></div>
       <div class="topic-body">
         <ul>
-          <li>Method Resolution Order (MRO) determines the order in which Python looks for a method in a hierarchy of classes.</li>
+          <li>
+            Method Resolution Order (MRO) determines the order in which Python
+            looks for a method in a hierarchy of classes.
+          </li>
           <li>It uses the C3 linearization algorithm.</li>
-          <li>It is defined by the <span class="code">__mro__</span> attribute or the <span class="code">mro()</span> method.</li>
-          <li>Understanding MRO is crucial for knowing where methods are inherited from, especially in complex class hierarchies.</li>
+          <li>
+            It is defined by the <span class="code">__mro__</span> attribute or
+            the <span class="code">mro()</span> method.
+          </li>
+          <li>
+            Understanding MRO is crucial for knowing where methods are inherited
+            from, especially in complex class hierarchies.
+          </li>
         </ul>
         <pre><code language="python">
     class A:
@@ -258,13 +285,17 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="CallMethod">
-      <div class="topic-heading"><h2><span class="code">__call__</span> in Python</h2></div>
+      <div class="topic-heading">
+        <h2><span class="code">__call__</span> in Python</h2>
+      </div>
       <div class="topic-body">
         <ul>
-          <li>__call__ allows an instance of a class to be called as a function.</li>
+          <li>
+            __call__ allows an instance of a class to be called as a function.
+          </li>
         </ul>
         <pre><code class="language-python">
     class Product:
@@ -282,14 +313,25 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
 
     <div class="topic" id="NewVsInit">
-      <div class="topic-heading"><h2><span class="code">__new__</span> vs <span class="code">__init__</span> in Python</h2></div>
+      <div class="topic-heading">
+        <h2>
+          <span class="code">__new__</span> vs
+          <span class="code">__init__</span> in Python
+        </h2>
+      </div>
       <div class="topic-body">
         <ul>
-          <li><span class="code">__new__</span> is a static method that is responsible for creating a new instance of a class.</li>
-          <li><span class="code">__init__</span> is an instance method responsible for initializing the object after its creation.</li>
+          <li>
+            <span class="code">__new__</span> is a static method that is
+            responsible for creating a new instance of a class.
+          </li>
+          <li>
+            <span class="code">__init__</span> is an instance method responsible
+            for initializing the object after its creation.
+          </li>
         </ul>
         <pre><code class="language-python">
         class MyClass:
@@ -306,8 +348,6 @@
         </code></pre>
       </div>
     </div>
-
-
   </div>
 
   <div class="sidebar-right">
@@ -317,7 +357,10 @@
 </div>
 
 <div class="footer">
-  <span class="prev"><a href="./05.event_handling.html">05. Event Handling</a></span>
-  <span class="next"><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span>
+  <span class="prev"
+    ><a href="./05.event_handling.html">05. Event Handling</a></span
+  >
+  <span class="next"
+    ><a href="./07.lists_and_keys.html">07. Lists and Keys</a></span
+  >
 </div>
-

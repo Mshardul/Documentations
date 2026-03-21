@@ -763,7 +763,7 @@ print(Test.count, a.count, b.count)
 - [ ] `2 3 2`
 - [ ] `3 3 3`
 ## Answer
-2. `2 2 2`
+2. `2 3 2`
 
 # Question 49
 ## Tags

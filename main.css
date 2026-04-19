@@ -5,6 +5,34 @@
   --main-link-visited-color: #5121f5;
 }
 
+.wiki-banner {
+  border: 5px solid var(--subject-border-color);
+  border-radius: 15px;
+  padding: 14px 20px;
+  margin-bottom: 16px;
+  background-color: #f0eeff;
+}
+
+.wiki-banner-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--main-link-color);
+  text-decoration: none;
+}
+
+.wiki-banner-link:hover {
+  text-decoration: underline;
+}
+
+.wiki-banner-arrow {
+  font-size: 1.4rem;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+
 li {
   padding-top: 10px;
   color: var(--main-link-color);

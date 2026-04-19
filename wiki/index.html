@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Knowledge Base</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+    />
+    <link rel="stylesheet" href="./wiki.css" />
+  </head>
+  <body>
+    <!-- ══════════════════════════════════════
+       VIEW 1 — HOME
+  ══════════════════════════════════════ -->
+    <div id="view-home" class="view active">
+      <div class="home-bg-grid" aria-hidden="true"></div>
+      <div class="home-glow" aria-hidden="true"></div>
+      <header class="home-header">
+        <div class="home-eyebrow">Documentation</div>
+        <h1 class="home-title">Knowledge Base</h1>
+        <p class="home-subtitle">
+          Interview-ready references, deep dives, and system design walkthroughs
+          — all in one place.
+        </p>
+      </header>
+      <main class="home-main">
+        <div id="wiki-grid" class="wiki-grid"></div>
+      </main>
+    </div>
+
+    <!-- ══════════════════════════════════════
+       VIEW 2 — WIKI INDEX
+  ══════════════════════════════════════ -->
+    <div id="view-index" class="view">
+      <div class="page-topbar">
+        <div class="topbar-inner">
+          <button class="back-btn" onclick="Wiki.goHome()">
+            <svg viewBox="0 0 16 16" fill="none">
+              <path
+                d="M10 4L6 8l4 4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Home
+          </button>
+          <nav id="index-breadcrumb" class="breadcrumb"></nav>
+        </div>
+      </div>
+      <div class="page-hero">
+        <div class="page-hero-inner">
+          <h1 id="index-title" class="page-title"></h1>
+          <p id="index-subtitle" class="page-subtitle"></p>
+          <div class="search-bar">
+            <svg class="search-icon" viewBox="0 0 20 20" fill="none">
+              <circle
+                cx="8.5"
+                cy="8.5"
+                r="5.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M13 13l3.5 3.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <input
+              type="text"
+              id="search-input"
+              class="search-input"
+              placeholder="Search topics…"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button id="search-clear" class="search-clear" aria-label="Clear">
+              <svg viewBox="0 0 14 14" fill="none">
+                <path
+                  d="M3 3l8 8M11 3l-8 8"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <main class="index-main">
+        <div id="index-sections" class="index-sections"></div>
+        <div id="no-results" class="no-results hidden">
+          <div class="no-results-icon">⊘</div>
+          <p class="no-results-text">
+            No results for "<strong id="no-results-query"></strong>"
+          </p>
+          <span class="no-results-hint">Try a different search term</span>
+        </div>
+      </main>
+    </div>
+
+    <!-- ══════════════════════════════════════
+       VIEW 3 — CONTENT
+  ══════════════════════════════════════ -->
+    <div id="view-content" class="view">
+      <div class="content-topbar">
+        <div class="topbar-inner">
+          <button class="back-btn" id="content-back-btn">
+            <svg viewBox="0 0 16 16" fill="none">
+              <path
+                d="M10 4L6 8l4 4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Back
+          </button>
+          <nav id="content-breadcrumb" class="breadcrumb"></nav>
+        </div>
+      </div>
+      <div class="content-layout">
+        <article id="markdown-body" class="markdown-body"></article>
+        <aside id="toc-sidebar" class="toc-sidebar">
+          <div class="toc-header">
+            <span class="toc-label">On this page</span>
+            <button id="toc-collapse" class="toc-collapse" title="Collapse">
+              <svg viewBox="0 0 14 14" fill="none">
+                <path
+                  d="M9 3L5 7l4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <nav id="toc-nav" class="toc-nav"></nav>
+        </aside>
+      </div>
+      <!-- Mobile TOC -->
+      <button
+        id="toc-mobile-btn"
+        class="toc-mobile-btn"
+        title="Table of contents"
+      >
+        <svg viewBox="0 0 20 20" fill="none">
+          <path
+            d="M4 6h12M4 10h8M4 14h10"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+      <div id="toc-mobile-overlay" class="toc-mobile-overlay"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+       SHARED — SCROLL TO TOP
+  ══════════════════════════════════════ -->
+    <button
+      id="scroll-top"
+      class="scroll-top-btn"
+      title="Back to top"
+      aria-label="Scroll to top"
+    >
+      <svg viewBox="0 0 20 20" fill="none">
+        <path
+          d="M10 14V6M6 10l4-4 4 4"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="./wiki.js"></script>
+  </body>
+</html>

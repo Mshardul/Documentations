@@ -17,12 +17,88 @@
     <link rel="stylesheet" href="./wiki.css" />
   </head>
   <body>
+    <div id="reading-progress" class="reading-progress"></div>
+
+    <!-- ══════════════════════════════════════
+       GLOBAL SEARCH MODAL (⌘K)
+  ══════════════════════════════════════ -->
+    <div
+      id="global-search-modal"
+      class="gsearch-modal hidden"
+      aria-hidden="true"
+    >
+      <div class="gsearch-backdrop" id="gsearch-backdrop"></div>
+      <div class="gsearch-dialog" role="dialog" aria-label="Global search">
+        <div class="gsearch-input-wrap">
+          <svg class="gsearch-icon" viewBox="0 0 20 20" fill="none">
+            <circle
+              cx="8.5"
+              cy="8.5"
+              r="5.5"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <path
+              d="M13 13l3.5 3.5"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+          <input
+            type="text"
+            id="gsearch-input"
+            class="gsearch-input"
+            placeholder="Search all wikis…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <kbd class="gsearch-esc-key">ESC</kbd>
+        </div>
+        <div id="gsearch-results" class="gsearch-results">
+          <div class="gsearch-empty">Start typing to search…</div>
+        </div>
+      </div>
+    </div>
+
     <!-- ══════════════════════════════════════
        VIEW 1 — HOME
   ══════════════════════════════════════ -->
     <div id="view-home" class="view active">
       <div class="home-bg-grid" aria-hidden="true"></div>
       <div class="home-glow" aria-hidden="true"></div>
+      <div class="home-topbar">
+        <button
+          class="theme-toggle-btn"
+          title="Toggle theme"
+          onclick="Theme.toggle()"
+        >
+          <svg class="theme-icon-moon" viewBox="0 0 20 20" fill="none">
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <svg class="theme-icon-sun" viewBox="0 0 20 20" fill="none">
+            <circle
+              cx="10"
+              cy="10"
+              r="4"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <path
+              d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </div>
       <header class="home-header">
         <div class="home-eyebrow">Documentation</div>
         <h1 class="home-title">Knowledge Base</h1>
@@ -32,6 +108,19 @@
         </p>
       </header>
       <main class="home-main">
+        <div id="bookmarks-section" class="bookmarks-section hidden">
+          <div class="bookmarks-header">
+            <span class="bookmarks-label">Bookmarked</span>
+            <button
+              class="bookmarks-clear-btn"
+              onclick="Bookmarks.clearAll()"
+              title="Clear all"
+            >
+              Clear
+            </button>
+          </div>
+          <div id="bookmarks-grid" class="bookmarks-grid"></div>
+        </div>
         <div id="wiki-grid" class="wiki-grid"></div>
       </main>
     </div>
@@ -55,14 +144,12 @@
             Home
           </button>
           <nav id="index-breadcrumb" class="breadcrumb"></nav>
-        </div>
-      </div>
-      <div class="page-hero">
-        <div class="page-hero-inner">
-          <h1 id="index-title" class="page-title"></h1>
-          <p id="index-subtitle" class="page-subtitle"></p>
-          <div class="search-bar">
-            <svg class="search-icon" viewBox="0 0 20 20" fill="none">
+          <button
+            class="topbar-search-btn"
+            onclick="GlobalSearch.open()"
+            title="Search all (⌘K)"
+          >
+            <svg viewBox="0 0 20 20" fill="none">
               <circle
                 cx="8.5"
                 cy="8.5"
@@ -77,36 +164,48 @@
                 stroke-linecap="round"
               />
             </svg>
-            <input
-              type="text"
-              id="search-input"
-              class="search-input"
-              placeholder="Search topics…"
-              autocomplete="off"
-              spellcheck="false"
-            />
-            <button id="search-clear" class="search-clear" aria-label="Clear">
-              <svg viewBox="0 0 14 14" fill="none">
-                <path
-                  d="M3 3l8 8M11 3l-8 8"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                />
-              </svg>
-            </button>
-          </div>
+            <kbd>⌘K</kbd>
+          </button>
+          <button
+            class="theme-toggle-btn"
+            title="Toggle theme"
+            onclick="Theme.toggle()"
+          >
+            <svg class="theme-icon-moon" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <svg class="theme-icon-sun" viewBox="0 0 20 20" fill="none">
+              <circle
+                cx="10"
+                cy="10"
+                r="4"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="page-hero">
+        <div class="page-hero-inner">
+          <h1 id="index-title" class="page-title"></h1>
+          <p id="index-subtitle" class="page-subtitle"></p>
         </div>
       </div>
       <main class="index-main">
         <div id="index-sections" class="index-sections"></div>
-        <div id="no-results" class="no-results hidden">
-          <div class="no-results-icon">⊘</div>
-          <p class="no-results-text">
-            No results for "<strong id="no-results-query"></strong>"
-          </p>
-          <span class="no-results-hint">Try a different search term</span>
-        </div>
       </main>
     </div>
 
@@ -129,10 +228,116 @@
             Back
           </button>
           <nav id="content-breadcrumb" class="breadcrumb"></nav>
+          <span id="content-read-time" class="read-time-badge"></span>
+          <button
+            id="content-bookmark-btn"
+            class="topbar-icon-btn"
+            title="Bookmark"
+            onclick="Bookmarks.toggle()"
+          >
+            <svg viewBox="0 0 20 20" fill="none">
+              <path
+                d="M5 3h10a1 1 0 011 1v13l-6-3-6 3V4a1 1 0 011-1z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <button
+            id="content-offline-btn"
+            class="topbar-icon-btn"
+            title="Save for offline"
+            onclick="Offline.toggle()"
+          >
+            <svg class="offline-icon-download" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M10 3v10M6 9l4 4 4-4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M3 15h14"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <svg
+              class="offline-icon-check"
+              viewBox="0 0 20 20"
+              fill="none"
+              style="display: none"
+            >
+              <path
+                d="M4 10l5 5 8-8"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <button
+            class="topbar-search-btn"
+            onclick="GlobalSearch.open()"
+            title="Search all (⌘K)"
+          >
+            <svg viewBox="0 0 20 20" fill="none">
+              <circle
+                cx="8.5"
+                cy="8.5"
+                r="5.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M13 13l3.5 3.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <kbd>⌘K</kbd>
+          </button>
+          <button
+            class="theme-toggle-btn"
+            title="Toggle theme"
+            onclick="Theme.toggle()"
+          >
+            <svg class="theme-icon-moon" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <svg class="theme-icon-sun" viewBox="0 0 20 20" fill="none">
+              <circle
+                cx="10"
+                cy="10"
+                r="4"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
         </div>
       </div>
       <div class="content-layout">
-        <article id="markdown-body" class="markdown-body"></article>
+        <article id="markdown-body" class="markdown-body">
+          <div id="related-articles" class="related-articles"></div>
+        </article>
         <aside id="toc-sidebar" class="toc-sidebar">
           <div class="toc-header">
             <span class="toc-label">On this page</span>
@@ -191,6 +396,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script src="./wiki.js"></script>
   </body>
 </html>

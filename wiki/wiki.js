@@ -27,6 +27,23 @@ const mdConverter = new showdown.Converter({
   disableForced4SpacesIndentedSublists: true,
 });
 
+if (typeof mermaid !== "undefined") {
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: "dark",
+    themeVariables: {
+      darkMode: true,
+      background: "#161b27",
+      primaryColor: "#6366f1",
+      primaryTextColor: "#f1f5f9",
+      primaryBorderColor: "#252d42",
+      lineColor: "#64748b",
+      secondaryColor: "#1e2537",
+      tertiaryColor: "#252d42",
+    },
+  });
+}
+
 /* ═══════════════════════════════════════════════════════════════
    STATE
    ═══════════════════════════════════════════════════════════════ */
@@ -34,13 +51,16 @@ const state = {
   currentView: "home",
   currentWikiId: null,
   currentFilePath: null,
-  indexSections: [], // parsed sections from index.md
+  currentTitle: null,
+  indexSections: [],
   tocObserver: null,
 };
 
 /* ═══════════════════════════════════════════════════════════════
    VIEW MANAGEMENT
    ═══════════════════════════════════════════════════════════════ */
+const progressBar = document.getElementById("reading-progress");
+
 function showView(id) {
   document
     .querySelectorAll(".view")
@@ -48,6 +68,10 @@ function showView(id) {
   document.getElementById(id).classList.add("active");
   state.currentView = id.replace("view-", "");
   window.scrollTo(0, 0);
+
+  const isContent = id === "view-content";
+  progressBar.classList.toggle("visible", isContent);
+  if (isContent) progressBar.style.width = "0%";
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -127,7 +151,7 @@ function renderHome() {
   const grid = document.getElementById("wiki-grid");
   grid.innerHTML = WIKIS.map(
     (w) => `
-    <div class="wiki-card" onclick="navigate('${w.id}')" role="button" tabindex="0"
+    <div class="wiki-card" data-wiki-id="${w.id}" onclick="navigate('${w.id}')" role="button" tabindex="0"
          onkeydown="if(event.key==='Enter')navigate('${w.id}')">
       <div class="wiki-card-icon">${w.icon}</div>
       <div class="wiki-card-body">
@@ -135,7 +159,7 @@ function renderHome() {
         <p class="wiki-card-desc">${w.description}</p>
       </div>
       <div class="wiki-card-footer">
-        <span class="wiki-card-count">${w.articleCount} articles</span>
+        <span class="wiki-card-count">… articles</span>
         <span class="wiki-card-arrow">→</span>
       </div>
     </div>
@@ -143,6 +167,8 @@ function renderHome() {
   ).join("");
 
   showView("view-home");
+  updateArticleCounts();
+  renderBookmarksSection();
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -177,7 +203,7 @@ async function renderIndex(wiki) {
     const basePath = dirOf(wiki.indexPath);
     state.indexSections = parseIndexMd(md, basePath);
     renderIndexSections(state.indexSections, wiki);
-    setupSearch();
+    populateIndexReadTimes();
   } catch (err) {
     sectionsEl.innerHTML = `<p class="error">Failed to load index. (${err.message})</p>`;
   }
@@ -210,6 +236,14 @@ function renderIndexSections(sections, wiki) {
               <span class="index-card-arrow">→</span>
             </div>
             <p class="index-card-desc">${escHtml(card.description)}</p>
+            <div class="index-card-meta">
+              <span class="index-card-read-time" data-path="${escHtml(
+                card.path
+              )}">…</span>
+              <span class="index-card-read-dot ${
+                isRead(card.path) ? "visible" : ""
+              }" title="Read"></span>
+            </div>
           </div>
         `
           )
@@ -219,6 +253,57 @@ function renderIndexSections(sections, wiki) {
   `
     )
     .join("");
+}
+
+/* ─── Reading time ─── */
+function readingTime(text) {
+  const words = text.trim().split(/\s+/).length;
+  const mins = Math.max(1, Math.round(words / 200));
+  return `${mins} min read`;
+}
+
+const readTimeCache = {};
+
+async function populateIndexReadTimes() {
+  const badges = document.querySelectorAll(".index-card-read-time[data-path]");
+  for (const badge of badges) {
+    const path = badge.dataset.path;
+    if (!path) continue;
+    try {
+      if (!readTimeCache[path]) {
+        const md = await fetchText(path);
+        readTimeCache[path] = readingTime(md);
+      }
+      badge.textContent = readTimeCache[path];
+    } catch {
+      badge.textContent = "";
+    }
+  }
+}
+
+/* ─── Shared index cache (used by article counts + global search) ─── */
+const indexCache = {};
+
+async function fetchWikiIndex(wiki) {
+  if (indexCache[wiki.id]) return indexCache[wiki.id];
+  const md = await fetchText(wiki.indexPath);
+  const basePath = dirOf(wiki.indexPath);
+  const sections = parseIndexMd(md, basePath);
+  indexCache[wiki.id] = sections;
+  return sections;
+}
+
+async function updateArticleCounts() {
+  for (const wiki of WIKIS) {
+    try {
+      const sections = await fetchWikiIndex(wiki);
+      const count = sections.reduce((sum, s) => sum + s.cards.length, 0);
+      const el = document.querySelector(
+        `[data-wiki-id="${wiki.id}"] .wiki-card-count`
+      );
+      if (el) el.textContent = `${count} articles`;
+    } catch {}
+  }
 }
 
 /* ─── Index.md Parser ─── */
@@ -278,52 +363,6 @@ function fuzzyMatch(query, text) {
   return qi === q.length;
 }
 
-function setupSearch() {
-  const input = document.getElementById("search-input");
-  const clearBtn = document.getElementById("search-clear");
-
-  input.value = "";
-  clearBtn.classList.remove("visible");
-
-  input.addEventListener("input", () => {
-    const q = input.value.trim();
-    clearBtn.classList.toggle("visible", q.length > 0);
-    applySearch(q);
-  });
-
-  clearBtn.addEventListener("click", () => {
-    input.value = "";
-    clearBtn.classList.remove("visible");
-    applySearch("");
-    input.focus();
-  });
-}
-
-function applySearch(query) {
-  const cards = document.querySelectorAll(".index-card");
-  const sections = document.querySelectorAll(".index-section");
-  const noResults = document.getElementById("no-results");
-  let visible = 0;
-
-  cards.forEach((card) => {
-    const matches =
-      fuzzyMatch(query, card.dataset.title || "") ||
-      fuzzyMatch(query, card.dataset.desc || "");
-    card.classList.toggle("hidden", !matches);
-    if (matches) visible++;
-  });
-
-  sections.forEach((sec) => {
-    const anyVisible =
-      sec.querySelectorAll(".index-card:not(.hidden)").length > 0;
-    sec.classList.toggle("hidden", !anyVisible);
-  });
-
-  const showNo = visible === 0 && query.length > 0;
-  noResults.classList.toggle("hidden", !showNo);
-  if (showNo) document.getElementById("no-results-query").textContent = query;
-}
-
 /* ═══════════════════════════════════════════════════════════════
    VIEW 3 — CONTENT
    ═══════════════════════════════════════════════════════════════ */
@@ -343,6 +382,7 @@ async function renderContent(
 ) {
   state.currentWikiId = wiki.id;
   state.currentFilePath = filePath;
+  state.currentTitle = title;
 
   const derivedSlug = slug || filePath.split("/").pop().replace(/\.md$/, "");
 
@@ -377,17 +417,38 @@ async function renderContent(
   }
   document.getElementById("toc-nav").innerHTML = "";
 
+  const readTimeBadge = document.getElementById("content-read-time");
+  if (readTimeBadge) readTimeBadge.textContent = "";
+
   try {
     const markdown = await fetchText(filePath);
+
+    // Set reading time immediately after fetch
+    if (readTimeBadge) {
+      readTimeBadge.textContent =
+        readTimeCache[filePath] || readingTime(markdown);
+      readTimeCache[filePath] = readTimeBadge.textContent;
+    }
+
     const bodyContent = markdown
       .trim()
       .replace(/^#{1,6}\s+[^\n]*\n?/, "")
       .trim();
     if (!bodyContent) {
-      window.location.href = `./404.html?title=${encodeURIComponent(title)}`;
+      body.innerHTML = `
+        <div class="content-stub">
+          <div class="content-stub-icon">✦</div>
+          <h2 class="content-stub-title">${escHtml(title)}</h2>
+          <p class="content-stub-msg">This article hasn't been written yet.</p>
+        </div>`;
+      if (readTimeBadge) readTimeBadge.textContent = "";
+      buildTOC(body);
       return;
     }
     body.innerHTML = mdConverter.makeHtml(markdown);
+
+    // Mermaid must run before hljs so it claims those blocks first
+    await renderMermaidDiagrams(body);
 
     // Syntax highlighting
     body
@@ -398,9 +459,31 @@ async function renderContent(
     addCopyButtons(body);
     styleCallouts(body);
     interceptMdLinks(body, wiki, filePath);
+    addAnchorLinks(body);
 
     // TOC
     buildTOC(body);
+
+    // Code language labels
+    addCodeLangLabels(body);
+
+    // Related articles
+    renderRelatedArticles(wiki, filePath);
+
+    // Topbar button states
+    updateBookmarkBtn();
+    updateOfflineBtn();
+
+    // Scroll to heading anchor if ?a= param present
+    const anchor = new URLSearchParams(location.search).get("a");
+    if (anchor) {
+      const target = body.querySelector(`[id="${CSS.escape(anchor)}"]`);
+      if (target)
+        setTimeout(
+          () => target.scrollIntoView({ behavior: "smooth", block: "start" }),
+          150
+        );
+    }
   } catch (err) {
     body.innerHTML = `<p class="error">Failed to load content. (${err.message})</p>`;
   }
@@ -562,6 +645,19 @@ window.addEventListener(
   "scroll",
   () => {
     scrollTopBtn.classList.toggle("visible", window.scrollY > 300);
+
+    if (state.currentView === "content") {
+      const doc = document.documentElement;
+      const scrolled = doc.scrollTop || document.body.scrollTop;
+      const total = doc.scrollHeight - doc.clientHeight;
+      const pct = total > 0 ? scrolled / total : 0;
+      progressBar.style.width = `${pct * 100}%`;
+
+      // Auto-mark as read at 85%
+      if (pct > 0.85 && state.currentFilePath) {
+        markRead(state.currentFilePath);
+      }
+    }
   },
   { passive: true }
 );
@@ -631,13 +727,492 @@ function escHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
+/* ─── Heading Anchor Links ─── */
+function addAnchorLinks(contentEl) {
+  contentEl.querySelectorAll("h2, h3, h4").forEach((h) => {
+    if (!h.id) return;
+    const btn = document.createElement("button");
+    btn.className = "anchor-btn";
+    btn.title = "Copy link";
+    btn.innerHTML = anchorIcon();
+    btn.addEventListener("click", () => {
+      const url = new URL(location.href);
+      url.searchParams.set("a", h.id);
+      navigator.clipboard
+        .writeText(url.toString())
+        .then(() => {
+          btn.classList.add("copied");
+          setTimeout(() => btn.classList.remove("copied"), 2000);
+        })
+        .catch(() => {});
+    });
+    h.appendChild(btn);
+  });
+}
+
+function anchorIcon() {
+  return `<svg viewBox="0 0 16 16" fill="none">
+    <path d="M6.5 9.5l3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M4.5 11.5a2.5 2.5 0 010-3.54L6 6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M11.5 4.5a2.5 2.5 0 010 3.54L10 9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+
+/* ─── Mermaid Diagrams ─── */
+async function renderMermaidDiagrams(contentEl) {
+  if (typeof mermaid === "undefined") return;
+  const blocks = contentEl.querySelectorAll("pre code.language-mermaid");
+  let i = 0;
+  for (const block of blocks) {
+    const pre = block.parentElement;
+    const code = block.textContent.trim();
+    try {
+      const id = `mermaid-${Date.now()}-${i++}`;
+      const { svg } = await mermaid.render(id, code);
+      const wrapper = document.createElement("div");
+      wrapper.className = "mermaid-diagram";
+      wrapper.innerHTML = svg;
+      pre.replaceWith(wrapper);
+    } catch (err) {
+      console.warn("Mermaid render failed:", err);
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL SEARCH (⌘K)
+   ═══════════════════════════════════════════════════════════════ */
+const gSearchModal = document.getElementById("global-search-modal");
+const gSearchInput = document.getElementById("gsearch-input");
+const gSearchResults = document.getElementById("gsearch-results");
+const gSearchBackdrop = document.getElementById("gsearch-backdrop");
+
+const allSearchCache = { loaded: false, loading: false, entries: [] };
+
+async function loadAllSearchEntries() {
+  if (allSearchCache.loaded || allSearchCache.loading) return;
+  allSearchCache.loading = true;
+  gSearchResults.innerHTML = '<div class="gsearch-loading">Loading…</div>';
+
+  for (const wiki of WIKIS) {
+    try {
+      const sections = await fetchWikiIndex(wiki);
+      for (const section of sections) {
+        for (const card of section.cards) {
+          allSearchCache.entries.push({
+            wiki,
+            section: section.heading,
+            ...card,
+          });
+        }
+      }
+    } catch {}
+  }
+
+  allSearchCache.loaded = true;
+  allSearchCache.loading = false;
+  applyGlobalSearch(gSearchInput.value);
+}
+
+function openGlobalSearch() {
+  gSearchModal.classList.remove("hidden");
+  gSearchModal.setAttribute("aria-hidden", "false");
+  gSearchInput.value = "";
+  gSearchResults.innerHTML =
+    '<div class="gsearch-empty">Start typing to search…</div>';
+  gSearchInput.focus();
+  loadAllSearchEntries();
+}
+
+function closeGlobalSearch() {
+  gSearchModal.classList.add("hidden");
+  gSearchModal.setAttribute("aria-hidden", "true");
+}
+
+function scoreMatch(q, entry) {
+  const ql = q.toLowerCase();
+  const title = entry.title.toLowerCase();
+  const desc = entry.description.toLowerCase();
+  const short = ql.length <= 4;
+
+  if (title === ql) return 100;
+  if (title.startsWith(ql)) return 90;
+  if (title.includes(ql)) return 80;
+  if (fuzzyMatch(ql, title)) return 60;
+  // For short queries, stop here — avoid false positives from desc/section fuzzy
+  if (short) return 0;
+  if (desc.includes(ql)) return 40;
+  if (fuzzyMatch(ql, desc)) return 20;
+  if (fuzzyMatch(ql, entry.section.toLowerCase())) return 10;
+  return 0;
+}
+
+function applyGlobalSearch(query) {
+  if (!allSearchCache.loaded) return;
+
+  const q = query.trim();
+  if (!q) {
+    gSearchResults.innerHTML =
+      '<div class="gsearch-empty">Start typing to search…</div>';
+    return;
+  }
+
+  const scored = allSearchCache.entries
+    .map((e) => ({ entry: e, score: scoreMatch(q, e) }))
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map((s) => s.entry);
+
+  if (!scored.length) {
+    gSearchResults.innerHTML = `<div class="gsearch-no-results">No results for "<strong>${escHtml(
+      q
+    )}</strong>"</div>`;
+    return;
+  }
+
+  // Group by wiki, preserving score order within each group
+  const grouped = {};
+  for (const m of scored) {
+    if (!grouped[m.wiki.id]) grouped[m.wiki.id] = { wiki: m.wiki, items: [] };
+    grouped[m.wiki.id].items.push(m);
+  }
+
+  gSearchResults.innerHTML = Object.values(grouped)
+    .map(
+      (group) => `
+    <div class="gsearch-group-label">${escHtml(group.wiki.title)}</div>
+    ${group.items
+      .map(
+        (item) => `
+      <div class="gsearch-result"
+           onclick="closeGlobalSearch(); navigateToContent('${
+             item.wiki.id
+           }', '${encodeURIComponent(item.path)}', '${encodeURIComponent(
+          item.title
+        )}', '${item.slug}')"
+           role="button" tabindex="0"
+           onkeydown="if(event.key==='Enter')this.click()">
+        <span class="gsearch-result-title">${highlightMatch(
+          item.title,
+          q
+        )}</span>
+        <span class="gsearch-result-meta">${escHtml(item.section)} · ${escHtml(
+          item.description.slice(0, 90)
+        )}${item.description.length > 90 ? "…" : ""}</span>
+      </div>
+    `
+      )
+      .join("")}
+  `
+    )
+    .join("");
+}
+
+gSearchInput.addEventListener("input", () =>
+  applyGlobalSearch(gSearchInput.value)
+);
+gSearchBackdrop.addEventListener("click", closeGlobalSearch);
+
+document.addEventListener("keydown", (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+    e.preventDefault();
+    openGlobalSearch();
+  }
+  if (e.key === "Escape" && !gSearchModal.classList.contains("hidden")) {
+    closeGlobalSearch();
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   CODE LANGUAGE LABELS
+   ═══════════════════════════════════════════════════════════════ */
+function addCodeLangLabels(contentEl) {
+  contentEl.querySelectorAll("pre code[class]").forEach((code) => {
+    const match = code.className.match(/language-(\w+)/);
+    if (!match || match[1] === "mermaid") return;
+    const label = document.createElement("span");
+    label.className = "code-lang-label";
+    label.textContent = match[1];
+    code.parentElement.appendChild(label);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RELATED ARTICLES
+   ═══════════════════════════════════════════════════════════════ */
+async function renderRelatedArticles(wiki, currentPath) {
+  const container = document.getElementById("related-articles");
+  if (!container) return;
+  container.innerHTML = "";
+
+  try {
+    const sections = await fetchWikiIndex(wiki);
+    let related = [];
+    let sectionName = "";
+
+    for (const section of sections) {
+      const idx = section.cards.findIndex((c) => c.path === currentPath);
+      if (idx !== -1) {
+        sectionName = section.heading;
+        related = section.cards
+          .filter((c) => c.path !== currentPath)
+          .slice(0, 3);
+        break;
+      }
+    }
+
+    if (!related.length) return;
+
+    container.innerHTML = `
+      <div class="related-header">
+        <span class="related-label">More in ${escHtml(sectionName)}</span>
+      </div>
+      <div class="related-grid">
+        ${related
+          .map(
+            (card) => `
+          <div class="related-card"
+               onclick="navigateToContent('${wiki.id}','${encodeURIComponent(
+              card.path
+            )}','${encodeURIComponent(card.title)}','${card.slug}')"
+               role="button" tabindex="0"
+               onkeydown="if(event.key==='Enter')this.click()">
+            <span class="related-card-title">${escHtml(card.title)}</span>
+            <span class="related-card-arrow">→</span>
+          </div>`
+          )
+          .join("")}
+      </div>`;
+  } catch {}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOKMARKS
+   ═══════════════════════════════════════════════════════════════ */
+const BOOKMARKS_KEY = "wiki-bookmarks";
+
+function getBookmarks() {
+  try {
+    return JSON.parse(localStorage.getItem(BOOKMARKS_KEY) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveBookmarks(arr) {
+  localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(arr));
+}
+
+function isBookmarked(path) {
+  return getBookmarks().some((b) => b.path === path);
+}
+
+function updateBookmarkBtn() {
+  const btn = document.getElementById("content-bookmark-btn");
+  if (!btn) return;
+  const bookmarked = isBookmarked(state.currentFilePath);
+  btn.classList.toggle("active", bookmarked);
+  btn.title = bookmarked ? "Remove bookmark" : "Bookmark";
+}
+
+function renderBookmarksSection() {
+  const section = document.getElementById("bookmarks-section");
+  const grid = document.getElementById("bookmarks-grid");
+  if (!section || !grid) return;
+
+  const bookmarks = getBookmarks();
+  if (!bookmarks.length) {
+    section.classList.add("hidden");
+    return;
+  }
+
+  section.classList.remove("hidden");
+  grid.innerHTML = bookmarks
+    .map((b) => {
+      const wiki = WIKIS.find((w) => w.id === b.wikiId);
+      return `
+      <div class="bookmark-card"
+           onclick="navigateToContent('${b.wikiId}','${encodeURIComponent(
+        b.path
+      )}','${encodeURIComponent(b.title)}','${b.slug}')"
+           role="button" tabindex="0"
+           onkeydown="if(event.key==='Enter')this.click()">
+        <span class="bookmark-card-title">${escHtml(b.title)}</span>
+        <span class="bookmark-card-wiki">${escHtml(
+          wiki?.title || b.wikiId
+        )}</span>
+      </div>`;
+    })
+    .join("");
+}
+
+const Bookmarks = {
+  toggle() {
+    const path = state.currentFilePath;
+    if (!path) return;
+    const bookmarks = getBookmarks();
+    const idx = bookmarks.findIndex((b) => b.path === path);
+    if (idx >= 0) {
+      bookmarks.splice(idx, 1);
+    } else {
+      const wiki = WIKIS.find((w) => w.id === state.currentWikiId);
+      bookmarks.unshift({
+        wikiId: state.currentWikiId,
+        path,
+        slug: path.split("/").pop().replace(/\.md$/, ""),
+        title: state.currentTitle || path.split("/").pop().replace(/\.md$/, ""),
+        wikiTitle: wiki?.title || "",
+      });
+    }
+    saveBookmarks(bookmarks);
+    updateBookmarkBtn();
+  },
+  clearAll() {
+    saveBookmarks([]);
+    renderBookmarksSection();
+  },
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   MARK AS READ
+   ═══════════════════════════════════════════════════════════════ */
+const READ_KEY = "wiki-read";
+
+function getReadSet() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(READ_KEY) || "[]"));
+  } catch {
+    return new Set();
+  }
+}
+
+function isRead(path) {
+  return getReadSet().has(path);
+}
+
+function markRead(path) {
+  const read = getReadSet();
+  if (read.has(path)) return;
+  read.add(path);
+  localStorage.setItem(READ_KEY, JSON.stringify([...read]));
+  // Update any visible read dots for this article
+  document.querySelectorAll(`.index-card-read-dot`).forEach((dot) => {
+    const card = dot.closest(".index-card");
+    const timeBadge = card?.querySelector(".index-card-read-time");
+    if (timeBadge?.dataset.path === path) dot.classList.add("visible");
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   OFFLINE / PWA
+   ═══════════════════════════════════════════════════════════════ */
+async function downloadArticle(filePath) {
+  if (!("caches" in window)) return;
+  const cache = await caches.open("wiki-articles-v1");
+  const res = await fetch(filePath);
+  if (res.ok) await cache.put(filePath, res);
+}
+
+async function removeArticleDownload(filePath) {
+  if (!("caches" in window)) return;
+  const cache = await caches.open("wiki-articles-v1");
+  await cache.delete(filePath);
+}
+
+async function isArticleCached(filePath) {
+  if (!("caches" in window)) return false;
+  const cache = await caches.open("wiki-articles-v1");
+  return !!(await cache.match(filePath));
+}
+
+async function updateOfflineBtn() {
+  const btn = document.getElementById("content-offline-btn");
+  if (!btn || !state.currentFilePath) return;
+  const cached = await isArticleCached(state.currentFilePath);
+  const dlIcon = btn.querySelector(".offline-icon-download");
+  const chkIcon = btn.querySelector(".offline-icon-check");
+  btn.classList.toggle("active", cached);
+  if (dlIcon) dlIcon.style.display = cached ? "none" : "";
+  if (chkIcon) chkIcon.style.display = cached ? "" : "none";
+  btn.title = cached ? "Saved offline — click to remove" : "Save for offline";
+}
+
+const Offline = {
+  async toggle() {
+    const path = state.currentFilePath;
+    if (!path) return;
+    const btn = document.getElementById("content-offline-btn");
+    const cached = await isArticleCached(path);
+    if (cached) {
+      await removeArticleDownload(path);
+    } else {
+      btn?.classList.add("loading");
+      await downloadArticle(path);
+      btn?.classList.remove("loading");
+    }
+    updateOfflineBtn();
+  },
+};
+
+/* ─── Search result highlight ─── */
+function highlightMatch(text, query) {
+  if (!query) return escHtml(text);
+  const idx = text.toLowerCase().indexOf(query.toLowerCase());
+  if (idx === -1) return escHtml(text);
+  return (
+    escHtml(text.slice(0, idx)) +
+    `<mark class="gsearch-highlight">${escHtml(
+      text.slice(idx, idx + query.length)
+    )}</mark>` +
+    escHtml(text.slice(idx + query.length))
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   THEME (light / dark)
+   ═══════════════════════════════════════════════════════════════ */
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  const isDark = theme === "dark";
+  document
+    .querySelectorAll(".theme-icon-moon")
+    .forEach((el) => (el.style.display = isDark ? "" : "none"));
+  document
+    .querySelectorAll(".theme-icon-sun")
+    .forEach((el) => (el.style.display = isDark ? "none" : ""));
+  localStorage.setItem("wiki-theme", theme);
+}
+
+const Theme = {
+  toggle() {
+    const current =
+      document.documentElement.getAttribute("data-theme") || "dark";
+    applyTheme(current === "dark" ? "light" : "dark");
+  },
+};
+
 /* Public API for onclick handlers in HTML */
 const Wiki = { goHome: () => navigate("") };
+const GlobalSearch = { open: openGlobalSearch, close: closeGlobalSearch };
 
 /* ═══════════════════════════════════════════════════════════════
    INIT — parse hash on load
    ═══════════════════════════════════════════════════════════════ */
 (function init() {
-  const hash = location.hash.slice(1); // strip leading #
+  applyTheme(localStorage.getItem("wiki-theme") || "dark");
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./wiki-sw.js").catch(() => {});
+  }
+
+  const hash = location.hash.slice(1);
   route(hash);
 })();
+
+// Re-route when restored from BFcache (e.g. history.back() from 404 page)
+window.addEventListener("pageshow", (e) => {
+  if (e.persisted) {
+    const hash = location.hash.slice(1);
+    route(hash);
+  }
+});

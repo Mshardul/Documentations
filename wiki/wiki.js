@@ -80,7 +80,7 @@ function showView(id) {
    ═══════════════════════════════════════════════════════════════ */
 function navigate(hash, pushHistory = true) {
   if (pushHistory) {
-    const url = hash ? `wiki.html#${hash}` : "wiki.html";
+    const url = hash ? `#${hash}` : location.pathname + location.search;
     history.pushState({ hash }, "", url);
   }
   route(hash || "");
@@ -144,6 +144,10 @@ window.addEventListener("popstate", (e) => {
   route(hash);
 });
 
+window.addEventListener("hashchange", () => {
+  route(location.hash.slice(1));
+});
+
 /* ═══════════════════════════════════════════════════════════════
    VIEW 1 — HOME
    ═══════════════════════════════════════════════════════════════ */
@@ -159,7 +163,7 @@ function renderHome() {
         <p class="wiki-card-desc">${w.description}</p>
       </div>
       <div class="wiki-card-footer">
-        <span class="wiki-card-count">… articles</span>
+        <span class="wiki-card-count">0 articles</span>
         <span class="wiki-card-arrow">→</span>
       </div>
     </div>
@@ -168,7 +172,6 @@ function renderHome() {
 
   showView("view-home");
   updateArticleCounts();
-  renderBookmarksSection();
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -179,20 +182,15 @@ async function renderIndex(wiki) {
 
   // Breadcrumb & hero
   setBreadcrumb("index-breadcrumb", [
-    { label: "Home", action: () => navigate("") },
+    { label: "Home", href: "#" },
     { label: wiki.title },
   ]);
   document.getElementById("index-title").textContent = wiki.title;
   document.getElementById("index-subtitle").textContent = wiki.description;
 
-  // Back button
-  document
-    .getElementById("index-breadcrumb")
-    .closest(".page-topbar")
-    ?.querySelector(".back-btn")
-    ?.addEventListener("click", () => navigate(""), { once: true });
-
   showView("view-index");
+  renderRecentsSection(wiki);
+  renderBookmarksSection(wiki);
 
   const sectionsEl = document.getElementById("index-sections");
   sectionsEl.innerHTML =
@@ -386,18 +384,20 @@ async function renderContent(
 
   const derivedSlug = slug || filePath.split("/").pop().replace(/\.md$/, "");
 
+  addToRecents({ wikiId: wiki.id, path: filePath, title, slug: derivedSlug });
+
   if (pushNav) {
     history.pushState(
       { hash: `${wiki.id}/${derivedSlug}`, filePath, title },
       "",
-      `wiki.html#${wiki.id}/${derivedSlug}`
+      `#${wiki.id}/${derivedSlug}`
     );
   }
 
   // Breadcrumb
   setBreadcrumb("content-breadcrumb", [
-    { label: "Home", action: () => navigate("") },
-    { label: wiki.title, action: () => navigate(wiki.id) },
+    { label: "Home", href: "#" },
+    { label: wiki.title, href: `#${wiki.id}` },
     { label: title },
   ]);
 
@@ -671,6 +671,7 @@ scrollTopBtn.addEventListener("click", () => {
    ═══════════════════════════════════════════════════════════════ */
 function setBreadcrumb(elId, items) {
   const el = document.getElementById(elId);
+  if (!el) return;
   el.innerHTML = "";
   items.forEach((item, i) => {
     if (i > 0) {
@@ -680,18 +681,15 @@ function setBreadcrumb(elId, items) {
       el.appendChild(sep);
     }
     const isLast = i === items.length - 1;
-    if (isLast || !item.action) {
+    if (isLast || !item.href) {
       const span = document.createElement("span");
       span.textContent = item.label;
       el.appendChild(span);
     } else {
       const a = document.createElement("a");
-      a.href = "#";
+      a.className = "breadcrumb-link";
+      a.href = item.href;
       a.textContent = item.label;
-      a.addEventListener("click", (e) => {
-        e.preventDefault();
-        item.action();
-      });
       el.appendChild(a);
     }
   });
@@ -814,10 +812,29 @@ async function loadAllSearchEntries() {
   applyGlobalSearch(gSearchInput.value);
 }
 
+let gSearchSelectedIdx = -1;
+
+function gSearchItems() {
+  return [...gSearchResults.querySelectorAll(".gsearch-result")];
+}
+
+function gSearchSelect(idx) {
+  const items = gSearchItems();
+  items.forEach((el) => el.classList.remove("selected"));
+  if (idx < 0 || idx >= items.length) {
+    gSearchSelectedIdx = -1;
+    return;
+  }
+  gSearchSelectedIdx = idx;
+  items[idx].classList.add("selected");
+  items[idx].scrollIntoView({ block: "nearest" });
+}
+
 function openGlobalSearch() {
   gSearchModal.classList.remove("hidden");
   gSearchModal.setAttribute("aria-hidden", "false");
   gSearchInput.value = "";
+  gSearchSelectedIdx = -1;
   gSearchResults.innerHTML =
     '<div class="gsearch-empty">Start typing to search…</div>';
   gSearchInput.focus();
@@ -848,6 +865,7 @@ function scoreMatch(q, entry) {
 }
 
 function applyGlobalSearch(query) {
+  gSearchSelectedIdx = -1;
   if (!allSearchCache.loaded) return;
 
   const q = query.trim();
@@ -911,6 +929,26 @@ function applyGlobalSearch(query) {
 gSearchInput.addEventListener("input", () =>
   applyGlobalSearch(gSearchInput.value)
 );
+
+gSearchInput.addEventListener("keydown", (e) => {
+  const items = gSearchItems();
+  if (!items.length) return;
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    gSearchSelect(
+      gSearchSelectedIdx < items.length - 1 ? gSearchSelectedIdx + 1 : 0
+    );
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    gSearchSelect(
+      gSearchSelectedIdx > 0 ? gSearchSelectedIdx - 1 : items.length - 1
+    );
+  } else if (e.key === "Enter" && gSearchSelectedIdx >= 0) {
+    e.preventDefault();
+    items[gSearchSelectedIdx].click();
+  }
+});
+
 gSearchBackdrop.addEventListener("click", closeGlobalSearch);
 
 document.addEventListener("keydown", (e) => {
@@ -1015,35 +1053,37 @@ function updateBookmarkBtn() {
   btn.title = bookmarked ? "Remove bookmark" : "Bookmark";
 }
 
-function renderBookmarksSection() {
+function renderBookmarksSection(wiki) {
   const section = document.getElementById("bookmarks-section");
-  const grid = document.getElementById("bookmarks-grid");
-  if (!section || !grid) return;
-
-  const bookmarks = getBookmarks();
+  if (!section) return;
+  const bookmarks = getBookmarks().filter((b) => b.wikiId === wiki.id);
   if (!bookmarks.length) {
     section.classList.add("hidden");
     return;
   }
-
   section.classList.remove("hidden");
-  grid.innerHTML = bookmarks
-    .map((b) => {
-      const wiki = WIKIS.find((w) => w.id === b.wikiId);
-      return `
-      <div class="bookmark-card"
-           onclick="navigateToContent('${b.wikiId}','${encodeURIComponent(
-        b.path
-      )}','${encodeURIComponent(b.title)}','${b.slug}')"
-           role="button" tabindex="0"
-           onkeydown="if(event.key==='Enter')this.click()">
-        <span class="bookmark-card-title">${escHtml(b.title)}</span>
-        <span class="bookmark-card-wiki">${escHtml(
-          wiki?.title || b.wikiId
-        )}</span>
-      </div>`;
-    })
-    .join("");
+  section.innerHTML = `
+    <div class="recents-header">
+      <span class="recents-label">Bookmarked</span>
+      <button class="recents-clear-btn" onclick="Bookmarks.clearWiki('${
+        wiki.id
+      }')" title="Clear all">
+        <svg viewBox="0 0 12 12" fill="none"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="recents-strip">
+      ${bookmarks
+        .map(
+          (b) => `
+        <button class="recent-chip"
+          onclick="navigateToContent('${b.wikiId}','${encodeURIComponent(
+            b.path
+          )}','${encodeURIComponent(b.title)}','${b.slug}')">
+          ${escHtml(b.title)}
+        </button>`
+        )
+        .join("")}
+    </div>`;
 }
 
 const Bookmarks = {
@@ -1069,9 +1109,74 @@ const Bookmarks = {
   },
   clearAll() {
     saveBookmarks([]);
-    renderBookmarksSection();
+    const wiki = WIKIS.find((w) => w.id === state.currentWikiId);
+    if (wiki) renderBookmarksSection(wiki);
+  },
+  clearWiki(wikiId) {
+    saveBookmarks(getBookmarks().filter((b) => b.wikiId !== wikiId));
+    document.getElementById("bookmarks-section")?.classList.add("hidden");
   },
 };
+
+/* ═══════════════════════════════════════════════════════════════
+   RECENTLY VISITED
+   ═══════════════════════════════════════════════════════════════ */
+const RECENTS_KEY = "wiki-recents";
+const RECENTS_MAX = 6;
+
+function getRecents() {
+  try {
+    return JSON.parse(localStorage.getItem(RECENTS_KEY) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function addToRecents(entry) {
+  let recents = getRecents().filter((r) => r.path !== entry.path);
+  recents.unshift(entry);
+  if (recents.length > RECENTS_MAX) recents = recents.slice(0, RECENTS_MAX);
+  localStorage.setItem(RECENTS_KEY, JSON.stringify(recents));
+}
+
+function clearRecents(wikiId) {
+  const remaining = getRecents().filter((r) => r.wikiId !== wikiId);
+  localStorage.setItem(RECENTS_KEY, JSON.stringify(remaining));
+  document.getElementById("recents-section")?.classList.add("hidden");
+}
+
+function renderRecentsSection(wiki) {
+  const section = document.getElementById("recents-section");
+  if (!section) return;
+  const recents = getRecents().filter((r) => r.wikiId === wiki.id);
+  if (!recents.length) {
+    section.classList.add("hidden");
+    return;
+  }
+  section.classList.remove("hidden");
+  section.innerHTML = `
+    <div class="recents-header">
+      <span class="recents-label">Recently visited</span>
+      <button class="recents-clear-btn" onclick="clearRecents('${
+        wiki.id
+      }')" title="Clear all">
+        <svg viewBox="0 0 12 12" fill="none"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="recents-strip">
+      ${recents
+        .map(
+          (r) => `
+        <button class="recent-chip"
+          onclick="navigateToContent('${r.wikiId}','${encodeURIComponent(
+            r.path
+          )}','${encodeURIComponent(r.title)}','${r.slug}')">
+          ${escHtml(r.title)}
+        </button>`
+        )
+        .join("")}
+    </div>`;
+}
 
 /* ═══════════════════════════════════════════════════════════════
    MARK AS READ

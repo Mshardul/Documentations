@@ -1,4 +1,4 @@
-# AI Instructions
+# AI Instructions — Component Pages
 
 ---
 
@@ -15,7 +15,7 @@
 
 ---
 
-## GOALS & Audience
+## GOALS & AUDIENCE
 
 - Primary: Interview prep (trade-offs, debugging, scenario design)
 - Secondary: Production-grade conceptual mastery
@@ -32,6 +32,19 @@
 
 ---
 
+## PAGE STRUCTURE (FIXED — ALWAYS IN THIS ORDER)
+
+Every component page must begin with:
+
+1. **Title** — `# [Component Name]`
+2. **Prerequisites** — bulleted list of foundational topics the reader must know before this page makes sense. Format per bullet: `**[Name](relative-link)** — one sentence explaining why this specific prerequisite matters for THIS topic, not a generic definition.`
+3. **Table of Contents** — flat linked list of all H2 sections. Always placed after Prerequisites.
+4. **TLDR** — exactly one paragraph, plain prose, no bullet points. Captures: what the component is, the core architectural decision it enables, and the key trade-off. A reader should understand the component's essence without reading anything else.
+
+Then the main content follows.
+
+---
+
 ## INDEX FORMAT RULES
 
 - Plain text only, NO markdown code blocks, NO fenced sections.
@@ -43,97 +56,157 @@
 - Cross-references like "see section 4.2" are forbidden in the index. Allowed only in deep-dive content.
 - Acronyms may be used freely in the index. Full definitions belong exclusively in APPENDICES > Acronyms & Abbreviations.
 - When a concept has vendor-specific implementations, keep the index bullet generic. Real-world vendor examples belong in content, not the index.
+- When a concept or algorithm has its own deep-dive page, append `(→ component page)` to the bullet as a reminder to add the link during content generation.
+
+---
+
+## HEADING STYLE RULES
+
+- **Concept / algorithm H3s:** Use clean name only — no trailing description. Use H4 for sub-concepts.
+  - ✅ `### LRU (Least Recently Used)` with `#### Mechanics` and `#### Scan Resistance Problem` below
+  - ❌ `### LRU — Mechanics, Scan Resistance Problem`
+- **Failure mode H3s:** A dash is acceptable when the mitigation is integral to naming the pattern.
+  - ✅ `### Cache Avalanche — Staggered TTL, Circuit Breaker on Origin`
+- **No heading-as-sentence:** Headings must be crisp noun phrases, not content statements.
+  - ✅ `### Why Cache Invalidation Is Hard`
+  - ❌ `### Invalidation Is the Hard Problem — Why TTL Alone Isn't Enough`
 
 ---
 
 ## CONTENT GENERATION SPECIFICATIONS (Applies to Phase 2+)
 
-- Structure: Each index heading becomes a markdown H2 (##). Subheadings become H3/H4.
-- Progressive Disclosure: Every H2 section follows this order: (1) one-sentence mental model anchor — what this is and why it exists, (2) core mechanics & constraints, (3) trade-offs, edge cases, failure modes, (4) Interview Lens & Decision Framework.
-- Definitions: No dictionary-style definitions. Define through purpose and first principle. For terms likely unfamiliar to the reader, add one intuitive one-liner before the deep dive.
-- Thought Process: Include at least one "🧠 Thought Process" callout per major section showing how a senior engineer reasons from requirements to design decision.
-- Decision Framework: Include "⚖️ Decision Framework" callouts covering what constraints drive X vs Y choices, how to justify trade-offs, and how to answer "when would you NOT use this?" in interviews.
-- Interview Focus: Include a "🎯 Interview Lens" callout per complex section: expected question, ideal answer structure, common traps, and how to pivot if asked follow-ups.
-- Code/Config: Use fenced code blocks for production-ready snippets, CLI diagnostics, or configuration patterns. Also include short illustrative pseudo-code or minimal runnable examples when seeing the code makes the concept stick faster than prose alone — regardless of complexity. Always add brief context.
-- Tone: Authoritative, concise, production-tested. No hand-holding, but no assumed expertise either.
-- Vendor Examples: Keep core explanation generic. Mention 1-2 well-known vendor implementations as real-world examples (e.g., AWS ALB, HAProxy) without deep comparison.
-- Deep-Dive Handling: Where index shows [LINKED DEEP-DIVE], output: "🔗 Deep-Dive: [File Name] - See separate document for full implementation/math/protocol details."
-- No filler. No historical fluff. No vendor marketing. Focus on mechanics, decisions, and debugging.
+### Section Structure
+
+Each H2 section follows this fixed envelope:
+
+**Opening (mandatory):**
+
+```
+**Interviewer TL;DR:** [1-2 sentences. The single most important thing to say about this topic in an interview. Optimized for quick revision.]
+
+**Mental model:** [One sentence. An intuitive anchor — what this component/mechanism IS and why it exists, before any mechanics.]
+```
+
+**Body:** Core mechanics → trade-offs → edge cases → failure modes. Depth follows importance.
+
+**Closing (mandatory):**
+
+```
+**Key Takeaway:** [1-2 sentences. The single most important decision or trade-off from this section — what a senior engineer would carry out of this section.]
+```
+
+For important H3 subsections (complex enough to warrant a summary), add a TLDR line immediately after the heading:
+
+> _One sentence capturing the core insight of this subsection before diving in._
+
+### Progressive Disclosure
+
+Every H2 section follows this order: (1) Interviewer TL;DR + Mental model, (2) core mechanics & constraints, (3) trade-offs, edge cases, failure modes, (4) Interview Lens & Decision Framework, (5) Key Takeaway.
+
+### Definitions
+
+No dictionary-style definitions. Define through purpose and first principle. For terms likely unfamiliar to the reader, add one intuitive one-liner before the deep dive.
+
+### Thought Process Callout
+
+Include at least one `🧠 **Thought Process**` callout per major section showing how a senior engineer reasons from requirements to design decision.
+
+### Decision Framework Callout
+
+Include `⚖️ **Decision Framework**` callouts covering: what constraints drive X vs Y choices, how to justify trade-offs, how to answer "when would you NOT use this?" in interviews.
+
+### Interview Lens Callout
+
+Include a `🎯 **Interview Lens**` callout per complex section. Use this exact format:
+
+```
+> 🎯 **Interview Lens**
+> **Q:** [Expected interview question]
+> **Ideal answer:** [What a strong candidate says — not just correct, but framed well]
+> **Common trap:** [The most frequent wrong answer or wrong framing]
+> **Next question:** [The follow-up the interviewer asks if the candidate answers well]
+```
+
+### Code & Config
+
+Use fenced code blocks for production-ready snippets, CLI diagnostics, or configuration patterns. Include short illustrative pseudo-code when seeing the logic makes the concept stick faster than prose alone. Always add brief context.
+
+### Tone
+
+Authoritative, concise, production-tested. No hand-holding, but no assumed expertise either. No filler. No historical fluff. No vendor marketing.
+
+### Vendor Examples
+
+Keep core explanation generic. Mention 1-2 well-known vendor implementations as real-world examples (e.g., AWS ALB, HAProxy) without deep comparison. Do not dive into proprietary details.
+
+### Cross-File References
+
+- In index bullets: append `(→ component page)` to signal a link will be added in content.
+- In content: use inline markdown links — `[Component Name](../algorithms/file.md)`.
+- In prerequisites: use `**[Name](relative-link)** — one sentence on why it matters here`.
+- If the target file does not exist yet, add a comment `<!-- link: file.md -->` inline.
+
+### Deep-Dive Handling
+
+Where index shows [LINKED DEEP-DIVE], output:
+`🔗 Deep-Dive: [file-name.md] — See separate document for full implementation/math/protocol details.`
 
 ---
 
 ## STRUCTURE GUIDELINES (ADAPTIVE, NOT MANDATORY)
 
-- DO NOT force a fixed section order. Let the topic's nature drive the flow.
+- DO NOT prescribe a fixed section order. Let the topic's nature drive the flow.
 - DO let depth follow importance: critical topics get deeper nesting; trivial ones stay shallow.
-- DO include a PREREQUISITES section upfront (topic-adaptive fundamentals).
+- DO include Prerequisites, Table of Contents, and TLDR upfront (in that order — non-negotiable).
 - DO end with Appendices + Linked Deep-Dive file list.
+- Unbalanced tree by design: depth = importance, not symmetry.
 
 ---
 
 ## SUGGESTED SECTION STARTING POINTS (Pick, merge, reorder as needed)
 
+- Quick Decision Guide (when to use, when not to use, how to choose between variants)
 - Conceptual Foundations & Mental Models
-  - Analogies, core intuition, abstraction boundaries, why this component exists
-- Foundations & Classification
-  - Purpose, scope, abstraction boundaries, key variants
 - Core Mechanisms / Algorithms / Patterns
-  - Deterministic approaches, adaptive/heuristic logic, state management
 - Resilience & Failure Handling
-  - Health checks, thresholds, failover, drain, circuit breaking
 - Security & Hardening (if applicable)
-  - AuthN/Z, encryption, abuse mitigation, policy enforcement
 - Performance & Optimization
-  - Resource lifecycle, protocol implications, caching/buffering trade-offs
 - Deployment Contexts & Modern Architectures
-  - Cloud vs self-hosted, orchestration integration, edge/mesh patterns
 - Observability & Debugging
-  - Metrics/SLOs, tracing, logging, advanced debugging techniques
 - Advanced Patterns & Strategies
-  - Rollouts, traffic splitting, mirroring, transformation
 - Production Issues & Troubleshooting (Interview-Critical)
-  - Failure modes, degradation patterns, debugging methodology, postmortems
-- Testing, Validation & Interview Scenarios
-  - Load testing, chaos engineering, config validation, question bank [LINKED DEEP-DIVE]
-- Appendices (Reference Only)
-  - Acronyms & Abbreviations
-  - Config snippets, glossary, formulas, anti-patterns
-
----
-
-## CONSTRAINTS & DESIGN PRINCIPLES
-
-- Unbalanced tree by design: depth = importance, not symmetry.
-- Layered progression preferred: foundations → mechanisms → resilience → operations.
-- Interview-first lens: emphasize trade-offs, failure modes, debugging steps.
-- NO historical/evolution content unless critical to trade-off understanding.
-- Keep core explanation generic. You may mention 1-2 well-known vendor implementations as real-world examples (e.g., AWS ALB, HAProxy) without deep comparison. Do not dive into proprietary details.
-- NO meta-commentary in index bullets (e.g., "Trade-offs discussed here") - state concepts only.
-- NO redundant nesting: if 1.1.1 suffices, do not create 1.1.1.1.
-- Within the same level, order bullets by logical flow: prerequisites before advanced, common cases before edge cases, cause before effect.
-- One topic per leaf: avoid grouping unrelated concepts under one bullet.
+- Common Interview Gotchas
+- Appendices (Acronyms, selection matrices, anti-patterns)
+- Interview Scenario Bank [LINKED DEEP-DIVE]
 
 ---
 
 ## LINKED DEEP-DIVE CRITERIA
 
-- Create [LINKED DEEP-DIVE] only if topic is:
-  - Math-heavy (e.g., consistent hashing ring math)
-  - Kernel/low-level implementation (e.g., eBPF/XDP routing)
-  - Protocol-specific nuance (e.g., QUIC connection ID routing)
-  - Interview-critical scenario bank (if too long for main index)
-- Format at end of index:
-  Linked Deep-Dive Files:
-  - topic-name-deep-dive.md
+Create [LINKED DEEP-DIVE] only if the topic is:
+
+- Math-heavy (e.g., consistent hashing ring math)
+- Kernel/low-level implementation (e.g., eBPF/XDP routing)
+- Protocol-specific nuance (e.g., QUIC connection ID routing)
+- Interview-critical scenario bank (if too long for main page)
+
+Format at end of index:
+
+```
+Linked Deep-Dive Files:
+- topic-name-deep-dive.md
+```
 
 ---
 
-## EXAMPLE ANCHORS (Load Balancer)
+## CONSTRAINTS & DESIGN PRINCIPLES
 
-- VALID (expert-level): 2.3 Consistent Hashing (Ring, Virtual Nodes, Rebalancing Impact) [LINKED DEEP-DIVE]
-- VALID (beginner-accessible): 1.2 Consistent Hashing — core intuition & key distribution
-- INVALID: 2.3.1 Definition | 2.3.2 How It Works | 2.3.3 Pros | 2.3.4 Cons
-- OMISSION EXAMPLE: If topic = "Consistent Hashing", omit Security/Deployment sections entirely — do not force them.
+- Interview-first lens: emphasize trade-offs, failure modes, debugging steps.
+- NO historical/evolution content unless critical to trade-off understanding.
+- NO meta-commentary in index bullets (e.g., "Trade-offs discussed here") — state concepts only.
+- NO redundant nesting: if 1.1.1 suffices, do not create 1.1.1.1.
+- Within the same level, order bullets by logical flow: prerequisites before advanced, common cases before edge cases, cause before effect.
+- One topic per leaf: avoid grouping unrelated concepts under one bullet.
 
 ---
 
@@ -141,6 +214,8 @@
 
 Before outputting Phase 1, verify:
 
+- Does the page structure follow: Title → Prerequisites → Table of Contents → TLDR → content?
+- Is the TLDR exactly one paragraph with no bullet points?
 - Is the tree unbalanced by design (depth = importance)?
 - Are all index bullets crisp phrases (no sentences, no definitions)?
 - Are [LINKED DEEP-DIVE] markers only on math/kernel/protocol/interview-critical topics?

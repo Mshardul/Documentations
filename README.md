@@ -4,6 +4,12 @@ This repo stores all the information about everything that I will be reading (fr
 
 You can reach the site at <https://shardullearnt.netlify.app/main.html>
 
+## Dev Server
+
+```bash
+python3 -m http.server 8000
+```
+
 ## To-do
 
 1. Make the main-content div draggable and accordingly resize the table-of-content div.
@@ -36,7 +42,7 @@ Example:
         "Embedding them in the container image"
       ],
       "answer": 1,
-      "explanation": "A **secrets management service** (e.g., `HashiCorp Vault`, `AWS Secrets Manager`) provides centralized, auditable access control with **encryption at rest** and **in transit**.\n\n_Always avoid hardcoded secrets._",
+      "explanation": "A **secrets management service** (e.g., `HashCorp Vault`, `AWS Secrets Manager`) provides centralized, auditable access control with **encryption at rest** and **in transit**.\n\n_Always avoid hardcoded secrets._",
       "tags": ["secrets-management", "security", "cloud-native", "aws"]
     }
   ]

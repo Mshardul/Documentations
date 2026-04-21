@@ -262,6 +262,8 @@ function readingTime(text) {
 
 const readTimeCache = {};
 
+const STUB_THRESHOLD = 200; // bytes — stubs are just "# Title\n---"
+
 async function populateIndexReadTimes() {
   const badges = document.querySelectorAll(".index-card-read-time[data-path]");
   for (const badge of badges) {
@@ -270,9 +272,20 @@ async function populateIndexReadTimes() {
     try {
       if (!readTimeCache[path]) {
         const md = await fetchText(path);
-        readTimeCache[path] = readingTime(md);
+        readTimeCache[path] =
+          md.length < STUB_THRESHOLD ? null : readingTime(md);
       }
-      badge.textContent = readTimeCache[path];
+      const isStub = readTimeCache[path] === null;
+      const card = badge.closest(".index-card");
+      if (isStub && card) {
+        card.classList.add("index-card--unavailable");
+        card.removeAttribute("onclick");
+        card.removeAttribute("tabindex");
+        card.setAttribute("aria-disabled", "true");
+        const dot = card.querySelector(".index-card-read-dot");
+        if (dot) dot.remove();
+      }
+      badge.textContent = isStub ? "Coming soon" : readTimeCache[path];
     } catch {
       badge.textContent = "";
     }
@@ -795,13 +808,29 @@ async function loadAllSearchEntries() {
   for (const wiki of WIKIS) {
     try {
       const sections = await fetchWikiIndex(wiki);
+      const entries = [];
       for (const section of sections) {
         for (const card of section.cards) {
-          allSearchCache.entries.push({
-            wiki,
-            section: section.heading,
-            ...card,
-          });
+          entries.push({ wiki, section: section.heading, ...card });
+        }
+      }
+      // Detect stubs concurrently — reuse readTimeCache if already populated
+      await Promise.all(
+        entries.map(async (entry) => {
+          if (readTimeCache[entry.path] === undefined) {
+            try {
+              const md = await fetchText(entry.path);
+              readTimeCache[entry.path] =
+                md.length < STUB_THRESHOLD ? null : readingTime(md);
+            } catch {
+              readTimeCache[entry.path] = "";
+            }
+          }
+        })
+      );
+      for (const entry of entries) {
+        if (readTimeCache[entry.path] !== null) {
+          allSearchCache.entries.push(entry);
         }
       }
     } catch {}
@@ -956,8 +985,12 @@ document.addEventListener("keydown", (e) => {
     e.preventDefault();
     openGlobalSearch();
   }
-  if (e.key === "Escape" && !gSearchModal.classList.contains("hidden")) {
-    closeGlobalSearch();
+  if (e.key === "Escape") {
+    if (!gSearchModal.classList.contains("hidden")) {
+      closeGlobalSearch();
+    } else if (state.currentView === "content" && state.currentWikiId) {
+      navigate(state.currentWikiId);
+    }
   }
 });
 

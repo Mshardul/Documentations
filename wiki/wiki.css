@@ -558,6 +558,14 @@ img {
   border-color: var(--accent);
   background: var(--surface-2);
 }
+.index-card--unavailable {
+  cursor: default;
+  opacity: 0.45;
+  pointer-events: none;
+}
+.index-card--unavailable .index-card-arrow {
+  display: none;
+}
 .index-card-header {
   display: flex;
   align-items: flex-start;

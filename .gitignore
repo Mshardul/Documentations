@@ -8,3 +8,6 @@ __pycache__/
 *.sqlite3
 *.env
 *.venv
+.pytest_cache/
+test-results/
+playwright-report/

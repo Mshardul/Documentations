@@ -10,6 +10,14 @@ You can reach the site at <https://shardullearnt.netlify.app/main.html>
 python3 -m http.server 8000
 ```
 
+## Tests
+
+```bash
+pip install -r requirements.txt
+playwright install chromium
+pytest
+```
+
 ## To-do
 
 1. Make the main-content div draggable and accordingly resize the table-of-content div.

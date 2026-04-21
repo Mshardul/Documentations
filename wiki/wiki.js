@@ -485,6 +485,7 @@ async function renderContent(
 
     // Topbar button states
     updateBookmarkBtn();
+    updateReadBtn();
     updateOfflineBtn();
 
     // Scroll to heading anchor if ?a= param present; else restore saved position
@@ -673,6 +674,7 @@ window.addEventListener(
       // Auto-mark as read at 85%
       if (pct > 0.85 && state.currentFilePath) {
         markRead(state.currentFilePath);
+        updateReadBtn();
       }
 
       // Persist scroll position (debounced)
@@ -1252,13 +1254,45 @@ function markRead(path) {
   if (read.has(path)) return;
   read.add(path);
   localStorage.setItem(READ_KEY, JSON.stringify([...read]));
-  // Update any visible read dots for this article
   document.querySelectorAll(`.index-card-read-dot`).forEach((dot) => {
     const card = dot.closest(".index-card");
     const timeBadge = card?.querySelector(".index-card-read-time");
     if (timeBadge?.dataset.path === path) dot.classList.add("visible");
   });
 }
+
+function markUnread(path) {
+  const read = getReadSet();
+  if (!read.has(path)) return;
+  read.delete(path);
+  localStorage.setItem(READ_KEY, JSON.stringify([...read]));
+  document.querySelectorAll(`.index-card-read-dot`).forEach((dot) => {
+    const card = dot.closest(".index-card");
+    const timeBadge = card?.querySelector(".index-card-read-time");
+    if (timeBadge?.dataset.path === path) dot.classList.remove("visible");
+  });
+}
+
+function updateReadBtn() {
+  const btn = document.getElementById("content-read-btn");
+  if (!btn || !state.currentFilePath) return;
+  const read = isRead(state.currentFilePath);
+  btn.classList.toggle("active", read);
+  btn.title = read ? "Mark as unread" : "Mark as read";
+}
+
+const ReadToggle = {
+  toggle() {
+    const path = state.currentFilePath;
+    if (!path) return;
+    if (isRead(path)) {
+      markUnread(path);
+    } else {
+      markRead(path);
+    }
+    updateReadBtn();
+  },
+};
 
 /* ═══════════════════════════════════════════════════════════════
    OFFLINE / PWA
@@ -1479,6 +1513,7 @@ const DEFAULT_SETTINGS = {
   accentId: "indigo",
   font: "Inter",
   fontSize: "M",
+  contentWidth: "Default",
 };
 
 function getSettings() {
@@ -1534,6 +1569,9 @@ function applySettingsToDOM(s) {
 
   const sizes = { S: "14px", M: "16px", L: "18px" };
   document.documentElement.style.fontSize = sizes[s.fontSize] || "16px";
+
+  const widths = { Narrow: "68ch", Default: "80ch", Wide: "120ch" };
+  root.setProperty("--content-width", widths[s.contentWidth] || "80ch");
 }
 
 const Settings = {
@@ -1562,6 +1600,7 @@ const Settings = {
     this._renderTheme(s);
     this._renderFonts(s);
     this._renderSizes(s);
+    this._renderWidths(s);
     this._renderAccents(s);
   },
 
@@ -1611,6 +1650,26 @@ const Settings = {
         return `<button class="settings-size-btn${active}" onclick="Settings._setSize('${sz}')">${sz}</button>`;
       })
       .join("");
+  },
+
+  _renderWidths(s) {
+    document.getElementById("settings-widths").innerHTML = [
+      "Narrow",
+      "Default",
+      "Wide",
+    ]
+      .map((w) => {
+        const active = s.contentWidth === w ? " active" : "";
+        return `<button class="settings-size-btn${active}" onclick="Settings._setWidth('${w}')">${w}</button>`;
+      })
+      .join("");
+  },
+
+  _setWidth(contentWidth) {
+    const s = { ...getSettings(), contentWidth, preset: "custom" };
+    saveSettings(s);
+    applySettingsToDOM(s);
+    this._render();
   },
 
   _renderAccents(s) {

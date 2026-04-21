@@ -28,6 +28,8 @@
 | WIKI-018 | 2026-04-21 | Settings page                                      | Gear icon in every topbar opens settings panel. Controls: font (6 options), font size (S/M/L), colour palette (6 options), theme preset (6 factory presets; editing any picker switches to "custom"). Persisted in localStorage. | Completed | 2026-04-21 | Font list, palette, and preset definitions implemented per design decisions below.                     |
 | WIKI-032 | 2026-04-21 | Light/Dark toggle row in settings panel            | Add explicit Light/Dark buttons inside settings panel (after Preset section). Sets theme + preset:"custom". Complements header toggle.                                                                                           | Completed | 2026-04-21 |                                                                                                        |
 | WIKI-033 | 2026-04-21 | Hacker theme presets (Matrix, Terminal, Amber CRT) | Three new data-theme values (matrix, terminal, amber-term) with full CSS token overrides. Added as presets in settings panel. 9 presets total.                                                                                   | Completed | 2026-04-21 | No scanlines; can be revisited. Amber CRT reuses amber accent; Matrix/Terminal get new accent entries. |
+| WIKI-035 | 2026-04-22 | Mark as unread toggle                              | Button in content topbar (eye icon, next to bookmark) to manually mark/unmark current article as read. `ReadToggle.toggle()` calls `markUnread`/`markRead`; `updateReadBtn()` reflects state. Also fires on 85% auto-mark.       | Completed | 2026-04-22 |                                                                                                        |
+| WIKI-038 | 2026-04-22 | Reading content width control in settings          | Narrow/Default/Wide row in settings panel. `--content-width` CSS var (68ch/80ch/120ch) applied to `.markdown-body`. Persisted in localStorage. Mobile unaffected — viewport narrower than all values.                            | Completed | 2026-04-22 |                                                                                                        |
 
 ---
 
@@ -72,3 +74,16 @@
 
 **Hacker themes** use dedicated `data-theme` values (`matrix`, `terminal`, `amber-term`) with full CSS token overrides for bg/text. Theme row in settings (Light/Dark buttons) only switches between light/dark baseline; hacker themes only accessible via preset cards.
 | Neon | IBM Plex Sans | Medium | Rose |
+
+### WIKI-038 — Reading Content Width
+
+Three options in settings (same row UX as font size): **Narrow / Default / Wide**.
+
+Implemented as a `--content-width` CSS custom property on `.markdown-body`:
+| Option | Value |
+|--------|-------|
+| Narrow | `68ch` |
+| Default | `80ch` |
+| Wide | `120ch` |
+
+Mobile requires no special handling — viewport is narrower than all three values, so `max-width` has no visual effect and content fills the viewport naturally via CSS.

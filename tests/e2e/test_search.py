@@ -1,0 +1,70 @@
+"""WIKI-001: ↑/↓ keyboard navigation in search results + Enter to select
+WIKI-023: stub articles (< 200 chars) excluded from ⌘K results
+"""
+
+
+def _open_search(page):
+    page.keyboard.press("Meta+k")
+    page.wait_for_selector("#global-search-modal:not(.hidden)")
+    page.wait_for_selector("#gsearch-input")
+
+
+def test_arrow_down_selects_first_result(wiki_page):
+    """WIKI-001: ArrowDown marks first result with .selected class."""
+    _open_search(wiki_page)
+    wiki_page.fill("#gsearch-input", "caching")
+    wiki_page.wait_for_selector(".gsearch-result")
+
+    wiki_page.keyboard.press("ArrowDown")
+    selected = wiki_page.locator(".gsearch-result.selected")
+    assert selected.count() == 1
+
+
+def test_arrow_keys_cycle_results(wiki_page):
+    """WIKI-001: ArrowDown twice moves .selected to a different result."""
+    _open_search(wiki_page)
+    # "cache" matches many sections inside the large caching.md → guaranteed ≥2 results.
+    wiki_page.fill("#gsearch-input", "cache")
+    wiki_page.wait_for_selector(".gsearch-result")
+    # Wait until at least two results are rendered before navigating.
+    wiki_page.locator(".gsearch-result").nth(1).wait_for()
+
+    wiki_page.keyboard.press("ArrowDown")
+    first = wiki_page.locator(".gsearch-result.selected").inner_text()
+    wiki_page.keyboard.press("ArrowDown")
+    second = wiki_page.locator(".gsearch-result.selected").inner_text()
+    assert first != second
+
+
+def test_enter_navigates_to_article(wiki_page):
+    """WIKI-001: Enter on focused result navigates to article (content view becomes active)."""
+    _open_search(wiki_page)
+    wiki_page.fill("#gsearch-input", "caching")
+    wiki_page.wait_for_selector(".gsearch-result")
+
+    wiki_page.keyboard.press("ArrowDown")
+    wiki_page.keyboard.press("Enter")
+    wiki_page.wait_for_selector("#view-content.active", timeout=8_000)
+
+
+def test_stubs_excluded_from_search(wiki_page):
+    """WIKI-023: known stub articles (< 200 chars) do not appear in search results."""
+    _open_search(wiki_page)
+    # "api gateway" matches the stub api-gateway.md (14 bytes) by title,
+    # but the stub filter should exclude it from results.
+    wiki_page.fill("#gsearch-input", "api gateway")
+    wiki_page.wait_for_timeout(1_500)
+
+    results = wiki_page.locator(".gsearch-result").all()
+    titles = [r.inner_text() for r in results]
+    assert all("api gateway" not in t.lower() or len(t) > 200 for t in titles), (
+        f"Stub article appeared in results: {titles}"
+    )
+
+
+def test_search_shows_real_articles(wiki_page):
+    """WIKI-023: non-stub articles do appear in search results."""
+    _open_search(wiki_page)
+    wiki_page.fill("#gsearch-input", "caching")
+    wiki_page.wait_for_selector(".gsearch-result", timeout=8_000)
+    assert wiki_page.locator(".gsearch-result").count() > 0

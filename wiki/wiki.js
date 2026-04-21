@@ -487,7 +487,7 @@ async function renderContent(
     updateBookmarkBtn();
     updateOfflineBtn();
 
-    // Scroll to heading anchor if ?a= param present
+    // Scroll to heading anchor if ?a= param present; else restore saved position
     const anchor = new URLSearchParams(location.search).get("a");
     if (anchor) {
       const target = body.querySelector(`[id="${CSS.escape(anchor)}"]`);
@@ -496,6 +496,9 @@ async function renderContent(
           () => target.scrollIntoView({ behavior: "smooth", block: "start" }),
           150
         );
+    } else {
+      const saved = localStorage.getItem(`scroll-${filePath}`);
+      if (saved) setTimeout(() => window.scrollTo(0, parseInt(saved, 10)), 150);
     }
   } catch (err) {
     body.innerHTML = `<p class="error">Failed to load content. (${err.message})</p>`;
@@ -653,6 +656,7 @@ tocMobileOverlay.addEventListener("click", () => {
    SCROLL TO TOP
    ═══════════════════════════════════════════════════════════════ */
 const scrollTopBtn = document.getElementById("scroll-top");
+let _scrollSaveTimer;
 
 window.addEventListener(
   "scroll",
@@ -670,6 +674,16 @@ window.addEventListener(
       if (pct > 0.85 && state.currentFilePath) {
         markRead(state.currentFilePath);
       }
+
+      // Persist scroll position (debounced)
+      clearTimeout(_scrollSaveTimer);
+      _scrollSaveTimer = setTimeout(() => {
+        if (state.currentFilePath)
+          localStorage.setItem(
+            `scroll-${state.currentFilePath}`,
+            window.scrollY
+          );
+      }, 400);
     }
   },
   { passive: true }
@@ -979,6 +993,9 @@ gSearchInput.addEventListener("keydown", (e) => {
 });
 
 gSearchBackdrop.addEventListener("click", closeGlobalSearch);
+document
+  .getElementById("settings-backdrop")
+  .addEventListener("click", () => Settings.close());
 
 document.addEventListener("keydown", (e) => {
   if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -988,6 +1005,8 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     if (!gSearchModal.classList.contains("hidden")) {
       closeGlobalSearch();
+    } else if (Settings.isOpen()) {
+      Settings.close();
     } else if (state.currentView === "content" && state.currentWikiId) {
       navigate(state.currentWikiId);
     }
@@ -1307,25 +1326,349 @@ function highlightMatch(text, query) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   THEME (light / dark)
+   SETTINGS
    ═══════════════════════════════════════════════════════════════ */
-function applyTheme(theme) {
+const SETTINGS_KEY = "wiki-settings";
+
+const FONT_OPTIONS = [
+  { id: "Inter", label: "Inter" },
+  { id: "Geist", label: "Geist" },
+  { id: "IBM Plex Sans", label: "IBM Plex" },
+  { id: "Lora", label: "Lora" },
+  { id: "Source Serif 4", label: "Source Serif" },
+  { id: "JetBrains Mono", label: "Mono" },
+];
+
+const ACCENT_OPTIONS = [
+  {
+    id: "indigo",
+    value: "#6366f1",
+    light: "#818cf8",
+    dim: "rgba(99,102,241,0.12)",
+    glow: "rgba(99,102,241,0.25)",
+  },
+  {
+    id: "violet",
+    value: "#8b5cf6",
+    light: "#a78bfa",
+    dim: "rgba(139,92,246,0.12)",
+    glow: "rgba(139,92,246,0.25)",
+  },
+  {
+    id: "blue",
+    value: "#3b82f6",
+    light: "#60a5fa",
+    dim: "rgba(59,130,246,0.12)",
+    glow: "rgba(59,130,246,0.25)",
+  },
+  {
+    id: "cyan",
+    value: "#06b6d4",
+    light: "#22d3ee",
+    dim: "rgba(6,182,212,0.12)",
+    glow: "rgba(6,182,212,0.25)",
+  },
+  {
+    id: "emerald",
+    value: "#10b981",
+    light: "#34d399",
+    dim: "rgba(16,185,129,0.12)",
+    glow: "rgba(16,185,129,0.25)",
+  },
+  {
+    id: "amber",
+    value: "#f59e0b",
+    light: "#fbbf24",
+    dim: "rgba(245,158,11,0.12)",
+    glow: "rgba(245,158,11,0.25)",
+  },
+  {
+    id: "matrix",
+    value: "#00ff41",
+    light: "#39ff14",
+    dim: "rgba(0,255,65,0.12)",
+    glow: "rgba(0,255,65,0.3)",
+  },
+  {
+    id: "neon-green",
+    value: "#22c55e",
+    light: "#4ade80",
+    dim: "rgba(34,197,94,0.12)",
+    glow: "rgba(34,197,94,0.25)",
+  },
+];
+
+const SETTINGS_PRESETS = [
+  {
+    id: "dark",
+    label: "Dark",
+    theme: "dark",
+    accentId: "indigo",
+    font: "Inter",
+    fontSize: "M",
+  },
+  {
+    id: "light",
+    label: "Light",
+    theme: "light",
+    accentId: "indigo",
+    font: "Inter",
+    fontSize: "M",
+  },
+  {
+    id: "midnight",
+    label: "Midnight",
+    theme: "dark",
+    accentId: "violet",
+    font: "Geist",
+    fontSize: "M",
+  },
+  {
+    id: "warm",
+    label: "Warm",
+    theme: "dark",
+    accentId: "amber",
+    font: "Lora",
+    fontSize: "M",
+  },
+  {
+    id: "ocean",
+    label: "Ocean",
+    theme: "dark",
+    accentId: "cyan",
+    font: "IBM Plex Sans",
+    fontSize: "M",
+  },
+  {
+    id: "forest",
+    label: "Forest",
+    theme: "light",
+    accentId: "emerald",
+    font: "Source Serif 4",
+    fontSize: "M",
+  },
+  {
+    id: "matrix",
+    label: "Matrix",
+    theme: "matrix",
+    accentId: "matrix",
+    font: "JetBrains Mono",
+    fontSize: "M",
+  },
+  {
+    id: "terminal",
+    label: "Terminal",
+    theme: "terminal",
+    accentId: "neon-green",
+    font: "JetBrains Mono",
+    fontSize: "M",
+  },
+  {
+    id: "amber-crt",
+    label: "Amber CRT",
+    theme: "amber-term",
+    accentId: "amber",
+    font: "JetBrains Mono",
+    fontSize: "M",
+  },
+];
+
+const DEFAULT_SETTINGS = {
+  preset: "dark",
+  theme: "dark",
+  accentId: "indigo",
+  font: "Inter",
+  fontSize: "M",
+};
+
+function getSettings() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "null");
+    if (stored) return { ...DEFAULT_SETTINGS, ...stored };
+  } catch {}
+  const oldTheme = localStorage.getItem("wiki-theme");
+  if (oldTheme)
+    return {
+      ...DEFAULT_SETTINGS,
+      theme: oldTheme,
+      preset: oldTheme === "dark" ? "dark" : "light",
+    };
+  return { ...DEFAULT_SETTINGS };
+}
+
+function saveSettings(s) {
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
+}
+
+function accentById(id) {
+  return ACCENT_OPTIONS.find((a) => a.id === id) || ACCENT_OPTIONS[0];
+}
+
+function applySettingsToDOM(s) {
+  const theme = s.theme || "dark";
   document.documentElement.setAttribute("data-theme", theme);
-  const isDark = theme === "dark";
+  const isDark = theme !== "light";
   document
     .querySelectorAll(".theme-icon-moon")
     .forEach((el) => (el.style.display = isDark ? "" : "none"));
   document
     .querySelectorAll(".theme-icon-sun")
     .forEach((el) => (el.style.display = isDark ? "none" : ""));
-  localStorage.setItem("wiki-theme", theme);
+
+  const accent = accentById(s.accentId);
+  const root = document.documentElement.style;
+  root.setProperty("--accent", accent.value);
+  root.setProperty("--accent-light", accent.light);
+  root.setProperty("--accent-dim", accent.dim);
+  root.setProperty("--accent-glow", accent.glow);
+
+  const font = s.font || "Inter";
+  const isSerif = font === "Lora" || font === "Source Serif 4";
+  const isMono = font === "JetBrains Mono";
+  const fallback = isSerif
+    ? "Georgia, serif"
+    : isMono
+    ? "monospace"
+    : '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+  root.setProperty("--font", `"${font}", ${fallback}`);
+
+  const sizes = { S: "14px", M: "16px", L: "18px" };
+  document.documentElement.style.fontSize = sizes[s.fontSize] || "16px";
 }
 
+const Settings = {
+  open() {
+    this._render();
+    const panel = document.getElementById("settings-panel");
+    panel.classList.remove("hidden");
+    panel.setAttribute("aria-hidden", "false");
+  },
+
+  close() {
+    const panel = document.getElementById("settings-panel");
+    panel.classList.add("hidden");
+    panel.setAttribute("aria-hidden", "true");
+  },
+
+  isOpen() {
+    return !document
+      .getElementById("settings-panel")
+      .classList.contains("hidden");
+  },
+
+  _render() {
+    const s = getSettings();
+    this._renderPresets(s);
+    this._renderTheme(s);
+    this._renderFonts(s);
+    this._renderSizes(s);
+    this._renderAccents(s);
+  },
+
+  _renderPresets(s) {
+    document.getElementById("settings-presets").innerHTML =
+      SETTINGS_PRESETS.map((p) => {
+        const accent = accentById(p.accentId);
+        const active = s.preset === p.id ? " active" : "";
+        return `<button class="settings-preset-card${active}" onclick="Settings._applyPreset('${p.id}')">
+        <span class="settings-preset-swatch" style="background:${accent.value}"></span>
+        <span class="settings-preset-name">${p.label}</span>
+      </button>`;
+      }).join("");
+  },
+
+  _renderTheme(s) {
+    document.getElementById("settings-themes").innerHTML = ["light", "dark"]
+      .map((t) => {
+        const active = s.theme === t ? " active" : "";
+        return `<button class="settings-size-btn${active}" onclick="Settings._setTheme('${t}')">${
+          t === "light" ? "Light" : "Dark"
+        }</button>`;
+      })
+      .join("");
+  },
+
+  _setTheme(theme) {
+    const s = { ...getSettings(), theme, preset: "custom" };
+    saveSettings(s);
+    applySettingsToDOM(s);
+    this._render();
+  },
+
+  _renderFonts(s) {
+    document.getElementById("settings-fonts").innerHTML = FONT_OPTIONS.map(
+      (f) => {
+        const active = s.font === f.id ? " active" : "";
+        return `<button class="settings-font-chip${active}" style="font-family:'${f.id}',sans-serif" onclick="Settings._setFont('${f.id}')">${f.label}</button>`;
+      }
+    ).join("");
+  },
+
+  _renderSizes(s) {
+    document.getElementById("settings-sizes").innerHTML = ["S", "M", "L"]
+      .map((sz) => {
+        const active = s.fontSize === sz ? " active" : "";
+        return `<button class="settings-size-btn${active}" onclick="Settings._setSize('${sz}')">${sz}</button>`;
+      })
+      .join("");
+  },
+
+  _renderAccents(s) {
+    document.getElementById("settings-accents").innerHTML = ACCENT_OPTIONS.map(
+      (a) => {
+        const active = s.accentId === a.id ? " active" : "";
+        return `<button class="settings-accent-swatch${active}" style="background:${a.value}" title="${a.id}" onclick="Settings._setAccent('${a.id}')"></button>`;
+      }
+    ).join("");
+  },
+
+  _applyPreset(presetId) {
+    const preset = SETTINGS_PRESETS.find((p) => p.id === presetId);
+    if (!preset) return;
+    const s = {
+      preset: presetId,
+      theme: preset.theme,
+      accentId: preset.accentId,
+      font: preset.font,
+      fontSize: preset.fontSize,
+    };
+    saveSettings(s);
+    applySettingsToDOM(s);
+    this._render();
+  },
+
+  _setFont(font) {
+    const s = { ...getSettings(), font, preset: "custom" };
+    saveSettings(s);
+    applySettingsToDOM(s);
+    this._render();
+  },
+
+  _setSize(fontSize) {
+    const s = { ...getSettings(), fontSize, preset: "custom" };
+    saveSettings(s);
+    applySettingsToDOM(s);
+    this._render();
+  },
+
+  _setAccent(accentId) {
+    const s = { ...getSettings(), accentId, preset: "custom" };
+    saveSettings(s);
+    applySettingsToDOM(s);
+    this._render();
+  },
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   THEME (light / dark)
+   ═══════════════════════════════════════════════════════════════ */
 const Theme = {
   toggle() {
-    const current =
-      document.documentElement.getAttribute("data-theme") || "dark";
-    applyTheme(current === "dark" ? "light" : "dark");
+    const s = getSettings();
+    const newTheme = s.theme === "dark" ? "light" : "dark";
+    const updated = { ...s, theme: newTheme, preset: "custom" };
+    saveSettings(updated);
+    applySettingsToDOM(updated);
   },
 };
 
@@ -1337,7 +1680,7 @@ const GlobalSearch = { open: openGlobalSearch, close: closeGlobalSearch };
    INIT — parse hash on load
    ═══════════════════════════════════════════════════════════════ */
 (function init() {
-  applyTheme(localStorage.getItem("wiki-theme") || "dark");
+  applySettingsToDOM(getSettings());
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./wiki-sw.js").catch(() => {});

@@ -120,6 +120,27 @@
             />
           </svg>
         </button>
+        <button
+          class="topbar-icon-btn"
+          title="Settings"
+          onclick="Settings.open()"
+        >
+          <svg viewBox="0 0 20 20" fill="none">
+            <path
+              d="M8.5 2h3l.6 2.2a5.5 5.5 0 011.7 1l2.1-.8 1.5 2.6-1.6 1.6a5.5 5.5 0 010 2l1.6 1.6-1.5 2.6-2.1-.8a5.5 5.5 0 01-1.7 1L11.5 18h-3l-.6-2.2a5.5 5.5 0 01-1.7-1l-2.1.8-1.5-2.6 1.6-1.6a5.5 5.5 0 010-2L2.6 7.8l1.5-2.6 2.1.8a5.5 5.5 0 011.7-1L8.5 2z"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linejoin="round"
+            />
+            <circle
+              cx="10"
+              cy="10"
+              r="2.3"
+              stroke="currentColor"
+              stroke-width="1.4"
+            />
+          </svg>
+        </button>
       </div>
       <header class="home-header">
         <div class="home-eyebrow">Documentation</div>
@@ -202,6 +223,27 @@
                 stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
+              />
+            </svg>
+          </button>
+          <button
+            class="topbar-icon-btn"
+            title="Settings"
+            onclick="Settings.open()"
+          >
+            <svg viewBox="0 0 20 20" fill="none">
+              <path
+                d="M8.5 2h3l.6 2.2a5.5 5.5 0 011.7 1l2.1-.8 1.5 2.6-1.6 1.6a5.5 5.5 0 010 2l1.6 1.6-1.5 2.6-2.1-.8a5.5 5.5 0 01-1.7 1L11.5 18h-3l-.6-2.2a5.5 5.5 0 01-1.7-1l-2.1.8-1.5-2.6 1.6-1.6a5.5 5.5 0 010-2L2.6 7.8l1.5-2.6 2.1.8a5.5 5.5 0 011.7-1L8.5 2z"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linejoin="round"
+              />
+              <circle
+                cx="10"
+                cy="10"
+                r="2.3"
+                stroke="currentColor"
+                stroke-width="1.4"
               />
             </svg>
           </button>
@@ -343,6 +385,27 @@
               />
             </svg>
           </button>
+          <button
+            class="topbar-icon-btn"
+            title="Settings"
+            onclick="Settings.open()"
+          >
+            <svg viewBox="0 0 20 20" fill="none">
+              <path
+                d="M8.5 2h3l.6 2.2a5.5 5.5 0 011.7 1l2.1-.8 1.5 2.6-1.6 1.6a5.5 5.5 0 010 2l1.6 1.6-1.5 2.6-2.1-.8a5.5 5.5 0 01-1.7 1L11.5 18h-3l-.6-2.2a5.5 5.5 0 01-1.7-1l-2.1.8-1.5-2.6 1.6-1.6a5.5 5.5 0 010-2L2.6 7.8l1.5-2.6 2.1.8a5.5 5.5 0 011.7-1L8.5 2z"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linejoin="round"
+              />
+              <circle
+                cx="10"
+                cy="10"
+                r="2.3"
+                stroke="currentColor"
+                stroke-width="1.4"
+              />
+            </svg>
+          </button>
         </div>
       </div>
       <div class="content-layout">
@@ -404,6 +467,60 @@
         />
       </svg>
     </button>
+
+    <!-- ══════════════════════════════════════
+       SETTINGS PANEL
+  ══════════════════════════════════════ -->
+    <div
+      id="settings-panel"
+      class="settings-panel hidden"
+      role="dialog"
+      aria-label="Settings"
+      aria-hidden="true"
+    >
+      <div class="settings-backdrop" id="settings-backdrop"></div>
+      <div class="settings-drawer">
+        <div class="settings-header">
+          <span class="settings-title">Settings</span>
+          <button
+            class="settings-close-btn"
+            onclick="Settings.close()"
+            title="Close"
+          >
+            <svg viewBox="0 0 14 14" fill="none">
+              <path
+                d="M1 1l12 12M13 1L1 13"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="settings-body">
+          <div class="settings-section">
+            <div class="settings-section-label">Preset</div>
+            <div id="settings-presets" class="settings-preset-grid"></div>
+          </div>
+          <div class="settings-section">
+            <div class="settings-section-label">Theme</div>
+            <div id="settings-themes" class="settings-size-row"></div>
+          </div>
+          <div class="settings-section">
+            <div class="settings-section-label">Font</div>
+            <div id="settings-fonts" class="settings-font-grid"></div>
+          </div>
+          <div class="settings-section">
+            <div class="settings-section-label">Font Size</div>
+            <div id="settings-sizes" class="settings-size-row"></div>
+          </div>
+          <div class="settings-section">
+            <div class="settings-section-label">Accent Color</div>
+            <div id="settings-accents" class="settings-accent-row"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>

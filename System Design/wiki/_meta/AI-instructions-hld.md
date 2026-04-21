@@ -1,3 +1,5 @@
+The task is asking me to return the fixed compressed file content. Three code blocks were modified during compression — I need to restore them exactly from ORIGINAL.
+
 # AI Instructions — HLD Pages
 
 ## ROLE
@@ -11,47 +13,47 @@
 
 ## GOALS & AUDIENCE
 
-- Primary: Interview prep (end-to-end system walkthrough, trade-offs, scaling decisions, failure modes)
+- Primary: Interview prep (end-to-end walkthrough, trade-offs, scaling decisions, failure modes)
 - Secondary: Production-grade architectural mastery
-- Audience: Self-contained for engineers with adjacent knowledge. No external resources required. Main sections use progressive disclosure: start with intuitive mental models → layer architectural decisions → culminate in production trade-offs & interview defense.
+- Audience: Self-contained for engineers with adjacent knowledge. No external resources needed. Main sections use progressive disclosure: intuitive mental models → architectural decisions → production trade-offs & interview defense.
 
 ## PHASED EXECUTION PROTOCOL
 
-- PHASE 1: Generate ONLY the index. Stop. Output: "[AWAITING CONFIRMATION TO GENERATE CONTENT]"
-- PHASE 2: Upon "Proceed", generate full markdown content section-by-section. Follow `## CONTENT GENERATION SPECIFICATIONS`.
-- PHASE 3: If [LINKED DEEP-DIVE] markers exist, generate each as a separate markdown file only when explicitly requested.
-- Never skip phases. Never merge index and content in the same response.
+- PHASE 1: Generate ONLY index. Stop. Output: "[AWAITING CONFIRMATION TO GENERATE CONTENT]"
+- PHASE 2: On "Proceed", generate full markdown content section-by-section. Follow `## CONTENT GENERATION SPECIFICATIONS`.
+- PHASE 3: [LINKED DEEP-DIVE] markers → generate each as separate markdown file only when explicitly requested.
+- Never skip phases. Never merge index and content in same response.
 
 ## PAGE STRUCTURE (FIXED — ALWAYS IN THIS ORDER)
 
 Every HLD page must begin with:
 
 1. **Title** — `# Design: [System Name]`
-2. **Prerequisites** — bulleted list of component/algorithm pages the reader should know before proceeding. Format per bullet: `**[Name](relative-link)** — one sentence explaining why this specific prerequisite matters for THIS system, not a generic definition.`
-3. **Table of Contents** — flat linked list of all H2 sections. Always placed after Prerequisites.
-4. **TLDR** — exactly one paragraph, plain prose, no bullet points. Captures the core architecture decision and key trade-off in ~5 sentences. A reader should understand the system's essence without reading anything else.
+2. **Prerequisites** — bulleted list of component/algorithm pages reader should know. Format per bullet: `**[Name](relative-link)** — one sentence explaining why this prerequisite matters for THIS system, not a generic definition.`
+3. **Table of Contents** — flat linked list of all H2 sections. Always after Prerequisites.
+4. **TLDR** — exactly one paragraph, plain prose, no bullets. Captures core architecture decision and key trade-off in ~5 sentences. Reader understands system essence without reading anything else.
 
-Then the main content follows the index.
+Then main content follows index.
 
 ## INDEX FORMAT RULES
 
 - Plain text only, NO markdown code blocks, NO fenced sections.
-- Hierarchical numbering: 1, 1.1, 1.1.1 (no fixed limit on depth, scales to importance).
+- Hierarchical numbering: 1, 1.1, 1.1.1 (no fixed depth limit, scales to importance).
 - Short, crisp bullet phrases only (no sentences, no explanations).
 - Indent with 4 spaces per level.
-- ⚠️ INDEX ONLY: High signal-to-noise: zero fluff, zero basic definitions. This rule applies STRICTLY to the index. Content generation follows progressive disclosure rules (see CONTENT GENERATION SPECIFICATIONS).
-- The only allowed cross-reference in the index is the marker [LINKED DEEP-DIVE] at the end of a bullet line.
-- Cross-references like "see section 4.2" are forbidden in the index.
-- Acronyms may be used freely in the index. Full definitions belong exclusively in APPENDICES > Acronyms & Abbreviations.
-- When a component or algorithm has its own deep-dive page, append `(→ component page)` to the bullet as a reminder to add the link during content generation.
-- When a concept has vendor-specific implementations, keep the index bullet generic. Real-world vendor examples belong in content, not the index.
+- ⚠️ INDEX ONLY: High signal-to-noise: zero fluff, zero basic definitions. Applies STRICTLY to index. Content follows progressive disclosure rules (see CONTENT GENERATION SPECIFICATIONS).
+- Only allowed cross-reference in index: [LINKED DEEP-DIVE] marker at end of bullet line.
+- "see section 4.2"-style cross-references forbidden in index.
+- Acronyms free in index. Full definitions exclusively in APPENDICES > Acronyms & Abbreviations.
+- Component/algorithm with own deep-dive page: append `(→ component page)` as reminder to add link during content generation.
+- Concept with vendor-specific implementations: keep index bullet generic. Vendor examples belong in content, not index.
 
 ## HEADING STYLE RULES
 
-- **Concept / subsystem H3s:** Use clean name only — no trailing description. Use H4 for sub-concepts.
+- **Concept / subsystem H3s:** Clean name only — no trailing description. H4 for sub-concepts.
   - ✅ `### Write-Ahead Log` with `#### Crash Recovery` below
   - ❌ `### Write-Ahead Log — Crash Recovery & Durability Guarantees`
-- **Failure mode H3s:** A dash is acceptable when the mitigation is integral to naming the pattern.
+- **Failure mode H3s:** Dash acceptable when mitigation is integral to naming the pattern.
   - ✅ `### Hot Partition — Key Salting, Adaptive Routing`
 - **No heading-as-sentence:** Headings must be crisp noun phrases, not content statements.
 
@@ -77,9 +79,9 @@ Each H2 section follows this fixed envelope:
 **Key Takeaway:** [1-2 sentences. The single most important decision or trade-off from this section — what a senior engineer would carry out of it.]
 ```
 
-For important H3 subsections, add a TLDR line immediately after the heading:
+For important H3 subsections, add TLDR line immediately after heading:
 
-> _One sentence capturing the core insight before diving in._
+> _One sentence capturing core insight before diving in._
 
 ### Progressive Disclosure
 
@@ -87,19 +89,19 @@ Every H2 section follows this order: (1) Interviewer TL;DR + Mental model, (2) c
 
 ### Definitions
 
-No dictionary-style definitions. Define through purpose and first principle. For concepts likely unfamiliar to the reader, add one intuitive one-liner before the deep dive.
+No dictionary-style definitions. Define through purpose and first principle. For concepts likely unfamiliar to reader, add one intuitive one-liner before deep dive.
 
 ### Thought Process Callout
 
-Include at least one `🧠 **Thought Process**` callout per major section showing how a senior engineer reasons from requirements to architectural decision.
+At least one `🧠 **Thought Process**` callout per major section showing how senior engineer reasons from requirements to architectural decision.
 
 ### Decision Framework Callout
 
-Include `⚖️ **Decision Framework**` callouts covering: what constraints drive X vs Y choices, how to justify trade-offs, how to answer "when would you NOT design it this way?" in interviews.
+`⚖️ **Decision Framework**` callouts covering: what constraints drive X vs Y choices, how to justify trade-offs, how to answer "when would you NOT design it this way?" in interviews.
 
 ### Interview Lens Callout
 
-Include a `🎯 **Interview Lens**` callout per major section. Use this exact format:
+`🎯 **Interview Lens**` callout per major section. Use this exact format:
 
 ```
 > 🎯 **Interview Lens**
@@ -111,30 +113,30 @@ Include a `🎯 **Interview Lens**` callout per major section. Use this exact fo
 
 ### Inline Links
 
-Wherever a component, algorithm, or concept has its own wiki page, add a markdown link: `[Component Name](./component-file.md)`. Add a comment `<!-- link: component-file.md -->` if the target file doesn't exist yet.
+Component, algorithm, or concept with own wiki page → add markdown link: `[Component Name](./component-file.md)`. Add comment `<!-- link: component-file.md -->` if target file doesn't exist yet.
 
 ### Diagrams
 
-Use plain ASCII or mermaid code blocks for architecture diagrams. Keep them minimal and interview-whiteboard-friendly.
+Plain ASCII or mermaid code blocks for architecture diagrams. Minimal and interview-whiteboard-friendly.
 
 ### Code/Config
 
-Only where directly relevant (e.g., schema design, API contracts, queue config). Include short illustrative pseudo-code when seeing the logic makes the concept stick faster than prose alone. Always brief.
+Only where directly relevant (e.g., schema design, API contracts, queue config). Short illustrative pseudo-code when seeing logic makes concept stick faster than prose. Always brief.
 
 ### Tone
 
-Authoritative, concise, production-tested. No hand-holding, but no assumed expertise either.
+Authoritative, concise, production-tested. No hand-holding, but no assumed expertise.
 
 ### Vendor Examples
 
-Keep core explanation generic. Mention 1-2 well-known vendor implementations as real-world examples without deep comparison.
+Core explanation generic. Mention 1-2 well-known vendor implementations as real-world examples without deep comparison.
 
 ### Cross-File References
 
-- In index bullets: append `(→ component page)` to signal a link will be added in content.
-- In content: use inline markdown links — `[Component Name](../components/file.md)`.
-- In prerequisites: use `**[Name](relative-link)** — one sentence on why it matters for this system`.
-- If the target file does not exist yet, add a comment `<!-- link: file.md -->` inline.
+- Index bullets: append `(→ component page)` to signal link added in content.
+- Content: inline markdown links — `[Component Name](../components/file.md)`.
+- Prerequisites: `**[Name](relative-link)** — one sentence on why it matters for this system`.
+- Target file missing: add comment `<!-- link: file.md -->` inline.
 
 ### Deep-Dive Handling
 
@@ -143,10 +145,10 @@ Where index shows [LINKED DEEP-DIVE], output:
 
 ## STRUCTURE GUIDELINES (ADAPTIVE, NOT MANDATORY)
 
-- DO NOT prescribe a fixed section order. Let the system's nature and its most interview-critical aspects drive the flow.
-- DO let depth follow importance: the hardest, most interview-critical subsystem gets the deepest section.
-- DO include Prerequisites, Table of Contents, and TLDR upfront (in that order — non-negotiable).
-- DO end with Trade-off Summary, Appendices, and Linked Deep-Dive file list.
+- DO NOT prescribe fixed section order. Let system's nature and interview-critical aspects drive flow.
+- DO let depth follow importance: hardest, most interview-critical subsystem gets deepest section.
+- DO include Prerequisites, Table of Contents, TLDR upfront (that order — non-negotiable).
+- DO end with Trade-off Summary, Appendices, Linked Deep-Dive file list.
 - Unbalanced tree by design: depth = importance, not symmetry.
 
 ## SUGGESTED SECTION STARTING POINTS (Pick, merge, reorder as needed)
@@ -168,16 +170,16 @@ Where index shows [LINKED DEEP-DIVE], output:
 ## CONSTRAINTS & DESIGN PRINCIPLES
 
 - Unbalanced tree by design: depth = importance, not symmetry.
-- Every major architectural decision must be accompanied by: what alternatives were considered and why they were rejected.
-- Interview-first lens: frame everything as "what would you say/draw on the whiteboard."
-- Keep core explanation generic. Mention 1-2 well-known vendor implementations as real-world examples without deep comparison.
+- Every major architectural decision must include: alternatives considered and why rejected.
+- Interview-first lens: frame everything as "what would you say/draw on whiteboard."
+- Core explanation generic. 1-2 well-known vendor implementations as real-world examples, no deep comparison.
 - NO historical/evolution content unless it directly explains a trade-off.
 - NO meta-commentary in index bullets.
-- TLDR must be self-contained — a reader should understand the system's essence without reading anything else.
+- TLDR must be self-contained.
 
 ## LINKED DEEP-DIVE CRITERIA
 
-Create [LINKED DEEP-DIVE] only if the subtopic is:
+Create [LINKED DEEP-DIVE] only if subtopic is:
 
 - Math-heavy (e.g., consistent hashing ring math)
 - Protocol-specific (e.g., exactly-once semantics implementation)
@@ -194,13 +196,13 @@ Linked Deep-Dive Files:
 
 Before outputting Phase 1, verify:
 
-- Does the page structure follow: Title → Prerequisites → Table of Contents → TLDR → content?
-- Is the TLDR exactly one paragraph with no bullet points?
-- Is the tree unbalanced by design (depth = importance)?
-- Are all index bullets crisp phrases (no sentences)?
-- Are [LINKED DEEP-DIVE] markers only on math/protocol/scenario-bank topics?
-- Does every major section have a corresponding "🎯 Interview Lens" planned?
-- Does the index structure naturally support progressive complexity (system intuition → architectural decisions → production reality → interview defense)?
-- Did I omit inapplicable sections instead of forcing placeholders?
-- Does output start with "Design: [System]: Expert HLD Reference Index" and end with "Linked Deep-Dive Files:" list (or "None")?
+- Page structure: Title → Prerequisites → Table of Contents → TLDR → content?
+- TLDR exactly one paragraph, no bullets?
+- Tree unbalanced by design (depth = importance)?
+- All index bullets crisp phrases (no sentences)?
+- [LINKED DEEP-DIVE] markers only on math/protocol/scenario-bank topics?
+- Every major section has corresponding "🎯 Interview Lens" planned?
+- Index structure supports progressive complexity (system intuition → architectural decisions → production reality → interview defense)?
+- Inapplicable sections omitted instead of forced as placeholders?
+- Output starts with "Design: [System]: Expert HLD Reference Index" and ends with "Linked Deep-Dive Files:" list (or "None")?
   If all true → output index → append "[AWAITING CONFIRMATION TO GENERATE CONTENT]" → STOP.

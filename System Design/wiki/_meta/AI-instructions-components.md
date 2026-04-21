@@ -1,3 +1,5 @@
+No file path provided — the task expects me to output the fixed content directly.
+
 # AI Instructions — Component Pages
 
 ---
@@ -19,16 +21,16 @@
 
 - Primary: Interview prep (trade-offs, debugging, scenario design)
 - Secondary: Production-grade conceptual mastery
-- Audience: Self-contained for engineers with adjacent knowledge (e.g., knows k8s but not CDN). No external resources required. PREREQUISITES handle foundational onboarding. Main sections use progressive disclosure: start with intuitive mental models → layer technical mechanics → culminate in production trade-offs & interview scenarios.
+- Audience: Self-contained for engineers with adjacent knowledge (e.g., knows k8s but not CDN). No external resources required. PREREQUISITES handle foundational onboarding. Main sections use progressive disclosure: intuitive mental models → technical mechanics → production trade-offs & interview scenarios.
 
 ---
 
 ## PHASED EXECUTION PROTOCOL
 
-- PHASE 1: Generate ONLY the index. Stop. Output: "[AWAITING CONFIRMATION TO GENERATE CONTENT]"
-- PHASE 2: Upon "Proceed", generate full markdown content section-by-section. Follow `## CONTENT GENERATION SPECIFICATIONS`.
-- PHASE 3: If [LINKED DEEP-DIVE] markers exist, generate each as a separate markdown file only when explicitly requested.
-- Never skip phases. Never merge index and content in the same response.
+- PHASE 1: Generate ONLY index. Stop. Output: "[AWAITING CONFIRMATION TO GENERATE CONTENT]"
+- PHASE 2: On "Proceed", generate full markdown content section-by-section. Follow `## CONTENT GENERATION SPECIFICATIONS`.
+- PHASE 3: If [LINKED DEEP-DIVE] markers exist, generate each as separate markdown file only when explicitly requested.
+- Never skip phases. Never merge index and content in same response.
 
 ---
 
@@ -37,11 +39,11 @@
 Every component page must begin with:
 
 1. **Title** — `# [Component Name]`
-2. **Prerequisites** — bulleted list of foundational topics the reader must know before this page makes sense. Format per bullet: `**[Name](relative-link)** — one sentence explaining why this specific prerequisite matters for THIS topic, not a generic definition.`
-3. **Table of Contents** — flat linked list of all H2 sections. Always placed after Prerequisites.
-4. **TLDR** — exactly one paragraph, plain prose, no bullet points. Captures: what the component is, the core architectural decision it enables, and the key trade-off. A reader should understand the component's essence without reading anything else.
+2. **Prerequisites** — bulleted list of foundational topics reader must know before page makes sense. Format per bullet: `**[Name](relative-link)** — one sentence explaining why this specific prerequisite matters for THIS topic, not a generic definition.`
+3. **Table of Contents** — flat linked list of all H2 sections. Always after Prerequisites.
+4. **TLDR** — exactly one paragraph, plain prose, no bullets. Captures: what component is, core architectural decision it enables, key trade-off. Reader understands essence without reading else.
 
-Then the main content follows.
+Then main content follows.
 
 ---
 
@@ -51,21 +53,21 @@ Then the main content follows.
 - Hierarchical numbering: 1, 1.1, 1.1.1 (no fixed limit on width/depth, scales to importance).
 - Short, crisp bullet phrases only (no sentences, no explanations).
 - Indent with 4 spaces per level.
-- ⚠️ INDEX ONLY: High signal-to-noise: zero fluff, zero basic definitions. This rule applies STRICTLY to the index. Content generation follows progressive disclosure rules (see CONTENT GENERATION SPECIFICATIONS).
-- The only allowed cross-reference in the index is the marker [LINKED DEEP-DIVE] at the end of a bullet line.
-- Cross-references like "see section 4.2" are forbidden in the index. Allowed only in deep-dive content.
-- Acronyms may be used freely in the index. Full definitions belong exclusively in APPENDICES > Acronyms & Abbreviations.
-- When a concept has vendor-specific implementations, keep the index bullet generic. Real-world vendor examples belong in content, not the index.
-- When a concept or algorithm has its own deep-dive page, append `(→ component page)` to the bullet as a reminder to add the link during content generation.
+- ⚠️ INDEX ONLY: High signal-to-noise: zero fluff, zero basic definitions. Strict to index. Content generation follows progressive disclosure rules (see CONTENT GENERATION SPECIFICATIONS).
+- Only allowed cross-reference in index: [LINKED DEEP-DIVE] marker at end of bullet line.
+- Cross-references like "see section 4.2" forbidden in index. Allowed only in deep-dive content.
+- Acronyms free in index. Full definitions belong exclusively in APPENDICES > Acronyms & Abbreviations.
+- Vendor-specific implementations: keep index bullet generic. Real-world examples in content, not index.
+- Concept with own deep-dive page: append `(→ component page)` as reminder to add link during content generation.
 
 ---
 
 ## HEADING STYLE RULES
 
-- **Concept / algorithm H3s:** Use clean name only — no trailing description. Use H4 for sub-concepts.
+- **Concept / algorithm H3s:** Clean name only — no trailing description. H4 for sub-concepts.
   - ✅ `### LRU (Least Recently Used)` with `#### Mechanics` and `#### Scan Resistance Problem` below
   - ❌ `### LRU — Mechanics, Scan Resistance Problem`
-- **Failure mode H3s:** A dash is acceptable when the mitigation is integral to naming the pattern.
+- **Failure mode H3s:** Dash acceptable when mitigation is integral to naming pattern.
   - ✅ `### Cache Avalanche — Staggered TTL, Circuit Breaker on Origin`
 - **No heading-as-sentence:** Headings must be crisp noun phrases, not content statements.
   - ✅ `### Why Cache Invalidation Is Hard`
@@ -95,29 +97,29 @@ Each H2 section follows this fixed envelope:
 **Key Takeaway:** [1-2 sentences. The single most important decision or trade-off from this section — what a senior engineer would carry out of this section.]
 ```
 
-For important H3 subsections (complex enough to warrant a summary), add a TLDR line immediately after the heading:
+For important H3 subsections (complex enough to warrant summary), add TLDR line immediately after heading:
 
-> _One sentence capturing the core insight of this subsection before diving in._
+> _One sentence capturing core insight of subsection before diving in._
 
 ### Progressive Disclosure
 
-Every H2 section follows this order: (1) Interviewer TL;DR + Mental model, (2) core mechanics & constraints, (3) trade-offs, edge cases, failure modes, (4) Interview Lens & Decision Framework, (5) Key Takeaway.
+Every H2 section follows: (1) Interviewer TL;DR + Mental model, (2) core mechanics & constraints, (3) trade-offs, edge cases, failure modes, (4) Interview Lens & Decision Framework, (5) Key Takeaway.
 
 ### Definitions
 
-No dictionary-style definitions. Define through purpose and first principle. For terms likely unfamiliar to the reader, add one intuitive one-liner before the deep dive.
+No dictionary-style definitions. Define through purpose and first principle. For terms likely unfamiliar to reader, add one intuitive one-liner before deep dive.
 
 ### Thought Process Callout
 
-Include at least one `🧠 **Thought Process**` callout per major section showing how a senior engineer reasons from requirements to design decision.
+At least one `🧠 **Thought Process**` callout per major section showing how senior engineer reasons from requirements to design decision.
 
 ### Decision Framework Callout
 
-Include `⚖️ **Decision Framework**` callouts covering: what constraints drive X vs Y choices, how to justify trade-offs, how to answer "when would you NOT use this?" in interviews.
+`⚖️ **Decision Framework**` callouts covering: constraints driving X vs Y choices, how to justify trade-offs, how to answer "when would you NOT use this?" in interviews.
 
 ### Interview Lens Callout
 
-Include a `🎯 **Interview Lens**` callout per complex section. Use this exact format:
+`🎯 **Interview Lens**` callout per complex section. Exact format:
 
 ```
 > 🎯 **Interview Lens**
@@ -129,22 +131,22 @@ Include a `🎯 **Interview Lens**` callout per complex section. Use this exact 
 
 ### Code & Config
 
-Use fenced code blocks for production-ready snippets, CLI diagnostics, or configuration patterns. Include short illustrative pseudo-code when seeing the logic makes the concept stick faster than prose alone. Always add brief context.
+Fenced code blocks for production-ready snippets, CLI diagnostics, or config patterns. Short illustrative pseudo-code when logic sticks faster than prose. Always add brief context.
 
 ### Tone
 
-Authoritative, concise, production-tested. No hand-holding, but no assumed expertise either. No filler. No historical fluff. No vendor marketing.
+Authoritative, concise, production-tested. No hand-holding, no assumed expertise. No filler. No historical fluff. No vendor marketing.
 
 ### Vendor Examples
 
-Keep core explanation generic. Mention 1-2 well-known vendor implementations as real-world examples (e.g., AWS ALB, HAProxy) without deep comparison. Do not dive into proprietary details.
+Keep core explanation generic. Mention 1-2 well-known vendor implementations as real-world examples (e.g., AWS ALB, HAProxy) without deep comparison. No proprietary details.
 
 ### Cross-File References
 
-- In index bullets: append `(→ component page)` to signal a link will be added in content.
-- In content: use inline markdown links — `[Component Name](../algorithms/file.md)`.
-- In prerequisites: use `**[Name](relative-link)** — one sentence on why it matters here`.
-- If the target file does not exist yet, add a comment `<!-- link: file.md -->` inline.
+- In index bullets: append `(→ component page)` to signal link added in content.
+- In content: inline markdown links — `[Component Name](../algorithms/file.md)`.
+- In prerequisites: `**[Name](relative-link)** — one sentence on why it matters here`.
+- If target file doesn't exist yet, add `<!-- link: file.md -->` inline.
 
 ### Deep-Dive Handling
 
@@ -155,9 +157,9 @@ Where index shows [LINKED DEEP-DIVE], output:
 
 ## STRUCTURE GUIDELINES (ADAPTIVE, NOT MANDATORY)
 
-- DO NOT prescribe a fixed section order. Let the topic's nature drive the flow.
-- DO let depth follow importance: critical topics get deeper nesting; trivial ones stay shallow.
-- DO include Prerequisites, Table of Contents, and TLDR upfront (in that order — non-negotiable).
+- DO NOT prescribe fixed section order. Topic's nature drives flow.
+- DO let depth follow importance: critical topics get deeper nesting; trivial stay shallow.
+- DO include Prerequisites, Table of Contents, TLDR upfront (that order — non-negotiable).
 - DO end with Appendices + Linked Deep-Dive file list.
 - Unbalanced tree by design: depth = importance, not symmetry.
 
@@ -165,7 +167,7 @@ Where index shows [LINKED DEEP-DIVE], output:
 
 ## SUGGESTED SECTION STARTING POINTS (Pick, merge, reorder as needed)
 
-- Quick Decision Guide (when to use, when not to use, how to choose between variants)
+- Quick Decision Guide (when to use, when not to, how to choose between variants)
 - Conceptual Foundations & Mental Models
 - Core Mechanisms / Algorithms / Patterns
 - Resilience & Failure Handling
@@ -183,7 +185,7 @@ Where index shows [LINKED DEEP-DIVE], output:
 
 ## LINKED DEEP-DIVE CRITERIA
 
-Create [LINKED DEEP-DIVE] only if the topic is:
+Create [LINKED DEEP-DIVE] only if topic is:
 
 - Math-heavy (e.g., consistent hashing ring math)
 - Kernel/low-level implementation (e.g., eBPF/XDP routing)
@@ -204,9 +206,9 @@ Linked Deep-Dive Files:
 - Interview-first lens: emphasize trade-offs, failure modes, debugging steps.
 - NO historical/evolution content unless critical to trade-off understanding.
 - NO meta-commentary in index bullets (e.g., "Trade-offs discussed here") — state concepts only.
-- NO redundant nesting: if 1.1.1 suffices, do not create 1.1.1.1.
-- Within the same level, order bullets by logical flow: prerequisites before advanced, common cases before edge cases, cause before effect.
-- One topic per leaf: avoid grouping unrelated concepts under one bullet.
+- NO redundant nesting: if 1.1.1 suffices, skip 1.1.1.1.
+- Within same level, order bullets by logical flow: prerequisites before advanced, common before edge cases, cause before effect.
+- One topic per leaf: no grouping unrelated concepts under one bullet.
 
 ---
 
@@ -214,14 +216,14 @@ Linked Deep-Dive Files:
 
 Before outputting Phase 1, verify:
 
-- Does the page structure follow: Title → Prerequisites → Table of Contents → TLDR → content?
-- Is the TLDR exactly one paragraph with no bullet points?
-- Is the tree unbalanced by design (depth = importance)?
-- Are all index bullets crisp phrases (no sentences, no definitions)?
-- Are [LINKED DEEP-DIVE] markers only on math/kernel/protocol/interview-critical topics?
-- Did I omit inapplicable sections instead of forcing placeholders?
-- Does the index structure naturally support progressive complexity (beginner intuition → production reality → interview defense)?
-- Does output start with "[TOPIC]: Expert Reference Index" and end with "Linked Deep-Dive Files:" list?
+- Page structure: Title → Prerequisites → Table of Contents → TLDR → content?
+- TLDR exactly one paragraph, no bullets?
+- Tree unbalanced by design (depth = importance)?
+- All index bullets crisp phrases (no sentences, no definitions)?
+- [LINKED DEEP-DIVE] markers only on math/kernel/protocol/interview-critical topics?
+- Inapplicable sections omitted instead of forced as placeholders?
+- Index structure supports progressive complexity (beginner intuition → production reality → interview defense)?
+- Output starts with "[TOPIC]: Expert Reference Index" and ends with "Linked Deep-Dive Files:" list?
   If all true → output index → append "[AWAITING CONFIRMATION TO GENERATE CONTENT]" → STOP.
 
 ---

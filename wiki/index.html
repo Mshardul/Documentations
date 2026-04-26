@@ -14,6 +14,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    />
     <link rel="stylesheet" href="./wiki.css" />
   </head>
   <body>
@@ -521,6 +525,27 @@
         </div>
         <div class="settings-body">
           <div class="settings-section">
+            <div class="settings-section-label">Data</div>
+            <div class="settings-size-row">
+              <button class="settings-size-btn" onclick="Settings.exportData()">
+                Export Backup
+              </button>
+              <button
+                class="settings-size-btn"
+                onclick="document.getElementById('import-upload').click()"
+              >
+                Import Backup
+              </button>
+              <input
+                type="file"
+                id="import-upload"
+                accept=".json"
+                style="display: none"
+                onchange="Settings.importData(event)"
+              />
+            </div>
+          </div>
+          <div class="settings-section">
             <div class="settings-section-label">Preset</div>
             <div id="settings-presets" class="settings-preset-grid"></div>
           </div>
@@ -548,9 +573,20 @@
       </div>
     </div>
 
+    <div
+      id="hover-preview"
+      class="hover-preview hidden"
+      aria-hidden="true"
+    ></div>
+
     <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
     <script src="./wiki.js"></script>
   </body>
 </html>

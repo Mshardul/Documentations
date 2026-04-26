@@ -2043,3 +2043,50 @@ img {
     transform: translateY(0);
   }
 }
+
+/* ═══════════════════════════════════════════════
+   WIKIPEDIA HOVER PREVIEWS (P1)
+   ═══════════════════════════════════════════════ */
+.hover-preview {
+  position: absolute;
+  z-index: 9999;
+  width: 340px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-lg);
+  padding: var(--s4) var(--s5);
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  opacity: 0;
+  transform: translateY(4px) scale(0.98);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  pointer-events: none;
+}
+.hover-preview.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.hover-preview h1,
+.hover-preview h2,
+.hover-preview h3 {
+  font-size: var(--text-base);
+  color: var(--text-heading);
+  margin-bottom: var(--s2);
+  border: none;
+  padding: 0;
+}
+.hover-preview p {
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hover-preview .loading {
+  color: var(--text-muted);
+  text-align: center;
+  padding: var(--s4) 0;
+}

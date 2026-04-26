@@ -17,6 +17,35 @@ const WIKIS = [
 /* ═══════════════════════════════════════════════════════════════
    SHOWDOWN CONVERTER CONFIG
    ═══════════════════════════════════════════════════════════════ */
+const mathExtension = () => {
+  return [
+    {
+      type: "lang",
+      regex: /(?:\$\$)([\s\S]+?)(?:\$\$)/g,
+      replace: (match, content) =>
+        "¨D" + btoa(unescape(encodeURIComponent(content))) + "¨D",
+    },
+    {
+      type: "lang",
+      regex: /(?:\$)([\s\S]+?)(?:\$)/g,
+      replace: (match, content) =>
+        "¨d" + btoa(unescape(encodeURIComponent(content))) + "¨d",
+    },
+    {
+      type: "output",
+      regex: /¨D([A-Za-z0-9+/=]+)¨D/g,
+      replace: (match, content) =>
+        "$$" + decodeURIComponent(escape(atob(content))) + "$$",
+    },
+    {
+      type: "output",
+      regex: /¨d([A-Za-z0-9+/=]+)¨d/g,
+      replace: (match, content) =>
+        "$" + decodeURIComponent(escape(atob(content))) + "$",
+    },
+  ];
+};
+
 const mdConverter = new showdown.Converter({
   ghCompatibleHeaderId: true,
   noHeaderId: false,
@@ -25,6 +54,7 @@ const mdConverter = new showdown.Converter({
   simpleLineBreaks: true,
   openLinksInNewWindow: false,
   disableForced4SpacesIndentedSublists: true,
+  extensions: [mathExtension],
 });
 
 if (typeof mermaid !== "undefined") {
@@ -458,7 +488,23 @@ async function renderContent(
       buildTOC(body);
       return;
     }
-    body.innerHTML = mdConverter.makeHtml(markdown);
+
+    // DOMPurify (XSS Protection)
+    const rawHtml = mdConverter.makeHtml(markdown);
+    const cleanHtml =
+      typeof DOMPurify !== "undefined" ? DOMPurify.sanitize(rawHtml) : rawHtml;
+    body.innerHTML = cleanHtml;
+
+    // KaTeX rendering
+    if (typeof renderMathInElement !== "undefined") {
+      renderMathInElement(body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+        ],
+        throwOnError: false,
+      });
+    }
 
     // Mermaid must run before hljs so it claims those blocks first
     await renderMermaidDiagrams(body);
@@ -558,21 +604,104 @@ function styleCallouts(contentEl) {
   });
 }
 
-/* ─── Internal .md link interception ─── */
+/* ─── Internal .md link interception & Hover Previews ─── */
+let hoverPreviewTimer;
+
 function interceptMdLinks(contentEl, wiki, currentFilePath) {
   const baseDir = dirOf(currentFilePath);
+  const previewEl = document.getElementById("hover-preview");
 
   contentEl.querySelectorAll("a[href]").forEach((link) => {
     const href = link.getAttribute("href");
+
+    // Intercept in-page anchor links (e.g., Markdown-authored TOCs)
+    if (href.startsWith("#")) {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = href.slice(1);
+
+        // CSS.escape handles IDs with special characters
+        const target = document.querySelector(`[id="${CSS.escape(targetId)}"]`);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+          // Update the URL with the deep-link query param without breaking the hash route
+          const url = new URL(location.href);
+          url.searchParams.set("a", targetId);
+          history.replaceState(history.state, "", url.toString());
+        }
+      });
+      return;
+    }
+
+    // Ignore external links
     if (!href || !href.endsWith(".md") || href.startsWith("http")) return;
+
+    // Handle internal markdown links
+    const resolvedPath = resolvePath(baseDir, href);
 
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      const resolvedPath = resolvePath(baseDir, href);
       const title = link.textContent.trim();
       renderContent(wiki, resolvedPath, title);
+      if (previewEl) previewEl.classList.remove("visible");
+    });
+
+    // Hover logic
+    link.addEventListener("mouseenter", (e) => {
+      hoverPreviewTimer = setTimeout(
+        () => showHoverPreview(link, resolvedPath),
+        400
+      );
+    });
+
+    link.addEventListener("mouseleave", () => {
+      clearTimeout(hoverPreviewTimer);
+      if (previewEl) previewEl.classList.remove("visible");
     });
   });
+}
+
+async function showHoverPreview(link, path) {
+  const previewEl = document.getElementById("hover-preview");
+
+  // Position the preview
+  const rect = link.getBoundingClientRect();
+  previewEl.style.top = `${window.scrollY + rect.bottom + 8}px`;
+
+  // Keep it inside viewport bounds
+  let leftPos = rect.left;
+  if (leftPos + 340 > window.innerWidth) leftPos = window.innerWidth - 360;
+  previewEl.style.left = `${leftPos}px`;
+
+  previewEl.innerHTML = '<div class="loading">Loading preview...</div>';
+  previewEl.classList.add("visible");
+
+  try {
+    const md = await fetchText(path);
+    // Remove title header and get first block of text
+    const textWithoutTitle = md.replace(/^#+ .*/gm, "").trim();
+    const firstParagraphMarkdown = textWithoutTitle.split("\n\n")[0];
+
+    if (!firstParagraphMarkdown) throw new Error("Empty");
+
+    const rawHtml = mdConverter.makeHtml(firstParagraphMarkdown);
+    previewEl.innerHTML = DOMPurify.sanitize(rawHtml);
+
+    // Render math inside preview
+    if (typeof renderMathInElement !== "undefined") {
+      renderMathInElement(previewEl, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+        ],
+        throwOnError: false,
+      });
+    }
+  } catch {
+    previewEl.innerHTML =
+      '<p style="color:var(--text-muted)">Preview not available.</p>';
+  }
 }
 
 /* ─── TOC Builder ─── */
@@ -599,7 +728,10 @@ function buildTOC(contentEl) {
       h.scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
-    tocNav.appendChild(a);
+    // Keep the URL updated with the deep-link query parameter
+    const url = new URL(location.href);
+    url.searchParams.set("a", h.id);
+    history.replaceState(history.state, "", url.toString());
   });
 
   // IntersectionObserver for active highlight
@@ -1715,6 +1847,50 @@ const Settings = {
     saveSettings(s);
     applySettingsToDOM(s);
     this._render();
+  },
+
+  exportData() {
+    const data = {
+      bookmarks: localStorage.getItem("wiki-bookmarks"),
+      recents: localStorage.getItem("wiki-recents"),
+      read: localStorage.getItem("wiki-read"),
+      settings: localStorage.getItem("wiki-settings"),
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `wiki-backup-${new Date().toISOString().split("T")[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  },
+
+  importData(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (data.bookmarks)
+          localStorage.setItem("wiki-bookmarks", data.bookmarks);
+        if (data.recents) localStorage.setItem("wiki-recents", data.recents);
+        if (data.read) localStorage.setItem("wiki-read", data.read);
+        if (data.settings) localStorage.setItem("wiki-settings", data.settings);
+
+        alert("Data imported successfully! The app will now reload.");
+        location.reload();
+      } catch (err) {
+        alert("Invalid backup file.");
+      }
+    };
+    reader.readAsText(file);
+    // Reset input so it can be triggered again
+    event.target.value = "";
   },
 };
 

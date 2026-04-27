@@ -62,7 +62,7 @@
 
 ### What is a Builder Pattern
 
-`Builder Deisgn Pattern` `Design Pattern`
+`Builder Design Pattern` `Design Pattern`
 
 # Design Concepts and Tools
 

@@ -676,7 +676,7 @@
 
 `Cascading Failures` `Microservice Architecture`
 
-## Partial Failurs
+## Partial Failures
 
 ### How would you handle partial failures in a distributed transaction?
 

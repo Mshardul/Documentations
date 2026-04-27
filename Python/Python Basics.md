@@ -306,7 +306,7 @@ def apply_function(f: Callable[[int, int], int], a: int, b: int) -> int:
   ```python
   print("Hello, %s %s" % (first_name, last_name))
   ```
-- 2 optional argumenst, `sep` and `end`.By default, `print()` uses a space as a separator and ends with a newline.
+- 2 optional arguments, `sep` and `end`.By default, `print()` uses a space as a separator and ends with a newline.
   ```python
   print("Hello", "World", sep="-", end="!\n")  # Hello-World!
   ```

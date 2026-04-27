@@ -20,7 +20,7 @@
 - [Level 5](#level-5)
   - [Dual Consciousness Theory](#dual-consciousness-theory)
   - [Observation creates the universe](#observation-creates-the-universe)
-  - [Mystery of conciousness](#mystery-of-conciousness)
+  - [Mystery of consciousness](#mystery-of-consciousness)
 - [Level 6](#level-6)
   - [Past and Future exist simultaneously](#past-and-future-exist-simultaneously)
   - [Superdetermenism](#superdetermenism)
@@ -84,7 +84,7 @@
 #### What is it?
 
 - This is the evolutionary "glitch" of the human frontal lobe.
-- Humans are the only animals capable fo running complex simulations of the future.
+- Humans are the only animals capable for running complex simulations of the future.
 - While this can be highly useful in various scenarios, it also means we suffer misfortunes in our heads thousands of times before they happen (or even if they never happen).
 
 #### Examples
@@ -180,7 +180,7 @@
 
 - often called the "Contingency of Being"
 - Logic suggest that "nothing" is the natural state of things - it requires no energy, no lasw, and no space.
-- The fact that a massive, complex universe exsists instead of a void is a violation of Occam's Razor.
+- The fact that a massive, complex universe exists instead of a void is a violation of Occam's Razor.
 - It is the ultimate Brute fact that has no explanation.
 
 #### Examples
@@ -680,7 +680,7 @@
 
 #### Thought-Provoking Questions
 
-### Mystery of conciousness
+### Mystery of consciousness
 
 #### Thought-Provoking Questions
 

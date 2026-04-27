@@ -1,5 +1,5 @@
 # See https://pre-commit.com for more information
-# See https://pre-commit.com/hooks.html for more hooks
+# CI-only config: check-only mode (no auto-fix). Mirrors .pre-commit-config.yaml.
 exclude: ^shared/highlight/
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -13,20 +13,20 @@ repos:
       - id: detect-private-key
       - id: check-json
       - id: check-case-conflict
-      - id: no-commit-to-branch
-        args: [--branch, main]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.7
     hooks:
       - id: ruff
-        args: [--extend-select, I, --fix]
+        args: [--extend-select, I]
       - id: ruff-format
+        args: [--check]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.7.1
     hooks:
       - id: prettier
+        args: [--check]
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.44.0
@@ -38,4 +38,3 @@ repos:
     rev: v1.44.0
     hooks:
       - id: typos
-        args: [--write-changes]

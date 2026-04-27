@@ -43,6 +43,9 @@
   - [Example](#example-9)
   - [Related Topics](#related-topics-5)
 - [Metaclasses](#metaclasses)
+  - [what?](#what-2)
+  - [why?](#why)
+  - [example](#example-10)
 - [The Global Interpreter Lock (GIL)](#the-global-interpreter-lock-gil)
 - [Concurrency with Threads (conceptual)](#concurrency-with-threads-conceptual)
 - [Concurrency with Multiple Processes (conceptual)](#concurrency-with-multiple-processes-conceptual)
@@ -192,7 +195,7 @@ def logging_decorator(func):
     def wrapper():
         print("calling function...")
         func()
-        print("... fuction exited")
+        print("... function exited")
     return wrapper
 
 @logging_decorator

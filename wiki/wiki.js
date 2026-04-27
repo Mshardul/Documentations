@@ -121,8 +121,8 @@ function navigate(hash, pushHistory = true) {
 
 function route(hash) {
   const parts = hash.split("/").filter(Boolean);
-
   if (parts.length === 0) {
+    updatePageTitle("Home");
     renderHome();
     return;
   }
@@ -130,25 +130,26 @@ function route(hash) {
   const wikiId = parts[0];
   const wiki = WIKIS.find((w) => w.id === wikiId);
   if (!wiki) {
+    updatePageTitle("Not Found");
+    // If history is shallow, strip bad hash to prevent back-button traps
+    if (history.length <= 2) history.replaceState(null, "", location.pathname);
     renderHome();
     return;
   }
 
   if (parts.length === 1) {
+    updatePageTitle(wiki.title);
     renderIndex(wiki);
     return;
   }
 
-  // Content view: we need the full file path.
-  // If we have it in history state, use it. Otherwise resolve from index.
+  // Content view
   const slug = parts[1];
   const savedPath = history.state?.filePath;
   const savedTitle = history.state?.title;
-
   if (savedPath) {
     renderContent(wiki, savedPath, savedTitle || slug);
   } else {
-    // Cold load: fetch index first to resolve slug → path
     resolveSlugAndRender(wiki, slug);
   }
 }
@@ -165,11 +166,12 @@ async function resolveSlugAndRender(wiki, slug) {
         return;
       }
     }
-    // Fallback: construct path heuristically
-    renderHome();
-  } catch {
-    renderHome();
-  }
+  } catch {}
+
+  // Slug not found fallback
+  updatePageTitle("Not Found");
+  if (history.length <= 2) history.replaceState(null, "", location.pathname);
+  renderHome();
 }
 
 window.addEventListener("popstate", (e) => {
@@ -432,6 +434,8 @@ async function renderContent(
   state.currentWikiId = wiki.id;
   state.currentFilePath = filePath;
   state.currentTitle = title;
+
+  updatePageTitle(title);
 
   const derivedSlug = slug || filePath.split("/").pop().replace(/\.md$/, "");
 
@@ -957,13 +961,23 @@ function dirOf(filePath) {
   return filePath.substring(0, filePath.lastIndexOf("/"));
 }
 
+/* ─── Dynamic Page Title ─── */
+function updatePageTitle(title) {
+  document.title = `${title} | Wiki App`;
+}
+
+/* ─── Robust Relative Path Resolver ─── */
 function resolvePath(baseDir, relHref) {
-  if (relHref.startsWith("./")) return baseDir + "/" + relHref.slice(2);
-  if (relHref.startsWith("../")) {
-    const parent = baseDir.substring(0, baseDir.lastIndexOf("/"));
-    return parent + "/" + relHref.slice(3);
+  const baseParts = baseDir.split("/");
+  const relParts = relHref.split("/");
+  const stack = [];
+
+  for (const p of baseParts) if (p) stack.push(p);
+  for (const p of relParts) {
+    if (p === "..") stack.pop();
+    else if (p && p !== ".") stack.push(p);
   }
-  return baseDir + "/" + relHref;
+  return stack.join("/");
 }
 
 function escHtml(str) {

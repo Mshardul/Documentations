@@ -693,6 +693,20 @@ img {
   font-size: 0.73rem;
 }
 
+/* toc heading jump pulse */
+@keyframes tocHeadingPulse {
+  0% {
+    background-color: var(--accent-dim);
+    border-radius: var(--r-sm);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+.toc-heading-pulse {
+  animation: tocHeadingPulse 0.6s ease-out;
+}
+
 /* Mobile TOC */
 .toc-mobile-btn {
   display: none;
@@ -818,6 +832,12 @@ img {
   font-weight: 600;
   color: var(--text-body);
   margin: var(--s6) 0 var(--s2);
+}
+
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4 {
+  scroll-margin-top: 70px; /* Clears sticky header + breathing room */
 }
 
 /* Paragraphs */

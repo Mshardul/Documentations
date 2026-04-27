@@ -1,6 +1,6 @@
 # UI / UX Design Decisions
 
-## Settings Page & Themes (WIKI-018, WIKI-033)
+## Settings Page & Themes (018, 033)
 
 ### Fonts (6)
 
@@ -46,7 +46,7 @@ Hacker themes use dedicated `data-theme` values (`matrix`, `terminal`, `amber-te
 
 ---
 
-## Reading Content Width (WIKI-038)
+## Reading Content Width (038)
 
 Three options in settings (same row UX as font size): **Narrow / Default / Wide**.
 

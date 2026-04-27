@@ -1,9 +1,9 @@
 """
-- Prerequisites chips (WIKI-016)
-- Copy button on all code blocks (WIKI-028)
-- Topbar title visibility on scroll (WIKI-040)
-- DOMPurify XSS sanitization (WIKI-067)
-- KaTeX math support (WIKI-074)
+- Prerequisites chips (016)
+- Copy button on all code blocks (028)
+- Topbar title visibility on scroll (040)
+- DOMPurify XSS sanitization (067)
+- KaTeX math support (074)
 - TOC items rendered in sidebar
 """
 

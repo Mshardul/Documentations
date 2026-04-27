@@ -92,11 +92,20 @@ def test_index_scroll_persistence(page, base_url):
     """Scroll position on wiki index is restored when revisiting."""
     # 1. Go to index and scroll down
     page.goto(f"{base_url}/wiki/#system-design")
-    page.wait_for_selector("#view-index.active", timeout=5_000)
-    page.evaluate("() => window.scrollTo(0, 800)")
+    page.wait_for_selector(
+        ".index-card", timeout=10_000
+    )  # Content loaded → page is scrollable
+    page.wait_for_timeout(100)  # Let showView's 50ms scroll-restore timer fire first
+    # Scroll to 60% of the actual scrollable height (stays within page bounds)
+    page.evaluate("""() => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo({ top: Math.floor(max * 0.6), behavior: 'instant' });
+    }""")
     page.wait_for_timeout(400)  # Wait for debounced save
 
-    saved_scroll = page.evaluate("() => localStorage.getItem('wiki-index-scroll')")
+    saved_scroll = page.evaluate(
+        "() => localStorage.getItem('wiki-index-scroll-system-design')"
+    )
     assert saved_scroll and int(saved_scroll) > 0
 
     # 2. Navigate away (to article)
@@ -105,10 +114,14 @@ def test_index_scroll_persistence(page, base_url):
 
     # 3. Go back to index
     page.goto(f"{base_url}/wiki/#system-design")
-    page.wait_for_selector("#view-index.active", timeout=5_000)
-
-    # Restore happens in showView with 50ms timeout
-    page.wait_for_timeout(200)
+    page.wait_for_selector(
+        ".index-card", timeout=10_000
+    )  # Content loaded → scroll restored
 
     scroll_y = page.evaluate("() => window.scrollY")
-    assert scroll_y > 600  # Should be restored near 800
+    saved = int(
+        page.evaluate(
+            "() => localStorage.getItem('wiki-index-scroll-system-design') || '0'"
+        )
+    )
+    assert scroll_y >= saved * 0.7  # Restored to within 30% of saved position

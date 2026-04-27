@@ -43,7 +43,7 @@ def test_deep_path_resolution(page, base_url):
     page.route(
         "**/mock.md", lambda r: r.fulfill(body="# Mock\n\n[Deep Link](../../target.md)")
     )
-    page.route("**/target.md", lambda r: r.fulfill(body="# Target Article"))
+    page.route("**/target.md", lambda r: r.fulfill(body="# Target Article\n\nContent."))
 
     # Navigate to mock article
     page.goto(f"{base_url}/wiki/")

@@ -100,14 +100,7 @@ function showView(id) {
   document.getElementById(id).classList.add("active");
   state.currentView = id.replace("view-", "");
 
-  // Restore index scroll (per-wiki), clear when going home
-  if (id === "view-index") {
-    const key = `wiki-index-scroll-${state.currentWikiId}`;
-    const saved = localStorage.getItem(key);
-    setTimeout(() => window.scrollTo(0, saved ? parseInt(saved, 10) : 0), 50);
-  } else {
-    window.scrollTo(0, 0);
-  }
+  if (id !== "view-index") window.scrollTo(0, 0);
 
   const isContent = id === "view-content";
   progressBar.classList.toggle("visible", isContent);
@@ -245,6 +238,10 @@ async function renderIndex(wiki) {
     state.indexSections = parseIndexMd(md, basePath);
     renderIndexSections(state.indexSections, wiki);
     populateIndexReadTimes();
+
+    const savedScroll = localStorage.getItem(`wiki-index-scroll-${wiki.id}`);
+    if (savedScroll)
+      window.scrollTo({ top: parseInt(savedScroll, 10), behavior: "instant" });
   } catch (err) {
     sectionsEl.innerHTML = `<p class="error">Failed to load index. (${err.message})</p>`;
   }

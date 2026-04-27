@@ -1,13 +1,14 @@
-"""WIKI-019: scroll position persisted per article in localStorage
-WIKI-020: TOC sidebar sticky on desktop, hidden on mobile
+"""
+- scroll position persisted per article in localStorage
+- TOC sidebar sticky on desktop, hidden on mobile
 """
 
 
-# ── WIKI-019 ──────────────────────────────────────────────────────────────────
+# ── Scroll Position in LocalStorage ─────────────────────────────────────────────
 
 
 def test_scroll_position_saved_and_restored(page, base_url):
-    """WIKI-019: scroll position is restored when revisiting the same article.
+    """scroll position is restored when revisiting the same article.
 
     Writes the saved position directly to localStorage using the app's own key
     (read from state.currentFilePath) to avoid relying on headless scroll events
@@ -39,7 +40,7 @@ def test_scroll_position_saved_and_restored(page, base_url):
 
 
 def test_scroll_position_not_restored_with_anchor(page, base_url):
-    """WIKI-019: ?a= anchor param takes priority over saved scroll position."""
+    """?a= anchor param takes priority over saved scroll position."""
     # First visit and scroll to persist a position.
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#markdown-body pre", timeout=10_000)
@@ -67,11 +68,11 @@ def test_scroll_position_not_restored_with_anchor(page, base_url):
     assert page.locator("#view-content.active").count() == 1
 
 
-# ── WIKI-020 ──────────────────────────────────────────────────────────────────
+# ── TOC Sidebar Behavior ────────────────────────────────────────────────────────
 
 
 def test_toc_visible_on_desktop(page, base_url):
-    """WIKI-020: TOC sidebar is visible on large screens."""
+    """TOC sidebar is visible on large screens."""
     page.set_viewport_size({"width": 1280, "height": 800})
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#view-content.active", timeout=10_000)
@@ -81,7 +82,7 @@ def test_toc_visible_on_desktop(page, base_url):
 
 
 def test_toc_hidden_on_mobile(page, base_url):
-    """WIKI-020: TOC sidebar is hidden by default on mobile viewports."""
+    """TOC sidebar is hidden by default on mobile viewports."""
     page.set_viewport_size({"width": 375, "height": 812})
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#view-content.active", timeout=10_000)
@@ -91,7 +92,7 @@ def test_toc_hidden_on_mobile(page, base_url):
 
 
 def test_toc_sticky_does_not_scroll_away(page, base_url):
-    """WIKI-020: TOC sidebar stays in viewport after scrolling down."""
+    """TOC sidebar stays in viewport after scrolling down."""
     page.set_viewport_size({"width": 1280, "height": 800})
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#markdown-body pre", timeout=8_000)

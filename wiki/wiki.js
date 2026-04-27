@@ -21,13 +21,14 @@ const mathExtension = () => {
   return [
     {
       type: "lang",
-      regex: /(?:\$\$)([\s\S]+?)(?:\$\$)/g,
+      regex: /\$\$([\s\S]+?)\$\$/g, // Block math
       replace: (match, content) =>
         "¨D" + btoa(unescape(encodeURIComponent(content))) + "¨D",
     },
     {
       type: "lang",
-      regex: /(?:\$)([\s\S]+?)(?:\$)/g,
+      // Inline math: requires non-space characters next to the $ signs to avoid matching bash prompts
+      regex: /\$(?!\s)([^$\n]*?\S)\$/g,
       replace: (match, content) =>
         "¨d" + btoa(unescape(encodeURIComponent(content))) + "¨d",
     },
@@ -84,6 +85,7 @@ const state = {
   currentTitle: null,
   indexSections: [],
   tocObserver: null,
+  titleObserver: null,
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -110,7 +112,8 @@ function showView(id) {
    ═══════════════════════════════════════════════════════════════ */
 function navigate(hash, pushHistory = true) {
   if (pushHistory) {
-    const url = hash ? `#${hash}` : location.pathname + location.search;
+    // Explicitly reconstruct URL with pathname to strip away location.search query params
+    const url = location.pathname + (hash ? `#${hash}` : "");
     history.pushState({ hash }, "", url);
   }
   route(hash || "");
@@ -295,31 +298,36 @@ const readTimeCache = {};
 const STUB_THRESHOLD = 200; // bytes — stubs are just "# Title\n---"
 
 async function populateIndexReadTimes() {
-  const badges = document.querySelectorAll(".index-card-read-time[data-path]");
-  for (const badge of badges) {
-    const path = badge.dataset.path;
-    if (!path) continue;
-    try {
-      if (!readTimeCache[path]) {
-        const md = await fetchText(path);
-        readTimeCache[path] =
-          md.length < STUB_THRESHOLD ? null : readingTime(md);
+  const badges = Array.from(
+    document.querySelectorAll(".index-card-read-time[data-path]")
+  );
+
+  await Promise.all(
+    badges.map(async (badge) => {
+      const path = badge.dataset.path;
+      if (!path) return;
+      try {
+        if (readTimeCache[path] === undefined) {
+          const md = await fetchText(path);
+          readTimeCache[path] =
+            md.length < STUB_THRESHOLD ? null : readingTime(md);
+        }
+        const isStub = readTimeCache[path] === null;
+        const card = badge.closest(".index-card");
+        if (isStub && card) {
+          card.classList.add("index-card--unavailable");
+          card.removeAttribute("onclick");
+          card.removeAttribute("tabindex");
+          card.setAttribute("aria-disabled", "true");
+          const dot = card.querySelector(".index-card-read-dot");
+          if (dot) dot.remove();
+        }
+        badge.textContent = isStub ? "Coming soon" : readTimeCache[path];
+      } catch {
+        badge.textContent = "";
       }
-      const isStub = readTimeCache[path] === null;
-      const card = badge.closest(".index-card");
-      if (isStub && card) {
-        card.classList.add("index-card--unavailable");
-        card.removeAttribute("onclick");
-        card.removeAttribute("tabindex");
-        card.setAttribute("aria-disabled", "true");
-        const dot = card.querySelector(".index-card-read-dot");
-        if (dot) dot.remove();
-      }
-      badge.textContent = isStub ? "Coming soon" : readTimeCache[path];
-    } catch {
-      badge.textContent = "";
-    }
-  }
+    })
+  );
 }
 
 /* ─── Shared index cache (used by article counts + global search) ─── */
@@ -427,13 +435,12 @@ async function renderContent(
 
   const derivedSlug = slug || filePath.split("/").pop().replace(/\.md$/, "");
 
-  addToRecents({ wikiId: wiki.id, path: filePath, title, slug: derivedSlug });
-
   if (pushNav) {
+    const url = location.pathname + `#${wiki.id}/${derivedSlug}`;
     history.pushState(
       { hash: `${wiki.id}/${derivedSlug}`, filePath, title },
       "",
-      `#${wiki.id}/${derivedSlug}`
+      url
     );
   }
 
@@ -466,6 +473,9 @@ async function renderContent(
   try {
     const markdown = await fetchText(filePath);
 
+    // Only track successful loads.
+    addToRecents({ wikiId: wiki.id, path: filePath, title, slug: derivedSlug });
+
     // Set reading time immediately after fetch
     if (readTimeBadge) {
       readTimeBadge.textContent =
@@ -491,9 +501,8 @@ async function renderContent(
 
     // DOMPurify (XSS Protection)
     const rawHtml = mdConverter.makeHtml(markdown);
-    const cleanHtml =
+    body.innerHTML =
       typeof DOMPurify !== "undefined" ? DOMPurify.sanitize(rawHtml) : rawHtml;
-    body.innerHTML = cleanHtml;
 
     // KaTeX rendering
     if (typeof renderMathInElement !== "undefined") {
@@ -517,6 +526,10 @@ async function renderContent(
     // Post-processing
     addCopyButtons(body);
     styleCallouts(body);
+
+    // Prerequisites Chips
+    renderPrerequisites(body);
+
     interceptMdLinks(body, wiki, filePath);
     addAnchorLinks(body);
 
@@ -534,7 +547,32 @@ async function renderContent(
     updateReadBtn();
     updateOfflineBtn();
 
-    // Scroll to heading anchor if ?a= param present; else restore saved position
+    // Topbar Title Observer
+    if (state.titleObserver) {
+      state.titleObserver.disconnect();
+      state.titleObserver = null;
+    }
+    const topbarTitle = document.getElementById("topbar-title");
+    if (topbarTitle) {
+      topbarTitle.textContent = title;
+      topbarTitle.classList.remove("visible");
+      const h1 = body.querySelector("h1");
+      if (h1) {
+        state.titleObserver = new IntersectionObserver(
+          (entries) => {
+            const entry = entries[0];
+            // Show title if h1 is scrolled ABOVE the viewport
+            topbarTitle.classList.toggle(
+              "visible",
+              !entry.isIntersecting && entry.boundingClientRect.top < 0
+            );
+          },
+          { rootMargin: "-44px 0px 0px 0px" }
+        );
+        state.titleObserver.observe(h1);
+      }
+    }
+
     const anchor = new URLSearchParams(location.search).get("a");
     if (anchor) {
       const target = body.querySelector(`[id="${CSS.escape(anchor)}"]`);
@@ -604,6 +642,38 @@ function styleCallouts(contentEl) {
   });
 }
 
+/* ─── Prerequisites Chips ─── */
+function renderPrerequisites(contentEl) {
+  const ps = Array.from(contentEl.querySelectorAll("p"));
+  const prereqP = ps.find((p) =>
+    p.textContent.trim().startsWith("Prerequisites:")
+  );
+  if (!prereqP) return;
+
+  const links = Array.from(prereqP.querySelectorAll("a"));
+  if (!links.length) return;
+
+  const container = document.createElement("div");
+  container.className = "prereqs-container";
+  container.innerHTML = `<span class="prereqs-label">Prerequisites:</span>`;
+
+  links.forEach((link) => {
+    const chip = document.createElement("a");
+    chip.className = "prereq-chip";
+    chip.href = link.getAttribute("href");
+    chip.innerHTML = link.innerHTML;
+    container.appendChild(chip);
+  });
+
+  const h1 = contentEl.querySelector("h1");
+  if (h1 && h1.nextSibling) {
+    contentEl.insertBefore(container, h1.nextSibling);
+  } else {
+    contentEl.prepend(container);
+  }
+  prereqP.remove();
+}
+
 /* ─── Internal .md link interception & Hover Previews ─── */
 let hoverPreviewTimer;
 
@@ -613,8 +683,9 @@ function interceptMdLinks(contentEl, wiki, currentFilePath) {
 
   contentEl.querySelectorAll("a[href]").forEach((link) => {
     const href = link.getAttribute("href");
+    if (!href) return;
 
-    // Intercept in-page anchor links (e.g., Markdown-authored TOCs)
+    // Anchor links
     if (href.startsWith("#")) {
       link.addEventListener("click", (e) => {
         e.preventDefault();
@@ -634,8 +705,15 @@ function interceptMdLinks(contentEl, wiki, currentFilePath) {
       return;
     }
 
-    // Ignore external links
-    if (!href || !href.endsWith(".md") || href.startsWith("http")) return;
+    // External links navigate away in new tab
+    if (href.startsWith("http")) {
+      link.setAttribute("target", "_blank");
+      link.setAttribute("rel", "noopener noreferrer");
+      return;
+    }
+
+    // Ignore missing or non-md links
+    if (!href.endsWith(".md")) return;
 
     // Handle internal markdown links
     const resolvedPath = resolvePath(baseDir, href);
@@ -648,7 +726,7 @@ function interceptMdLinks(contentEl, wiki, currentFilePath) {
     });
 
     // Hover logic
-    link.addEventListener("mouseenter", (e) => {
+    link.addEventListener("mouseenter", () => {
       hoverPreviewTimer = setTimeout(
         () => showHoverPreview(link, resolvedPath),
         400
@@ -679,16 +757,25 @@ async function showHoverPreview(link, path) {
 
   try {
     const md = await fetchText(path);
-    // Remove title header and get first block of text
-    const textWithoutTitle = md.replace(/^#+ .*/gm, "").trim();
-    const firstParagraphMarkdown = textWithoutTitle.split("\n\n")[0];
+    let extract = "";
 
-    if (!firstParagraphMarkdown) throw new Error("Empty");
+    // Match TLDR section first
+    const tldrMatch = md.match(/##\s*TL;?DR\s*\n([\s\S]*?)(?=\n##|$)/i);
+    if (tldrMatch && tldrMatch[1].trim()) {
+      extract = tldrMatch[1].trim();
+    } else {
+      // Fallback to first paragraph
+      const textWithoutTitle = md.replace(/^#+ .*/gm, "").trim();
+      extract = textWithoutTitle.split("\n\n")[0];
+    }
 
-    const rawHtml = mdConverter.makeHtml(firstParagraphMarkdown);
-    previewEl.innerHTML = DOMPurify.sanitize(rawHtml);
+    if (!extract) throw new Error("Empty");
+    if (extract.length > 350) extract = extract.slice(0, 350) + "...";
 
-    // Render math inside preview
+    const rawHtml = mdConverter.makeHtml(extract);
+    previewEl.innerHTML =
+      typeof DOMPurify !== "undefined" ? DOMPurify.sanitize(rawHtml) : rawHtml;
+
     if (typeof renderMathInElement !== "undefined") {
       renderMathInElement(previewEl, {
         delimiters: [
@@ -726,12 +813,13 @@ function buildTOC(contentEl) {
     a.addEventListener("click", (e) => {
       e.preventDefault();
       h.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      const url = new URL(location.href);
+      url.searchParams.set("a", h.id);
+      history.replaceState(history.state, "", url.toString());
     });
 
-    // Keep the URL updated with the deep-link query parameter
-    const url = new URL(location.href);
-    url.searchParams.set("a", h.id);
-    history.replaceState(history.state, "", url.toString());
+    tocNav.appendChild(a);
   });
 
   // IntersectionObserver for active highlight
@@ -1653,14 +1741,22 @@ function getSettings() {
     const stored = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "null");
     if (stored) return { ...DEFAULT_SETTINGS, ...stored };
   } catch {}
+
   const oldTheme = localStorage.getItem("wiki-theme");
-  if (oldTheme)
+  if (oldTheme) {
     return {
       ...DEFAULT_SETTINGS,
       theme: oldTheme,
       preset: oldTheme === "dark" ? "dark" : "light",
     };
-  return { ...DEFAULT_SETTINGS };
+  }
+
+  // OS theme detection on first visit
+  const prefersLight =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: light)").matches;
+  const theme = prefersLight ? "light" : "dark";
+  return { ...DEFAULT_SETTINGS, theme, preset: theme };
 }
 
 function saveSettings(s) {

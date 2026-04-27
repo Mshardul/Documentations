@@ -5,13 +5,20 @@ from pathlib import Path
 
 import pytest
 
-REPO_ROOT = Path(__file__).parent.parent
+REPO_ROOT = Path(__file__).parent.parent.parent
 
 
 def _free_port() -> int:
     with socket.socket() as s:
         s.bind(("", 0))
         return s.getsockname()[1]
+
+
+@pytest.fixture
+def browser_context_args(browser_context_args):
+    # Block service workers so page.route() mock intercepts work correctly.
+    # The SW intercepts all .md fetches before Playwright sees them otherwise.
+    return {**browser_context_args, "service_workers": "block"}
 
 
 @pytest.fixture(scope="session")

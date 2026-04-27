@@ -1,5 +1,6 @@
-"""WIKI-001: ↑/↓ keyboard navigation in search results + Enter to select
-WIKI-023: stub articles (< 200 chars) excluded from ⌘K results
+"""
+- ↑/↓ keyboard navigation in search results + Enter to select
+- stub articles (< 200 chars) excluded from ⌘K results
 """
 
 
@@ -10,7 +11,7 @@ def _open_search(page):
 
 
 def test_arrow_down_selects_first_result(wiki_page):
-    """WIKI-001: ArrowDown marks first result with .selected class."""
+    """ArrowDown marks first result with .selected class."""
     _open_search(wiki_page)
     wiki_page.fill("#gsearch-input", "caching")
     wiki_page.wait_for_selector(".gsearch-result")
@@ -21,7 +22,7 @@ def test_arrow_down_selects_first_result(wiki_page):
 
 
 def test_arrow_keys_cycle_results(wiki_page):
-    """WIKI-001: ArrowDown twice moves .selected to a different result."""
+    """ArrowDown twice moves .selected to a different result."""
     _open_search(wiki_page)
     # "cache" matches many sections inside the large caching.md → guaranteed ≥2 results.
     wiki_page.fill("#gsearch-input", "cache")
@@ -37,7 +38,7 @@ def test_arrow_keys_cycle_results(wiki_page):
 
 
 def test_enter_navigates_to_article(wiki_page):
-    """WIKI-001: Enter on focused result navigates to article (content view becomes active)."""
+    """Enter on focused result navigates to article (content view becomes active)."""
     _open_search(wiki_page)
     wiki_page.fill("#gsearch-input", "caching")
     wiki_page.wait_for_selector(".gsearch-result")
@@ -48,7 +49,7 @@ def test_enter_navigates_to_article(wiki_page):
 
 
 def test_stubs_excluded_from_search(wiki_page):
-    """WIKI-023: known stub articles (< 200 chars) do not appear in search results."""
+    """known stub articles (< 200 chars) do not appear in search results."""
     _open_search(wiki_page)
     # "api gateway" matches the stub api-gateway.md (14 bytes) by title,
     # but the stub filter should exclude it from results.
@@ -63,7 +64,7 @@ def test_stubs_excluded_from_search(wiki_page):
 
 
 def test_search_shows_real_articles(wiki_page):
-    """WIKI-023: non-stub articles do appear in search results."""
+    """non-stub articles do appear in search results."""
     _open_search(wiki_page)
     wiki_page.fill("#gsearch-input", "caching")
     wiki_page.wait_for_selector(".gsearch-result", timeout=8_000)

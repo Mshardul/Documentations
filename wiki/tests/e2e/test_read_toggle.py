@@ -1,4 +1,6 @@
-"""WIKI-035: Mark as unread toggle — button presence, state, toggle, persistence."""
+"""
+- Mark as unread toggle — button presence, state, toggle, persistence.
+"""
 
 ARTICLE_HASH = "system-design/caching"
 
@@ -16,20 +18,20 @@ def _go_to_article(page, base_url):
 
 
 def test_read_btn_present_in_content_topbar(page, base_url):
-    """WIKI-035: #content-read-btn exists in content topbar."""
+    """#content-read-btn exists in content topbar."""
     _go_to_article(page, base_url)
     assert page.locator("#content-read-btn").count() == 1
 
 
 def test_read_btn_initial_title_is_mark_as_read(page, base_url):
-    """WIKI-035: button title is 'Mark as read' when article not yet read."""
+    """button title is 'Mark as read' when article not yet read."""
     _go_to_article(page, base_url)
     title = page.locator("#content-read-btn").get_attribute("title")
     assert title == "Mark as read"
 
 
 def test_read_btn_initially_not_active(page, base_url):
-    """WIKI-035: button does not have .active class when article is unread."""
+    """button does not have .active class when article is unread."""
     _go_to_article(page, base_url)
     cls = page.locator("#content-read-btn").get_attribute("class")
     assert "active" not in cls
@@ -39,7 +41,7 @@ def test_read_btn_initially_not_active(page, base_url):
 
 
 def test_clicking_read_btn_marks_article_read(page, base_url):
-    """WIKI-035: clicking button adds article path to wiki-read in localStorage."""
+    """clicking button adds article path to wiki-read in localStorage."""
     _go_to_article(page, base_url)
     page.locator("#content-read-btn").click()
 
@@ -50,7 +52,7 @@ def test_clicking_read_btn_marks_article_read(page, base_url):
 
 
 def test_read_btn_becomes_active_after_click(page, base_url):
-    """WIKI-035: button gets .active class after clicking to mark as read."""
+    """button gets .active class after clicking to mark as read."""
     _go_to_article(page, base_url)
     page.locator("#content-read-btn").click()
     cls = page.locator("#content-read-btn").get_attribute("class")
@@ -58,7 +60,7 @@ def test_read_btn_becomes_active_after_click(page, base_url):
 
 
 def test_read_btn_title_changes_to_mark_as_unread(page, base_url):
-    """WIKI-035: button title becomes 'Mark as unread' after marking read."""
+    """button title becomes 'Mark as unread' after marking read."""
     _go_to_article(page, base_url)
     page.locator("#content-read-btn").click()
     title = page.locator("#content-read-btn").get_attribute("title")
@@ -69,7 +71,7 @@ def test_read_btn_title_changes_to_mark_as_unread(page, base_url):
 
 
 def test_clicking_again_marks_article_unread(page, base_url):
-    """WIKI-035: clicking button a second time removes article from wiki-read."""
+    """clicking button a second time removes article from wiki-read."""
     _go_to_article(page, base_url)
     page.locator("#content-read-btn").click()  # mark read
     page.locator("#content-read-btn").click()  # mark unread
@@ -81,7 +83,7 @@ def test_clicking_again_marks_article_unread(page, base_url):
 
 
 def test_read_btn_loses_active_after_unmark(page, base_url):
-    """WIKI-035: button loses .active class after clicking to mark as unread."""
+    """button loses .active class after clicking to mark as unread."""
     _go_to_article(page, base_url)
     page.locator("#content-read-btn").click()  # mark read
     page.locator("#content-read-btn").click()  # mark unread
@@ -90,7 +92,7 @@ def test_read_btn_loses_active_after_unmark(page, base_url):
 
 
 def test_read_btn_title_reverts_after_unmark(page, base_url):
-    """WIKI-035: button title reverts to 'Mark as read' after unmarking."""
+    """button title reverts to 'Mark as read' after unmarking."""
     _go_to_article(page, base_url)
     page.locator("#content-read-btn").click()  # mark read
     page.locator("#content-read-btn").click()  # mark unread
@@ -102,7 +104,7 @@ def test_read_btn_title_reverts_after_unmark(page, base_url):
 
 
 def test_read_state_persists_on_revisit(page, base_url):
-    """WIKI-035: article stays marked read when navigating away and back."""
+    """article stays marked read when navigating away and back."""
     _go_to_article(page, base_url)
     page.locator("#content-read-btn").click()  # mark read
 

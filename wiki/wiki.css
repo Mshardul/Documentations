@@ -287,11 +287,8 @@ img {
 .home-bg-grid {
   position: fixed;
   inset: 0;
-  background-image: linear-gradient(
-      rgba(99, 102, 241, 0.04) 1px,
-      transparent 1px
-    ),
-    linear-gradient(90deg, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
+  background-image: linear-gradient(var(--accent-dim) 1px, transparent 1px),
+    linear-gradient(90deg, var(--accent-dim) 1px, transparent 1px);
   background-size: 40px 40px;
   pointer-events: none;
   z-index: 0;
@@ -307,7 +304,7 @@ img {
   height: 500px;
   background: radial-gradient(
     ellipse at 50% 30%,
-    rgba(99, 102, 241, 0.18) 0%,
+    var(--accent-dim) 0%,
     transparent 65%
   );
   pointer-events: none;
@@ -1408,22 +1405,6 @@ img {
   --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.15);
 }
 
-[data-theme="light"] .home-bg-grid {
-  background-image: linear-gradient(
-      rgba(79, 70, 229, 0.06) 1px,
-      transparent 1px
-    ),
-    linear-gradient(90deg, rgba(79, 70, 229, 0.06) 1px, transparent 1px);
-}
-
-[data-theme="light"] .home-glow {
-  background: radial-gradient(
-    ellipse at 50% 30%,
-    rgba(79, 70, 229, 0.12) 0%,
-    transparent 65%
-  );
-}
-
 [data-theme="light"] .page-topbar,
 [data-theme="light"] .content-topbar {
   background: rgba(248, 250, 252, 0.9);
@@ -2089,4 +2070,73 @@ img {
   color: var(--text-muted);
   text-align: center;
   padding: var(--s4) 0;
+}
+
+/* ═══════════════════════════════════════════════
+   PREREQUISITES CHIPS
+   ═══════════════════════════════════════════════ */
+.prereqs-container {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  margin-bottom: var(--s6);
+  margin-top: calc(var(--s4) * -1);
+  flex-wrap: wrap;
+}
+.prereqs-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.prereq-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--text-xs);
+  color: var(--text-body);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  padding: 3px 12px;
+  text-decoration: none !important;
+  transition: background var(--t-fast), border-color var(--t-fast),
+    color var(--t-fast);
+}
+.prereq-chip:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent-light);
+}
+
+/* ═══════════════════════════════════════════════
+   TOPBAR TITLE
+   ═══════════════════════════════════════════════ */
+.content-topbar .topbar-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+}
+.topbar-title {
+  flex: 1; /* Pushes outer elements to the edges and claims remaining space */
+  text-align: center;
+  margin: 0 var(--s4);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-body);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-fast);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.topbar-title.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+@media (max-width: 640px) {
+  .topbar-title {
+    display: none;
+  } /* Hide on mobile to save topbar space */
 }

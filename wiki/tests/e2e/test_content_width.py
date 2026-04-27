@@ -1,4 +1,6 @@
-"""WIKI-038: Content width control in settings — Narrow/Default/Wide."""
+"""
+- Content width control in settings — Narrow/Default/Wide.
+"""
 
 
 def _open_settings(page):
@@ -18,7 +20,7 @@ def _get_content_width_var(page):
 
 
 def test_content_width_renders_three_buttons(wiki_page):
-    """WIKI-038: settings panel renders Narrow, Default, Wide buttons."""
+    """settings panel renders Narrow, Default, Wide buttons."""
     _open_settings(wiki_page)
     btns = wiki_page.locator("#settings-widths .settings-size-btn").all()
     labels = [b.inner_text() for b in btns]
@@ -26,7 +28,7 @@ def test_content_width_renders_three_buttons(wiki_page):
 
 
 def test_content_width_default_is_active_on_open(wiki_page):
-    """WIKI-038: Default button has .active class on first open (default setting)."""
+    """Default button has .active class on first open (default setting)."""
     _open_settings(wiki_page)
     default_btn = wiki_page.locator("#settings-widths .settings-size-btn").nth(1)
     assert "active" in default_btn.get_attribute("class")
@@ -36,14 +38,14 @@ def test_content_width_default_is_active_on_open(wiki_page):
 
 
 def test_narrow_sets_content_width_68ch(wiki_page):
-    """WIKI-038: clicking Narrow sets --content-width to 68ch."""
+    """clicking Narrow sets --content-width to 68ch."""
     _open_settings(wiki_page)
     wiki_page.locator("#settings-widths .settings-size-btn").nth(0).click()  # Narrow
     assert _get_content_width_var(wiki_page) == "68ch"
 
 
 def test_default_sets_content_width_80ch(wiki_page):
-    """WIKI-038: clicking Default sets --content-width to 80ch."""
+    """clicking Default sets --content-width to 80ch."""
     _open_settings(wiki_page)
     wiki_page.locator("#settings-widths .settings-size-btn").nth(
         0
@@ -53,14 +55,14 @@ def test_default_sets_content_width_80ch(wiki_page):
 
 
 def test_wide_sets_content_width_120ch(wiki_page):
-    """WIKI-038: clicking Wide sets --content-width to 120ch."""
+    """clicking Wide sets --content-width to 120ch."""
     _open_settings(wiki_page)
     wiki_page.locator("#settings-widths .settings-size-btn").nth(2).click()  # Wide
     assert _get_content_width_var(wiki_page) == "120ch"
 
 
 def test_width_button_gets_active_class(wiki_page):
-    """WIKI-038: clicked width button receives .active, others lose it."""
+    """clicked width button receives .active, others lose it."""
     _open_settings(wiki_page)
     wide_btn = wiki_page.locator("#settings-widths .settings-size-btn").nth(2)
     wide_btn.click()
@@ -73,7 +75,7 @@ def test_width_button_gets_active_class(wiki_page):
 
 
 def test_changing_width_sets_custom_preset(wiki_page):
-    """WIKI-038: manually changing width while on a named preset switches to custom."""
+    """manually changing width while on a named preset switches to custom."""
     _open_settings(wiki_page)
     wiki_page.locator("#settings-presets .settings-preset-card").nth(0).click()  # Dark
     wiki_page.locator("#settings-widths .settings-size-btn").nth(2).click()  # Wide
@@ -87,7 +89,7 @@ def test_changing_width_sets_custom_preset(wiki_page):
 
 
 def test_content_width_persists_across_reload(page, base_url):
-    """WIKI-038: selected content width survives a page reload via localStorage."""
+    """selected content width survives a page reload via localStorage."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
 

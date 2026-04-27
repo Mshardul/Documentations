@@ -1,6 +1,7 @@
-"""WIKI-012: hash-only URLs — no 404 on refresh
-WIKI-015: breadcrumb links reliable
-WIKI-029: Escape from content → wiki index; Escape closes search modal first
+"""
+- hash-only URLs — no 404 on refresh
+- breadcrumb links reliable
+- Escape from content → wiki index; Escape closes search modal first
 """
 
 
@@ -10,19 +11,19 @@ def _go_to_article(page, base_url):
 
 
 def test_hash_url_no_404(page, base_url):
-    """WIKI-012: fresh load of wiki index hash URL returns 200."""
+    """fresh load of wiki index hash URL returns 200."""
     response = page.goto(f"{base_url}/wiki/#system-design")
     assert response is not None and response.status == 200
 
 
 def test_hash_url_content_no_404(page, base_url):
-    """WIKI-012: fresh load of article hash URL returns 200."""
+    """fresh load of article hash URL returns 200."""
     response = page.goto(f"{base_url}/wiki/#system-design/caching")
     assert response is not None and response.status == 200
 
 
 def test_breadcrumb_home_link_works(wiki_page, base_url):
-    """WIKI-015: home breadcrumb link navigates back to home view."""
+    """home breadcrumb link navigates back to home view."""
     _go_to_article(wiki_page, base_url)
     wiki_page.wait_for_selector("#content-breadcrumb .breadcrumb-link")
     wiki_page.locator("#content-breadcrumb .breadcrumb-link").first.click()
@@ -30,7 +31,7 @@ def test_breadcrumb_home_link_works(wiki_page, base_url):
 
 
 def test_breadcrumb_wiki_link_works(wiki_page, base_url):
-    """WIKI-015: wiki breadcrumb link navigates to wiki index view."""
+    """wiki breadcrumb link navigates to wiki index view."""
     _go_to_article(wiki_page, base_url)
     links = wiki_page.locator("#content-breadcrumb .breadcrumb-link").all()
     assert len(links) >= 2
@@ -39,7 +40,7 @@ def test_breadcrumb_wiki_link_works(wiki_page, base_url):
 
 
 def test_escape_closes_search_modal(wiki_page):
-    """WIKI-029: Escape closes open search modal (takes priority over index nav)."""
+    """Escape closes open search modal (takes priority over index nav)."""
     wiki_page.keyboard.press("Meta+k")
     wiki_page.wait_for_selector("#global-search-modal:not(.hidden)")
     wiki_page.keyboard.press("Escape")
@@ -48,7 +49,7 @@ def test_escape_closes_search_modal(wiki_page):
 
 
 def test_escape_from_content_goes_to_index(wiki_page, base_url):
-    """WIKI-029: Escape from content view (with modal closed) navigates to wiki index."""
+    """Escape from content view (with modal closed) navigates to wiki index."""
     _go_to_article(wiki_page, base_url)
     wiki_page.keyboard.press("Escape")
     wiki_page.wait_for_selector("#view-index.active", timeout=5_000)

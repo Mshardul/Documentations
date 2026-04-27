@@ -24,5 +24,6 @@ ESTP = "ESTP"
 # Brand / proper names — typos splits camelCase so whitelist the token "hashi"
 hashi = "hashi"
 Jus = "Jus"  # JusPay
+FPR = "FPR"  # False Positive Rate
 # Conditional (exception for some example, etc)
 Yello = "Yello"

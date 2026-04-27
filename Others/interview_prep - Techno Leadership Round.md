@@ -1,60 +1,48 @@
-- [Technical Challenges Faced and Overcame](#technical-challenges-faced-and-overcame)
-  - [What key Technical challenges have you faced?](#what-key-technical-challenges-have-you-faced)
-    - [Architecture](#architecture)
-    - [Stakeholders](#stakeholders)
-    - [Team Lead](#team-lead)
-  - [How did you validate the effectiveness of project?](#how-did-you-validate-the-effectiveness-of-project)
-    - [Metrics](#metrics)
-    - [Prompt Engineering](#prompt-engineering)
-    - [Stakeholders](#stakeholders-1)
-  - [A failure or something you would do differently if given another chance.](#a-failure-or-something-you-would-do-differently-if-given-another-chance)
-    - [Standardization when different teams working on different modeules](#standardization-when-different-teams-working-on-different-modeules)
-    - [Decoupling Payments Module into 2 Microservices](#decoupling-payments-module-into-2-microservices)
-- [Technology Decision Making](#technology-decision-making)
-  - [When did you have to choose a Technology Stack (X over Y), and explain the trade-offs you had to consider?](#when-did-you-have-to-choose-a-technology-stack-x-over-y-and-explain-the-trade-offs-you-had-to-consider)
-    - [Golang over Python for high-throughtput microservice](#golang-over-python-for-high-throughtput-microservice)
-    - [Flask over Django](#flask-over-django)
-    - [FastAPI over Flask or Django](#fastapi-over-flask-or-django)
-    - [React over Angular](#react-over-angular)
-- [Influencing team to adopt a new Engineering Solution](#influencing-team-to-adopt-a-new-engineering-solution)
-  - [Ever had to Lead or Influence your team to adopt a new Engineering Approach or Best Practice. How did you convince them?](#ever-had-to-lead-or-influence-your-team-to-adopt-a-new-engineering-approach-or-best-practice-how-did-you-convince-them)
-    - [Moving from Monolithic to Microservices](#moving-from-monolithic-to-microservices)
-    - [Adopting CI/CD practices using GitLab CI/CD](#adopting-cicd-practices-using-gitlab-cicd)
-    - [Instilling a culture of Detailed PRs and Strict Code Reviews](#instilling-a-culture-of-detailed-prs-and-strict-code-reviews)
-- [Scalability](#scalability)
-  - [How did you Build Scalable Solution for thousands of people to join Online Video Conference at once?](#how-did-you-build-scalable-solution-for-thousands-of-people-to-join-online-video-conference-at-once)
-    - [focus on a microservices-based architecture and leveraging cloud scalability](#focus-on-a-microservices-based-architecture-and-leveraging-cloud-scalability)
-    - [continuous performance management and process adjustments](#continuous-performance-management-and-process-adjustments)
-    - [performance-aware culture in the team](#performance-aware-culture-in-the-team)
-- [Team Leadership](#team-leadership)
-  - [how did you manage coordination across different roles and ensure successful, on-time delivery of projects without compromising on quality?](#how-did-you-manage-coordination-across-different-roles-and-ensure-successful-on-time-delivery-of-projects-without-compromising-on-quality)
-    - [Architecture](#architecture-1)
-    - [Process](#process)
-    - [Collaboration](#collaboration)
-- [End-to-End Solution](#end-to-end-solution)
-  - [How did you approach the End-to-End Solution Design in terms of technical strategy and team leadership?](#how-did-you-approach-the-end-to-end-solution-design-in-terms-of-technical-strategy-and-team-leadership)
-    - [Architecture](#architecture-2)
-    - [Process](#process-1)
-    - [Team](#team)
-- [DevOps](#devops)
-  - [Describe how you implemented a CI/CD pipeline in one of your projects, and what impact it had on the team and product delivery?](#describe-how-you-implemented-a-cicd-pipeline-in-one-of-your-projects-and-what-impact-it-had-on-the-team-and-product-delivery)
-    - [Architecture](#architecture-3)
-    - [Process](#process-2)
-    - [Team](#team-1)
-- [Strengths](#strengths)
-  - [What are some of your strengths?](#what-are-some-of-your-strengths)
-    - [Technical](#technical)
-    - [Leadership](#leadership)
-- [Weeknesses](#weeknesses)
-  - [What are some of your weaknesses?](#what-are-some-of-your-weaknesses)
-- [Challenges Faced](#challenges-faced)
-  - [What challenges did you face in your career? and how did you overcome them?](#what-challenges-did-you-face-in-your-career-and-how-did-you-overcome-them)
-- [Conflicts](#conflicts)
-  - [Were there any instances of Conflicts between two teammates? How did you resolve them?](#were-there-any-instances-of-conflicts-between-two-teammates-how-did-you-resolve-them)
-  - [Strong Conflicts among team members](#strong-conflicts-among-team-members)
-    - [Architecture Disagreement During Refactor](#architecture-disagreement-during-refactor)
-    - [Code Ownership vs Delivery Velocity](#code-ownership-vs-delivery-velocity)
-- [Team Culture](#team-culture)
+- [What key Technical challenges have you faced?](#what-key-technical-challenges-have-you-faced)
+  - [Architecture](#architecture)
+  - [Stakeholders](#stakeholders)
+  - [Team Lead](#team-lead)
+- [How did you validate the effectiveness of project?](#how-did-you-validate-the-effectiveness-of-project)
+  - [Metrics](#metrics)
+  - [Prompt Engineering](#prompt-engineering)
+  - [Stakeholders](#stakeholders-1)
+- [A failure or something you would do differently if given another chance.](#a-failure-or-something-you-would-do-differently-if-given-another-chance)
+  - [Standardization when different teams working on different modeules](#standardization-when-different-teams-working-on-different-modeules)
+  - [Decoupling Payments Module into 2 Microservices](#decoupling-payments-module-into-2-microservices)
+- [When did you have to choose a Technology Stack (X over Y), and explain the trade-offs you had to consider?](#when-did-you-have-to-choose-a-technology-stack-x-over-y-and-explain-the-trade-offs-you-had-to-consider)
+  - [Golang over Python for high-throughput microservice](#golang-over-python-for-high-throughput-microservice)
+  - [Flask over Django](#flask-over-django)
+  - [FastAPI over Flask or Django](#fastapi-over-flask-or-django)
+  - [React over Angular](#react-over-angular)
+- [Ever had to Lead or Influence your team to adopt a new Engineering Approach or Best Practice. How did you convince them?](#ever-had-to-lead-or-influence-your-team-to-adopt-a-new-engineering-approach-or-best-practice-how-did-you-convince-them)
+  - [Moving from Monolithic to Microservices](#moving-from-monolithic-to-microservices)
+  - [Adopting CI/CD practices using GitLab CI/CD](#adopting-cicd-practices-using-gitlab-cicd)
+  - [Instilling a culture of Detailed PRs and Strict Code Reviews](#instilling-a-culture-of-detailed-prs-and-strict-code-reviews)
+- [How did you Build Scalable Solution for thousands of people to join Online Video Conference at once?](#how-did-you-build-scalable-solution-for-thousands-of-people-to-join-online-video-conference-at-once)
+  - [focus on a microservices-based architecture and leveraging cloud scalability](#focus-on-a-microservices-based-architecture-and-leveraging-cloud-scalability)
+  - [continuous performance management and process adjustments](#continuous-performance-management-and-process-adjustments)
+  - [performance-aware culture in the team](#performance-aware-culture-in-the-team)
+- [how did you manage coordination across different roles and ensure successful, on-time delivery of projects without compromising on quality?](#how-did-you-manage-coordination-across-different-roles-and-ensure-successful-on-time-delivery-of-projects-without-compromising-on-quality)
+  - [Architecture](#architecture-1)
+  - [Process](#process)
+  - [Collaboration](#collaboration)
+- [How did you approach the End-to-End Solution Design in terms of technical strategy and team leadership?](#how-did-you-approach-the-end-to-end-solution-design-in-terms-of-technical-strategy-and-team-leadership)
+  - [Architecture](#architecture-2)
+  - [Process](#process-1)
+  - [Team](#team)
+- [Describe how you implemented a CI/CD pipeline in one of your projects, and what impact it had on the team and product delivery?](#describe-how-you-implemented-a-cicd-pipeline-in-one-of-your-projects-and-what-impact-it-had-on-the-team-and-product-delivery)
+  - [Architecture](#architecture-3)
+  - [Process](#process-2)
+  - [Team](#team-1)
+- [What are some of your strengths?](#what-are-some-of-your-strengths)
+  - [Technical](#technical)
+  - [Leadership](#leadership)
+- [What are some of your weaknesses?](#what-are-some-of-your-weaknesses)
+- [What challenges did you face in your career? and how did you overcome them?](#what-challenges-did-you-face-in-your-career-and-how-did-you-overcome-them)
+- [Were there any instances of Conflicts between two teammates? How did you resolve them?](#were-there-any-instances-of-conflicts-between-two-teammates-how-did-you-resolve-them)
+- [Strong Conflicts among team members](#strong-conflicts-among-team-members)
+  - [Architecture Disagreement During Refactor](#architecture-disagreement-during-refactor)
+  - [Code Ownership vs Delivery Velocity](#code-ownership-vs-delivery-velocity)
 
 # Technical Challenges Faced and Overcame
 
@@ -63,7 +51,7 @@
 ### Architecture
 
 - Designing for **high scalability** and **availability**
-  - Utilized **Microservice Architecture** and leveraging **AWS-managed Services** for **auto-scaling** and **high resposiveness**.
+  - Utilized **Microservice Architecture** and leveraging **AWS-managed Services** for **auto-scaling** and **high responsiveness**.
   - implemented **edge caching via CloudFront** and used **AWS Lambda** for **burstable workloads**.
   - migrated stateful components to **Redis** to reduce database load.
 - Integration of 5 different social media APIs with varying data formats and rate limits:
@@ -144,7 +132,7 @@
 
 ## When did you have to choose a Technology Stack (X over Y), and explain the trade-offs you had to consider?
 
-### Golang over Python for high-throughtput microservice
+### Golang over Python for high-throughput microservice
 
 - Golang’s **concurrency model** and **compiled performance** excelled for the **scale** we needed.
 - Golang gave us **efficient goroutines** and **lower latency** under load.
@@ -359,7 +347,7 @@
 ### Technical
 
 - **System Design and Scalability Thinking**: eg using AWS DynamoDB over a SQL database for the most load-intensive parts of the system.
-- **Cross-Functional Collaboration**: eg collaborating with Ops and Finanace Teams for Payments Integration.
+- **Cross-Functional Collaboration**: eg collaborating with Ops and Finance Teams for Payments Integration.
 - **Quick and Learned Decision Making**: eg using Step Functions when emails were being marked as spam.
 - **Driving Engineering Best Practices**: eg introducing PR Templates, GitLab CI/CD, code review guidelines across teams
 - **Proper Documentation**: eg creating a clear documentation for the new architecture.

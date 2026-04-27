@@ -1,0 +1,28 @@
+[files]
+extend-exclude = ["shared/highlight/"]
+
+# Words that typos incorrectly flags — add new entries here as encountered.
+# Format: wrong-detection = "correct-spelling"  (map to itself = mark as correct)
+[default.extend-words]
+# Myers-Briggs type indicators
+INFP = "INFP"
+INFJ = "INFJ"
+INTJ = "INTJ"
+INTP = "INTP"
+ENFP = "ENFP"
+ENFJ = "ENFJ"
+ENTJ = "ENTJ"
+ENTP = "ENTP"
+ISFP = "ISFP"
+ISFJ = "ISFJ"
+ISTJ = "ISTJ"
+ISTP = "ISTP"
+ESFP = "ESFP"
+ESFJ = "ESFJ"
+ESTJ = "ESTJ"
+ESTP = "ESTP"
+# Brand / proper names
+HashiCorp = "HashiCorp"
+Jus = "Jus"  # JusPay
+# Conditional (exception for some example, etc)
+Yello = "Yello"

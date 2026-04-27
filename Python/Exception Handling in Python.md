@@ -1,5 +1,5 @@
 - [Exceptions](#exceptions)
-  - [Introdution to Exceptions](#introdution-to-exceptions)
+  - [Introduction to Exceptions](#introduction-to-exceptions)
   - [Built-in Exceptions](#built-in-exceptions)
     - [Base Exceptions](#base-exceptions)
     - [Standard Error Exceptions](#standard-error-exceptions)
@@ -32,7 +32,7 @@
 
 # Exceptions
 
-## Introdution to Exceptions
+## Introduction to Exceptions
 
 - An exception is an event that occurs during the execution of a program that disrupts the normal flow of instructions.
 - In Python, exceptions are objects that represent these error conditions.

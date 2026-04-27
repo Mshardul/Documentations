@@ -1,0 +1,61 @@
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — MOBILE
+   ═══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .content-layout {
+    flex-direction: column;
+    padding: var(--s5) var(--s4) var(--s16);
+  }
+  .toc-sidebar {
+    position: static;
+    width: 100%;
+    max-height: none;
+    display: none; /* hidden by default, shown via mobile btn */
+  }
+  .toc-mobile-btn {
+    display: flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-header {
+    padding: var(--s16) var(--s4) var(--s8);
+  }
+  .home-main {
+    padding: 0 var(--s4) var(--s12);
+  }
+  .page-hero {
+    padding: var(--s8) var(--s4) var(--s6);
+  }
+  .index-main {
+    padding: var(--s6) var(--s4) var(--s12);
+  }
+  .topbar-inner {
+    padding: var(--s3) var(--s4);
+  }
+  .scroll-top-btn {
+    bottom: var(--s5);
+    right: var(--s5);
+  }
+  .toc-mobile-btn {
+    bottom: 70px;
+    right: var(--s5);
+  }
+
+  .markdown-body h1 {
+    font-size: var(--text-2xl);
+  }
+  .markdown-body h2 {
+    font-size: var(--text-xl);
+  }
+  .markdown-body h3 {
+    font-size: var(--text-lg);
+  }
+  .markdown-body table {
+    font-size: var(--text-xs);
+  }
+  .markdown-body th,
+  .markdown-body td {
+    padding: var(--s2) var(--s3);
+  }
+}

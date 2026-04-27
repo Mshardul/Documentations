@@ -7,7 +7,7 @@
 - [AWS](#aws)
 - [System Development](#system-development)
 - [Golang](#golang)
-- [Authentication and Autherization](#authentication-and-autherization)
+- [Authentication and Authorization](#authentication-and-authorization)
 - [System Design Components](#system-design-components)
 - [Case Studies](#case-studies)
 
@@ -58,7 +58,7 @@
 
 - [Concurrency in Go: From Basics to Advanced Concepts](https://dev.to/chanchals7/concurrency-in-go-from-basics-to-advanced-concepts-1b9n)
 
-# Authentication and Autherization
+# Authentication and Authorization
 
 - [understand OAuth](https://dev.to/fomalhautb/i-finally-understand-oauth-2ldf)
 
@@ -74,5 +74,5 @@
 
 # Case Studies
 
-- [Agoda using Kafka for Terrabytes of data](https://newsletter.systemdesigncodex.com/p/kafka-load-balancing-at-agoda)
+- [Agoda using Kafka for Terabytes of data](https://newsletter.systemdesigncodex.com/p/kafka-load-balancing-at-agoda)
 -

@@ -167,7 +167,7 @@
 - Examples
   - Deployment of checkout-service v2.3.1 to prod
 - **In Datadog**,
-  - appears as event stream adn markers on timeseries graphs.
+  - appears as event stream and markers on timeseries graphs.
   - very useful in correlating "metric spike started exactly at deploy X"
 
 ##### RUM (Real User Monitoring)

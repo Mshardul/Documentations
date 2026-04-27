@@ -561,7 +561,7 @@ print(x)
 
 ## Tags
 
-#pyton #enumerate #data_structure #iterator #iterable #tuple
+#python #enumerate #data_structure #iterator #iterable #tuple
 
 ## Question
 

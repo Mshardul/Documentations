@@ -36,7 +36,7 @@ nest g service user
 # Controller
 
 - responsible for handling incoming requests and returning responses to the client.
-- The `routing mchanism` controls which controller receives which request.
+- The `routing mechanism` controls which controller receives which request.
 
 ## Controller Skeleton
 
@@ -47,7 +47,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './users.service';
 
-@Contoller('users')           // controller for '/users[...]'
+@Controller('users')           // controller for '/users[...]'
 export class UsersController {
 
   constructor(private readonly usersService: UsersService)
@@ -78,5 +78,5 @@ export class UsersController {
 
 ## 2 typical use cases
 
-- **transformation**: tranform input data to the desired form (eg from string to int)
+- **transformation**: transform input data to the desired form (eg from string to int)
 - **validation**: evaluate input data; if valid, simply pass it through unchanged; otherwise throw an exception.

@@ -31,15 +31,15 @@
 - [Categories based on ordering in a sequence](#categories-based-on-ordering-in-a-sequence)
   - [Ordered Sequences:](#ordered-sequences)
   - [Unordered Sequences:](#unordered-sequences)
-- [Time Complexities Comparision](#time-complexities-comparision)
-  - [Comparision Table](#comparision-table)
+- [Time Complexities Comparison](#time-complexities-comparison)
+  - [Comparison Table](#comparison-table)
   - [Rule of Thumb](#rule-of-thumb)
 
 # Lists
 
 ## List creation
 
-### Baisc List creation
+### Basic List creation
 
 ```python
 lst = []
@@ -837,7 +837,7 @@ multi_line_string = '''This is a
 multi-line string'''
 ```
 
-### String creation using the str() Constructo
+### String creation using the str() Constructor
 
 ```python
 number = 123
@@ -1026,9 +1026,9 @@ print(raw_string)                         # Output: C:\newfolder\test
 
 - `set`, `frozenset`, `dict`
 
-# Time Complexities Comparision
+# Time Complexities Comparison
 
-## Comparision Table
+## Comparison Table
 
 | Tables                     | List | Tuple | Set  | Dictionary | String |
 | -------------------------- | :--: | :---: | :--: | :--------: | :----: |

@@ -1,0 +1,83 @@
+/* ═══════════════════════════════════════════════
+   DESIGN TOKENS — edit here to retheme everything
+   ═══════════════════════════════════════════════ */
+:root {
+  /* Background layers */
+  --bg: #0f1117;
+  --surface: #161b27;
+  --surface-2: #1e2537;
+  --surface-3: #252d42;
+  --surface-hover: rgba(255, 255, 255, 0.04);
+
+  /* Borders */
+  --border: #252d42;
+  --border-2: #2e3a54;
+
+  /* Text */
+  --text-heading: #f1f5f9;
+  --text-body: #cbd5e1;
+  --text-muted: #64748b;
+  --text-subtle: #3d4f6b;
+
+  /* Accent (indigo) */
+  --accent: #6366f1;
+  --accent-light: #818cf8;
+  --accent-dim: rgba(99, 102, 241, 0.12);
+  --accent-glow: rgba(99, 102, 241, 0.25);
+
+  /* Semantic callout colors */
+  --callout-interview-border: #6366f1;
+  --callout-interview-bg: rgba(99, 102, 241, 0.07);
+  --callout-warning-border: #f59e0b;
+  --callout-warning-bg: rgba(245, 158, 11, 0.07);
+  --callout-thought-border: #a855f7;
+  --callout-thought-bg: rgba(168, 85, 247, 0.07);
+  --callout-decision-border: #10b981;
+  --callout-decision-bg: rgba(16, 185, 129, 0.07);
+
+  /* Typography */
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+
+  /* Type scale */
+  --text-xs: 0.72rem;
+  --text-sm: 0.85rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  /* Spacing scale */
+  --s1: 0.25rem;
+  --s2: 0.5rem;
+  --s3: 0.75rem;
+  --s4: 1rem;
+  --s5: 1.25rem;
+  --s6: 1.5rem;
+  --s8: 2rem;
+  --s10: 2.5rem;
+  --s12: 3rem;
+  --s16: 4rem;
+  --s20: 5rem;
+
+  /* Border radius */
+  --r-sm: 6px;
+  --r: 10px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
+  --shadow-accent: 0 0 0 1px var(--accent), 0 4px 24px var(--accent-glow);
+
+  /* Transitions */
+  --t-fast: 0.12s ease;
+  --t: 0.2s ease;
+  --t-slow: 0.35s ease;
+}

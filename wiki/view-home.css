@@ -1,0 +1,188 @@
+/* ═══════════════════════════════════════════════
+   VIEW 1 — HOME
+   ═══════════════════════════════════════════════ */
+#view-home {
+  position: relative;
+  flex-direction: column;
+  min-height: 100vh;
+}
+#view-home.active {
+  display: flex; /* override .view.active { display:block } so home uses flex layout */
+}
+
+/* Background grid pattern */
+.home-bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(var(--accent-dim) 1px, transparent 1px),
+    linear-gradient(90deg, var(--accent-dim) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Radial glow behind hero */
+.home-glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 500px;
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    var(--accent-dim) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home-header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: var(--s20) var(--s6) var(--s12);
+}
+
+.home-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  background: var(--accent-dim);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  padding: var(--s1) var(--s3);
+  border-radius: var(--r-full);
+  margin-bottom: var(--s6);
+}
+
+.home-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  color: var(--text-heading);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: var(--s4);
+}
+
+.home-subtitle {
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.home-main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 var(--s6) var(--s20);
+}
+
+/* Wiki card grid */
+.wiki-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s5);
+}
+
+@media (min-width: 768px) {
+  .wiki-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 1440px) {
+  .wiki-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Wiki card */
+.wiki-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s6);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  min-height: 220px;
+  overflow: hidden;
+  transition: transform var(--t), border-color var(--t), box-shadow var(--t);
+}
+.wiki-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--card-rgb, 99, 102, 241), 0.06) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+  transition: opacity var(--t);
+  opacity: 0;
+}
+.wiki-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-glow), 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.wiki-card:hover::before {
+  opacity: 1;
+}
+
+.wiki-card-icon {
+  font-size: 2.25rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.3));
+}
+.wiki-card-body {
+  flex: 1;
+}
+.wiki-card-title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: var(--s2);
+  letter-spacing: -0.01em;
+}
+.wiki-card-desc {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.wiki-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--s2);
+}
+.wiki-card-count {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--accent-light);
+  background: var(--accent-dim);
+  padding: var(--s1) var(--s3);
+  border-radius: var(--r-full);
+}
+.wiki-card-arrow {
+  font-size: var(--text-lg);
+  color: var(--text-subtle);
+  transition: color var(--t-fast), transform var(--t-fast);
+}
+.wiki-card:hover .wiki-card-arrow {
+  color: var(--accent-light);
+  transform: translateX(3px);
+}

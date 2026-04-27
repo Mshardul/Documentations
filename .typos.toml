@@ -1,5 +1,5 @@
 [files]
-extend-exclude = ["shared/highlight/"]
+extend-exclude = ["shared/highlight/", ".typos.toml"]
 
 # Words that typos incorrectly flags — add new entries here as encountered.
 # Format: wrong-detection = "correct-spelling"  (map to itself = mark as correct)
@@ -21,8 +21,8 @@ ESFP = "ESFP"
 ESFJ = "ESFJ"
 ESTJ = "ESTJ"
 ESTP = "ESTP"
-# Brand / proper names
-HashiCorp = "HashiCorp"
+# Brand / proper names — typos splits camelCase so whitelist the token "hashi"
+hashi = "hashi"
 Jus = "Jus"  # JusPay
 # Conditional (exception for some example, etc)
 Yello = "Yello"

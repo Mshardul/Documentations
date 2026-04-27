@@ -99,7 +99,8 @@ function showView(id) {
     .forEach((v) => v.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   state.currentView = id.replace("view-", "");
-  window.scrollTo(0, 0);
+
+  if (id !== "view-index") window.scrollTo(0, 0);
 
   const isContent = id === "view-content";
   progressBar.classList.toggle("visible", isContent);
@@ -237,6 +238,10 @@ async function renderIndex(wiki) {
     state.indexSections = parseIndexMd(md, basePath);
     renderIndexSections(state.indexSections, wiki);
     populateIndexReadTimes();
+
+    const savedScroll = localStorage.getItem(`wiki-index-scroll-${wiki.id}`);
+    if (savedScroll)
+      window.scrollTo({ top: parseInt(savedScroll, 10), behavior: "instant" });
   } catch (err) {
     sectionsEl.innerHTML = `<p class="error">Failed to load index. (${err.message})</p>`;
   }
@@ -818,6 +823,10 @@ function buildTOC(contentEl) {
       e.preventDefault();
       h.scrollIntoView({ behavior: "smooth", block: "start" });
 
+      // Visual pulse on target heading
+      h.classList.add("toc-heading-pulse");
+      setTimeout(() => h.classList.remove("toc-heading-pulse"), 600);
+
       const url = new URL(location.href);
       url.searchParams.set("a", h.id);
       history.replaceState(history.state, "", url.toString());
@@ -882,6 +891,7 @@ tocMobileOverlay.addEventListener("click", () => {
    ═══════════════════════════════════════════════════════════════ */
 const scrollTopBtn = document.getElementById("scroll-top");
 let _scrollSaveTimer;
+let _indexScrollTimer;
 
 window.addEventListener(
   "scroll",
@@ -910,6 +920,16 @@ window.addEventListener(
             window.scrollY
           );
       }, 400);
+    }
+
+    if (state.currentView === "index" && state.currentWikiId) {
+      clearTimeout(_indexScrollTimer);
+      _indexScrollTimer = setTimeout(() => {
+        localStorage.setItem(
+          `wiki-index-scroll-${state.currentWikiId}`,
+          window.scrollY
+        );
+      }, 300);
     }
   },
   { passive: true }
@@ -1234,10 +1254,13 @@ document
   .addEventListener("click", () => Settings.close());
 
 document.addEventListener("keydown", (e) => {
+  // ⌘K: Global Search
   if ((e.metaKey || e.ctrlKey) && e.key === "k") {
     e.preventDefault();
     openGlobalSearch();
   }
+
+  // Escape: Close modals or navigate back from content
   if (e.key === "Escape") {
     if (!gSearchModal.classList.contains("hidden")) {
       closeGlobalSearch();
@@ -1245,6 +1268,25 @@ document.addEventListener("keydown", (e) => {
       Settings.close();
     } else if (state.currentView === "content" && state.currentWikiId) {
       navigate(state.currentWikiId);
+    }
+  }
+
+  // Keyboard shortcuts for content view (when not focused on input/textarea)
+  if (state.currentView === "content") {
+    const tag = document.activeElement.tagName;
+    const isInput =
+      tag === "INPUT" ||
+      tag === "TEXTAREA" ||
+      document.activeElement.isContentEditable;
+    if (!isInput) {
+      if (e.key === "b" || e.key === "B") {
+        Bookmarks.toggle();
+        e.preventDefault();
+      }
+      if (e.key === ",") {
+        Settings.isOpen() ? Settings.close() : Settings.open();
+        e.preventDefault();
+      }
     }
   }
 });

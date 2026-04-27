@@ -1,6 +1,6 @@
 """
-- TLDR hover previews (WIKI-017)
-- External and Anchor link handling (WIKI-049)
+- TLDR hover previews (017)
+- External and Anchor link handling (049)
 """
 
 
@@ -27,7 +27,7 @@ def _load_mock_article(page, base_url, content, slug="mock", extra_routes=None):
 
 
 def test_tldr_hover_preview(page, base_url):
-    """WIKI-017: Hovering an internal link shows the TLDR in a popup."""
+    """017: Hovering an internal link shows the TLDR in a popup."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
 
@@ -62,7 +62,7 @@ def test_tldr_hover_preview(page, base_url):
 
 
 def test_external_links_target_blank(page, base_url):
-    """WIKI-049: External links automatically get target='_blank'."""
+    """049: External links automatically get target='_blank'."""
     _load_mock_article(
         page, base_url, "# Ext\n\n[Google](https://google.com)", slug="ext"
     )
@@ -76,7 +76,7 @@ def test_external_links_target_blank(page, base_url):
 
 
 def test_anchor_links_scroll_and_update_url(page, base_url):
-    """WIKI-049: Anchor links update the ?a= URL param without breaking the hash."""
+    """049: Anchor links update the ?a= URL param without breaking the hash."""
     _load_mock_article(
         page,
         base_url,

@@ -174,5 +174,5 @@ GitHub (Argo CD Repo Commit)
 3. Does Helm updates the YAML file content? Like, if I check in my GitHub Repo, will the YAML file be changed? What would be the commit message?
 4. How does Argo CD syncs the EKS Cluster? How does it tell the EKS Cluster about the new image?
 5. I understand that GitHub Action from the `project-be` repo pushes the entire image to EKS. But how does Kubernetes know which image to pull.
-6. Just updating the Kubernetes Service Endpoints is enough for NGINX to route the traffic to the new pods? Exaplain more on Kubernetes Service Enddpoint. Are all the {service_name: [endpoints]} data written in a single file? If yes, where is this file? Do I have access to update this file?
+6. Just updating the Kubernetes Service Endpoints is enough for NGINX to route the traffic to the new pods? Explain more on Kubernetes Service Enddpoint. Are all the {service_name: [endpoints]} data written in a single file? If yes, where is this file? Do I have access to update this file?
 7. How does all of these service handle authorization? Eg not all team members should be able to create/update an existing Kubernetes pod/cluster.

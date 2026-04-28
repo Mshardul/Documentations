@@ -1,7 +1,7 @@
 [files]
 extend-exclude = ["shared/highlight/", ".typos.toml"]
 
-# Words that typos incorrectly flags — add new entries here as encountered.
+# Words that typos incorrectly flags - add new entries here as encountered.
 # Format: wrong-detection = "correct-spelling"  (map to itself = mark as correct)
 [default.extend-words]
 # Myers-Briggs type indicators
@@ -21,7 +21,7 @@ ESFP = "ESFP"
 ESFJ = "ESFJ"
 ESTJ = "ESTJ"
 ESTP = "ESTP"
-# Brand / proper names — typos splits camelCase so whitelist the token "hashi"
+# Brand / proper names - typos splits camelCase so whitelist the token "hashi"
 hashi = "hashi"
 Jus = "Jus"  # JusPay
 FPR = "FPR"  # False Positive Rate

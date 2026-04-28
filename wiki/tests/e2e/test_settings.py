@@ -307,6 +307,18 @@ def test_size_l_increases_font_size(wiki_page):
 # ── accent selection ──────────────────────────────────────────────────────────
 
 
+def test_accent_swatches_have_aria_labels(wiki_page):
+    """Accent swatches are icon-only buttons — each must have aria-label for screen readers."""
+    _open_settings(wiki_page)
+    swatches = wiki_page.locator("#settings-accents .settings-accent-swatch").all()
+    assert len(swatches) > 0
+    for swatch in swatches:
+        label = swatch.get_attribute("aria-label")
+        assert label and label.strip(), (
+            f"Accent swatch missing aria-label: {swatch.get_attribute('style')}"
+        )
+
+
 def test_accent_swatch_updates_css_var(wiki_page):
     """clicking an accent swatch updates --accent CSS variable."""
     _open_settings(wiki_page)

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   WIKI DATA — add new wikis here
+   WIKI DATA - add new wikis here
    ═══════════════════════════════════════════════════════════════ */
 const WIKIS = [
   {
@@ -88,11 +88,11 @@ const state = {
   titleObserver: null,
 };
 
-/* ─── Shared caches (mutated by render.js and search.js — must live here) ─── */
+/* ─── Shared caches (mutated by render.js and search.js - must live here) ─── */
 const readTimeCache = {};
 const indexCache = {};
 const allSearchCache = { loaded: false, loading: false, entries: [] };
-const STUB_THRESHOLD = 200; // bytes — stubs are just "# Title\n---"
+const STUB_THRESHOLD = 200; // bytes - stubs are just "# Title\n---"
 
 /* ─── Pure utilities (placed here to avoid circular deps between storage/render) ─── */
 function escHtml(str) {

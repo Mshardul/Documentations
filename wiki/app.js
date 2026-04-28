@@ -15,7 +15,7 @@ import { progressBar, navigate, route, navigateToContent } from "./render.js";
 import { openGlobalSearch, closeGlobalSearch } from "./search.js";
 
 /* ═══════════════════════════════════════════════════════════════
-   WINDOW GLOBALS — required for onclick strings in HTML and
+   WINDOW GLOBALS - required for onclick strings in HTML and
    dynamically built innerHTML throughout the app
    ═══════════════════════════════════════════════════════════════ */
 window.state = state;
@@ -172,7 +172,7 @@ window.addEventListener("hashchange", () => {
 });
 
 /* ═══════════════════════════════════════════════════════════════
-   INIT — parse hash on load
+   INIT - parse hash on load
    ═══════════════════════════════════════════════════════════════ */
 (function init() {
   applySettingsToDOM(getSettings());

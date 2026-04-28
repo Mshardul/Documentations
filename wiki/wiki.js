@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   WIKI DATA — add new wikis here
+   WIKI DATA - add new wikis here
    ═══════════════════════════════════════════════════════════════ */
 const WIKIS = [
   {
@@ -185,7 +185,7 @@ window.addEventListener("hashchange", () => {
 });
 
 /* ═══════════════════════════════════════════════════════════════
-   VIEW 1 — HOME
+   VIEW 1 - HOME
    ═══════════════════════════════════════════════════════════════ */
 function renderHome() {
   const grid = document.getElementById("wiki-grid");
@@ -211,7 +211,7 @@ function renderHome() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   VIEW 2 — WIKI INDEX
+   VIEW 2 - WIKI INDEX
    ═══════════════════════════════════════════════════════════════ */
 async function renderIndex(wiki) {
   state.currentWikiId = wiki.id;
@@ -302,7 +302,7 @@ function readingTime(text) {
 
 const readTimeCache = {};
 
-const STUB_THRESHOLD = 200; // bytes — stubs are just "# Title\n---"
+const STUB_THRESHOLD = 200; // bytes - stubs are just "# Title\n---"
 
 async function populateIndexReadTimes() {
   const badges = Array.from(
@@ -420,7 +420,7 @@ function fuzzyMatch(query, text) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   VIEW 3 — CONTENT
+   VIEW 3 - CONTENT
    ═══════════════════════════════════════════════════════════════ */
 function navigateToContent(wikiId, encodedPath, encodedTitle, slug) {
   const filePath = decodeURIComponent(encodedPath);
@@ -1084,7 +1084,7 @@ async function loadAllSearchEntries() {
           entries.push({ wiki, section: section.heading, ...card });
         }
       }
-      // Detect stubs concurrently — reuse readTimeCache if already populated
+      // Detect stubs concurrently - reuse readTimeCache if already populated
       await Promise.all(
         entries.map(async (entry) => {
           if (readTimeCache[entry.path] === undefined) {
@@ -1155,7 +1155,7 @@ function scoreMatch(q, entry) {
   if (title.startsWith(ql)) return 90;
   if (title.includes(ql)) return 80;
   if (fuzzyMatch(ql, title)) return 60;
-  // For short queries, stop here — avoid false positives from desc/section fuzzy
+  // For short queries, stop here - avoid false positives from desc/section fuzzy
   if (short) return 0;
   if (desc.includes(ql)) return 40;
   if (fuzzyMatch(ql, desc)) return 20;
@@ -1601,7 +1601,7 @@ async function updateOfflineBtn() {
   btn.classList.toggle("active", cached);
   if (dlIcon) dlIcon.style.display = cached ? "none" : "";
   if (chkIcon) chkIcon.style.display = cached ? "" : "none";
-  btn.title = cached ? "Saved offline — click to remove" : "Save for offline";
+  btn.title = cached ? "Saved offline - click to remove" : "Save for offline";
 }
 
 const Offline = {
@@ -2064,7 +2064,7 @@ const Wiki = { goHome: () => navigate("") };
 const GlobalSearch = { open: openGlobalSearch, close: closeGlobalSearch };
 
 /* ═══════════════════════════════════════════════════════════════
-   INIT — parse hash on load
+   INIT - parse hash on load
    ═══════════════════════════════════════════════════════════════ */
 (function init() {
   applySettingsToDOM(getSettings());

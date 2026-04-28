@@ -52,7 +52,7 @@ def test_tldr_hover_preview(page, base_url):
     )
     page.wait_for_selector("a:has-text('Link')", timeout=5_000)
 
-    # Dispatch mouseenter directly — Playwright's hover() fires mouseleave immediately
+    # Dispatch mouseenter directly - Playwright's hover() fires mouseleave immediately
     # (due to internal mouse positioning), which cancels the 400 ms preview timer.
     page.locator("a:has-text('Link')").dispatch_event("mouseenter")
     page.wait_for_selector("#hover-preview.visible", timeout=5_000)

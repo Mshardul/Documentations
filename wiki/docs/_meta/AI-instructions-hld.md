@@ -1,4 +1,4 @@
-# AI Instructions — HLD Pages
+# AI Instructions - HLD Pages
 
 ## TOPIC
 
@@ -9,8 +9,8 @@
 ## NEVER
 
 - Start a section with "In this section, we will…" or "This page covers…"
-- Define a term inline if it has its own linked page — link it instead
-- Generate symmetric section depth — depth must reflect complexity, not balance
+- Define a term inline if it has its own linked page - link it instead
+- Generate symmetric section depth - depth must reflect complexity, not balance
 - Use "important", "note that", or "it is worth mentioning" as padding
 - Repeat the Interviewer TL;DR verbatim in the Key Takeaway
 - Open with history or evolution of the technology
@@ -22,8 +22,8 @@
 
 - **Goal:** Interview prep (end-to-end system walkthrough, trade-offs, scaling decisions, failure modes) + production-grade architectural mastery
 - **Persona:** Senior system design interviewer and technical architect
-- **Audience:** Engineers with adjacent knowledge. Self-contained — no external resources required.
-- **Approach:** Progressive disclosure — intuitive mental models → architectural decisions → production trade-offs & interview defense.
+- **Audience:** Engineers with adjacent knowledge. Self-contained - no external resources required.
+- **Approach:** Progressive disclosure - intuitive mental models → architectural decisions → production trade-offs & interview defense.
 
 ---
 
@@ -44,21 +44,21 @@
 
 ---
 
-## PAGE STRUCTURE (FIXED — ALWAYS IN THIS ORDER)
+## PAGE STRUCTURE (FIXED - ALWAYS IN THIS ORDER)
 
-1. **Title** — `# Design: [System Name]`
-2. **Prerequisites** — bulleted list. Each bullet has a tier and a context-specific reason:
+1. **Title** - `# Design: [System Name]`
+2. **Prerequisites** - bulleted list. Each bullet has a tier and a context-specific reason:
 
-   - `[Must read]` — page won't make sense without this
-   - `[Recommended]` — deepens understanding but page works without it
+   - `[Must read]` - page won't make sense without this
+   - `[Recommended]` - deepens understanding but page works without it
 
-   Format: `**[Name](relative-link)** [Must read | Recommended] — one sentence on why it matters for THIS system specifically.`
+   Format: `**[Name](relative-link)** [Must read | Recommended] - one sentence on why it matters for THIS system specifically.`
 
-   ✅ `**[Consistent Hashing](../algorithms/consistent-hashing.md)** [Must read] — the URL shortener's redirect service uses consistent hashing to route short codes to shards; without this, the sharding section won't make sense.`
-   ❌ `**[Consistent Hashing](../algorithms/consistent-hashing.md)** — Knowledge of consistent hashing.`
+   ✅ `**[Consistent Hashing](../algorithms/consistent-hashing.md)** [Must read] - the URL shortener's redirect service uses consistent hashing to route short codes to shards; without this, the sharding section won't make sense.`
+   ❌ `**[Consistent Hashing](../algorithms/consistent-hashing.md)** - Knowledge of consistent hashing.`
 
-3. **Table of Contents** — flat linked list of all H2 sections. Always after Prerequisites.
-4. **TLDR** — up to 5 sentences (≤50 words), plain prose, no bullet points. Captures the core architecture decision and key trade-off. Self-contained — reader understands the system's essence without reading anything else. Must reflect the system thesis identified in Phase 0.
+3. **Table of Contents** - flat linked list of all H2 sections. Always after Prerequisites.
+4. **TLDR** - up to 5 sentences (≤50 words), plain prose, no bullet points. Captures the core architecture decision and key trade-off. Self-contained - reader understands the system's essence without reading anything else. Must reflect the system thesis identified in Phase 0.
 
    ✅ "A URL shortener maps long URLs to short codes and redirects users at high read volume. The core challenge is generating unique, collision-free short codes at scale while keeping redirect latency under 10ms. Write path uses a distributed ID generator; read path is a cache-heavy lookup with consistent hashing for shard routing."
    ❌ "This page designs a URL shortener. We will cover the requirements, architecture, database design, and failure modes of the system."
@@ -71,7 +71,7 @@ Then the main content follows.
 
 - Plain text only. NO markdown code blocks, NO fenced sections.
 - Hierarchical numbering: 1, 1.1, 1.1.1 (depth scales to importance, no fixed limit).
-- Short, crisp phrases only — no sentences, no explanations.
+- Short, crisp phrases only - no sentences, no explanations.
 - Indent 4 spaces per level.
 - IMPORTANT: Index is high signal-to-noise only. Zero fluff, zero basic definitions. Content follows progressive disclosure (see CONTENT GENERATION SPECIFICATIONS).
 - No cross-references like "see section 4.2" in the index.
@@ -79,8 +79,8 @@ Then the main content follows.
 - Vendor-specific implementations: keep bullet generic. Examples belong in content only.
 - When a component or algorithm has its own page, append `(→ filename.md)` to the bullet as a reminder to inline-link during content generation.
 
-  ✅ `1.1 Short code generation — collision avoidance at scale`
-  ✅ `3.2.1 Hot shard — key salting, adaptive routing`
+  ✅ `1.1 Short code generation - collision avoidance at scale`
+  ✅ `3.2.1 Hot shard - key salting, adaptive routing`
   ❌ `1.1 Overview of how the system generates short URLs`
   ❌ `3.2.1 Discussion of failure modes in the sharding layer`
 
@@ -88,11 +88,11 @@ Then the main content follows.
 
 ## HEADING STYLE RULES
 
-- **Concept / subsystem H3s:** Clean name only — no trailing description. H4 for sub-concepts.
+- **Concept / subsystem H3s:** Clean name only - no trailing description. H4 for sub-concepts.
   - ✅ `### Write-Ahead Log` with `#### Crash Recovery` below
-  - ❌ `### Write-Ahead Log — Crash Recovery & Durability Guarantees`
+  - ❌ `### Write-Ahead Log - Crash Recovery & Durability Guarantees`
 - **Failure mode H3s:** Dash acceptable when mitigation is integral to naming the pattern.
-  - ✅ `### Hot Partition — Key Salting, Adaptive Routing`
+  - ✅ `### Hot Partition - Key Salting, Adaptive Routing`
 - **No heading-as-sentence.** Headings must be crisp noun phrases.
 
 ---
@@ -103,13 +103,13 @@ Then the main content follows.
 
 Each H2 section follows this fixed envelope, in this order:
 
-1. **Interviewer TL;DR** — 1-2 sentences. The single most important thing to say in an interview. Optimized for quick revision.
-2. **Mental model** — One sentence. An intuitive anchor: what this architectural piece IS and why it matters in this system.
-3. **Body** — Architectural decisions → alternatives considered and rejected → trade-offs, failure modes, scaling inflection points. Depth follows importance.
-4. **Callouts** — Interview Lens and Decision Framework where applicable (see Callouts below).
-5. **Key Takeaway** — 1-2 sentences. The most important decision or trade-off from this section.
+1. **Interviewer TL;DR** - 1-2 sentences. The single most important thing to say in an interview. Optimized for quick revision.
+2. **Mental model** - One sentence. An intuitive anchor: what this architectural piece IS and why it matters in this system.
+3. **Body** - Architectural decisions → alternatives considered and rejected → trade-offs, failure modes, scaling inflection points. Depth follows importance.
+4. **Callouts** - Interview Lens and Decision Framework where applicable (see Callouts below).
+5. **Key Takeaway** - 1-2 sentences. The most important decision or trade-off from this section.
 
-   ✅ "The redirect service must be read-optimised above all else — cache short codes aggressively at the CDN layer, and accept eventual consistency on analytics rather than slowing down the hot path."
+   ✅ "The redirect service must be read-optimised above all else - cache short codes aggressively at the CDN layer, and accept eventual consistency on analytics rather than slowing down the hot path."
    ❌ "The URL shortener system has many important design decisions and trade-offs that engineers should be aware of when designing similar systems."
 
 For important H3 subsections, add a one-line italic TLDR immediately after the heading:
@@ -126,12 +126,12 @@ For important H3 subsections, add a one-line italic TLDR immediately after the h
 | ⚖️    | **Decision Framework** | X vs Y constraints, trade-off justification, "when would you NOT design it this way?"              | ≥1 per section comparing ≥2 design options                               |
 | ⚠️    | **Warning / Gotcha**   | Pitfalls that trip candidates, non-obvious failure modes, assumptions that silently break at scale | 1–3 per page max — genuinely non-obvious gotchas only                    |
 
-**Interview Lens** — include once per major H2 section, using this exact format:
+**Interview Lens** - include once per major H2 section, using this exact format:
 
 ```
 > 🎯 **Interview Lens**
 > **Q:** [Expected interview question]
-> **Ideal answer:** [What a strong candidate says — not just correct, but framed well]
+> **Ideal answer:** [What a strong candidate says - not just correct, but framed well]
 > **Common trap:** [The most frequent wrong answer or wrong framing]
 > **Next question:** [The follow-up the interviewer asks if the candidate answers well]
 ```
@@ -167,7 +167,7 @@ Template:
 **Key constraint:** [the dominant number that forces a scaling decision]
 ```
 
-Keep estimation rough — ±1 order of magnitude is fine. Goal is to identify the dominant constraint, not achieve precision.
+Keep estimation rough - ±1 order of magnitude is fine. Goal is to identify the dominant constraint, not achieve precision.
 
 ### Diagrams
 
@@ -185,7 +185,7 @@ Core explanation generic. Mention 1-2 well-known implementations as examples wit
 
 Whenever a concept, component, or algorithm with its own wiki page is referenced:
 
-- In prerequisites: `**[Name](relative-link)** — one sentence on why it matters for this system`
+- In prerequisites: `**[Name](relative-link)** - one sentence on why it matters for this system`
 - First appearance in each section body: wrap in link
 - File doesn't exist yet: add `<!-- link: file.md -->` immediately after the reference
 
@@ -201,8 +201,8 @@ Path conventions (from an HLD page):
 ## STRUCTURE GUIDELINES
 
 - DO NOT prescribe a fixed section order. System's nature drives the flow.
-- Depth reflects conceptual complexity — the more layered and nuanced a subsystem, the deeper it nests. Not a proxy for length or interview importance.
-- Prerequisites, Table of Contents, TLDR are mandatory upfront (that order — non-negotiable).
+- Depth reflects conceptual complexity - the more layered and nuanced a subsystem, the deeper it nests. Not a proxy for length or interview importance.
+- Prerequisites, Table of Contents, TLDR are mandatory upfront (that order - non-negotiable).
 - End with Trade-off Summary and Appendices.
 - Unbalanced tree by design: depth = complexity, not symmetry.
 
@@ -215,7 +215,7 @@ Path conventions (from an HLD page):
 
 ## SUGGESTED SECTION STARTING POINTS
 
-Pick, merge, and reorder based on the system. Omit inapplicable sections — never include empty placeholders.
+Pick, merge, and reorder based on the system. Omit inapplicable sections - never include empty placeholders.
 
 - Requirements & Scope Clarification (functional, non-functional, out of scope)
 - Capacity Estimation (traffic, storage, bandwidth, scaling inflection points)
@@ -235,7 +235,7 @@ Pick, merge, and reorder based on the system. Omit inapplicable sections — nev
 
 ## TRADE-OFF SUMMARY FORMAT
 
-The Trade-off Summary is a dedicated H2 section placed before Appendices. It is a decision log — not prose, not re-explanation. One row per major architectural decision.
+The Trade-off Summary is a dedicated H2 section placed before Appendices. It is a decision log - not prose, not re-explanation. One row per major architectural decision.
 
 Table format:
 
@@ -255,7 +255,7 @@ Include only the sub-sections relevant to the system. Always placed at the end o
 Table format: `Acronym | Full Form | One-line meaning`
 
 **Anti-patterns**
-Bulleted list. Each entry: `pattern name — why it fails — what to do instead.`
+Bulleted list. Each entry: `pattern name - why it fails - what to do instead.`
 
 **Selection Matrix** _(include only if the system has multiple meaningful design variants worth comparing)_
 Table comparing variants across key decision dimensions (columns = variants, rows = criteria).
@@ -265,7 +265,7 @@ Table comparing variants across key decision dimensions (columns = variants, row
 ## CONSTRAINTS
 
 - Every major architectural decision needs: what alternatives were considered and why rejected.
-- NO meta-commentary in index bullets (e.g., "trade-offs discussed here") — state concepts only.
+- NO meta-commentary in index bullets (e.g., "trade-offs discussed here") - state concepts only.
 - NO redundant nesting: if 1.1.1 suffices, skip 1.1.1.1.
 - Within a level, order bullets by logical flow: prerequisites before advanced, common before edge cases, cause before effect.
 - One topic per leaf: don't group unrelated concepts under one bullet.
@@ -277,10 +277,10 @@ Table comparing variants across key decision dimensions (columns = variants, row
 **Before outputting Phase 1 (index), verify:**
 
 - [ ] System thesis identified and reflected in deepest section?
-- [ ] Tree is unbalanced — depth reflects conceptual complexity, not symmetry?
-- [ ] All index bullets are crisp phrases — no sentences, no definitions?
+- [ ] Tree is unbalanced - depth reflects conceptual complexity, not symmetry?
+- [ ] All index bullets are crisp phrases - no sentences, no definitions?
 - [ ] Concepts with own pages annotated with `(→ filename.md)` in index?
-- [ ] Inapplicable sections omitted — no empty placeholders?
+- [ ] Inapplicable sections omitted - no empty placeholders?
 - [ ] Index builds progressive complexity: system intuition → architectural decisions → production reality → interview defense?
 
 If all true → output index → append "[AWAITING CONFIRMATION TO GENERATE CONTENT]" → STOP.
@@ -289,6 +289,6 @@ If all true → output index → append "[AWAITING CONFIRMATION TO GENERATE CONT
 
 **Before outputting each Phase 2 section, run:**
 
-- **TLDR flashcard test:** Can someone use this TLDR standalone as an interview flashcard? If it says "In this article…", "We will cover…", or references other sections — rewrite.
-- **Key Takeaway sticky-note test:** Would a candidate write this on a post-it? If it's longer than 2 sentences or repeats the Interviewer TL;DR — compress it.
-- **Code block whiteboard test:** Would you write this on a whiteboard in an interview? If no — cut it.
+- **TLDR flashcard test:** Can someone use this TLDR standalone as an interview flashcard? If it says "In this article…", "We will cover…", or references other sections - rewrite.
+- **Key Takeaway sticky-note test:** Would a candidate write this on a post-it? If it's longer than 2 sentences or repeats the Interviewer TL;DR - compress it.
+- **Code block whiteboard test:** Would you write this on a whiteboard in an interview? If no - cut it.

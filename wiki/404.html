@@ -282,7 +282,7 @@
         <span class="dot dot-red"></span>
         <span class="dot dot-yellow"></span>
         <span class="dot dot-green"></span>
-        <span class="terminal-title">~/wiki — bash</span>
+        <span class="terminal-title">~/wiki - bash</span>
       </div>
 
       <div class="terminal-body">
@@ -306,7 +306,7 @@
         <div class="line error-line">
           <span class="error-label">error:</span>
           <span class="error-msg"
-            >empty file — this page hasn't been written yet.</span
+            >empty file - this page hasn't been written yet.</span
           >
         </div>
         <div class="hint-line">
@@ -328,7 +328,7 @@
       const title = params.get("title");
       if (title) {
         document.getElementById("fetch-target").textContent = `"./${title}.md"`;
-        document.title = `${title} — Not Written Yet`;
+        document.title = `${title} - Not Written Yet`;
       }
 
       document.addEventListener("keydown", (e) => {

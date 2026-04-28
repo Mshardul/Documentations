@@ -71,9 +71,9 @@ End-to-end system design walkthroughs. Each page includes prerequisites, a TLDR,
 
 ## How to Use
 
-**Flow 1 — Build up:** Pick a component → read it end-to-end → follow links to related components → then tackle an HLD.
+**Flow 1 - Build up:** Pick a component → read it end-to-end → follow links to related components → then tackle an HLD.
 
-**Flow 2 — Drill down:** Pick an HLD → read the architecture → click through to any component or algorithm page you need to revisit.
+**Flow 2 - Drill down:** Pick an HLD → read the architecture → click through to any component or algorithm page you need to revisit.
 
 ---
 

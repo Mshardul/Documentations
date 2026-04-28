@@ -1,5 +1,5 @@
 """
-- Mark as unread toggle — button presence, state, toggle, persistence.
+- Mark as unread toggle - button presence, state, toggle, persistence.
 """
 
 ARTICLE_HASH = "system-design/caching"

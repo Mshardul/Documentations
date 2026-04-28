@@ -167,37 +167,6 @@
 /* ═══════════════════════════════════════════════
    GLOBAL SEARCH MODAL (⌘K)
    ═══════════════════════════════════════════════ */
-.topbar-search-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s2);
-  margin-left: auto;
-  padding: var(--s1) var(--s3);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  color: var(--text-muted);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  transition: color var(--t-fast), border-color var(--t-fast),
-    background var(--t-fast);
-  cursor: pointer;
-}
-.topbar-search-btn svg {
-  width: 13px;
-  height: 13px;
-  flex-shrink: 0;
-}
-.topbar-search-btn kbd {
-  font-family: var(--font);
-  font-size: var(--text-xs);
-  color: var(--text-subtle);
-}
-.topbar-search-btn:hover {
-  color: var(--text-body);
-  border-color: var(--border-2);
-  background: var(--surface-3);
-}
 
 .gsearch-modal {
   position: fixed;
@@ -295,8 +264,10 @@
   transition: background var(--t-fast);
 }
 .gsearch-result:hover,
-.gsearch-result.selected {
+.gsearch-result.selected,
+.gsearch-result:focus {
   background: var(--surface-2);
+  outline: none;
 }
 .gsearch-result-title {
   font-size: var(--text-sm);
@@ -319,11 +290,17 @@
   color: var(--accent-light);
   font-weight: 600;
 }
+.gsearch-kbd {
+  font-family: var(--font);
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
 
 @media (max-width: 640px) {
-  .topbar-search-btn kbd {
-    display: none;
-  }
   .gsearch-modal {
     padding-top: 8vh;
   }

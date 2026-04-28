@@ -15,6 +15,7 @@
 - Repeat the Interviewer TL;DR verbatim in the Key Takeaway
 - Open with history or evolution of the concept
 - Include formal notation, ε-δ proofs, or full inductive proofs
+- State unverified facts, statistics, or attributions — when uncertain, qualify with "typically" or "commonly" rather than asserting as fact
 
 ---
 
@@ -136,11 +137,11 @@ Rules when included:
 
 ### Callouts
 
-| Emoji | Name                   | When to use                                                                                                      | Frequency                                              |
-| ----- | ---------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| 🧠    | **Thought Process**    | Show how a senior engineer reasons from the concept to a design decision                                         | ≥1 per major H2 section                                |
-| ⚖️    | **Decision Framework** | X vs Y constraints, trade-off justification, "when would you NOT apply this?"                                    | ≥1 per section comparing ≥2 variants or design options |
-| ⚠️    | **Warning / Gotcha**   | Non-obvious misapplications, common misreadings of the theorem/concept, assumptions that silently break at scale | 1–3 per page max — genuinely non-obvious gotchas only  |
+| Emoji | Name                   | When to use                                                                                                      | Frequency                                                                |
+| ----- | ---------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| 🧠    | **Thought Process**    | Show how a senior engineer reasons from the concept to a design decision                                         | Where section involves non-obvious reasoning or decision — not mandatory |
+| ⚖️    | **Decision Framework** | X vs Y constraints, trade-off justification, "when would you NOT apply this?"                                    | ≥1 per section comparing ≥2 variants or design options                   |
+| ⚠️    | **Warning / Gotcha**   | Non-obvious misapplications, common misreadings of the theorem/concept, assumptions that silently break at scale | 1–3 per page max — genuinely non-obvious gotchas only                    |
 
 **Interview Lens** — include once per complex H2 section, using this exact format:
 

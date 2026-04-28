@@ -14,6 +14,7 @@
 - Use "important", "note that", or "it is worth mentioning" as padding
 - Repeat the Interviewer TL;DR verbatim in the Key Takeaway
 - Open with history or evolution of the technology
+- State unverified facts, statistics, or attributions — when uncertain, qualify with "typically" or "commonly" rather than asserting as fact
 
 ---
 
@@ -119,11 +120,11 @@ For important H3 subsections, add a one-line italic TLDR immediately after the h
 
 ### Callouts
 
-| Emoji | Name                   | When to use                                                                                        | Frequency                                             |
-| ----- | ---------------------- | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
-| 🧠    | **Thought Process**    | Show how a senior engineer reasons from requirements to architectural decision                     | ≥1 per major H2 section                               |
-| ⚖️    | **Decision Framework** | X vs Y constraints, trade-off justification, "when would you NOT design it this way?"              | ≥1 per section comparing ≥2 design options            |
-| ⚠️    | **Warning / Gotcha**   | Pitfalls that trip candidates, non-obvious failure modes, assumptions that silently break at scale | 1–3 per page max — genuinely non-obvious gotchas only |
+| Emoji | Name                   | When to use                                                                                        | Frequency                                                                |
+| ----- | ---------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| 🧠    | **Thought Process**    | Show how a senior engineer reasons from requirements to architectural decision                     | Where section involves non-obvious reasoning or decision — not mandatory |
+| ⚖️    | **Decision Framework** | X vs Y constraints, trade-off justification, "when would you NOT design it this way?"              | ≥1 per section comparing ≥2 design options                               |
+| ⚠️    | **Warning / Gotcha**   | Pitfalls that trip candidates, non-obvious failure modes, assumptions that silently break at scale | 1–3 per page max — genuinely non-obvious gotchas only                    |
 
 **Interview Lens** — include once per major H2 section, using this exact format:
 

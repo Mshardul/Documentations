@@ -25,6 +25,9 @@ import {
   addAnchorLinks,
   renderMermaidDiagrams,
   addCodeLangLabels,
+  addImageLightbox,
+  addDiagramZoom,
+  addTableScrollCues,
 } from "./content.js";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -456,6 +459,11 @@ async function renderContent(
 
     // Code language labels
     addCodeLangLabels(body);
+
+    // Image lightbox + diagram zoom + table scroll cues
+    addImageLightbox(body);
+    addDiagramZoom(body);
+    addTableScrollCues(body);
 
     // Related articles
     renderRelatedArticles(wiki, filePath);

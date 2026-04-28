@@ -1,5 +1,45 @@
 import { state } from "./state.js";
 
+/* ─── Zoom Overlay (shared by image lightbox + diagram zoom) ─── */
+function getZoomOverlay() {
+  let overlay = document.getElementById("zoom-overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.id = "zoom-overlay";
+    overlay.className = "zoom-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-label", "Zoomed view");
+    overlay.innerHTML = `
+      <div class="zoom-overlay-backdrop"></div>
+      <button class="zoom-overlay-close" aria-label="Close">
+        <svg viewBox="0 0 16 16" fill="none">
+          <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="zoom-overlay-content"></div>`;
+    document.body.appendChild(overlay);
+    overlay
+      .querySelector(".zoom-overlay-backdrop")
+      .addEventListener("click", closeZoomOverlay);
+    overlay
+      .querySelector(".zoom-overlay-close")
+      .addEventListener("click", closeZoomOverlay);
+  }
+  return overlay;
+}
+
+function closeZoomOverlay() {
+  document.getElementById("zoom-overlay")?.classList.remove("open");
+}
+
+function openZoomOverlay(node) {
+  const overlay = getZoomOverlay();
+  const contentEl = overlay.querySelector(".zoom-overlay-content");
+  contentEl.innerHTML = "";
+  contentEl.appendChild(node);
+  overlay.classList.add("open");
+}
+
 /* ─── Copy Buttons ─── */
 function addCopyButtons(contentEl) {
   contentEl.querySelectorAll("pre").forEach((pre) => {
@@ -182,6 +222,18 @@ function anchorIcon() {
   </svg>`;
 }
 
+/* ─── Image Lightbox (WIKI-044) ─── */
+function addImageLightbox(contentEl) {
+  contentEl.querySelectorAll("img").forEach((img) => {
+    img.classList.add("zoomable-img");
+    img.addEventListener("click", () => {
+      const clone = img.cloneNode();
+      clone.style.cursor = "";
+      openZoomOverlay(clone);
+    });
+  });
+}
+
 /* ─── Mermaid Diagrams ─── */
 async function renderMermaidDiagrams(contentEl) {
   if (typeof mermaid === "undefined") return;
@@ -195,12 +247,106 @@ async function renderMermaidDiagrams(contentEl) {
       const { svg } = await mermaid.render(id, code);
       const wrapper = document.createElement("div");
       wrapper.className = "mermaid-diagram";
+      wrapper.dataset.mermaidSrc = code;
       wrapper.innerHTML = svg;
       pre.replaceWith(wrapper);
     } catch (err) {
       console.warn("Mermaid render failed:", err);
     }
   }
+}
+
+/* ─── Diagram Zoom (WIKI-045) ─── */
+function addDiagramZoom(contentEl) {
+  contentEl.querySelectorAll(".mermaid-diagram").forEach((diagram) => {
+    diagram.addEventListener("click", () => {
+      const svgEl = diagram.querySelector("svg");
+      if (!svgEl) return;
+      const clone = svgEl.cloneNode(true);
+      // Preserve viewBox so CSS can size it; set explicit 100% dims so
+      // the element has a non-zero bounding box inside the flex overlay.
+      clone.removeAttribute("width");
+      clone.removeAttribute("height");
+      clone.setAttribute("width", "100%");
+      clone.setAttribute("height", "100%");
+      clone.classList.add("zoom-diagram-svg");
+      openZoomOverlay(clone);
+    });
+  });
+}
+
+/* ─── Mermaid Theme Sync (WIKI-039) ─── */
+function getMermaidThemeConfig(theme) {
+  if (theme === "light") {
+    return {
+      theme: "default",
+      themeVariables: {
+        darkMode: false,
+        primaryColor: "#6366f1",
+        primaryTextColor: "#1e293b",
+        primaryBorderColor: "#e2e8f0",
+        lineColor: "#94a3b8",
+      },
+    };
+  }
+  return {
+    theme: "dark",
+    themeVariables: {
+      darkMode: true,
+      background: "#161b27",
+      primaryColor: "#6366f1",
+      primaryTextColor: "#f1f5f9",
+      primaryBorderColor: "#252d42",
+      lineColor: "#64748b",
+      secondaryColor: "#1e2537",
+      tertiaryColor: "#252d42",
+    },
+  };
+}
+
+async function rerenderMermaidDiagrams() {
+  if (typeof mermaid === "undefined") return;
+  const contentEl = document.getElementById("markdown-body");
+  if (!contentEl) return;
+  const diagrams = contentEl.querySelectorAll(
+    ".mermaid-diagram[data-mermaid-src]"
+  );
+  if (!diagrams.length) return;
+
+  const theme = document.documentElement.getAttribute("data-theme") || "dark";
+  mermaid.initialize({ startOnLoad: false, ...getMermaidThemeConfig(theme) });
+
+  let i = 0;
+  for (const wrapper of diagrams) {
+    const code = wrapper.dataset.mermaidSrc;
+    try {
+      const id = `mermaid-rerender-${Date.now()}-${i++}`;
+      const { svg } = await mermaid.render(id, code);
+      wrapper.innerHTML = svg;
+    } catch (err) {
+      console.warn("Mermaid re-render failed:", err);
+    }
+  }
+}
+
+/* ─── Table Scroll Cue (WIKI-053) ─── */
+function addTableScrollCues(contentEl) {
+  contentEl.querySelectorAll("table").forEach((table) => {
+    const wrap = document.createElement("div");
+    wrap.className = "table-scroll-wrap";
+    table.parentNode.insertBefore(wrap, table);
+    wrap.appendChild(table);
+
+    const updateCue = () => {
+      const overflows = wrap.scrollWidth > wrap.clientWidth + 4;
+      const atEnd = wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 4;
+      wrap.classList.toggle("scroll-cue", overflows && !atEnd);
+    };
+
+    wrap.addEventListener("scroll", updateCue, { passive: true });
+    new ResizeObserver(updateCue).observe(wrap);
+    updateCue();
+  });
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -218,6 +364,7 @@ function addCodeLangLabels(contentEl) {
 }
 
 export {
+  closeZoomOverlay,
   addCopyButtons,
   styleCallouts,
   renderPrerequisites,
@@ -225,4 +372,8 @@ export {
   addAnchorLinks,
   renderMermaidDiagrams,
   addCodeLangLabels,
+  addImageLightbox,
+  addDiagramZoom,
+  rerenderMermaidDiagrams,
+  addTableScrollCues,
 };

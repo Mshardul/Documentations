@@ -488,6 +488,10 @@ function applySettingsToDOM(s) {
 
   const widths = { Narrow: "68ch", Default: "80ch", Wide: "120ch" };
   root.setProperty("--content-width", widths[s.contentWidth] || "80ch");
+
+  document.dispatchEvent(
+    new CustomEvent("wiki:themechange", { detail: { theme } })
+  );
 }
 
 const Settings = {

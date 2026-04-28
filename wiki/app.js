@@ -13,23 +13,64 @@ import {
 } from "./storage.js";
 import { progressBar, navigate, route, navigateToContent } from "./render.js";
 import { openGlobalSearch, closeGlobalSearch } from "./search.js";
+import { closeZoomOverlay, rerenderMermaidDiagrams } from "./content.js";
 
 /* ═══════════════════════════════════════════════════════════════
-   WINDOW GLOBALS - required for onclick strings in HTML and
-   dynamically built innerHTML throughout the app
+   WINDOW GLOBALS - required for onclick strings in dynamically
+   built innerHTML throughout the app (render.js, storage.js)
    ═══════════════════════════════════════════════════════════════ */
 window.state = state;
-window.Wiki = { goHome: () => navigate("") };
-window.GlobalSearch = { open: openGlobalSearch, close: closeGlobalSearch };
-window.Theme = Theme;
 window.Settings = Settings;
 window.Bookmarks = Bookmarks;
-window.ReadToggle = ReadToggle;
-window.Offline = Offline;
 window.navigate = navigate;
 window.navigateToContent = navigateToContent;
 window.clearRecents = clearRecents;
 window.closeGlobalSearch = closeGlobalSearch;
+
+/* ═══════════════════════════════════════════════════════════════
+   DATA-ACTION DELEGATION (WIKI-063)
+   Handles all static button actions from index.html
+   ═══════════════════════════════════════════════════════════════ */
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-action]");
+  if (!btn) return;
+  switch (btn.dataset.action) {
+    case "search-open":
+      openGlobalSearch();
+      break;
+    case "theme-toggle":
+      Theme.toggle();
+      break;
+    case "settings-open":
+      Settings.open();
+      break;
+    case "settings-close":
+      Settings.close();
+      break;
+    case "wiki-home":
+      navigate("");
+      break;
+    case "read-toggle":
+      ReadToggle.toggle();
+      break;
+    case "bookmark-toggle":
+      Bookmarks.toggle();
+      break;
+    case "offline-toggle":
+      Offline.toggle();
+      break;
+    case "settings-export":
+      Settings.exportData();
+      break;
+    case "import-trigger":
+      document.getElementById("import-upload").click();
+      break;
+  }
+});
+
+document
+  .getElementById("import-upload")
+  .addEventListener("change", (e) => Settings.importData(e));
 
 /* ═══════════════════════════════════════════════════════════════
    TOC COLLAPSE & MOBILE TOC
@@ -126,7 +167,9 @@ document.addEventListener("keydown", (e) => {
 
   // Escape: Close modals or navigate back from content
   if (e.key === "Escape") {
-    if (
+    if (document.getElementById("zoom-overlay")?.classList.contains("open")) {
+      closeZoomOverlay();
+    } else if (
       !document
         .getElementById("global-search-modal")
         .classList.contains("hidden")
@@ -158,6 +201,11 @@ document.addEventListener("keydown", (e) => {
     }
   }
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   DIAGRAM THEME SYNC (WIKI-039)
+   ═══════════════════════════════════════════════════════════════ */
+document.addEventListener("wiki:themechange", rerenderMermaidDiagrams);
 
 /* ═══════════════════════════════════════════════════════════════
    HASH ROUTER EVENT WIRING

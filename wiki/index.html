@@ -60,7 +60,13 @@
           />
           <kbd class="gsearch-esc-key">ESC</kbd>
         </div>
-        <div id="gsearch-results" class="gsearch-results">
+        <div
+          id="gsearch-results"
+          class="gsearch-results"
+          role="region"
+          aria-label="Search results"
+          aria-live="polite"
+        >
           <div class="gsearch-empty">Start typing to search…</div>
         </div>
       </div>
@@ -74,7 +80,7 @@
       <div class="home-glow" aria-hidden="true"></div>
       <div class="home-topbar">
         <button
-          class="topbar-search-btn"
+          class="topbar-icon-btn"
           onclick="GlobalSearch.open()"
           title="Search all (⌘K)"
         >
@@ -93,7 +99,6 @@
               stroke-linecap="round"
             />
           </svg>
-          <kbd>⌘K</kbd>
         </button>
         <button
           class="theme-toggle-btn"
@@ -180,7 +185,7 @@
           </button>
           <nav id="index-breadcrumb" class="breadcrumb"></nav>
           <button
-            class="topbar-search-btn"
+            class="topbar-icon-btn"
             onclick="GlobalSearch.open()"
             title="Search all (⌘K)"
           >
@@ -199,7 +204,6 @@
                 stroke-linecap="round"
               />
             </svg>
-            <kbd>⌘K</kbd>
           </button>
           <button
             class="theme-toggle-btn"
@@ -362,7 +366,7 @@
             </svg>
           </button>
           <button
-            class="topbar-search-btn"
+            class="topbar-icon-btn"
             onclick="GlobalSearch.open()"
             title="Search all (⌘K)"
           >
@@ -381,7 +385,6 @@
                 stroke-linecap="round"
               />
             </svg>
-            <kbd>⌘K</kbd>
           </button>
           <button
             class="theme-toggle-btn"

@@ -73,11 +73,13 @@ function gSearchSelect(idx) {
   items.forEach((el) => el.classList.remove("selected"));
   if (idx < 0 || idx >= items.length) {
     gSearchSelectedIdx = -1;
+    gSearchInput.focus();
     return;
   }
   gSearchSelectedIdx = idx;
   items[idx].classList.add("selected");
   items[idx].scrollIntoView({ block: "nearest" });
+  items[idx].focus();
 }
 
 function openGlobalSearch() {
@@ -85,10 +87,14 @@ function openGlobalSearch() {
   gSearchModal.setAttribute("aria-hidden", "false");
   gSearchInput.value = "";
   gSearchSelectedIdx = -1;
-  gSearchResults.innerHTML =
-    '<div class="gsearch-empty">Start typing to search…</div>';
   gSearchInput.focus();
-  loadAllSearchEntries();
+  if (allSearchCache.loaded) {
+    applyGlobalSearch("");
+  } else {
+    gSearchResults.innerHTML =
+      '<div class="gsearch-empty">Start typing to search…</div>';
+    loadAllSearchEntries();
+  }
 }
 
 function closeGlobalSearch() {
@@ -114,17 +120,83 @@ function scoreMatch(q, entry) {
   return 0;
 }
 
+function renderResultItem(item, highlightQuery) {
+  return `
+    <div class="gsearch-result"
+         onclick="closeGlobalSearch(); navigateToContent('${
+           item.wiki.id
+         }', '${encodeURIComponent(item.path)}', '${encodeURIComponent(
+    item.title
+  )}', '${item.slug}')"
+         role="button" tabindex="0"
+         onkeydown="if(event.key==='Enter')this.click()">
+      <span class="gsearch-result-title">${highlightMatch(
+        item.title,
+        highlightQuery
+      )}</span>
+      <span class="gsearch-result-meta">${escHtml(item.section)} · ${escHtml(
+    item.description.slice(0, 90)
+  )}${item.description.length > 90 ? "…" : ""}</span>
+    </div>`;
+}
+
+function applySectionFilter(sectionQuery) {
+  if (!sectionQuery) {
+    gSearchResults.innerHTML =
+      '<div class="gsearch-empty">Type a section name to filter…</div>';
+    return;
+  }
+
+  const ql = sectionQuery.toLowerCase();
+  const matched = {};
+  for (const entry of allSearchCache.entries) {
+    const sectionLower = entry.section.toLowerCase();
+    if (sectionLower.includes(ql) || fuzzyMatch(ql, sectionLower)) {
+      const key = `${entry.wiki.id}::${entry.section}`;
+      if (!matched[key])
+        matched[key] = { wiki: entry.wiki, section: entry.section, items: [] };
+      matched[key].items.push(entry);
+    }
+  }
+
+  if (!Object.keys(matched).length) {
+    gSearchResults.innerHTML = `<div class="gsearch-no-results">No sections matching "<strong>${escHtml(
+      sectionQuery
+    )}</strong>"</div>`;
+    return;
+  }
+
+  gSearchResults.innerHTML = Object.values(matched)
+    .map(
+      (g) => `
+    <div class="gsearch-group-label">${highlightMatch(
+      g.section,
+      sectionQuery
+    )}</div>
+    ${g.items.map((item) => renderResultItem(item, "")).join("")}
+  `
+    )
+    .join("");
+}
+
 function applyGlobalSearch(query) {
   gSearchSelectedIdx = -1;
   if (!allSearchCache.loaded) return;
 
-  const q = query.trim();
-  if (!q) {
-    gSearchResults.innerHTML =
-      '<div class="gsearch-empty">Start typing to search…</div>';
+  const raw = query.trim();
+
+  if (raw.startsWith(">")) {
+    applySectionFilter(raw.slice(1).trimStart());
     return;
   }
 
+  if (!raw) {
+    gSearchResults.innerHTML =
+      '<div class="gsearch-empty">Type to search · <kbd class="gsearch-kbd">&gt;</kbd> to filter by section</div>';
+    return;
+  }
+
+  const q = raw;
   const scored = allSearchCache.entries
     .map((e) => ({ entry: e, score: scoreMatch(q, e) }))
     .filter((s) => s.score > 0)
@@ -149,28 +221,7 @@ function applyGlobalSearch(query) {
     .map(
       (group) => `
     <div class="gsearch-group-label">${escHtml(group.wiki.title)}</div>
-    ${group.items
-      .map(
-        (item) => `
-      <div class="gsearch-result"
-           onclick="closeGlobalSearch(); navigateToContent('${
-             item.wiki.id
-           }', '${encodeURIComponent(item.path)}', '${encodeURIComponent(
-          item.title
-        )}', '${item.slug}')"
-           role="button" tabindex="0"
-           onkeydown="if(event.key==='Enter')this.click()">
-        <span class="gsearch-result-title">${highlightMatch(
-          item.title,
-          q
-        )}</span>
-        <span class="gsearch-result-meta">${escHtml(item.section)} · ${escHtml(
-          item.description.slice(0, 90)
-        )}${item.description.length > 90 ? "…" : ""}</span>
-      </div>
-    `
-      )
-      .join("")}
+    ${group.items.map((item) => renderResultItem(item, q)).join("")}
   `
     )
     .join("");
@@ -196,6 +247,25 @@ gSearchInput.addEventListener("keydown", (e) => {
   } else if (e.key === "Enter" && gSearchSelectedIdx >= 0) {
     e.preventDefault();
     items[gSearchSelectedIdx].click();
+  }
+});
+
+gSearchResults.addEventListener("keydown", (e) => {
+  const items = gSearchItems();
+  if (!items.length) return;
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    gSearchSelect(
+      gSearchSelectedIdx < items.length - 1 ? gSearchSelectedIdx + 1 : 0
+    );
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    if (gSearchSelectedIdx <= 0) {
+      gSearchSelectedIdx = -1;
+      gSearchInput.focus();
+    } else {
+      gSearchSelect(gSearchSelectedIdx - 1);
+    }
   }
 });
 

@@ -6,13 +6,13 @@
 
 def test_search_button_visible_on_home(wiki_page):
     """search button present and visible in home topbar."""
-    btn = wiki_page.locator(".home-topbar .topbar-search-btn")
+    btn = wiki_page.locator('.home-topbar button[title="Search all (⌘K)"]')
     assert btn.is_visible()
 
 
 def test_search_button_opens_modal(wiki_page):
     """clicking search button opens global search modal."""
-    wiki_page.locator(".home-topbar .topbar-search-btn").click()
+    wiki_page.locator('.home-topbar button[title="Search all (⌘K)"]').click()
     modal = wiki_page.locator("#global-search-modal")
     assert not modal.get_attribute("class").__contains__("hidden")
 

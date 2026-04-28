@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   VIEW 2 — WIKI INDEX
+   VIEW 2 - WIKI INDEX
    ═══════════════════════════════════════════════ */
 .page-hero {
   background: linear-gradient(180deg, var(--surface) 0%, transparent 100%);
@@ -135,7 +135,7 @@
 }
 
 /* ═══════════════════════════════════════════════
-   MARK AS READ — index card indicator
+   MARK AS READ - index card indicator
    ═══════════════════════════════════════════════ */
 .index-card-read-dot {
   display: inline-block;

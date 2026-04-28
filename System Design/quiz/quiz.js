@@ -5,7 +5,7 @@ const CONFIG = {
 };
 
 // ========== SVG ICONS ==========
-// Inline SVGs — no external dependency, consistent cross-platform rendering.
+// Inline SVGs - no external dependency, consistent cross-platform rendering.
 // Uses currentColor so the parent element's CSS color property drives the stroke.
 const ICON_CHECK = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
 const ICON_CROSS = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
@@ -80,7 +80,7 @@ function getColorForTag(tag) {
   return color;
 }
 
-// Fisher-Yates shuffle — mutates and returns the array.
+// Fisher-Yates shuffle - mutates and returns the array.
 function shuffleArray(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -148,7 +148,7 @@ function escapeHtml(str) {
 
 // Build the static HTML string for one question card.
 // NOTE: icons and card-glow classes are applied via handleSubmit (direct DOM
-// manipulation) so CSS animations trigger correctly — they are NOT in this template.
+// manipulation) so CSS animations trigger correctly - they are NOT in this template.
 function renderQuestionCard(question) {
   const state = questionStates.get(question.id) || {
     submitted: false,
@@ -252,7 +252,7 @@ function refreshCard(questionId) {
   const newCard = wrapper.firstElementChild;
   cardElement.parentNode.replaceChild(newCard, cardElement);
 
-  // Re-apply card glow (skip bloom animation — it already played)
+  // Re-apply card glow (skip bloom animation - it already played)
   if (wasCorrect) newCard.classList.add("card--correct");
   if (wasIncorrect) newCard.classList.add("card--incorrect");
 
@@ -407,7 +407,7 @@ function attachCardEvents(cardElement, questionId) {
     handleSubmit(cardElement, questionId)
   );
 
-  // Track radio changes in state; clearBtn is already in scope — no re-query needed
+  // Track radio changes in state; clearBtn is already in scope - no re-query needed
   radios.forEach((radio) => {
     radio.addEventListener("change", () => {
       const state = questionStates.get(questionId) || {
@@ -596,7 +596,7 @@ async function init() {
       if (isConfirmed) updateURLWithTags(selectedTags);
     });
 
-    // Reset drawer — clears both checkbox state AND selected chip styling
+    // Reset drawer - clears both checkbox state AND selected chip styling
     resetTagsBtn.addEventListener("click", () => {
       tagCheckboxesDiv
         .querySelectorAll(".tag-checkbox-item")

@@ -140,7 +140,7 @@ def test_dompurify_strips_script_tags(page, base_url):
     page.wait_for_selector("#markdown-body", timeout=5_000)
 
     fired = page.evaluate("() => window.__xss_fired === true")
-    assert not fired, "XSS script tag was executed — DOMPurify not working"
+    assert not fired, "XSS script tag was executed - DOMPurify not working"
 
     script_count = page.evaluate(
         "() => document.querySelectorAll('#markdown-body script').length"
@@ -156,7 +156,7 @@ def test_dompurify_strips_onerror_attributes(page, base_url):
     page.wait_for_selector("#markdown-body", timeout=5_000)
 
     fired = page.evaluate("() => window.__onerror_fired === true")
-    assert not fired, "onerror= handler executed — DOMPurify not stripping event attrs"
+    assert not fired, "onerror= handler executed - DOMPurify not stripping event attrs"
 
 
 # ── KaTeX math ───────────────────────────────────────────────────────
@@ -168,7 +168,7 @@ def test_katex_renders_block_math(page, base_url):
 
     page.wait_for_selector("#markdown-body .katex", timeout=5_000)
     katex_count = page.locator("#markdown-body .katex").count()
-    assert katex_count > 0, "No .katex elements found — block math not rendered"
+    assert katex_count > 0, "No .katex elements found - block math not rendered"
 
 
 def test_katex_renders_inline_math(page, base_url):
@@ -182,7 +182,7 @@ def test_katex_renders_inline_math(page, base_url):
 
     page.wait_for_selector("#markdown-body .katex", timeout=5_000)
     katex_count = page.locator("#markdown-body .katex").count()
-    assert katex_count > 0, "No .katex elements found — inline math not rendered"
+    assert katex_count > 0, "No .katex elements found - inline math not rendered"
 
 
 # ── TOC rendering ──────────────────────────────────────────────────────────────

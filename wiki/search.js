@@ -35,7 +35,7 @@ async function loadAllSearchEntries() {
           entries.push({ wiki, section: section.heading, ...card });
         }
       }
-      // Detect stubs concurrently — reuse readTimeCache if already populated
+      // Detect stubs concurrently - reuse readTimeCache if already populated
       await Promise.all(
         entries.map(async (entry) => {
           if (readTimeCache[entry.path] === undefined) {
@@ -106,7 +106,7 @@ function scoreMatch(q, entry) {
   if (title.startsWith(ql)) return 90;
   if (title.includes(ql)) return 80;
   if (fuzzyMatch(ql, title)) return 60;
-  // For short queries, stop here — avoid false positives from desc/section fuzzy
+  // For short queries, stop here - avoid false positives from desc/section fuzzy
   if (short) return 0;
   if (desc.includes(ql)) return 40;
   if (fuzzyMatch(ql, desc)) return 20;

@@ -1,5 +1,5 @@
 """
-- hash-only URLs — no 404 on refresh
+- hash-only URLs - no 404 on refresh
 - breadcrumb links reliable
 - Escape from content → wiki index; Escape closes search modal first
 """

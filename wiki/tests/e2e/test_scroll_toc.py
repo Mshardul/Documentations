@@ -50,7 +50,7 @@ def test_scroll_position_not_restored_with_anchor(page, base_url):
     assert file_path, "Could not read state.currentFilePath from app"
     page.evaluate("(fp) => localStorage.setItem('scroll-' + fp, '600')", file_path)
 
-    # Revisit with an anchor — scroll should go to anchor, not saved position.
+    # Revisit with an anchor - scroll should go to anchor, not saved position.
     first_heading = page.evaluate(
         "() => document.querySelector('#markdown-body [id]')?.id"
     )
@@ -63,7 +63,7 @@ def test_scroll_position_not_restored_with_anchor(page, base_url):
     )
     page.evaluate("() => window.scrollTo(0, 0)")
     page.wait_for_timeout(400)
-    # Anchor scroll targets near-0 if heading is at top, or some other position —
+    # Anchor scroll targets near-0 if heading is at top, or some other position -
     # key assertion is that the restore path did not fire (no error thrown).
     assert page.locator("#view-content.active").count() == 1
 

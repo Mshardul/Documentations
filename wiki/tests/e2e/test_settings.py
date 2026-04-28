@@ -1,6 +1,6 @@
 """
-- Settings panel — open/close, presets, font, size, accent, theme row, hacker themes, persistence.
-- Theme variable sync — accent CSS vars.
+- Settings panel - open/close, presets, font, size, accent, theme row, hacker themes, persistence.
+- Theme variable sync - accent CSS vars.
 - OS theme detect on first visit.
 """
 
@@ -175,7 +175,7 @@ def test_hacker_presets_set_mono_font(wiki_page):
 
 
 def test_hacker_themes_show_moon_icon(wiki_page):
-    """hacker themes treated as dark — moon icon visible, sun hidden."""
+    """hacker themes treated as dark - moon icon visible, sun hidden."""
     _open_settings(wiki_page)
     wiki_page.locator("#settings-presets .settings-preset-card").nth(
         6
@@ -308,7 +308,7 @@ def test_size_l_increases_font_size(wiki_page):
 
 
 def test_accent_swatches_have_aria_labels(wiki_page):
-    """Accent swatches are icon-only buttons — each must have aria-label for screen readers."""
+    """Accent swatches are icon-only buttons - each must have aria-label for screen readers."""
     _open_settings(wiki_page)
     swatches = wiki_page.locator("#settings-accents .settings-accent-swatch").all()
     assert len(swatches) > 0

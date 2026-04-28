@@ -115,7 +115,7 @@ async function resolveSlugAndRender(wiki, slug) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   VIEW 1 — HOME
+   VIEW 1 - HOME
    ═══════════════════════════════════════════════════════════════ */
 function renderHome() {
   const grid = document.getElementById("wiki-grid");
@@ -141,7 +141,7 @@ function renderHome() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   VIEW 2 — WIKI INDEX
+   VIEW 2 - WIKI INDEX
    ═══════════════════════════════════════════════════════════════ */
 async function renderIndex(wiki) {
   state.currentWikiId = wiki.id;
@@ -329,7 +329,7 @@ function parseIndexMd(markdown, basePath) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   VIEW 3 — CONTENT
+   VIEW 3 - CONTENT
    ═══════════════════════════════════════════════════════════════ */
 function navigateToContent(wikiId, encodedPath, encodedTitle, slug) {
   const filePath = decodeURIComponent(encodedPath);

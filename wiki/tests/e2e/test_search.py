@@ -64,7 +64,7 @@ def test_stubs_excluded_from_search(wiki_page):
 
 
 def test_search_input_has_aria_label(wiki_page):
-    """Search input must have an aria-label — placeholder text alone is not read reliably by screen readers."""
+    """Search input must have an aria-label - placeholder text alone is not read reliably by screen readers."""
     _open_search(wiki_page)
     label = wiki_page.locator("#gsearch-input").get_attribute("aria-label")
     assert label and label.strip()

@@ -1,5 +1,5 @@
 """
-- Content width control in settings — Narrow/Default/Wide.
+- Content width control in settings - Narrow/Default/Wide.
 """
 
 

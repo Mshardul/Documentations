@@ -1,4 +1,4 @@
-# AI Instructions — Component Pages
+# AI Instructions - Component Pages
 
 ## TOPIC
 
@@ -9,8 +9,8 @@
 ## NEVER
 
 - Start a section with "In this section, we will…" or "This page covers…"
-- Define a term inline if it has its own linked page — link it instead
-- Generate symmetric section depth — depth must reflect complexity, not balance
+- Define a term inline if it has its own linked page - link it instead
+- Generate symmetric section depth - depth must reflect complexity, not balance
 - Use "important", "note that", or "it is worth mentioning" as padding
 - Repeat the Interviewer TL;DR verbatim in the Key Takeaway
 - Open with history or evolution of the technology
@@ -22,8 +22,8 @@
 
 - **Goal:** Interview prep (trade-offs, debugging, scenario design) + production-grade conceptual mastery
 - **Persona:** Senior system design educator and technical writer
-- **Audience:** Engineers with adjacent knowledge (e.g., knows k8s but not CDN). Self-contained — no external resources required. Prerequisites handle foundational onboarding.
-- **Approach:** Progressive disclosure — intuitive mental models → technical mechanics → production trade-offs & interview scenarios.
+- **Audience:** Engineers with adjacent knowledge (e.g., knows k8s but not CDN). Self-contained - no external resources required. Prerequisites handle foundational onboarding.
+- **Approach:** Progressive disclosure - intuitive mental models → technical mechanics → production trade-offs & interview scenarios.
 
 ---
 
@@ -43,21 +43,21 @@
 
 ---
 
-## PAGE STRUCTURE (FIXED — ALWAYS IN THIS ORDER)
+## PAGE STRUCTURE (FIXED - ALWAYS IN THIS ORDER)
 
-1. **Title** — `# [Component Name]`
-2. **Prerequisites** — bulleted list. Each bullet has a tier and a context-specific reason:
+1. **Title** - `# [Component Name]`
+2. **Prerequisites** - bulleted list. Each bullet has a tier and a context-specific reason:
 
-   - `[Must read]` — page won't make sense without this
-   - `[Recommended]` — deepens understanding but page works without it
+   - `[Must read]` - page won't make sense without this
+   - `[Recommended]` - deepens understanding but page works without it
 
-   Format: `**[Name](relative-link)** [Must read | Recommended] — one sentence on why it matters for THIS topic specifically.`
+   Format: `**[Name](relative-link)** [Must read | Recommended] - one sentence on why it matters for THIS topic specifically.`
 
-   ✅ `**[Caching](../components/caching.md)** [Must read] — CDN edge nodes are caching layers; TTL mechanics directly determine the staleness behaviour covered throughout this page.`
-   ❌ `**[Caching](../components/caching.md)** — Understanding of caching concepts.`
+   ✅ `**[Caching](../components/caching.md)** [Must read] - CDN edge nodes are caching layers; TTL mechanics directly determine the staleness behaviour covered throughout this page.`
+   ❌ `**[Caching](../components/caching.md)** - Understanding of caching concepts.`
 
-3. **Table of Contents** — flat linked list of all H2 sections. Always after Prerequisites.
-4. **TLDR** — up to 5 sentences (≤50 words), plain prose, no bullet points. Captures: what the component is, the core architectural decision it enables, and the key trade-off. Self-contained — reader understands the essence without reading anything else.
+3. **Table of Contents** - flat linked list of all H2 sections. Always after Prerequisites.
+4. **TLDR** - up to 5 sentences (≤50 words), plain prose, no bullet points. Captures: what the component is, the core architectural decision it enables, and the key trade-off. Self-contained - reader understands the essence without reading anything else.
 
    ✅ "A load balancer distributes incoming traffic across backend servers to prevent overload and maximise availability. The critical choice is L4 vs L7: L4 routes by IP/TCP (fast, minimal overhead), L7 routes by HTTP content (slower, but enables sticky sessions, smart health checks, and content-aware routing). Most production systems use L7 for the flexibility."
    ❌ "This page covers load balancers. We will discuss how they work, their types, and failure modes. Load balancers are an important component in distributed systems."
@@ -70,7 +70,7 @@ Then the main content follows.
 
 - Plain text only. NO markdown code blocks, NO fenced sections.
 - Hierarchical numbering: 1, 1.1, 1.1.1 (depth scales to importance, no fixed limit).
-- Short, crisp phrases only — no sentences, no explanations.
+- Short, crisp phrases only - no sentences, no explanations.
 - Indent 4 spaces per level.
 - IMPORTANT: Index is high signal-to-noise only. Zero fluff, zero basic definitions. Content follows progressive disclosure (see CONTENT GENERATION SPECIFICATIONS).
 - No cross-references like "see section 4.2" in the index.
@@ -78,8 +78,8 @@ Then the main content follows.
 - Vendor-specific implementations: keep bullet generic. Examples belong in content only.
 - When a concept has its own page, append `(→ filename.md)` to the bullet as a reminder to inline-link during content generation.
 
-  ✅ `1.1 L4 vs L7 — routing granularity trade-offs`
-  ✅ `2.1.1 Split-brain — quorum, fencing`
+  ✅ `1.1 L4 vs L7 - routing granularity trade-offs`
+  ✅ `2.1.1 Split-brain - quorum, fencing`
   ❌ `1.1 Overview of what load balancers do and why they are needed`
   ❌ `2.1.1 Discussion of various failure modes and how to handle them`
 
@@ -87,14 +87,14 @@ Then the main content follows.
 
 ## HEADING STYLE RULES
 
-- **Concept / algorithm H3s:** Clean name only — no trailing description. H4 for sub-concepts.
+- **Concept / algorithm H3s:** Clean name only - no trailing description. H4 for sub-concepts.
   - ✅ `### LRU (Least Recently Used)` with `#### Mechanics` and `#### Scan Resistance Problem` below
-  - ❌ `### LRU — Mechanics, Scan Resistance Problem`
+  - ❌ `### LRU - Mechanics, Scan Resistance Problem`
 - **Failure mode H3s:** Dash acceptable when mitigation is integral to naming the pattern.
-  - ✅ `### Cache Avalanche — Staggered TTL, Circuit Breaker on Origin`
+  - ✅ `### Cache Avalanche - Staggered TTL, Circuit Breaker on Origin`
 - **No heading-as-sentence.** Headings must be crisp noun phrases.
   - ✅ `### Why Cache Invalidation Is Hard`
-  - ❌ `### Invalidation Is the Hard Problem — Why TTL Alone Isn't Enough`
+  - ❌ `### Invalidation Is the Hard Problem - Why TTL Alone Isn't Enough`
 
 ---
 
@@ -104,13 +104,13 @@ Then the main content follows.
 
 Each H2 section follows this fixed envelope, in this order:
 
-1. **Interviewer TL;DR** — 1-2 sentences. The single most important thing to say in an interview. Optimized for quick revision.
-2. **Mental model** — One sentence. An intuitive anchor: what this component IS and why it exists, before any mechanics.
-3. **Body** — Core mechanics → alternatives considered and rejected → trade-offs, edge cases, failure modes. Depth follows importance.
-4. **Callouts** — Interview Lens and Decision Framework where applicable (see Callouts below).
-5. **Key Takeaway** — 1-2 sentences. The most important decision or trade-off from this section.
+1. **Interviewer TL;DR** - 1-2 sentences. The single most important thing to say in an interview. Optimized for quick revision.
+2. **Mental model** - One sentence. An intuitive anchor: what this component IS and why it exists, before any mechanics.
+3. **Body** - Core mechanics → alternatives considered and rejected → trade-offs, edge cases, failure modes. Depth follows importance.
+4. **Callouts** - Interview Lens and Decision Framework where applicable (see Callouts below).
+5. **Key Takeaway** - 1-2 sentences. The most important decision or trade-off from this section.
 
-   ✅ "Choose L7 over L4 when you need session persistence, content-based routing, or application-aware health checks — the CPU overhead is worth it at scale."
+   ✅ "Choose L7 over L4 when you need session persistence, content-based routing, or application-aware health checks - the CPU overhead is worth it at scale."
    ❌ "Load balancers are an important component and understanding their trade-offs is crucial for interviews and production systems."
 
 For important H3 subsections, add a one-line italic TLDR immediately after the heading:
@@ -127,12 +127,12 @@ For important H3 subsections, add a one-line italic TLDR immediately after the h
 | ⚖️    | **Decision Framework** | X vs Y constraints, trade-off justification, "when would you NOT use this?"                        | ≥1 per section comparing ≥2 design options                               |
 | ⚠️    | **Warning / Gotcha**   | Pitfalls that trip candidates, non-obvious failure modes, assumptions that silently break at scale | 1–3 per page max — genuinely non-obvious gotchas only                    |
 
-**Interview Lens** — include once per complex H2 section, using this exact format:
+**Interview Lens** - include once per complex H2 section, using this exact format:
 
 ```
 > 🎯 **Interview Lens**
 > **Q:** [Expected interview question]
-> **Ideal answer:** [What a strong candidate says — not just correct, but framed well]
+> **Ideal answer:** [What a strong candidate says - not just correct, but framed well]
 > **Common trap:** [The most frequent wrong answer or wrong framing]
 > **Next question:** [The follow-up the interviewer asks if the candidate answers well]
 ```
@@ -169,7 +169,7 @@ Core explanation generic. Mention 1-2 well-known implementations as examples (e.
 
 Whenever a concept, component, or algorithm with its own wiki page is referenced:
 
-- In prerequisites: `**[Name](relative-link)** — one sentence on why it matters here`
+- In prerequisites: `**[Name](relative-link)** - one sentence on why it matters here`
 - First appearance in each section body: wrap in link
 - File doesn't exist yet: add `<!-- link: file.md -->` immediately after the reference
 
@@ -185,8 +185,8 @@ Path conventions (from a component/algorithm page):
 ## STRUCTURE GUIDELINES
 
 - DO NOT prescribe a fixed section order. Topic's nature drives the flow.
-- Depth reflects conceptual complexity — the more layered and nuanced a concept, the deeper it nests. Not a proxy for length or interview importance.
-- Prerequisites, Table of Contents, TLDR are mandatory upfront (that order — non-negotiable).
+- Depth reflects conceptual complexity - the more layered and nuanced a concept, the deeper it nests. Not a proxy for length or interview importance.
+- Prerequisites, Table of Contents, TLDR are mandatory upfront (that order - non-negotiable).
 - End with Appendices.
 - Unbalanced tree by design: depth = complexity, not symmetry.
 
@@ -195,13 +195,13 @@ Path conventions (from a component/algorithm page):
 - **Inline H3s:** each failure mode is an H3 within its relevant parent H2, as part of natural flow
 - **Dedicated summary H2** (e.g., `## Production Failure Modes & Gotchas`): consolidates all failure modes mentioned inline + additional ones not covered elsewhere. Always present. Primary interview revision target for failure mode questions.
 
-**Quick Decision Guide** (when to use / when not to) — place after Core Mechanisms, not before. Readers understand the trade-offs better once they understand the mechanics.
+**Quick Decision Guide** (when to use / when not to) - place after Core Mechanisms, not before. Readers understand the trade-offs better once they understand the mechanics.
 
 ---
 
 ## SUGGESTED SECTION STARTING POINTS
 
-Pick, merge, and reorder based on the topic. Omit inapplicable sections — never include empty placeholders.
+Pick, merge, and reorder based on the topic. Omit inapplicable sections - never include empty placeholders.
 
 - Quick Decision Guide (when to use, when not to, how to choose between variants)
 - Conceptual Foundations & Mental Models
@@ -227,7 +227,7 @@ Include only the sub-sections relevant to the topic. Always placed at the end of
 Table format: `Acronym | Full Form | One-line meaning`
 
 **Anti-patterns**
-Bulleted list. Each entry: `pattern name — why it fails — what to do instead.`
+Bulleted list. Each entry: `pattern name - why it fails - what to do instead.`
 
 **Selection Matrix** _(include only if topic has multiple variants worth comparing)_
 Table comparing variants across key decision dimensions (columns = variants, rows = criteria).
@@ -237,7 +237,7 @@ Table comparing variants across key decision dimensions (columns = variants, row
 ## CONSTRAINTS
 
 - Every major decision needs: what alternatives were considered and why rejected.
-- NO meta-commentary in index bullets (e.g., "trade-offs discussed here") — state concepts only.
+- NO meta-commentary in index bullets (e.g., "trade-offs discussed here") - state concepts only.
 - NO redundant nesting: if 1.1.1 suffices, skip 1.1.1.1.
 - Within a level, order bullets by logical flow: prerequisites before advanced, common before edge cases, cause before effect.
 - One topic per leaf: don't group unrelated concepts under one bullet.
@@ -248,10 +248,10 @@ Table comparing variants across key decision dimensions (columns = variants, row
 
 **Before outputting Phase 1 (index), verify:**
 
-- [ ] Tree is unbalanced — depth reflects conceptual complexity, not symmetry?
-- [ ] All index bullets are crisp phrases — no sentences, no definitions?
+- [ ] Tree is unbalanced - depth reflects conceptual complexity, not symmetry?
+- [ ] All index bullets are crisp phrases - no sentences, no definitions?
 - [ ] Concepts with own pages annotated with `(→ filename.md)` in index?
-- [ ] Inapplicable sections omitted — no empty placeholders?
+- [ ] Inapplicable sections omitted - no empty placeholders?
 - [ ] Index builds progressive complexity: intuition → mechanics → production → interview defense?
 
 If all true → output index → append "[AWAITING CONFIRMATION TO GENERATE CONTENT]" → STOP.
@@ -260,6 +260,6 @@ If all true → output index → append "[AWAITING CONFIRMATION TO GENERATE CONT
 
 **Before outputting each Phase 2 section, run:**
 
-- **TLDR flashcard test:** Can someone use this TLDR standalone as an interview flashcard? If it says "In this article…", "We will cover…", or references other sections — rewrite.
-- **Key Takeaway sticky-note test:** Would a candidate write this on a post-it? If it's longer than 2 sentences or repeats the Interviewer TL;DR — compress it.
-- **Code block whiteboard test:** Would you write this on a whiteboard in an interview? If no — cut it.
+- **TLDR flashcard test:** Can someone use this TLDR standalone as an interview flashcard? If it says "In this article…", "We will cover…", or references other sections - rewrite.
+- **Key Takeaway sticky-note test:** Would a candidate write this on a post-it? If it's longer than 2 sentences or repeats the Interviewer TL;DR - compress it.
+- **Code block whiteboard test:** Would you write this on a whiteboard in an interview? If no - cut it.

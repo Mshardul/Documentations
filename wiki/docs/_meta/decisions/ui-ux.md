@@ -42,7 +42,7 @@ Selecting a preset populates all pickers. Editing any picker individually → pr
 | 8   | Terminal  | terminal   | JetBrains Mono | M    | neon-green |
 | 9   | Amber CRT | amber-term | JetBrains Mono | M    | amber      |
 
-Hacker themes use dedicated `data-theme` values (`matrix`, `terminal`, `amber-term`) with full CSS token overrides for bg/text. The Light/Dark toggle in settings only switches between light/dark baseline — hacker themes are only accessible via preset cards.
+Hacker themes use dedicated `data-theme` values (`matrix`, `terminal`, `amber-term`) with full CSS token overrides for bg/text. The Light/Dark toggle in settings only switches between light/dark baseline - hacker themes are only accessible via preset cards.
 
 ---
 
@@ -58,4 +58,4 @@ Implemented as `--content-width` CSS custom property on `.markdown-body`:
 | Default | `80ch`  |
 | Wide    | `120ch` |
 
-Mobile requires no special handling — viewport is narrower than all three values, so `max-width` has no visual effect and content fills the viewport naturally.
+Mobile requires no special handling - viewport is narrower than all three values, so `max-width` has no visual effect and content fills the viewport naturally.

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   VIEW 3 — CONTENT
+   VIEW 3 - CONTENT
    ═══════════════════════════════════════════════ */
 .content-layout {
   display: flex;
@@ -399,7 +399,7 @@
   background: var(--surface-2);
 }
 
-/* Blockquotes — default */
+/* Blockquotes - default */
 .markdown-body blockquote {
   border-left: 3px solid var(--border-2);
   padding: var(--s3) var(--s5);

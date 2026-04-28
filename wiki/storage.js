@@ -247,7 +247,7 @@ async function updateOfflineBtn() {
   btn.classList.toggle("active", cached);
   if (dlIcon) dlIcon.style.display = cached ? "none" : "";
   if (chkIcon) chkIcon.style.display = cached ? "" : "none";
-  btn.title = cached ? "Saved offline — click to remove" : "Save for offline";
+  btn.title = cached ? "Saved offline - click to remove" : "Save for offline";
 }
 
 const Offline = {

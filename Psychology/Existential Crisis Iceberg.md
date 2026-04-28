@@ -191,9 +191,9 @@
 
 #### Quotes
 
-- "Why is there something rather than nothing?" — Gottfried Wilhelm Leibniz
-- "The universe is just there, and that's all." — Bertrand Russell
-- "Not how the world is, is the mystical, but that it is." — Ludwig Wittgenstein
+- "Why is there something rather than nothing?" - Gottfried Wilhelm Leibniz
+- "The universe is just there, and that's all." - Bertrand Russell
+- "Not how the world is, is the mystical, but that it is." - Ludwig Wittgenstein
 
 #### Symptoms
 
@@ -239,9 +239,9 @@
 
 #### Quotes
 
-- "The idea of death, the fear of it, haunts the human animal like nothing else; it is a mainspring of human activity." — Ernest Becker
+- "The idea of death, the fear of it, haunts the human animal like nothing else; it is a mainspring of human activity." - Ernest Becker
 - "Men are so necessarily mad, that not to be mad would amount to another form of madness." - Blaise Pascal
-- "I don't want to achieve immortality through my work; I want to achieve immortality by not dying." — Woody Allen
+- "I don't want to achieve immortality through my work; I want to achieve immortality by not dying." - Woody Allen
 
 #### Symptoms
 
@@ -292,8 +292,8 @@
 
 #### Quotes
 
-- "We do not love people so much for the good they have done us, as for the good we have done them." — Leo Tolstoy (War and Peace).
-- "Self-love is the instrument of our preservation... it resembles the instrument of the perpetuation of the species." — Voltaire
+- "We do not love people so much for the good they have done us, as for the good we have done them." - Leo Tolstoy (War and Peace).
+- "Self-love is the instrument of our preservation... it resembles the instrument of the perpetuation of the species." - Voltaire
 
 #### Symptoms
 
@@ -339,9 +339,9 @@
 
 #### Quotes
 
-- "The past has no existence except as a record in the present." — Bertrand Russell
-- "If the world was created 5 minutes ago, how would you know? You wouldn't. Your breakfast is just a memory implanted to give you continuity." — Vsauce
-- "Time is a river which sweeps me along, but I am the river." — Jorge Luis Borges
+- "The past has no existence except as a record in the present." - Bertrand Russell
+- "If the world was created 5 minutes ago, how would you know? You wouldn't. Your breakfast is just a memory implanted to give you continuity." - Vsauce
+- "Time is a river which sweeps me along, but I am the river." - Jorge Luis Borges
 
 #### Symptoms
 
@@ -389,9 +389,9 @@
 
 #### Quotes
 
-- "Hell is other people." — Jean-Paul Sartre
-- "I exist, that is all, and I find it nauseating." — Jean-Paul Sartre
-- "We are like islands in the sea, separate on the surface but connected in the deep." — William James
+- "Hell is other people." - Jean-Paul Sartre
+- "I exist, that is all, and I find it nauseating." - Jean-Paul Sartre
+- "We are like islands in the sea, separate on the surface but connected in the deep." - William James
 
 #### Symptom
 
@@ -437,9 +437,9 @@
 
 #### Quotes
 
-- "Two possibilities exist: either we are alone in the Universe or we are not. Both are equally terrifying." — Arthur C. Clarke
-- "The universe is a dark forest... If a hunter sees another life, he can do only one thing: shoot and eliminate them." — Liu Cixin
-- "If aliens visit us, the outcome would be much as when Columbus landed in America, which didn't turn out well for the Native Americans." — Stephen Hawking
+- "Two possibilities exist: either we are alone in the Universe or we are not. Both are equally terrifying." - Arthur C. Clarke
+- "The universe is a dark forest... If a hunter sees another life, he can do only one thing: shoot and eliminate them." - Liu Cixin
+- "If aliens visit us, the outcome would be much as when Columbus landed in America, which didn't turn out well for the Native Americans." - Stephen Hawking
 
 #### Symptom
 
@@ -475,7 +475,7 @@
 
 - This is the **materialist hard-stop**: The view that consciousness is purely a byproduct of the brain's chemistry.
   - When the brain dies, the "show" doesn't move to a new theater; the projector just breaks.
-  - There is no darkness, no waiting—just non-existence.
+  - There is no darkness, no waiting-just non-existence.
 
 #### Examples
 
@@ -485,9 +485,9 @@
 
 #### Quotes
 
-- "I was dead for millions of years before I was born and it never inconvenienced me a bit." — Mark Twain
-- "Death is nothing to us. When we exist, death is not; and when death exists, we are not." — Epicurus
-- "For in that sleep of death what dreams may come..." — Shakespeare (Hamlet)
+- "I was dead for millions of years before I was born and it never inconvenienced me a bit." - Mark Twain
+- "Death is nothing to us. When we exist, death is not; and when death exists, we are not." - Epicurus
+- "For in that sleep of death what dreams may come..." - Shakespeare (Hamlet)
 
 #### Symptom
 
@@ -528,7 +528,7 @@
 
 - the philosophical rejection of objective meaning, purpose, or intrinsic value.
 - It posits that the universe does not care about you, morality is a human invention, and there is no "grand plan."
-- While often seen as depressing, it can also be liberating (Optimistic Nihilism)—if nothing matters, you are free to assign your own meaning to life.
+- While often seen as depressing, it can also be liberating (Optimistic Nihilism)-if nothing matters, you are free to assign your own meaning to life.
 
 #### Examples
 
@@ -538,8 +538,8 @@
 
 #### Quotes
 
-- "God is dead. God remains dead. And we have killed him." — Friedrich Nietzsche
-- "Man is the only creature who refuses to be what he is." — Albert Camus
+- "God is dead. God remains dead. And we have killed him." - Friedrich Nietzsche
+- "Man is the only creature who refuses to be what he is." - Albert Camus
 - "If we believe in nothing, if nothing has any meaning and if we can affirm no values whatsoever, then everything is possible and nothing has any importance." - Albert Camus (The Rebel)
 
 #### Symptom
@@ -589,9 +589,9 @@
 
 #### Quotes
 
-- "We are the local eyes and ears and thoughts and feelings of the cosmos." — Carl Sagan
-- "Sometimes I think we're alone in the universe, and sometimes I think we're not. In either case the idea is quite staggering." — Arthur C. Clarke
-- "The silence of these infinite spaces frightens me." — Blaise Pascal\
+- "We are the local eyes and ears and thoughts and feelings of the cosmos." - Carl Sagan
+- "Sometimes I think we're alone in the universe, and sometimes I think we're not. In either case the idea is quite staggering." - Arthur C. Clarke
+- "The silence of these infinite spaces frightens me." - Blaise Pascal\
 
 #### Symptom
 
@@ -639,9 +639,9 @@
 
 #### Quotes
 
-- "I plan to live forever, of course, but barring that I'd settle for a couple thousand years." — Isaac Asimov
-- "The first person to live to be 1,000 years old is certainly alive today." — Aubrey de Grey (Biogerontologist)
-- "Humanity is a bridge, not a destination." — Friedrich Nietzsche
+- "I plan to live forever, of course, but barring that I'd settle for a couple thousand years." - Isaac Asimov
+- "The first person to live to be 1,000 years old is certainly alive today." - Aubrey de Grey (Biogerontologist)
+- "Humanity is a bridge, not a destination." - Friedrich Nietzsche
 
 #### Symptom
 

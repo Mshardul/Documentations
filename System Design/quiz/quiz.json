@@ -306,7 +306,7 @@
         "Read-your-writes Consistency"
       ],
       "answer": 1,
-      "explanation": "**Strong Consistency** guarantees all nodes see the same data simultaneously — every read reflects the latest write. It trades availability and latency for accuracy, making it ideal for banking or inventory systems where stale data is unacceptable.",
+      "explanation": "**Strong Consistency** guarantees all nodes see the same data simultaneously - every read reflects the latest write. It trades availability and latency for accuracy, making it ideal for banking or inventory systems where stale data is unacceptable.",
       "tags": ["distributed-system", "consistency"]
     },
     {
@@ -320,7 +320,7 @@
         "Time-Series Database (e.g., InfluxDB)"
       ],
       "answer": 2,
-      "explanation": "A **Key-Value store** is perfect here — the short code is the key, the original URL is the value. Lookups are O(1), reads are extremely frequent, and there's no relational complexity needed. Redis also adds caching benefits for hot URLs.",
+      "explanation": "A **Key-Value store** is perfect here - the short code is the key, the original URL is the value. Lookups are O(1), reads are extremely frequent, and there's no relational complexity needed. Redis also adds caching benefits for hot URLs.",
       "tags": ["database", "scalability", "redis", "dynamodb"]
     },
     {
@@ -334,7 +334,7 @@
         "To cache frequently accessed database queries"
       ],
       "answer": 1,
-      "explanation": "A **Load Balancer** distributes incoming traffic across multiple servers to prevent any single server from becoming a bottleneck. It improves availability, fault tolerance, and scalability — if one server goes down, traffic is rerouted to healthy ones automatically.",
+      "explanation": "A **Load Balancer** distributes incoming traffic across multiple servers to prevent any single server from becoming a bottleneck. It improves availability, fault tolerance, and scalability - if one server goes down, traffic is rerouted to healthy ones automatically.",
       "tags": [
         "distributed-system",
         "load-balancing",
@@ -353,7 +353,7 @@
         "Availability and Consistency are both retained"
       ],
       "answer": 2,
-      "explanation": "In **CAP theorem**, you can only guarantee two of three properties. An AP system (Availability + Partition Tolerance) sacrifices strong Consistency — nodes may return stale data during a partition. Examples include DynamoDB and Cassandra, which favor availability over strict consistency.",
+      "explanation": "In **CAP theorem**, you can only guarantee two of three properties. An AP system (Availability + Partition Tolerance) sacrifices strong Consistency - nodes may return stale data during a partition. Examples include DynamoDB and Cassandra, which favor availability over strict consistency.",
       "tags": [
         "distributed-system",
         "cap-theorem",
@@ -401,7 +401,7 @@
         "It stores data permanently as the primary database"
       ],
       "answer": 1,
-      "explanation": "**Message Queues** decouple services so producers don't wait for consumers to process requests. This enables async communication, absorbs traffic spikes, and improves fault tolerance — if a consumer goes down, messages persist in the queue until it recovers.",
+      "explanation": "**Message Queues** decouple services so producers don't wait for consumers to process requests. This enables async communication, absorbs traffic spikes, and improves fault tolerance - if a consumer goes down, messages persist in the queue until it recovers.",
       "tags": ["message-queue", "microservice", "fault-tolerance", "kafka"]
     },
     {
@@ -429,7 +429,7 @@
         "CQRS Pattern"
       ],
       "answer": 1,
-      "explanation": "The **Circuit Breaker Pattern** monitors failures and \"opens\" the circuit when a threshold is hit — stopping calls to the failing service temporarily. After a timeout, it enters a half-open state to test recovery before resuming normal traffic.",
+      "explanation": "The **Circuit Breaker Pattern** monitors failures and \"opens\" the circuit when a threshold is hit - stopping calls to the failing service temporarily. After a timeout, it enters a half-open state to test recovery before resuming normal traffic.",
       "tags": ["microservice", "fault-tolerance", "distributed-system"]
     },
     {
@@ -449,7 +449,7 @@
     {
       "id": "bc957c56-7f19-479e-964c-fff5c36a8323",
       "type": "single",
-      "question": "Which consistency pattern ensures that once a user writes a value, they will always read that same value back — even in a distributed system?",
+      "question": "Which consistency pattern ensures that once a user writes a value, they will always read that same value back - even in a distributed system?",
       "options": [
         "Monotonic Read Consistency",
         "Causal Consistency",
@@ -457,7 +457,7 @@
         "Eventual Consistency"
       ],
       "answer": 2,
-      "explanation": "**Read-Your-Writes Consistency** guarantees that after a user performs a write, all subsequent reads by that same user reflect that write. This is critical for user-facing apps — achieved by routing user reads to the same replica.",
+      "explanation": "**Read-Your-Writes Consistency** guarantees that after a user performs a write, all subsequent reads by that same user reflect that write. This is critical for user-facing apps - achieved by routing user reads to the same replica.",
       "tags": ["distributed-system", "consistency", "replication"]
     },
     {
@@ -505,7 +505,7 @@
         "Increased storage costs in exchange for faster reads"
       ],
       "answer": 1,
-      "explanation": "**Eventual consistency** allows nodes to temporarily return stale data, but guarantees they'll converge to the same value over time. This trade-off enables high availability and low latency — systems like DNS, DynamoDB, and Cassandra use it to remain operational even during network partitions.",
+      "explanation": "**Eventual consistency** allows nodes to temporarily return stale data, but guarantees they'll converge to the same value over time. This trade-off enables high availability and low latency - systems like DNS, DynamoDB, and Cassandra use it to remain operational even during network partitions.",
       "tags": [
         "distributed-system",
         "consistency",
@@ -525,7 +525,7 @@
         "An operation that locks a resource until completion"
       ],
       "answer": 1,
-      "explanation": "**Idempotency** ensures repeated identical requests produce the same outcome — critical for retries in distributed systems. If a payment API call fails mid-flight, retrying an idempotent endpoint won't charge the user twice. HTTP GET, PUT, and DELETE are idempotent; POST typically is not.",
+      "explanation": "**Idempotency** ensures repeated identical requests produce the same outcome - critical for retries in distributed systems. If a payment API call fails mid-flight, retrying an idempotent endpoint won't charge the user twice. HTTP GET, PUT, and DELETE are idempotent; POST typically is not.",
       "tags": [
         "distributed-system",
         "api-design",
@@ -558,7 +558,7 @@
         "Managing leader election in a distributed cluster"
       ],
       "answer": 1,
-      "explanation": "**2PC** ensures all nodes in a distributed transaction either commit or rollback together — maintaining atomicity. A coordinator asks all nodes to \"prepare,\" then \"commit\" only if all agree. It's reliable but slow and vulnerable to coordinator failure.",
+      "explanation": "**2PC** ensures all nodes in a distributed transaction either commit or rollback together - maintaining atomicity. A coordinator asks all nodes to \"prepare,\" then \"commit\" only if all agree. It's reliable but slow and vulnerable to coordinator failure.",
       "tags": ["distributed-system", "transaction", "database", "consistency"]
     },
     {
@@ -572,7 +572,7 @@
         "It requires all services to share the same database schema"
       ],
       "answer": 2,
-      "explanation": "**Synchronous communication** creates tight coupling — the caller blocks and waits, so a slow or failed downstream service stalls the entire request chain. This can cascade into system-wide slowdowns. Async communication via message queues or event streams avoids this entirely.",
+      "explanation": "**Synchronous communication** creates tight coupling - the caller blocks and waits, so a slow or failed downstream service stalls the entire request chain. This can cascade into system-wide slowdowns. Async communication via message queues or event streams avoids this entirely.",
       "tags": [
         "microservice",
         "distributed-system",

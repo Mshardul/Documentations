@@ -97,14 +97,14 @@
 - **Situation**
   - Was leading the backend and architecture for a campaign management platform that needed integration with five different social media APIs. We had a tight timeline to launch an MVP that supported at least three platforms.
 - **Failure**
-  - Made the decision to build all integrations in parallel by dividing them among sub-teams — thinking this would accelerate delivery.
+  - Made the decision to build all integrations in parallel by dividing them among sub-teams - thinking this would accelerate delivery.
   - While we were able to move quickly in development, it led to inconsistencies in API abstraction, error handling, and data formats because each team implemented their integration differently.
   - When it came time to stitch the pieces together, we spent more time debugging integration mismatches and normalizing data than we saved during development.
   - As a result, the go-live was delayed by nearly 2 weeks, and the MVP required multiple patches post-launch to stabilize.
 - **Lesson**
   - **Parallel execution without upfront standardization is risky**: We lacked a well-defined interface contract or base SDK for these APIs, which would’ve saved rework later.
   - **Speed at the start can cost time at the end**: I realized that spending 1 extra week in design and standardization would have saved us at least 2–3 weeks of downstream fixes.
-  - **Leadership isn’t just about trusting delegation — it’s also about setting the right guardrails**: I should have reviewed the early architecture choices from each sub-team more closely and driven alignment before implementation.
+  - **Leadership isn’t just about trusting delegation - it’s also about setting the right guardrails**: I should have reviewed the early architecture choices from each sub-team more closely and driven alignment before implementation.
 - **Improvement**
   - Create a shared API abstraction layer first, and mandate each integration team to follow it.
   - Introduce a common error handling and logging framework.
@@ -158,7 +158,7 @@
 - **React** because our team had **prior experience** with it and a **strong JavaScript skill set**, which meant a **smoother learning curve** and **faster onboarding** for new members.
 - **Angular** is a **powerful framework**, but it’s **more opinionated** and has a **steeper learning curve**.
 - **Trade-off**: React needed to integrate **additional libraries** for **state management** and **tooling**, which Angular provides out-of-the-box.
-- **Aligning tech stack** with the **team’s expertise** proved beneficial — the developers were **immediately productive**, and we could **deliver features quickly**.
+- **Aligning tech stack** with the **team’s expertise** proved beneficial - the developers were **immediately productive**, and we could **deliver features quickly**.
 - vast **React ecosystem** gave us **flexibility** to pick and choose **solutions** (like **Redux** for state, **Material-UI** for components) that best fit our needs.
 
 # Influencing team to adopt a new Engineering Solution
@@ -399,23 +399,23 @@
   - One advocated for using **event-driven architecture with Kafka** to decouple services.
   - The other strongly preferred keeping the **current REST-based synchronous design**, fearing increased complexity and ops overhead.
 - **Handling**
-  - **One-on-One Listening**: spoke to both individuals separately — not to judge, but to deeply understand their reasoning
+  - **One-on-One Listening**: spoke to both individuals separately - not to judge, but to deeply understand their reasoning
   - **Short-Term vs Long-Term Vision Split**: While it was easy to continue with REST for now, but probably later on we needed to switch to event-driven architecture for scalability.
 - **Solution**
   - Based on current requirement; Going on with the current design for now, and switching to Kafka after 6 months.
 
 ### Code Ownership vs Delivery Velocity
 
-- During a tight release window, one of the mid-level engineers bypassed the usual code review process and merged a major backend change into the main branch. He justified it by saying: “It’s my module, I know what I’m doing — code review will just delay things.”
-- A senior engineer on the team objected strongly — saying this set a bad precedent and violated our team ownership and peer review culture.
+- During a tight release window, one of the mid-level engineers bypassed the usual code review process and merged a major backend change into the main branch. He justified it by saying: “It’s my module, I know what I’m doing - code review will just delay things.”
+- A senior engineer on the team objected strongly - saying this set a bad precedent and violated our team ownership and peer review culture.
 - **Handling**
-  - **Clarified the Real Issue**: This wasn’t just about a merge — it was about boundaries and expectations.
+  - **Clarified the Real Issue**: This wasn’t just about a merge - it was about boundaries and expectations.
     - The mid-level dev felt ownership pressure due to delivery timelines and took shortcuts.
     - The senior felt disrespected and worried that our review rigor was being eroded.
-    - **Situation Reframing**: Not a people problem — a process weakness under pressure.
+    - **Situation Reframing**: Not a people problem - a process weakness under pressure.
   - **Created Guardrails + Compromise**
     - A mandatory 1-review rule even during crunches (reduced from 2 temporarily).
-    - A new “critical PR fast track” label — that allowed devs to signal when they needed rapid reviews, so others could prioritize.
+    - A new “critical PR fast track” label - that allowed devs to signal when they needed rapid reviews, so others could prioritize.
 
 # Team Culture
 

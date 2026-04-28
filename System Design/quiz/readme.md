@@ -1,4 +1,4 @@
-# Quiz Revision App — Project Documentation
+# Quiz Revision App - Project Documentation
 
 ---
 
@@ -13,7 +13,7 @@
 - [5. Quiz JSON Schema](#5-quiz-json-schema)
   - [Top-level structure](#top-level-structure)
   - [`meta` object](#meta-object)
-  - [`questions` array — each item](#questions-array--each-item)
+  - [`questions` array - each item](#questions-array---each-item)
   - [Full example](#full-example)
   - [Constraints](#constraints)
   - [Adding a new question manually](#adding-a-new-question-manually)
@@ -37,9 +37,9 @@
 
 ## 1. Overview
 
-- A lightweight, offline-friendly quiz revision tool built with plain HTML, CSS, and JS — no framework, no build step.
+- A lightweight, offline-friendly quiz revision tool built with plain HTML, CSS, and JS - no framework, no build step.
 - Solves the problem of storing and revising MCQ-style questions from mock tests, courses, or books in a structured, filterable format.
-- Intended for individual use — load your own `quiz.json`, filter by topic, and revise at your own pace.
+- Intended for individual use - load your own `quiz.json`, filter by topic, and revise at your own pace.
 
 ---
 
@@ -54,7 +54,7 @@
 ### Loading Questions
 
 - Point the JS config to your `quiz.json` file path (see [Configuration](#8-configuration)).
-- On load, the JS verifies the file — if invalid or unreachable, an error is shown.
+- On load, the JS verifies the file - if invalid or unreachable, an error is shown.
 - No UI-based question addition in v1; edit `quiz.json` directly.
 
 ### Applying Filters
@@ -69,10 +69,10 @@
 ### Interacting with Quiz Cards
 
 - **Select an option** using radio buttons (one per line).
-- **Show/Hide Answer** — passive peek at the answer without marking as attempted.
-- **Clear Selection** — visible only when an option is selected; resets the radio.
-- **Submit Answer** — validates selection, highlights correct (green) / incorrect (red) option, reveals answer + explanation, and changes the button label to "Hide Answer".
-- **Load More** — appends the next paginated batch of questions at the bottom.
+- **Show/Hide Answer** - passive peek at the answer without marking as attempted.
+- **Clear Selection** - visible only when an option is selected; resets the radio.
+- **Submit Answer** - validates selection, highlights correct (green) / incorrect (red) option, reveals answer + explanation, and changes the button label to "Hide Answer".
+- **Load More** - appends the next paginated batch of questions at the bottom.
 
 ---
 
@@ -82,7 +82,7 @@
 /
 ├── quiz.html       # App shell, layout, and static markup
 ├── quiz.css        # All styling, theming, chip colours, drawer, cards
-└── quiz.js          # All logic — data loading, filtering, pagination, rendering
+└── quiz.js          # All logic - data loading, filtering, pagination, rendering
 ```
 
 | File        | Responsibility                                                                                     |
@@ -141,7 +141,7 @@ quiz.css
 | `version`      | `number`   | Schema version (integer)                              |
 | `allowed_tags` | `string[]` | Master tag vocabulary; source of truth for the drawer |
 
-### `questions` array — each item
+### `questions` array - each item
 
 | Field         | Type       | Description                                                                                                     |
 | ------------- | ---------- | --------------------------------------------------------------------------------------------------------------- |
@@ -190,15 +190,15 @@ quiz.css
 
 ### Constraints
 
-- `answer` index must be a valid index into `options` — do not reorder options after setting it.
+- `answer` index must be a valid index into `options` - do not reorder options after setting it.
 - `id` must be unique across all questions.
-- No trailing commas — strict JSON.
+- No trailing commas - strict JSON.
 
 ### Adding a new question manually
 
 1. Generate a UUID (e.g., `uuidgen` in terminal or any online tool).
 2. Write question, options, set `answer` as 0-based index.
-3. Write `explanation` in markdown — preview in a `.md` scratch file first.
+3. Write `explanation` in markdown - preview in a `.md` scratch file first.
 4. Pick tags **only** from `meta.allowed_tags`; add new tags to `allowed_tags` first if needed.
 5. Validate JSON before saving (e.g., `python -m json.tool quiz.json`).
 
@@ -208,11 +208,11 @@ quiz.css
 
 ### Format rules
 
-- **Lowercase** — `secrets-management` not `Secrets-Management`
-- **Hyphen-separated** — `api-security` not `api_security` or `apiSecurity`
-- **No plurals** — `container` not `containers`
+- **Lowercase** - `secrets-management` not `Secrets-Management`
+- **Hyphen-separated** - `api-security` not `api_security` or `apiSecurity`
+- **No plurals** - `container` not `containers`
 - **No special characters** beyond hyphens
-- **No hierarchy notation** — use separate tags: `["cloud", "aws"]` not `"cloud:aws"`
+- **No hierarchy notation** - use separate tags: `["cloud", "aws"]` not `"cloud:aws"`
 
 ### Taxonomy (think in layers)
 
@@ -244,23 +244,23 @@ quiz.css
 
 ## 7. Features
 
-- **Tag filtering** — union (OR) of selected tags; persisted in URL query params (`?tags=security,aws`); survives page reload.
-- **Pagination with "Load More"** — loads `pagination_size` questions at a time; appends to page; button greyed out when pool exhausted.
-- **Shuffle** — question pool is shuffled on every page load/filter change; no repeated ordering across sessions.
-- **Answer validation** — Submit highlights correct (green) / incorrect (red) option and auto-reveals answer + explanation.
-- **Passive peek** — Show/Hide Answer button reveals answer without marking as attempted (for v2 scoring).
-- **Markdown explanations** — rendered via `marked.js`; supports inline code, bold, italic.
-- **Tag colour chips** — consistent colour per tag, round-robin assigned at runtime.
-- **Floating drawer menu** — right-side drawer for tag selection; doesn't shift page layout.
-- **Active filter display** — Div2 shows selected tag chips + total filtered question count (circle badge) when filter is active.
-- **Back to top** — floating ↑ button, bottom-right.
-- **Keyboard accessibility** — full keyboard navigation (see [Section 10](#10-keyboard-accessibility)).
+- **Tag filtering** - union (OR) of selected tags; persisted in URL query params (`?tags=security,aws`); survives page reload.
+- **Pagination with "Load More"** - loads `pagination_size` questions at a time; appends to page; button greyed out when pool exhausted.
+- **Shuffle** - question pool is shuffled on every page load/filter change; no repeated ordering across sessions.
+- **Answer validation** - Submit highlights correct (green) / incorrect (red) option and auto-reveals answer + explanation.
+- **Passive peek** - Show/Hide Answer button reveals answer without marking as attempted (for v2 scoring).
+- **Markdown explanations** - rendered via `marked.js`; supports inline code, bold, italic.
+- **Tag colour chips** - consistent colour per tag, round-robin assigned at runtime.
+- **Floating drawer menu** - right-side drawer for tag selection; doesn't shift page layout.
+- **Active filter display** - Div2 shows selected tag chips + total filtered question count (circle badge) when filter is active.
+- **Back to top** - floating ↑ button, bottom-right.
+- **Keyboard accessibility** - full keyboard navigation (see [Section 10](#10-keyboard-accessibility)).
 
 ---
 
 ## 8. Configuration
 
-Config is a small inline object at the top of `quiz.js` — no separate config file.
+Config is a small inline object at the top of `quiz.js` - no separate config file.
 
 ```js
 const CONFIG = {
@@ -279,9 +279,9 @@ const CONFIG = {
 ### Page layout
 
 ```
-Div1   — Header (centered, not fixed): quiz topic title
-Div2   — Active filter bar (hidden by default): tag chips + question count badge
-Div3   — Quiz area: one card (Div3.1) per question
+Div1   - Header (centered, not fixed): quiz topic title
+Div2   - Active filter bar (hidden by default): tag chips + question count badge
+Div3   - Quiz area: one card (Div3.1) per question
          └── Div3.1.1  Question text (bold)
          └── Div3.1.2  Tag chips (coloured)
          └── Div3.1.3  Options (radio buttons, one per line)
@@ -295,9 +295,9 @@ Div3   — Quiz area: one card (Div3.1) per question
 
 ### Floating elements (bottom-right)
 
-- **↑ Back to top button** — always visible on scroll.
-- **Floating menu** — Confluence-style icon cluster.
-  - **Tags icon** — opens right-side drawer (non-blocking).
+- **↑ Back to top button** - always visible on scroll.
+- **Floating menu** - Confluence-style icon cluster.
+  - **Tags icon** - opens right-side drawer (non-blocking).
 
 ### Tag drawer
 
@@ -325,9 +325,9 @@ Drawer (right side, doesn't shift page)
 ## 10. Keyboard Accessibility
 
 - All interactive elements (radio buttons, action buttons, drawer checkboxes, Load More) are **focusable and operable via keyboard**.
-- `Tab` / `Shift+Tab` — navigate between focusable elements.
-- `Space` / `Enter` — activate buttons and checkboxes.
-- `Arrow keys` — navigate radio button options within a question.
+- `Tab` / `Shift+Tab` - navigate between focusable elements.
+- `Space` / `Enter` - activate buttons and checkboxes.
+- `Arrow keys` - navigate radio button options within a question.
 - Drawer is openable/closable via keyboard (focus trap inside drawer when open).
 - Back to top button is keyboard accessible.
 - Focus order follows visual DOM order.
@@ -336,7 +336,7 @@ Drawer (right side, doesn't shift page)
 
 ## 11. External Dependencies
 
-Loaded via CDN — no npm install required.
+Loaded via CDN - no npm install required.
 
 | Library                                       | Purpose                                            | CDN tag in `quiz.html`                                                      |
 | --------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------- |
@@ -347,18 +347,18 @@ Loaded via CDN — no npm install required.
 
 ## 12. Known Limitations
 
-- **No state persistence across reloads** — selected answers, show/hide state, and load-more position are all lost on page refresh or filter change.
-- **Static pagination size** — `pagination_size` can only be changed by editing `quiz.js` and refreshing.
-- **No score tracking** — Submit and Show/Hide are separate for future scoring, but no score is calculated in v1.
-- **Filter is union only (OR)** — AND filtering not available in v1 UI (logic exists in JS, deferred to v2).
-- **Manual question authoring only** — no UI for adding/editing questions; `quiz.json` must be edited directly.
-- **Local server required** — cannot be opened as a plain `file://` URL due to browser CORS restrictions on `fetch`.
+- **No state persistence across reloads** - selected answers, show/hide state, and load-more position are all lost on page refresh or filter change.
+- **Static pagination size** - `pagination_size` can only be changed by editing `quiz.js` and refreshing.
+- **No score tracking** - Submit and Show/Hide are separate for future scoring, but no score is calculated in v1.
+- **Filter is union only (OR)** - AND filtering not available in v1 UI (logic exists in JS, deferred to v2).
+- **Manual question authoring only** - no UI for adding/editing questions; `quiz.json` must be edited directly.
+- **Local server required** - cannot be opened as a plain `file://` URL due to browser CORS restrictions on `fetch`.
 
 ---
 
 ## 13. V2 Roadmap
 
-- **(a) Score / progress tracking** — track attempted questions, correct answers, running score display.
-- **(b) Finish Quiz button** — allows user to explicitly end a session.
-- **(c) Downloadable report (PDF)** — generated on quiz completion; includes each question, selected answer, correct answer, and final stats (score, accuracy %).
-- **(d) Add questions from UI** — form-based question authoring without editing `quiz.json` manually.
+- **(a) Score / progress tracking** - track attempted questions, correct answers, running score display.
+- **(b) Finish Quiz button** - allows user to explicitly end a session.
+- **(c) Downloadable report (PDF)** - generated on quiz completion; includes each question, selected answer, correct answer, and final stats (score, accuracy %).
+- **(d) Add questions from UI** - form-based question authoring without editing `quiz.json` manually.

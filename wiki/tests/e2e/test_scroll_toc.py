@@ -91,6 +91,29 @@ def test_toc_hidden_on_mobile(page, base_url):
     assert not sidebar.is_visible()
 
 
+def test_mobile_toc_closes_on_link_tap(page, base_url):
+    """Tapping a TOC link closes the mobile drawer without needing the overlay."""
+    page.set_viewport_size({"width": 375, "height": 812})
+    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.wait_for_selector("#view-content.active", timeout=10_000)
+    page.wait_for_selector("#toc-nav .toc-item", state="attached")
+
+    page.locator("#toc-mobile-btn").click()
+    page.wait_for_function(
+        "() => document.getElementById('toc-sidebar').classList.contains('mobile-open')"
+    )
+
+    page.locator("#toc-nav .toc-item").first.click()
+    page.wait_for_function(
+        "() => !document.getElementById('toc-sidebar').classList.contains('mobile-open')"
+    )
+    assert (
+        not page.locator("#toc-mobile-overlay")
+        .get_attribute("class")
+        .__contains__("open")
+    )
+
+
 def test_toc_sticky_does_not_scroll_away(page, base_url):
     """TOC sidebar stays in viewport after scrolling down."""
     page.set_viewport_size({"width": 1280, "height": 800})

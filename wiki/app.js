@@ -50,6 +50,12 @@ tocMobileOverlay.addEventListener("click", () => {
   tocSidebar.classList.remove("mobile-open");
   tocMobileOverlay.classList.remove("open");
 });
+document.getElementById("toc-nav").addEventListener("click", (e) => {
+  if (e.target.closest(".toc-item")) {
+    tocSidebar.classList.remove("mobile-open");
+    tocMobileOverlay.classList.remove("open");
+  }
+});
 
 /* ═══════════════════════════════════════════════════════════════
    SCROLL TO TOP

@@ -592,7 +592,7 @@ const Settings = {
     document.getElementById("settings-accents").innerHTML = ACCENT_OPTIONS.map(
       (a) => {
         const active = s.accentId === a.id ? " active" : "";
-        return `<button class="settings-accent-swatch${active}" style="background:${a.value}" title="${a.id}" onclick="Settings._setAccent('${a.id}')"></button>`;
+        return `<button class="settings-accent-swatch${active}" style="background:${a.value}" title="${a.id}" aria-label="${a.id}" onclick="Settings._setAccent('${a.id}')"></button>`;
       }
     ).join("");
   },

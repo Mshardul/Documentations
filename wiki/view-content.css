@@ -365,6 +365,29 @@
   border-color: var(--border);
 }
 
+/* ═══════════════════════════════════════════════
+   TABLE SCROLL CUE (WIKI-053)
+   ═══════════════════════════════════════════════ */
+.table-scroll-wrap {
+  overflow-x: auto;
+  position: relative;
+  margin: var(--s6) 0;
+}
+.table-scroll-wrap table {
+  margin: 0;
+}
+.table-scroll-wrap.scroll-cue::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 60px;
+  background: linear-gradient(to right, transparent, var(--surface));
+  pointer-events: none;
+  border-radius: 0 var(--r) var(--r) 0;
+}
+
 /* Tables */
 .markdown-body table {
   width: 100%;
@@ -455,9 +478,87 @@
   border-radius: var(--r);
   overflow-x: auto;
   text-align: center;
+  cursor: zoom-in;
 }
 .mermaid-diagram svg {
   max-width: 100%;
+  height: auto;
+}
+
+/* zoomable images (WIKI-044) */
+.markdown-body img.zoomable-img {
+  cursor: zoom-in;
+}
+
+/* ═══════════════════════════════════════════════
+   ZOOM OVERLAY (WIKI-044 / WIKI-045)
+   ═══════════════════════════════════════════════ */
+.zoom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.zoom-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.zoom-overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(4px);
+}
+.zoom-overlay-close {
+  position: absolute;
+  top: var(--s4);
+  right: var(--s4);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  color: var(--text-muted);
+  z-index: 1;
+  transition: color var(--t-fast), background var(--t-fast);
+}
+.zoom-overlay-close svg {
+  width: 14px;
+  height: 14px;
+}
+.zoom-overlay-close:hover {
+  color: var(--text-body);
+  background: var(--surface-3);
+}
+.zoom-overlay-content {
+  position: relative;
+  z-index: 1;
+  max-width: 92vw;
+  max-height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+.zoom-overlay-content img {
+  max-width: 90vw;
+  max-height: 88vh;
+  border-radius: var(--r);
+  object-fit: contain;
+  display: block;
+}
+.zoom-diagram-svg {
+  max-width: 90vw;
+  max-height: 88vh;
+  width: auto;
   height: auto;
 }
 

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="./wiki.css" />
   </head>
   <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
     <div id="reading-progress" class="reading-progress"></div>
 
     <!-- ══════════════════════════════════════
@@ -81,7 +82,7 @@
       <div class="home-topbar">
         <button
           class="topbar-icon-btn"
-          onclick="GlobalSearch.open()"
+          data-action="search-open"
           title="Search all (⌘K)"
         >
           <svg viewBox="0 0 20 20" fill="none">
@@ -103,7 +104,7 @@
         <button
           class="theme-toggle-btn"
           title="Toggle theme"
-          onclick="Theme.toggle()"
+          data-action="theme-toggle"
         >
           <svg class="theme-icon-moon" viewBox="0 0 20 20" fill="none">
             <path
@@ -133,7 +134,7 @@
         <button
           class="topbar-icon-btn"
           title="Settings"
-          onclick="Settings.open()"
+          data-action="settings-open"
         >
           <svg viewBox="0 0 20 20" fill="none">
             <path
@@ -160,7 +161,7 @@
           - all in one place.
         </p>
       </header>
-      <main class="home-main">
+      <main id="main-content" class="home-main">
         <div id="wiki-grid" class="wiki-grid"></div>
       </main>
     </div>
@@ -171,7 +172,7 @@
     <div id="view-index" class="view">
       <div class="page-topbar">
         <div class="topbar-inner">
-          <button class="back-btn" onclick="Wiki.goHome()">
+          <button class="back-btn" data-action="wiki-home">
             <svg viewBox="0 0 16 16" fill="none">
               <path
                 d="M10 4L6 8l4 4"
@@ -186,7 +187,7 @@
           <nav id="index-breadcrumb" class="breadcrumb"></nav>
           <button
             class="topbar-icon-btn"
-            onclick="GlobalSearch.open()"
+            data-action="search-open"
             title="Search all (⌘K)"
           >
             <svg viewBox="0 0 20 20" fill="none">
@@ -208,7 +209,7 @@
           <button
             class="theme-toggle-btn"
             title="Toggle theme"
-            onclick="Theme.toggle()"
+            data-action="theme-toggle"
           >
             <svg class="theme-icon-moon" viewBox="0 0 20 20" fill="none">
               <path
@@ -238,7 +239,7 @@
           <button
             class="topbar-icon-btn"
             title="Settings"
-            onclick="Settings.open()"
+            data-action="settings-open"
           >
             <svg viewBox="0 0 20 20" fill="none">
               <path
@@ -296,7 +297,7 @@
             id="content-read-btn"
             class="topbar-icon-btn"
             title="Mark as read"
-            onclick="ReadToggle.toggle()"
+            data-action="read-toggle"
           >
             <svg viewBox="0 0 20 20" fill="none">
               <path
@@ -318,7 +319,7 @@
             id="content-bookmark-btn"
             class="topbar-icon-btn"
             title="Bookmark"
-            onclick="Bookmarks.toggle()"
+            data-action="bookmark-toggle"
           >
             <svg viewBox="0 0 20 20" fill="none">
               <path
@@ -333,7 +334,7 @@
             id="content-offline-btn"
             class="topbar-icon-btn"
             title="Save for offline"
-            onclick="Offline.toggle()"
+            data-action="offline-toggle"
           >
             <svg class="offline-icon-download" viewBox="0 0 20 20" fill="none">
               <path
@@ -367,7 +368,7 @@
           </button>
           <button
             class="topbar-icon-btn"
-            onclick="GlobalSearch.open()"
+            data-action="search-open"
             title="Search all (⌘K)"
           >
             <svg viewBox="0 0 20 20" fill="none">
@@ -389,7 +390,7 @@
           <button
             class="theme-toggle-btn"
             title="Toggle theme"
-            onclick="Theme.toggle()"
+            data-action="theme-toggle"
           >
             <svg class="theme-icon-moon" viewBox="0 0 20 20" fill="none">
               <path
@@ -419,7 +420,7 @@
           <button
             class="topbar-icon-btn"
             title="Settings"
-            onclick="Settings.open()"
+            data-action="settings-open"
           >
             <svg viewBox="0 0 20 20" fill="none">
               <path
@@ -515,7 +516,7 @@
           <span class="settings-title">Settings</span>
           <button
             class="settings-close-btn"
-            onclick="Settings.close()"
+            data-action="settings-close"
             title="Close"
           >
             <svg viewBox="0 0 14 14" fill="none">
@@ -532,13 +533,10 @@
           <div class="settings-section">
             <div class="settings-section-label">Data</div>
             <div class="settings-size-row">
-              <button class="settings-size-btn" onclick="Settings.exportData()">
+              <button class="settings-size-btn" data-action="settings-export">
                 Export Backup
               </button>
-              <button
-                class="settings-size-btn"
-                onclick="document.getElementById('import-upload').click()"
-              >
+              <button class="settings-size-btn" data-action="import-trigger">
                 Import Backup
               </button>
               <input
@@ -547,7 +545,6 @@
                 accept=".json"
                 aria-label="Import backup file"
                 style="display: none"
-                onchange="Settings.importData(event)"
               />
             </div>
           </div>
@@ -585,13 +582,31 @@
       aria-hidden="true"
     ></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"
+    ></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    ></script>
 
     <script type="module" src="./app.js"></script>
   </body>

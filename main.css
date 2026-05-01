@@ -52,25 +52,23 @@ h2 {
   position: sticky;
   top: 0;
   background-color: var(--navbar-background-color);
-  overflow: hidden;
-  text-align: center;
+  display: flex;
+  align-items: center;
   margin-bottom: 10px;
   font-size: xx-large;
   padding: 10px;
 }
-.left,
-.right,
-.center {
-  display: inline;
-}
 .left {
-  float: left;
+  flex: 1;
+  text-align: left;
+}
+.center {
+  flex: 1;
+  text-align: center;
 }
 .right {
-  float: right;
-}
-.center {
-  float: none;
+  flex: 1;
+  text-align: right;
 }
 
 .subject {

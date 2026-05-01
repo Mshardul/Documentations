@@ -170,7 +170,10 @@ async function renderIndex(wiki) {
     const basePath = dirOf(wiki.indexPath);
     state.indexSections = parseIndexMd(md, basePath);
     renderIndexSections(state.indexSections, wiki);
-    populateIndexReadTimes();
+
+    sectionsEl.classList.add("index-sections--loading");
+    await populateIndexReadTimes();
+    sectionsEl.classList.remove("index-sections--loading");
 
     const savedScroll = localStorage.getItem(`wiki-index-scroll-${wiki.id}`);
     if (savedScroll)
@@ -183,12 +186,25 @@ async function renderIndex(wiki) {
 function renderIndexSections(sections, wiki) {
   const container = document.getElementById("index-sections");
   container.innerHTML = sections
-    .map(
-      (section) => `
-    <div class="index-section" data-section="${section.heading}">
-      <div class="section-header">
-        <h2 class="section-title">${section.heading}</h2>
+    .map((section) => {
+      const collapseKey = `wiki-section-collapsed-${wiki.id}-${section.heading}`;
+      const isCollapsed = !!localStorage.getItem(collapseKey);
+      const escapedHeading = section.heading
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+      return `
+    <div class="index-section${
+      isCollapsed ? " section--collapsed" : ""
+    }" data-section="${escHtml(section.heading)}">
+      <div class="section-header"
+           role="button" tabindex="0"
+           onclick="toggleSection(this,'${wiki.id}','${escapedHeading}')"
+           onkeydown="if(event.key==='Enter'||event.key===' '){toggleSection(this,'${
+             wiki.id
+           }','${escapedHeading}');event.preventDefault()}">
+        <h2 class="section-title">${escHtml(section.heading)}</h2>
         <span class="section-count">${section.cards.length}</span>
+        <span class="section-chevron">›</span>
       </div>
       <div class="index-card-grid">
         ${section.cards
@@ -221,9 +237,20 @@ function renderIndexSections(sections, wiki) {
           .join("")}
       </div>
     </div>
-  `
-    )
+  `;
+    })
     .join("");
+}
+
+function toggleSection(headerEl, wikiId, heading) {
+  const section = headerEl.closest(".index-section");
+  const isCollapsed = section.classList.toggle("section--collapsed");
+  const key = `wiki-section-collapsed-${wikiId}-${heading}`;
+  if (isCollapsed) {
+    localStorage.setItem(key, "1");
+  } else {
+    localStorage.removeItem(key);
+  }
 }
 
 /* ─── Reading time ─── */
@@ -767,4 +794,5 @@ export {
   updatePageTitle,
   resolvePath,
   renderRelatedArticles,
+  toggleSection,
 };

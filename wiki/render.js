@@ -166,9 +166,7 @@ async function renderIndex(wiki) {
     '<div class="loading" style="padding:3rem;text-align:center;color:var(--text-muted);font-size:.875rem">Loading…</div>';
 
   try {
-    const md = await fetchText(wiki.indexPath);
-    const basePath = dirOf(wiki.indexPath);
-    state.indexSections = parseIndexMd(md, basePath);
+    state.indexSections = await fetchWikiIndex(wiki);
     renderIndexSections(state.indexSections, wiki);
 
     sectionsEl.classList.add("index-sections--loading");
@@ -296,10 +294,26 @@ async function populateIndexReadTimes() {
 /* ─── Shared index cache (used by article counts + global search) ─── */
 async function fetchWikiIndex(wiki) {
   if (indexCache[wiki.id]) return indexCache[wiki.id];
+
+  const sessionKey = `wiki-index-cache-${wiki.id}`;
+  const cached = sessionStorage.getItem(sessionKey);
+  if (cached) {
+    try {
+      const sections = JSON.parse(cached);
+      indexCache[wiki.id] = sections;
+      return sections;
+    } catch {}
+  }
+
   const md = await fetchText(wiki.indexPath);
   const basePath = dirOf(wiki.indexPath);
   const sections = parseIndexMd(md, basePath);
   indexCache[wiki.id] = sections;
+
+  try {
+    sessionStorage.setItem(sessionKey, JSON.stringify(sections));
+  } catch {}
+
   return sections;
 }
 
@@ -693,8 +707,14 @@ function setBreadcrumb(elId, items) {
    UTILITIES
    ═══════════════════════════════════════════════════════════════ */
 async function fetchText(path) {
-  const res = await fetch(encodeURI(path));
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  let res;
+  try {
+    res = await fetch(encodeURI(path));
+  } catch {
+    throw new Error("Network error — check your connection");
+  }
+  if (res.status === 404) throw new Error("Not found (404)");
+  if (!res.ok) throw new Error(`Server error (${res.status})`);
   return res.text();
 }
 

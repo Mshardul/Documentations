@@ -11,7 +11,13 @@ import {
   markRead,
   updateReadBtn,
 } from "./storage.js";
-import { progressBar, navigate, route, navigateToContent } from "./render.js";
+import {
+  progressBar,
+  navigate,
+  route,
+  navigateToContent,
+  toggleSection,
+} from "./render.js";
 import { openGlobalSearch, closeGlobalSearch } from "./search.js";
 import { closeZoomOverlay, rerenderMermaidDiagrams } from "./content.js";
 
@@ -24,6 +30,7 @@ window.Settings = Settings;
 window.Bookmarks = Bookmarks;
 window.navigate = navigate;
 window.navigateToContent = navigateToContent;
+window.toggleSection = toggleSection;
 window.clearRecents = clearRecents;
 window.closeGlobalSearch = closeGlobalSearch;
 

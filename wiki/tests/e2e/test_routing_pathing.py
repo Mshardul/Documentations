@@ -4,6 +4,8 @@ Robust resolvePath for nested ../../ links.
 404 history fallback strips bad hashes on shallow history.
 """
 
+import re
+
 
 def _go_to_article(page, base_url):
     page.goto(f"{base_url}/wiki/#system-design/caching")
@@ -85,3 +87,15 @@ def test_404_fallback_on_bad_article(page, base_url):
 
     assert page.locator("#view-home.active").count() == 1
     assert "this-does-not-exist" not in page.url
+
+
+# ── WIKI-073: 404.html back-button history fallback ───────────────────────────
+
+
+def test_404_back_btn_redirects_when_no_history(page, base_url):
+    """404.html back button redirects to wiki home when history is empty."""
+    page.goto(f"{base_url}/wiki/404.html")
+    page.wait_for_load_state("domcontentloaded")
+
+    page.click("#back-btn")
+    page.wait_for_url(re.compile(r".*/wiki/?(?:#.*)?$"), timeout=5_000)

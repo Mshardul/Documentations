@@ -314,7 +314,7 @@
           request to contribute.
         </div>
 
-        <div class="back-line" id="back-btn" onclick="history.back()">
+        <div class="back-line" id="back-btn">
           <span class="prompt">$</span>
           <span class="back-cmd">cd <span class="arg">../</span></span>
           <span class="cursor"></span>
@@ -331,8 +331,21 @@
         document.title = `${title} - Not Written Yet`;
       }
 
+      function goBack() {
+        if (
+          !document.referrer ||
+          !document.referrer.startsWith(location.origin)
+        ) {
+          location.href = "./";
+        } else {
+          history.back();
+        }
+      }
+
+      document.getElementById("back-btn").addEventListener("click", goBack);
+
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") history.back();
+        if (e.key === "Enter") goBack();
       });
     </script>
   </body>

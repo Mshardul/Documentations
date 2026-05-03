@@ -24,10 +24,12 @@ import {
   buildTOC,
   addAnchorLinks,
   renderMermaidDiagrams,
+  addCollapsibleCodeBlocks,
   addCodeLangLabels,
   addImageLightbox,
   addDiagramZoom,
   addTableScrollCues,
+  cleanupFocusMode,
 } from "./content.js";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -408,11 +410,12 @@ async function renderContent(
   const body = document.getElementById("markdown-body");
   body.innerHTML = '<div class="loading">Loading…</div>';
 
-  // Clear old observer
+  // Clear old observers and modes
   if (state.tocObserver) {
     state.tocObserver.disconnect();
     state.tocObserver = null;
   }
+  cleanupFocusMode();
   document.getElementById("toc-nav").innerHTML = "";
 
   const readTimeBadge = document.getElementById("content-read-time");
@@ -484,8 +487,9 @@ async function renderContent(
     // TOC
     buildTOC(body);
 
-    // Code language labels
+    // Code language labels + collapsible long blocks
     addCodeLangLabels(body);
+    addCollapsibleCodeBlocks(body);
 
     // Image lightbox + diagram zoom + table scroll cues
     addImageLightbox(body);

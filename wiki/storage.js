@@ -1,6 +1,28 @@
 import { state, WIKIS, escHtml } from "./state.js";
 
 /* ═══════════════════════════════════════════════════════════════
+   SCROLL CACHE EVICTION (WIKI-065)
+   ═══════════════════════════════════════════════════════════════ */
+const SCROLL_KEYS_MANIFEST = "wiki-scroll-keys";
+const SCROLL_CACHE_MAX = 50;
+
+function saveScrollPos(key, value) {
+  let keys;
+  try {
+    keys = JSON.parse(localStorage.getItem(SCROLL_KEYS_MANIFEST) || "[]");
+  } catch {
+    keys = [];
+  }
+  keys = keys.filter((k) => k !== key);
+  keys.unshift(key);
+  while (keys.length > SCROLL_CACHE_MAX) {
+    localStorage.removeItem(keys.pop());
+  }
+  localStorage.setItem(SCROLL_KEYS_MANIFEST, JSON.stringify(keys));
+  localStorage.setItem(key, value);
+}
+
+/* ═══════════════════════════════════════════════════════════════
    BOOKMARKS
    ═══════════════════════════════════════════════════════════════ */
 const BOOKMARKS_KEY = "wiki-bookmarks";
@@ -495,23 +517,65 @@ function applySettingsToDOM(s) {
 }
 
 const Settings = {
+  _lastFocus: null,
+  _focusTrapHandler: null,
+
   open() {
+    this._lastFocus = document.activeElement;
     this._render();
     const panel = document.getElementById("settings-panel");
     panel.classList.remove("hidden");
     panel.setAttribute("aria-hidden", "false");
+
+    const focusable = this._getFocusable();
+    if (focusable.length) focusable[0].focus();
+
+    this._focusTrapHandler = (e) => {
+      if (e.key !== "Tab") return;
+      const els = this._getFocusable();
+      if (!els.length) return;
+      if (e.shiftKey) {
+        if (document.activeElement === els[0]) {
+          e.preventDefault();
+          els[els.length - 1].focus();
+        }
+      } else {
+        if (document.activeElement === els[els.length - 1]) {
+          e.preventDefault();
+          els[0].focus();
+        }
+      }
+    };
+    panel.addEventListener("keydown", this._focusTrapHandler);
   },
 
   close() {
     const panel = document.getElementById("settings-panel");
+    if (this._focusTrapHandler) {
+      panel.removeEventListener("keydown", this._focusTrapHandler);
+      this._focusTrapHandler = null;
+    }
     panel.classList.add("hidden");
     panel.setAttribute("aria-hidden", "true");
+    if (this._lastFocus && typeof this._lastFocus.focus === "function") {
+      this._lastFocus.focus();
+      this._lastFocus = null;
+    }
   },
 
   isOpen() {
     return !document
       .getElementById("settings-panel")
       .classList.contains("hidden");
+  },
+
+  _getFocusable() {
+    const panel = document.getElementById("settings-panel");
+    return [
+      ...panel.querySelectorAll(
+        "button:not([disabled]), input:not([disabled])"
+      ),
+    ].filter((el) => el.offsetParent !== null && el.style.display !== "none");
   },
 
   _render() {
@@ -696,6 +760,7 @@ const Theme = {
 };
 
 export {
+  saveScrollPos,
   getBookmarks,
   saveBookmarks,
   isBookmarked,

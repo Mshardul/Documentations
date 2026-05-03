@@ -10,6 +10,7 @@ import {
   clearRecents,
   markRead,
   updateReadBtn,
+  saveScrollPos,
 } from "./storage.js";
 import {
   progressBar,
@@ -19,7 +20,11 @@ import {
   toggleSection,
 } from "./render.js";
 import { openGlobalSearch, closeGlobalSearch } from "./search.js";
-import { closeZoomOverlay, rerenderMermaidDiagrams } from "./content.js";
+import {
+  closeZoomOverlay,
+  rerenderMermaidDiagrams,
+  toggleFocusMode,
+} from "./content.js";
 
 /* ═══════════════════════════════════════════════════════════════
    WINDOW GLOBALS - required for onclick strings in dynamically
@@ -134,17 +139,14 @@ window.addEventListener(
       clearTimeout(_scrollSaveTimer);
       _scrollSaveTimer = setTimeout(() => {
         if (state.currentFilePath)
-          localStorage.setItem(
-            `scroll-${state.currentFilePath}`,
-            window.scrollY
-          );
+          saveScrollPos(`scroll-${state.currentFilePath}`, window.scrollY);
       }, 400);
     }
 
     if (state.currentView === "index" && state.currentWikiId) {
       clearTimeout(_indexScrollTimer);
       _indexScrollTimer = setTimeout(() => {
-        localStorage.setItem(
+        saveScrollPos(
           `wiki-index-scroll-${state.currentWikiId}`,
           window.scrollY
         );
@@ -203,6 +205,10 @@ document.addEventListener("keydown", (e) => {
       }
       if (e.key === ",") {
         Settings.isOpen() ? Settings.close() : Settings.open();
+        e.preventDefault();
+      }
+      if (e.key === "f" || e.key === "F") {
+        toggleFocusMode();
         e.preventDefault();
       }
     }

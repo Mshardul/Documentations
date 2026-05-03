@@ -350,6 +350,28 @@ function addTableScrollCues(contentEl) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   COLLAPSIBLE LONG CODE BLOCKS (WIKI-085)
+   ═══════════════════════════════════════════════════════════════ */
+function addCollapsibleCodeBlocks(contentEl) {
+  contentEl.querySelectorAll("pre").forEach((pre) => {
+    const code = pre.querySelector("code");
+    const lineCount = (code || pre).textContent.split("\n").length;
+    if (lineCount <= 20) return;
+
+    pre.classList.add("pre--collapsible");
+
+    const btn = document.createElement("button");
+    btn.className = "code-expand-btn";
+    btn.textContent = "Show more";
+    btn.addEventListener("click", () => {
+      const expanded = pre.classList.toggle("pre--expanded");
+      btn.textContent = expanded ? "Show less" : "Show more";
+    });
+    pre.appendChild(btn);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════
    CODE LANGUAGE LABELS
    ═══════════════════════════════════════════════════════════════ */
 function addCodeLangLabels(contentEl) {
@@ -363,6 +385,57 @@ function addCodeLangLabels(contentEl) {
   });
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   TYPEWRITER FOCUS MODE (WIKI-087)
+   ═══════════════════════════════════════════════════════════════ */
+let _focusMode = false;
+let _focusObserver = null;
+
+const FOCUS_SELECTORS = "p, li, blockquote, pre, h2, h3";
+
+function toggleFocusMode() {
+  const contentEl = document.getElementById("markdown-body");
+  if (!contentEl) return;
+  _focusMode = !_focusMode;
+  contentEl.classList.toggle("focus-mode", _focusMode);
+
+  if (_focusMode) {
+    _focusObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle("focus-para", entry.isIntersecting);
+        });
+      },
+      { rootMargin: "-35% 0px -35% 0px", threshold: 0 }
+    );
+    contentEl.querySelectorAll(FOCUS_SELECTORS).forEach((el) => {
+      _focusObserver.observe(el);
+    });
+  } else {
+    _cleanupFocusObserver(contentEl);
+  }
+}
+
+function cleanupFocusMode() {
+  if (!_focusMode) return;
+  _focusMode = false;
+  const contentEl = document.getElementById("markdown-body");
+  if (contentEl) {
+    contentEl.classList.remove("focus-mode");
+    _cleanupFocusObserver(contentEl);
+  }
+}
+
+function _cleanupFocusObserver(contentEl) {
+  if (_focusObserver) {
+    _focusObserver.disconnect();
+    _focusObserver = null;
+  }
+  contentEl.querySelectorAll(".focus-para").forEach((el) => {
+    el.classList.remove("focus-para");
+  });
+}
+
 export {
   closeZoomOverlay,
   addCopyButtons,
@@ -371,9 +444,12 @@ export {
   buildTOC,
   addAnchorLinks,
   renderMermaidDiagrams,
+  addCollapsibleCodeBlocks,
   addCodeLangLabels,
   addImageLightbox,
   addDiagramZoom,
   rerenderMermaidDiagrams,
   addTableScrollCues,
+  toggleFocusMode,
+  cleanupFocusMode,
 };

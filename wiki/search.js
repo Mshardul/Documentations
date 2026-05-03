@@ -63,6 +63,8 @@ async function loadAllSearchEntries() {
 }
 
 let gSearchSelectedIdx = -1;
+let _searchOpener = null;
+let _searchFocusTrapHandler = null;
 
 function gSearchItems() {
   return [...gSearchResults.querySelectorAll(".gsearch-result")];
@@ -83,11 +85,33 @@ function gSearchSelect(idx) {
 }
 
 function openGlobalSearch() {
+  _searchOpener = document.activeElement;
   gSearchModal.classList.remove("hidden");
   gSearchModal.setAttribute("aria-hidden", "false");
   gSearchInput.value = "";
   gSearchSelectedIdx = -1;
   gSearchInput.focus();
+
+  _searchFocusTrapHandler = (e) => {
+    if (e.key !== "Tab") return;
+    const items = [gSearchInput, ...gSearchItems()];
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  };
+  gSearchModal.addEventListener("keydown", _searchFocusTrapHandler);
+
   if (allSearchCache.loaded) {
     applyGlobalSearch("");
   } else {
@@ -100,6 +124,14 @@ function openGlobalSearch() {
 function closeGlobalSearch() {
   gSearchModal.classList.add("hidden");
   gSearchModal.setAttribute("aria-hidden", "true");
+  if (_searchFocusTrapHandler) {
+    gSearchModal.removeEventListener("keydown", _searchFocusTrapHandler);
+    _searchFocusTrapHandler = null;
+  }
+  if (_searchOpener && typeof _searchOpener.focus === "function") {
+    _searchOpener.focus();
+    _searchOpener = null;
+  }
 }
 
 function scoreMatch(q, entry) {

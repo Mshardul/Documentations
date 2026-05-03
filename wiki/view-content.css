@@ -740,3 +740,65 @@
   border-color: var(--accent);
   color: var(--accent-light);
 }
+
+/* ═══════════════════════════════════════════════
+   COLLAPSIBLE CODE BLOCKS (WIKI-085)
+   ═══════════════════════════════════════════════ */
+.markdown-body pre.pre--collapsible {
+  max-height: 360px;
+  overflow-y: hidden;
+}
+.markdown-body pre.pre--collapsible::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 64px;
+  background: linear-gradient(to bottom, transparent, #1a1d2e);
+  pointer-events: none;
+}
+.markdown-body pre.pre--collapsible.pre--expanded {
+  max-height: none;
+  overflow-y: auto;
+}
+.markdown-body pre.pre--collapsible.pre--expanded::after {
+  display: none;
+}
+.code-expand-btn {
+  position: absolute;
+  bottom: var(--s3);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 3px 14px;
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  background: var(--surface-3);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-full);
+  color: var(--text-muted);
+  cursor: pointer;
+  z-index: 1;
+  white-space: nowrap;
+  transition: color var(--t-fast), border-color var(--t-fast),
+    background var(--t-fast);
+}
+.code-expand-btn:hover {
+  color: var(--text-body);
+  border-color: var(--border);
+  background: var(--surface-2);
+}
+
+/* ═══════════════════════════════════════════════
+   TYPEWRITER FOCUS MODE (WIKI-087)
+   ═══════════════════════════════════════════════ */
+.markdown-body.focus-mode p,
+.markdown-body.focus-mode li,
+.markdown-body.focus-mode blockquote,
+.markdown-body.focus-mode pre,
+.markdown-body.focus-mode h2,
+.markdown-body.focus-mode h3 {
+  opacity: 0.2;
+  transition: opacity 0.2s ease;
+}
+.markdown-body.focus-mode .focus-para {
+  opacity: 1;
+}

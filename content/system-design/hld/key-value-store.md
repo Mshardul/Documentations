@@ -1,1 +1,0 @@
-# Design: Key Value Store

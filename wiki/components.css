@@ -50,13 +50,19 @@
   flex-shrink: 0;
 }
 
+/* Push action buttons to the right in the index topbar */
+.page-topbar .breadcrumb {
+  flex: 1;
+  min-width: 0;
+}
+
 /* Topbar */
 .page-topbar,
 .content-topbar {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(15, 17, 23, 0.85);
+  background: var(--bg-translucent, rgba(15, 17, 23, 0.85));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
@@ -509,44 +515,87 @@
   color: var(--text-muted);
 }
 
-/* Preset cards */
-.settings-preset-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--s2);
-}
-.settings-preset-card {
+/* Settings groups */
+.settings-group {
   display: flex;
   flex-direction: column;
+  gap: var(--s4);
+  padding-bottom: var(--s5);
+  border-bottom: 1px solid var(--border);
+}
+.settings-group:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.settings-group-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-heading);
+}
+
+/* Background swatches */
+.settings-bg-row {
+  display: flex;
   align-items: center;
   gap: var(--s2);
-  padding: var(--s3) var(--s2);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
+}
+.settings-bg-swatch {
+  width: 36px;
+  height: 36px;
   border-radius: var(--r);
+  border: 2px solid var(--border-2);
   cursor: pointer;
-  transition: border-color var(--t-fast), background var(--t-fast);
-  font-family: var(--font);
-}
-.settings-preset-card:hover {
-  border-color: var(--border-2);
-  background: var(--surface-3);
-}
-.settings-preset-card.active {
-  border-color: var(--accent);
-  background: var(--accent-dim);
-}
-.settings-preset-swatch {
-  width: 22px;
-  height: 22px;
-  border-radius: var(--r-full);
-  display: block;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: transform var(--t-fast), outline-color var(--t-fast);
   flex-shrink: 0;
 }
-.settings-preset-name {
-  font-size: var(--text-xs);
-  font-weight: 500;
-  color: var(--text-body);
+.settings-bg-swatch:hover {
+  transform: scale(1.1);
+}
+.settings-bg-swatch.active {
+  outline-color: var(--accent-light);
+  border-color: transparent;
+}
+.settings-bg-separator {
+  width: 1px;
+  height: 28px;
+  background: var(--border-2);
+  flex-shrink: 0;
+  margin: 0 var(--s1);
+}
+
+/* Text colour swatches */
+.settings-text-row {
+  display: flex;
+  gap: var(--s2);
+}
+.settings-text-swatch {
+  flex: 1;
+  height: 36px;
+  border-radius: var(--r);
+  border: 2px solid transparent;
+  cursor: pointer;
+  overflow: hidden;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: transform var(--t-fast), outline-color var(--t-fast);
+  display: flex;
+  flex-direction: column;
+}
+.settings-text-swatch:hover {
+  transform: scale(1.05);
+}
+.settings-text-swatch.active {
+  outline-color: var(--accent-light);
+}
+.settings-text-swatch-head {
+  flex: 3;
+}
+.settings-text-swatch-body {
+  flex: 2;
 }
 
 /* Font chips */

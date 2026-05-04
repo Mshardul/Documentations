@@ -71,20 +71,6 @@ def test_width_button_gets_active_class(wiki_page):
     assert "active" not in narrow_btn.get_attribute("class")
 
 
-# ── preset interaction ─────────────────────────────────────────────────────────
-
-
-def test_changing_width_sets_custom_preset(wiki_page):
-    """manually changing width while on a named preset switches to custom."""
-    _open_settings(wiki_page)
-    wiki_page.locator("#settings-presets .settings-preset-card").nth(0).click()  # Dark
-    wiki_page.locator("#settings-widths .settings-size-btn").nth(2).click()  # Wide
-    active_presets = wiki_page.locator(
-        "#settings-presets .settings-preset-card.active"
-    ).count()
-    assert active_presets == 0
-
-
 # ── persistence ────────────────────────────────────────────────────────────────
 
 

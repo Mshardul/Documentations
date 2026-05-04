@@ -22,7 +22,7 @@ def test_export_button_triggers_download(page, base_url):
     _open_settings(page)
 
     with page.expect_download() as dl_info:
-        page.locator("button:has-text('Export Backup')").click()
+        page.locator("button:has-text('Export')").click()
 
     download = dl_info.value
     assert download.suggested_filename.startswith("wiki-backup-")
@@ -36,7 +36,7 @@ def test_export_json_contains_expected_keys(page, base_url):
     _open_settings(page)
 
     with page.expect_download() as dl_info:
-        page.locator("button:has-text('Export Backup')").click()
+        page.locator("button:has-text('Export')").click()
 
     download = dl_info.value
     path = download.path()

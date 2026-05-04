@@ -9,7 +9,7 @@ Interview-ready reference. Two entry points: start from a component and build up
 Foundational building blocks. Each page covers mechanics, trade-offs, failure modes, and production patterns.
 
 | Component                                                                      | Description                                                      |
-| ------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------- | -------------------------------------------------------------- | --- |
 | [Message Queues](./components/message-queues.md)                               | Async messaging, delivery semantics, backpressure, partitioning  |
 | [DNS](./components/dns.md)                                                     | Domain resolution, record types, caching, propagation            |
 | [Load Balancer](./components/load-balancer.md)                                 | Traffic distribution, algorithms, health checks, L4 vs L7        |
@@ -24,6 +24,9 @@ Foundational building blocks. Each page covers mechanics, trade-offs, failure mo
 | [Blob / Object Storage](./components/blob-object-storage.md)                   | Binary storage, chunking, multipart upload, durability           |
 | [Distributed File System](./components/distributed-file-system.md)             | Block storage, metadata management, fault tolerance              |
 | [Search](./components/search.md)                                               | Inverted index, relevance ranking, distributed search            |
+| [Authentication](./components/authentication.md)                               | Session vs token auth, OAuth, OIDC, MFA, service-to-service      |
+| <!--                                                                           | [JWT](./components/jwt.md)                                       | Structure, signing algorithms, JWKS, verification gotchas      | --> |
+| <!--                                                                           | [mTLS](./components/mtls.md)                                     | Handshake, PKI management, certificate lifecycle, service mesh | --> |
 
 ---
 

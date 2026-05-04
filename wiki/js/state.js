@@ -10,7 +10,7 @@ const WIKIS = [
     icon: "⚙️",
     color: "#6366f1",
     indexPath: "./content/system-design/index.md",
-    articleCount: 37,
+    articleCount: 38,
   },
 ];
 

@@ -25,5 +25,6 @@ ESTP = "ESTP"
 hashi = "hashi"
 Jus = "Jus"  # JusPay
 FPR = "FPR"  # False Positive Rate
+OT = "OT"   # OTPs (one-time passwords, plural)
 # Conditional (exception for some example, etc)
 Yello = "Yello"

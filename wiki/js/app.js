@@ -239,7 +239,7 @@ window.addEventListener("hashchange", () => {
   applySettingsToDOM(getSettings());
 
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./wiki-sw.js").catch(() => {});
+    navigator.serviceWorker.register("../wiki-sw.js").catch(() => {});
   }
 
   const hash = location.hash.slice(1);

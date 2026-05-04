@@ -8,7 +8,12 @@ self.addEventListener("install", (e) => {
       .open(SHELL_CACHE)
       .then((cache) =>
         cache
-          .addAll(["./index.html", "./wiki.css", "./wiki.js", "./404.html"])
+          .addAll([
+            "./index.html",
+            "./css/wiki.css",
+            "./js/wiki.js",
+            "./404.html",
+          ])
           .catch(() => {})
       )
   );

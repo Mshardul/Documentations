@@ -303,30 +303,112 @@ const FONT_OPTIONS = [
   { id: "JetBrains Mono", label: "Mono" },
 ];
 
-const ACCENT_OPTIONS = [
+const DARK_BACKGROUNDS = [
+  {
+    id: "dark-void",
+    label: "Void",
+    bg: "#0d1117",
+    surface: "#151e2b",
+    surface2: "#1c2640",
+    surface3: "#232f4f",
+    border: "#1e2d45",
+    border2: "#27395a",
+    translucent: "rgba(13,17,23,0.88)",
+  },
+  {
+    id: "dark-slate",
+    label: "Slate",
+    bg: "#131929",
+    surface: "#1a2236",
+    surface2: "#222c44",
+    surface3: "#2a3652",
+    border: "#2a3652",
+    border2: "#334060",
+    translucent: "rgba(19,25,41,0.88)",
+  },
+  {
+    id: "dark-dusk",
+    label: "Dusk",
+    bg: "#1a1528",
+    surface: "#231d37",
+    surface2: "#2c2545",
+    surface3: "#352d53",
+    border: "#352d53",
+    border2: "#433860",
+    translucent: "rgba(26,21,40,0.88)",
+  },
+];
+
+const LIGHT_BACKGROUNDS = [
+  {
+    id: "light-white",
+    label: "White",
+    bg: "#f8fafc",
+    surface: "#ffffff",
+    surface2: "#f1f5f9",
+    surface3: "#e2e8f0",
+    border: "#e2e8f0",
+    border2: "#cbd5e1",
+    translucent: "rgba(248,250,252,0.92)",
+  },
+  {
+    id: "light-cream",
+    label: "Cream",
+    bg: "#faf7f0",
+    surface: "#ffffff",
+    surface2: "#f5f0e6",
+    surface3: "#ece5d8",
+    border: "#e8e0d0",
+    border2: "#d8ccbc",
+    translucent: "rgba(250,247,240,0.92)",
+  },
+  {
+    id: "light-fog",
+    label: "Fog",
+    bg: "#eef2f7",
+    surface: "#f8fafc",
+    surface2: "#e4eaf2",
+    surface3: "#d6e0eb",
+    border: "#c8d6e8",
+    border2: "#b8c8d8",
+    translucent: "rgba(238,242,247,0.92)",
+  },
+];
+
+const DARK_TEXT_COLORS = [
+  {
+    id: "text-crisp-dark",
+    label: "Crisp",
+    heading: "#f1f5f9",
+    body: "#cbd5e1",
+  },
+  { id: "text-soft-dark", label: "Soft", heading: "#b8cce0", body: "#8aa8c0" },
+  { id: "text-warm-dark", label: "Warm", heading: "#e8d4b8", body: "#c4a882" },
+];
+
+const LIGHT_TEXT_COLORS = [
+  {
+    id: "text-crisp-light",
+    label: "Crisp",
+    heading: "#0f172a",
+    body: "#334155",
+  },
+  { id: "text-soft-light", label: "Soft", heading: "#1e3050", body: "#476080" },
+  { id: "text-warm-light", label: "Warm", heading: "#3d2c1e", body: "#6b503c" },
+];
+
+const DARK_ACCENTS = [
   {
     id: "indigo",
+    label: "Indigo",
     value: "#6366f1",
     light: "#818cf8",
     dim: "rgba(99,102,241,0.12)",
     glow: "rgba(99,102,241,0.25)",
   },
   {
-    id: "violet",
-    value: "#8b5cf6",
-    light: "#a78bfa",
-    dim: "rgba(139,92,246,0.12)",
-    glow: "rgba(139,92,246,0.25)",
-  },
-  {
-    id: "blue",
-    value: "#3b82f6",
-    light: "#60a5fa",
-    dim: "rgba(59,130,246,0.12)",
-    glow: "rgba(59,130,246,0.25)",
-  },
-  {
     id: "cyan",
+    label: "Cyan",
     value: "#06b6d4",
     light: "#22d3ee",
     dim: "rgba(6,182,212,0.12)",
@@ -334,162 +416,108 @@ const ACCENT_OPTIONS = [
   },
   {
     id: "emerald",
+    label: "Emerald",
     value: "#10b981",
     light: "#34d399",
     dim: "rgba(16,185,129,0.12)",
     glow: "rgba(16,185,129,0.25)",
   },
-  {
-    id: "amber",
-    value: "#f59e0b",
-    light: "#fbbf24",
-    dim: "rgba(245,158,11,0.12)",
-    glow: "rgba(245,158,11,0.25)",
-  },
-  {
-    id: "matrix",
-    value: "#00ff41",
-    light: "#39ff14",
-    dim: "rgba(0,255,65,0.12)",
-    glow: "rgba(0,255,65,0.3)",
-  },
-  {
-    id: "neon-green",
-    value: "#22c55e",
-    light: "#4ade80",
-    dim: "rgba(34,197,94,0.12)",
-    glow: "rgba(34,197,94,0.25)",
-  },
 ];
 
-const SETTINGS_PRESETS = [
+const LIGHT_ACCENTS = [
   {
-    id: "dark",
-    label: "Dark",
-    theme: "dark",
-    accentId: "indigo",
-    font: "Inter",
-    fontSize: "M",
+    id: "indigo-l",
+    label: "Indigo",
+    value: "#4f46e5",
+    light: "#6366f1",
+    dim: "rgba(79,70,229,0.1)",
+    glow: "rgba(79,70,229,0.2)",
   },
   {
-    id: "light",
-    label: "Light",
-    theme: "light",
-    accentId: "indigo",
-    font: "Inter",
-    fontSize: "M",
+    id: "blue-l",
+    label: "Blue",
+    value: "#2563eb",
+    light: "#3b82f6",
+    dim: "rgba(37,99,235,0.1)",
+    glow: "rgba(37,99,235,0.2)",
   },
   {
-    id: "midnight",
-    label: "Midnight",
-    theme: "dark",
-    accentId: "violet",
-    font: "Geist",
-    fontSize: "M",
-  },
-  {
-    id: "warm",
-    label: "Warm",
-    theme: "dark",
-    accentId: "amber",
-    font: "Lora",
-    fontSize: "M",
-  },
-  {
-    id: "ocean",
-    label: "Ocean",
-    theme: "dark",
-    accentId: "cyan",
-    font: "IBM Plex Sans",
-    fontSize: "M",
-  },
-  {
-    id: "forest",
-    label: "Forest",
-    theme: "light",
-    accentId: "emerald",
-    font: "Source Serif 4",
-    fontSize: "M",
-  },
-  {
-    id: "matrix",
-    label: "Matrix",
-    theme: "matrix",
-    accentId: "matrix",
-    font: "JetBrains Mono",
-    fontSize: "M",
-  },
-  {
-    id: "terminal",
-    label: "Terminal",
-    theme: "terminal",
-    accentId: "neon-green",
-    font: "JetBrains Mono",
-    fontSize: "M",
-  },
-  {
-    id: "amber-crt",
-    label: "Amber CRT",
-    theme: "amber-term",
-    accentId: "amber",
-    font: "JetBrains Mono",
-    fontSize: "M",
+    id: "violet-l",
+    label: "Violet",
+    value: "#7c3aed",
+    light: "#8b5cf6",
+    dim: "rgba(124,58,237,0.1)",
+    glow: "rgba(124,58,237,0.2)",
   },
 ];
 
 const DEFAULT_SETTINGS = {
-  preset: "dark",
-  theme: "dark",
+  backgroundId: "dark-void",
+  textColorId: "text-crisp-dark",
   accentId: "indigo",
   font: "Inter",
   fontSize: "M",
   contentWidth: "Default",
 };
 
+function _isDark(backgroundId) {
+  return !backgroundId.startsWith("light-");
+}
+
 function getSettings() {
   try {
     const stored = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "null");
-    if (stored) return { ...DEFAULT_SETTINGS, ...stored };
+    if (stored?.backgroundId) return { ...DEFAULT_SETTINGS, ...stored };
   } catch {}
 
-  const oldTheme = localStorage.getItem("wiki-theme");
-  if (oldTheme) {
-    return {
-      ...DEFAULT_SETTINGS,
-      theme: oldTheme,
-      preset: oldTheme === "dark" ? "dark" : "light",
-    };
-  }
-
-  // OS theme detection on first visit
-  const prefersLight =
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: light)").matches;
-  const theme = prefersLight ? "light" : "dark";
-  return { ...DEFAULT_SETTINGS, theme, preset: theme };
+  // First visit or unrecognized format: use OS preference
+  const prefersLight = window.matchMedia?.(
+    "(prefers-color-scheme: light)"
+  ).matches;
+  return prefersLight
+    ? {
+        ...DEFAULT_SETTINGS,
+        backgroundId: "light-white",
+        textColorId: "text-crisp-light",
+        accentId: "indigo-l",
+      }
+    : { ...DEFAULT_SETTINGS };
 }
 
 function saveSettings(s) {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
 }
 
-function accentById(id) {
-  return ACCENT_OPTIONS.find((a) => a.id === id) || ACCENT_OPTIONS[0];
-}
-
 function applySettingsToDOM(s) {
-  const theme = s.theme || "dark";
+  const dark = _isDark(s.backgroundId);
+  const theme = dark ? "dark" : "light";
   document.documentElement.setAttribute("data-theme", theme);
-  const isDark = theme !== "light";
+
   document
     .querySelectorAll(".theme-icon-moon")
-    .forEach((el) => (el.style.display = isDark ? "" : "none"));
+    .forEach((el) => (el.style.display = dark ? "" : "none"));
   document
     .querySelectorAll(".theme-icon-sun")
-    .forEach((el) => (el.style.display = isDark ? "none" : ""));
+    .forEach((el) => (el.style.display = dark ? "none" : ""));
 
-  const accent = accentById(s.accentId);
+  const bgList = dark ? DARK_BACKGROUNDS : LIGHT_BACKGROUNDS;
+  const bg = bgList.find((b) => b.id === s.backgroundId) || bgList[0];
   const root = document.documentElement.style;
+  root.setProperty("--bg", bg.bg);
+  root.setProperty("--surface", bg.surface);
+  root.setProperty("--surface-2", bg.surface2);
+  root.setProperty("--surface-3", bg.surface3);
+  root.setProperty("--border", bg.border);
+  root.setProperty("--border-2", bg.border2);
+  root.setProperty("--bg-translucent", bg.translucent);
+
+  const tcList = dark ? DARK_TEXT_COLORS : LIGHT_TEXT_COLORS;
+  const tc = tcList.find((t) => t.id === s.textColorId) || tcList[0];
+  root.setProperty("--text-heading", tc.heading);
+  root.setProperty("--text-body", tc.body);
+
+  const accentList = dark ? DARK_ACCENTS : LIGHT_ACCENTS;
+  const accent = accentList.find((a) => a.id === s.accentId) || accentList[0];
   root.setProperty("--accent", accent.value);
   root.setProperty("--accent-light", accent.light);
   root.setProperty("--accent-dim", accent.dim);
@@ -580,59 +608,79 @@ const Settings = {
 
   _render() {
     const s = getSettings();
-    this._renderPresets(s);
-    this._renderTheme(s);
+    this._renderBackgrounds(s);
+    this._renderTextColors(s);
+    this._renderAccents(s);
     this._renderFonts(s);
     this._renderSizes(s);
     this._renderWidths(s);
-    this._renderAccents(s);
   },
 
-  _renderPresets(s) {
-    document.getElementById("settings-presets").innerHTML =
-      SETTINGS_PRESETS.map((p) => {
-        const accent = accentById(p.accentId);
-        const active = s.preset === p.id ? " active" : "";
-        return `<button class="settings-preset-card${active}" onclick="Settings._applyPreset('${p.id}')">
-        <span class="settings-preset-swatch" style="background:${accent.value}"></span>
-        <span class="settings-preset-name">${p.label}</span>
-      </button>`;
-      }).join("");
+  _renderBackgrounds(s) {
+    const mkSwatch = (bg) =>
+      `<button class="settings-bg-swatch${
+        s.backgroundId === bg.id ? " active" : ""
+      }"` +
+      ` style="background:${bg.bg}" title="${bg.label}" aria-label="${bg.label} background"` +
+      ` onclick="Settings._setBackground('${bg.id}')"></button>`;
+    document.getElementById("settings-backgrounds").innerHTML =
+      DARK_BACKGROUNDS.map(mkSwatch).join("") +
+      `<div class="settings-bg-separator" aria-hidden="true"></div>` +
+      LIGHT_BACKGROUNDS.map(mkSwatch).join("");
   },
 
-  _renderTheme(s) {
-    document.getElementById("settings-themes").innerHTML = ["light", "dark"]
-      .map((t) => {
-        const active = s.theme === t ? " active" : "";
-        return `<button class="settings-size-btn${active}" onclick="Settings._setTheme('${t}')">${
-          t === "light" ? "Light" : "Dark"
-        }</button>`;
-      })
+  _renderTextColors(s) {
+    const options = _isDark(s.backgroundId)
+      ? DARK_TEXT_COLORS
+      : LIGHT_TEXT_COLORS;
+    document.getElementById("settings-text-colors").innerHTML = options
+      .map(
+        (tc) =>
+          `<button class="settings-text-swatch${
+            s.textColorId === tc.id ? " active" : ""
+          }"` +
+          ` title="${tc.label}" aria-label="${tc.label} text"` +
+          ` onclick="Settings._setTextColor('${tc.id}')">` +
+          `<div class="settings-text-swatch-head" style="background:${tc.heading}"></div>` +
+          `<div class="settings-text-swatch-body" style="background:${tc.body}"></div>` +
+          `</button>`
+      )
       .join("");
   },
 
-  _setTheme(theme) {
-    const s = { ...getSettings(), theme, preset: "custom" };
-    saveSettings(s);
-    applySettingsToDOM(s);
-    this._render();
+  _renderAccents(s) {
+    const accents = _isDark(s.backgroundId) ? DARK_ACCENTS : LIGHT_ACCENTS;
+    document.getElementById("settings-accents").innerHTML = accents
+      .map(
+        (a) =>
+          `<button class="settings-accent-swatch${
+            s.accentId === a.id ? " active" : ""
+          }"` +
+          ` style="background:${a.value}" title="${a.label}" aria-label="${a.label} accent"` +
+          ` onclick="Settings._setAccent('${a.id}')"></button>`
+      )
+      .join("");
   },
 
   _renderFonts(s) {
     document.getElementById("settings-fonts").innerHTML = FONT_OPTIONS.map(
-      (f) => {
-        const active = s.font === f.id ? " active" : "";
-        return `<button class="settings-font-chip${active}" style="font-family:'${f.id}',sans-serif" onclick="Settings._setFont('${f.id}')">${f.label}</button>`;
-      }
+      (f) =>
+        `<button class="settings-font-chip${
+          s.font === f.id ? " active" : ""
+        }"` +
+        ` style="font-family:'${f.id}',sans-serif"` +
+        ` onclick="Settings._setFont('${f.id}')">${f.label}</button>`
     ).join("");
   },
 
   _renderSizes(s) {
     document.getElementById("settings-sizes").innerHTML = ["S", "M", "L"]
-      .map((sz) => {
-        const active = s.fontSize === sz ? " active" : "";
-        return `<button class="settings-size-btn${active}" onclick="Settings._setSize('${sz}')">${sz}</button>`;
-      })
+      .map(
+        (sz) =>
+          `<button class="settings-size-btn${
+            s.fontSize === sz ? " active" : ""
+          }"` + ` onclick="Settings._setSize('${sz}')">${sz}</button>`
+      )
       .join("");
   },
 
@@ -642,60 +690,60 @@ const Settings = {
       "Default",
       "Wide",
     ]
-      .map((w) => {
-        const active = s.contentWidth === w ? " active" : "";
-        return `<button class="settings-size-btn${active}" onclick="Settings._setWidth('${w}')">${w}</button>`;
-      })
+      .map(
+        (w) =>
+          `<button class="settings-size-btn${
+            s.contentWidth === w ? " active" : ""
+          }"` + ` onclick="Settings._setWidth('${w}')">${w}</button>`
+      )
       .join("");
   },
 
-  _setWidth(contentWidth) {
-    const s = { ...getSettings(), contentWidth, preset: "custom" };
-    saveSettings(s);
-    applySettingsToDOM(s);
+  _setBackground(backgroundId) {
+    const s = getSettings();
+    const wasDark = _isDark(s.backgroundId);
+    const nowDark = _isDark(backgroundId);
+    let { textColorId, accentId } = s;
+    if (wasDark !== nowDark) {
+      textColorId = nowDark ? "text-crisp-dark" : "text-crisp-light";
+      accentId = nowDark ? "indigo" : "indigo-l";
+    }
+    const updated = { ...s, backgroundId, textColorId, accentId };
+    saveSettings(updated);
+    applySettingsToDOM(updated);
     this._render();
   },
 
-  _renderAccents(s) {
-    document.getElementById("settings-accents").innerHTML = ACCENT_OPTIONS.map(
-      (a) => {
-        const active = s.accentId === a.id ? " active" : "";
-        return `<button class="settings-accent-swatch${active}" style="background:${a.value}" title="${a.id}" aria-label="${a.id}" onclick="Settings._setAccent('${a.id}')"></button>`;
-      }
-    ).join("");
-  },
-
-  _applyPreset(presetId) {
-    const preset = SETTINGS_PRESETS.find((p) => p.id === presetId);
-    if (!preset) return;
-    const s = {
-      preset: presetId,
-      theme: preset.theme,
-      accentId: preset.accentId,
-      font: preset.font,
-      fontSize: preset.fontSize,
-    };
-    saveSettings(s);
-    applySettingsToDOM(s);
-    this._render();
-  },
-
-  _setFont(font) {
-    const s = { ...getSettings(), font, preset: "custom" };
-    saveSettings(s);
-    applySettingsToDOM(s);
-    this._render();
-  },
-
-  _setSize(fontSize) {
-    const s = { ...getSettings(), fontSize, preset: "custom" };
+  _setTextColor(textColorId) {
+    const s = { ...getSettings(), textColorId };
     saveSettings(s);
     applySettingsToDOM(s);
     this._render();
   },
 
   _setAccent(accentId) {
-    const s = { ...getSettings(), accentId, preset: "custom" };
+    const s = { ...getSettings(), accentId };
+    saveSettings(s);
+    applySettingsToDOM(s);
+    this._render();
+  },
+
+  _setFont(font) {
+    const s = { ...getSettings(), font };
+    saveSettings(s);
+    applySettingsToDOM(s);
+    this._render();
+  },
+
+  _setSize(fontSize) {
+    const s = { ...getSettings(), fontSize };
+    saveSettings(s);
+    applySettingsToDOM(s);
+    this._render();
+  },
+
+  _setWidth(contentWidth) {
+    const s = { ...getSettings(), contentWidth };
     saveSettings(s);
     applySettingsToDOM(s);
     this._render();
@@ -747,15 +795,24 @@ const Settings = {
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   THEME (light / dark)
+   THEME (quick dark / light toggle)
    ═══════════════════════════════════════════════════════════════ */
 const Theme = {
   toggle() {
     const s = getSettings();
-    const newTheme = s.theme === "dark" ? "light" : "dark";
-    const updated = { ...s, theme: newTheme, preset: "custom" };
-    saveSettings(updated);
-    applySettingsToDOM(updated);
+    const next = _isDark(s.backgroundId)
+      ? {
+          backgroundId: "light-white",
+          textColorId: "text-crisp-light",
+          accentId: "indigo-l",
+        }
+      : {
+          backgroundId: "dark-void",
+          textColorId: "text-crisp-dark",
+          accentId: "indigo",
+        };
+    saveSettings({ ...s, ...next });
+    applySettingsToDOM({ ...s, ...next });
   },
 };
 
@@ -784,7 +841,6 @@ export {
   Offline,
   getSettings,
   saveSettings,
-  accentById,
   applySettingsToDOM,
   Settings,
   Theme,

@@ -1,25 +1,13 @@
 /* ═══════════════════════════════════════════════
    LIGHT THEME OVERRIDES
+   bg / surface / border / text-heading / text-body / accent are all set by JS.
+   Only shadows and code-block styles differ by light vs dark.
    ═══════════════════════════════════════════════ */
 [data-theme="light"] {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-2: #f1f5f9;
-  --surface-3: #e2e8f0;
   --surface-hover: rgba(0, 0, 0, 0.04);
 
-  --border: #e2e8f0;
-  --border-2: #cbd5e1;
-
-  --text-heading: #0f172a;
-  --text-body: #334155;
   --text-muted: #64748b;
   --text-subtle: #94a3b8;
-
-  --accent: #4f46e5;
-  --accent-light: #6366f1;
-  --accent-dim: rgba(79, 70, 229, 0.08);
-  --accent-glow: rgba(79, 70, 229, 0.2);
 
   --callout-interview-bg: rgba(79, 70, 229, 0.05);
   --callout-warning-bg: rgba(245, 158, 11, 0.06);
@@ -31,11 +19,6 @@
   --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.15);
 }
 
-[data-theme="light"] .page-topbar,
-[data-theme="light"] .content-topbar {
-  background: rgba(248, 250, 252, 0.9);
-}
-
 [data-theme="light"] .markdown-body code {
   color: #7c3aed;
   background: rgba(124, 58, 237, 0.08);
@@ -43,122 +26,14 @@
 }
 
 [data-theme="light"] .markdown-body pre {
-  background: #f8fafc !important;
+  background: var(--surface-2) !important;
   border-color: var(--border-2);
 }
 
 [data-theme="light"] .markdown-body pre code {
-  color: #334155;
+  color: var(--text-body);
 }
 
 [data-theme="light"] .wiki-card:hover {
   box-shadow: 0 0 0 1px var(--accent-glow), 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-/* ═══════════════════════════════════════════════
-   MATRIX THEME
-   ═══════════════════════════════════════════════ */
-[data-theme="matrix"] {
-  --bg: #000000;
-  --surface: #0a0a0a;
-  --surface-2: #111111;
-  --surface-3: #181818;
-  --surface-hover: rgba(0, 255, 65, 0.04);
-  --border: #1a2a1a;
-  --border-2: #1f3a1f;
-  --text-heading: #00ff41;
-  --text-body: #00cc34;
-  --text-muted: #007a22;
-  --text-subtle: #004d16;
-  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.8);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
-  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.95);
-}
-[data-theme="matrix"] .page-topbar,
-[data-theme="matrix"] .content-topbar {
-  background: rgba(0, 0, 0, 0.92);
-}
-[data-theme="matrix"] .markdown-body code {
-  color: #00ff41;
-  background: rgba(0, 255, 65, 0.08);
-  border-color: rgba(0, 255, 65, 0.2);
-}
-[data-theme="matrix"] .markdown-body pre {
-  background: #050505 !important;
-  border-color: rgba(0, 255, 65, 0.2);
-}
-[data-theme="matrix"] .markdown-body pre code {
-  color: #00ff41;
-}
-
-/* ═══════════════════════════════════════════════
-   TERMINAL THEME (soft green)
-   ═══════════════════════════════════════════════ */
-[data-theme="terminal"] {
-  --bg: #0a0f0a;
-  --surface: #101810;
-  --surface-2: #182018;
-  --surface-3: #1e281e;
-  --surface-hover: rgba(74, 222, 128, 0.04);
-  --border: #1a2e1a;
-  --border-2: #254225;
-  --text-heading: #4ade80;
-  --text-body: #86efac;
-  --text-muted: rgba(74, 222, 128, 0.45);
-  --text-subtle: rgba(74, 222, 128, 0.22);
-  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.7);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.9);
-}
-[data-theme="terminal"] .page-topbar,
-[data-theme="terminal"] .content-topbar {
-  background: rgba(10, 15, 10, 0.92);
-}
-[data-theme="terminal"] .markdown-body code {
-  color: #4ade80;
-  background: rgba(74, 222, 128, 0.08);
-  border-color: rgba(74, 222, 128, 0.2);
-}
-[data-theme="terminal"] .markdown-body pre {
-  background: #080d08 !important;
-  border-color: rgba(74, 222, 128, 0.2);
-}
-[data-theme="terminal"] .markdown-body pre code {
-  color: #86efac;
-}
-
-/* ═══════════════════════════════════════════════
-   AMBER CRT THEME
-   ═══════════════════════════════════════════════ */
-[data-theme="amber-term"] {
-  --bg: #0d0900;
-  --surface: #150f00;
-  --surface-2: #1e1500;
-  --surface-3: #271b00;
-  --surface-hover: rgba(255, 179, 71, 0.04);
-  --border: #2a1f00;
-  --border-2: #3d2d00;
-  --text-heading: #ffb347;
-  --text-body: #e8a030;
-  --text-muted: rgba(255, 179, 71, 0.45);
-  --text-subtle: rgba(255, 179, 71, 0.2);
-  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.8);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
-  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.95);
-}
-[data-theme="amber-term"] .page-topbar,
-[data-theme="amber-term"] .content-topbar {
-  background: rgba(13, 9, 0, 0.92);
-}
-[data-theme="amber-term"] .markdown-body code {
-  color: #ffb347;
-  background: rgba(255, 179, 71, 0.08);
-  border-color: rgba(255, 179, 71, 0.2);
-}
-[data-theme="amber-term"] .markdown-body pre {
-  background: #080500 !important;
-  border-color: rgba(255, 179, 71, 0.2);
-}
-[data-theme="amber-term"] .markdown-body pre code {
-  color: #e8a030;
 }

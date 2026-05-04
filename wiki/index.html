@@ -530,47 +530,55 @@
           </button>
         </div>
         <div class="settings-body">
-          <div class="settings-section">
-            <div class="settings-section-label">Data</div>
-            <div class="settings-size-row">
-              <button class="settings-size-btn" data-action="settings-export">
-                Export Backup
-              </button>
-              <button class="settings-size-btn" data-action="import-trigger">
-                Import Backup
-              </button>
-              <input
-                type="file"
-                id="import-upload"
-                accept=".json"
-                aria-label="Import backup file"
-                style="display: none"
-              />
+          <div class="settings-group">
+            <div class="settings-group-label">Theme</div>
+            <div class="settings-section">
+              <div class="settings-section-label">Background</div>
+              <div id="settings-backgrounds" class="settings-bg-row"></div>
+            </div>
+            <div class="settings-section">
+              <div class="settings-section-label">Text</div>
+              <div id="settings-text-colors" class="settings-text-row"></div>
+            </div>
+            <div class="settings-section">
+              <div class="settings-section-label">Accent</div>
+              <div id="settings-accents" class="settings-accent-row"></div>
             </div>
           </div>
-          <div class="settings-section">
-            <div class="settings-section-label">Preset</div>
-            <div id="settings-presets" class="settings-preset-grid"></div>
+          <div class="settings-group">
+            <div class="settings-group-label">Text</div>
+            <div class="settings-section">
+              <div class="settings-section-label">Font</div>
+              <div id="settings-fonts" class="settings-font-grid"></div>
+            </div>
+            <div class="settings-section">
+              <div class="settings-section-label">Size</div>
+              <div id="settings-sizes" class="settings-size-row"></div>
+            </div>
+            <div class="settings-section">
+              <div class="settings-section-label">Width</div>
+              <div id="settings-widths" class="settings-size-row"></div>
+            </div>
           </div>
-          <div class="settings-section">
-            <div class="settings-section-label">Theme</div>
-            <div id="settings-themes" class="settings-size-row"></div>
-          </div>
-          <div class="settings-section">
-            <div class="settings-section-label">Font</div>
-            <div id="settings-fonts" class="settings-font-grid"></div>
-          </div>
-          <div class="settings-section">
-            <div class="settings-section-label">Font Size</div>
-            <div id="settings-sizes" class="settings-size-row"></div>
-          </div>
-          <div class="settings-section">
-            <div class="settings-section-label">Content Width</div>
-            <div id="settings-widths" class="settings-size-row"></div>
-          </div>
-          <div class="settings-section">
-            <div class="settings-section-label">Accent Color</div>
-            <div id="settings-accents" class="settings-accent-row"></div>
+          <div class="settings-group">
+            <div class="settings-group-label">Data</div>
+            <div class="settings-section">
+              <div class="settings-size-row">
+                <button class="settings-size-btn" data-action="settings-export">
+                  Export
+                </button>
+                <button class="settings-size-btn" data-action="import-trigger">
+                  Import
+                </button>
+                <input
+                  type="file"
+                  id="import-upload"
+                  accept=".json"
+                  aria-label="Import backup file"
+                  style="display: none"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

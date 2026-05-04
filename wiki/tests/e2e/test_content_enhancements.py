@@ -322,7 +322,7 @@ def test_diagram_rerenders_on_theme_change(page, base_url):
     )
     assert svg_before, "No mermaid SVG found before theme change"
 
-    page.evaluate("() => Settings._applyPreset('light')")
+    page.evaluate("() => Settings._setBackground('light-white')")
 
     page.wait_for_function(
         f"""() => {{
@@ -348,7 +348,7 @@ def test_diagram_src_preserved_after_theme_change(page, base_url):
     src_before = page.evaluate(
         "() => document.querySelector('.mermaid-diagram')?.dataset.mermaidSrc"
     )
-    page.evaluate("() => Settings._applyPreset('light')")
+    page.evaluate("() => Settings._setBackground('light-white')")
 
     # Wait for re-render to complete (SVG changes)
     page.wait_for_timeout(2_000)

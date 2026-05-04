@@ -1,4 +1,4 @@
-const SHELL_CACHE = "wiki-shell-v2";
+const SHELL_CACHE = "wiki-shell-v3";
 const ARTICLE_CACHE = "wiki-articles-v1";
 
 self.addEventListener("install", (e) => {
@@ -8,7 +8,12 @@ self.addEventListener("install", (e) => {
       .open(SHELL_CACHE)
       .then((cache) =>
         cache
-          .addAll(["./index.html", "./wiki.css", "./wiki.js", "./404.html"])
+          .addAll([
+            "./index.html",
+            "./css/wiki.css",
+            "./js/wiki.js",
+            "./404.html",
+          ])
           .catch(() => {})
       )
   );
@@ -53,8 +58,10 @@ self.addEventListener("fetch", (e) => {
   e.respondWith(
     fetch(request)
       .then((res) => {
-        if (res.ok)
-          caches.open(SHELL_CACHE).then((c) => c.put(request, res.clone()));
+        if (res.ok) {
+          const clone = res.clone();
+          caches.open(SHELL_CACHE).then((c) => c.put(request, clone));
+        }
         return res;
       })
       .catch(() => caches.match(request))

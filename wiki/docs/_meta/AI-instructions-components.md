@@ -15,6 +15,8 @@
 - Repeat the Interviewer TL;DR verbatim in the Key Takeaway
 - Open with history or evolution of the technology
 - State unverified facts, statistics, or attributions — when uncertain, qualify with "typically" or "commonly" rather than asserting as fact
+- Include full function or class implementations in code blocks — pseudocode or prose only; implementations belong in dedicated pages
+- Use standards-body URNs, IANA identifiers, or proprietary strings in examples — use simple readable placeholders (e.g., `acr=basic`, `acr=mfa`) instead
 
 ---
 
@@ -29,7 +31,7 @@
 
 ## PHASED EXECUTION PROTOCOL
 
-- PHASE 1: Generate ONLY the index. Stop. Output: "[AWAITING CONFIRMATION TO GENERATE CONTENT]"
+- PHASE 1: Generate ONLY the index. Stop. Wait for user confirmation before generating any content.
 - PHASE 2: Upon "Proceed", generate content one H2 section at a time. Output one section, then stop and wait for "Continue" before generating the next. Follow CONTENT GENERATION SPECIFICATIONS. Resolve all `(→ filename.md)` markers from the index into actual inline markdown links when the concept first appears in content.
 - Never skip phases. Never merge index and content in the same response.
 
@@ -69,19 +71,18 @@ Then the main content follows.
 ## INDEX FORMAT RULES
 
 - Plain text only. NO markdown code blocks, NO fenced sections.
-- Hierarchical numbering: 1, 1.1, 1.1.1 (depth scales to importance, no fixed limit).
+- Hierarchical dashes: each depth level indented 4 spaces, no numbers, no fixed depth limit.
 - Short, crisp phrases only - no sentences, no explanations.
-- Indent 4 spaces per level.
 - IMPORTANT: Index is high signal-to-noise only. Zero fluff, zero basic definitions. Content follows progressive disclosure (see CONTENT GENERATION SPECIFICATIONS).
-- No cross-references like "see section 4.2" in the index.
+- No cross-references like "see the section above" in the index.
 - Acronyms free in index. Full definitions in APPENDICES > Acronyms only.
 - Vendor-specific implementations: keep bullet generic. Examples belong in content only.
 - When a concept has its own page, append `(→ filename.md)` to the bullet as a reminder to inline-link during content generation.
 
-  ✅ `1.1 L4 vs L7 - routing granularity trade-offs`
-  ✅ `2.1.1 Split-brain - quorum, fencing`
-  ❌ `1.1 Overview of what load balancers do and why they are needed`
-  ❌ `2.1.1 Discussion of various failure modes and how to handle them`
+  ✅ `- L4 vs L7 - routing granularity trade-offs`
+  ✅ ` - Split-brain - quorum, fencing`
+  ❌ `- Overview of what load balancers do and why they are needed`
+  ❌ ` - Discussion of various failure modes and how to handle them`
 
 ---
 
@@ -159,7 +160,7 @@ Plain ASCII or mermaid code blocks. Mandatory for topics where spatial relations
 
 ### Code & Config
 
-Fenced code blocks for production-ready snippets, CLI diagnostics, or config patterns. Short pseudo-code when logic sticks faster than prose. Always add brief context.
+Fenced code blocks for config patterns, API contracts, schema design, or CLI diagnostics. Short pseudocode when logic sticks faster than prose. No full function implementations — if the how-to-implement detail matters, it belongs on a dedicated page. Always ask: would this be on a whiteboard in a system design interview? If not, cut it.
 
 ### Vendor Examples
 
@@ -179,6 +180,28 @@ Path conventions (from a component/algorithm page):
 - Other components: `../components/file.md`
 - Algorithms: `../algorithms/file.md`
 - HLD pages: `../hld/file.md`
+
+---
+
+## SCOPE MANAGEMENT & STUB PAGES
+
+A component page covers a topic at the right depth — enough to understand it fully and make trade-off decisions, not enough to implement it. When a subtopic grows beyond that:
+
+**Signal that a section has exceeded its scope:**
+
+- More than ~2 H2 sections worth of content on a single sub-concept (e.g., JWT structure, mTLS PKI)
+- Content that is equally valuable as a standalone article
+- Deep implementation details (algorithm internals, PKI operations, cryptographic parameters)
+
+**What to do instead of trimming:**
+
+1. Create a dedicated stub file (e.g., `jwt.md`, `mtls.md`) seeded with the content
+2. Add the prerequisite back-link: `**[Parent](./parent.md)** [Must read]`
+3. Add a `<!-- Partial article — seeded from parent.md. Sections to be completed. -->` comment in the stub's Table of Contents
+4. In the parent article, replace the deep content with a 2–3 sentence summary + link to the new page
+5. In `index.md`, add the stub as a commented-out row until the article is complete
+
+Don't discard content that has been written — seed it into the appropriate dedicated page.
 
 ---
 
@@ -226,6 +249,8 @@ Include only the sub-sections relevant to the topic. Always placed at the end of
 **Acronyms & Abbreviations**
 Table format: `Acronym | Full Form | One-line meaning`
 
+Scope rule: only include acronyms for concepts directly and substantially covered in this article. If a concept has its own dedicated page (e.g., JWT, mTLS), its internal acronyms (e.g., JWT claims `sub`, `iss`, `aud`) belong on that page, not here.
+
 **Anti-patterns**
 Bulleted list. Each entry: `pattern name - why it fails - what to do instead.`
 
@@ -238,7 +263,7 @@ Table comparing variants across key decision dimensions (columns = variants, row
 
 - Every major decision needs: what alternatives were considered and why rejected.
 - NO meta-commentary in index bullets (e.g., "trade-offs discussed here") - state concepts only.
-- NO redundant nesting: if 1.1.1 suffices, skip 1.1.1.1.
+- NO redundant nesting: if depth-3 suffices, skip depth-4.
 - Within a level, order bullets by logical flow: prerequisites before advanced, common before edge cases, cause before effect.
 - One topic per leaf: don't group unrelated concepts under one bullet.
 
@@ -254,7 +279,7 @@ Table comparing variants across key decision dimensions (columns = variants, row
 - [ ] Inapplicable sections omitted - no empty placeholders?
 - [ ] Index builds progressive complexity: intuition → mechanics → production → interview defense?
 
-If all true → output index → append "[AWAITING CONFIRMATION TO GENERATE CONTENT]" → STOP.
+If all true → output index → STOP. Wait for user confirmation.
 
 ---
 

@@ -9,8 +9,8 @@ const WIKIS = [
       "Interview-ready references covering components, algorithms, and end-to-end system walkthroughs.",
     icon: "⚙️",
     color: "#6366f1",
-    indexPath: "../content/system-design/index.md",
-    articleCount: 37,
+    indexPath: "./content/system-design/index.md",
+    articleCount: 38,
   },
 ];
 

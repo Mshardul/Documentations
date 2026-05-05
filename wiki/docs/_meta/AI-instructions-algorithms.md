@@ -16,6 +16,8 @@
 - Open with history or evolution of the concept
 - Include formal notation, ε-δ proofs, or full inductive proofs
 - State unverified facts, statistics, or attributions — when uncertain, qualify with "typically" or "commonly" rather than asserting as fact
+- Include full function implementations in code blocks — pseudocode only; how-to-implement belongs in library/tool documentation
+- Use standards-body URNs, IANA identifiers, or proprietary strings in examples — use simple readable placeholders instead
 
 ---
 
@@ -30,7 +32,7 @@
 
 ## PHASED EXECUTION PROTOCOL
 
-- PHASE 1: Generate ONLY the index. Stop. Output: "[AWAITING CONFIRMATION TO GENERATE CONTENT]"
+- PHASE 1: Generate ONLY the index. Stop. Wait for user confirmation before generating any content.
 - PHASE 2: Upon "Proceed", generate content one H2 section at a time. Output one section, then stop and wait for "Continue" before generating the next. Follow CONTENT GENERATION SPECIFICATIONS. Resolve all `(→ filename.md)` markers from the index into actual inline markdown links when the concept first appears in content.
 - Never skip phases. Never merge index and content in the same response.
 
@@ -70,19 +72,18 @@ Then the main content follows.
 ## INDEX FORMAT RULES
 
 - Plain text only. NO markdown code blocks, NO fenced sections.
-- Hierarchical numbering: 1, 1.1, 1.1.1 (depth scales to importance, no fixed limit).
+- Hierarchical dashes: each depth level indented 4 spaces, no numbers, no fixed depth limit.
 - Short, crisp phrases only - no sentences, no explanations.
-- Indent 4 spaces per level.
 - IMPORTANT: Index is high signal-to-noise only. Zero fluff, zero basic definitions. Content follows progressive disclosure (see CONTENT GENERATION SPECIFICATIONS).
-- No cross-references like "see section 4.2" in the index.
+- No cross-references like "see the section above" in the index.
 - Acronyms free in index. Full definitions in APPENDICES > Acronyms only.
 - Vendor-specific implementations: keep bullet generic. Examples belong in content only.
 - When a concept has its own page, append `(→ filename.md)` to the bullet as a reminder to inline-link during content generation.
 
-  ✅ `1.1 Partition tolerance - why it's non-negotiable`
-  ✅ `3.2.1 PACELC - latency/consistency trade-off beyond CAP`
-  ❌ `1.1 Overview of the three CAP properties and what they mean`
-  ❌ `3.2.1 Discussion of extensions to CAP and their practical implications`
+  ✅ `- Partition tolerance - why it's non-negotiable`
+  ✅ ` - PACELC - latency/consistency trade-off beyond CAP`
+  ❌ `- Overview of the three CAP properties and what they mean`
+  ❌ ` - Discussion of extensions to CAP and their practical implications`
 
 ---
 
@@ -281,6 +282,8 @@ Include only the sub-sections relevant to the topic. Always placed at the end of
 **Acronyms & Abbreviations**
 Table format: `Acronym | Full Form | One-line meaning`
 
+Scope rule: only include acronyms for concepts directly and substantially covered in this article. If a concept has its own page, its internal acronyms belong there.
+
 **Anti-patterns**
 Bulleted list. Each entry: `pattern name - why it fails - what to do instead.`
 
@@ -294,7 +297,7 @@ Table comparing variants across key decision dimensions (columns = variants, row
 - Every major insight must connect to a concrete design decision or trade-off. If a section doesn't answer "so what when building a system?" - it doesn't belong.
 - Every major design implication needs: what alternatives exist and why this concept forces a choice.
 - NO meta-commentary in index bullets (e.g., "trade-offs discussed here") - state concepts only.
-- NO redundant nesting: if 1.1.1 suffices, skip 1.1.1.1.
+- NO redundant nesting: if depth-3 suffices, skip depth-4.
 - Within a level, order bullets by logical flow: intuition before formalism, common case before edge case, cause before effect.
 - One topic per leaf: don't group unrelated concepts under one bullet.
 
@@ -310,7 +313,7 @@ Table comparing variants across key decision dimensions (columns = variants, row
 - [ ] Inapplicable sections omitted - no empty placeholders?
 - [ ] Index builds progressive complexity: intuition → formal definition → mechanics → variants → real-world application → interview defense?
 
-If all true → output index → append "[AWAITING CONFIRMATION TO GENERATE CONTENT]" → STOP.
+If all true → output index → STOP. Wait for user confirmation.
 
 ---
 

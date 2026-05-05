@@ -1,1 +1,0 @@
-# Design: Distributed Id Generator

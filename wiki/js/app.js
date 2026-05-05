@@ -1,4 +1,4 @@
-import { state } from "./state.js";
+import { state, WIKIS } from "./state.js";
 import {
   applySettingsToDOM,
   getSettings,
@@ -11,6 +11,12 @@ import {
   markRead,
   updateReadBtn,
   saveScrollPos,
+  getRecents,
+  saveRecents,
+  getBookmarks,
+  saveBookmarks,
+  renderRecentsSection,
+  renderBookmarksSection,
 } from "./storage.js";
 import {
   progressBar,
@@ -18,6 +24,7 @@ import {
   route,
   navigateToContent,
   toggleSection,
+  showToast,
 } from "./render.js";
 import { openGlobalSearch, closeGlobalSearch } from "./search.js";
 import {
@@ -38,6 +45,26 @@ window.navigateToContent = navigateToContent;
 window.toggleSection = toggleSection;
 window.clearRecents = clearRecents;
 window.closeGlobalSearch = closeGlobalSearch;
+
+window.confirmClearRecents = (wikiId) => {
+  const snapshot = getRecents().filter((r) => r.wikiId === wikiId);
+  clearRecents(wikiId);
+  showToast("Recents cleared", 4000, () => {
+    saveRecents([...snapshot, ...getRecents()]);
+    const wiki = WIKIS.find((w) => w.id === wikiId);
+    if (wiki) renderRecentsSection(wiki);
+  });
+};
+
+window.confirmClearBookmarks = (wikiId) => {
+  const snapshot = getBookmarks().filter((b) => b.wikiId === wikiId);
+  Bookmarks.clearWiki(wikiId);
+  showToast("Bookmarks cleared", 4000, () => {
+    saveBookmarks([...snapshot, ...getBookmarks()]);
+    const wiki = WIKIS.find((w) => w.id === wikiId);
+    if (wiki) renderBookmarksSection(wiki);
+  });
+};
 
 /* ═══════════════════════════════════════════════════════════════
    DATA-ACTION DELEGATION (WIKI-063)
@@ -177,9 +204,32 @@ document.addEventListener("keydown", (e) => {
     openGlobalSearch();
   }
 
+  // ?: Help modal (when not focused on input/textarea)
+  if (e.key === "?") {
+    const tag = document.activeElement.tagName;
+    const isInput =
+      tag === "INPUT" ||
+      tag === "TEXTAREA" ||
+      document.activeElement.isContentEditable;
+    if (!isInput) {
+      e.preventDefault();
+      const helpModal = document.getElementById("help-modal");
+      if (helpModal && !helpModal.classList.contains("hidden")) {
+        closeHelp();
+      } else {
+        openHelp();
+      }
+    }
+  }
+
   // Escape: Close modals or navigate back from content
   if (e.key === "Escape") {
-    if (document.getElementById("zoom-overlay")?.classList.contains("open")) {
+    const helpModal = document.getElementById("help-modal");
+    if (helpModal && !helpModal.classList.contains("hidden")) {
+      closeHelp();
+    } else if (
+      document.getElementById("zoom-overlay")?.classList.contains("open")
+    ) {
       closeZoomOverlay();
     } else if (
       !document
@@ -255,6 +305,64 @@ function toggleDistractionFree() {
   _distractionFree = !_distractionFree;
   document.body.classList.toggle("distraction-free", _distractionFree);
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   HELP MODAL (WIKI-021)
+   ═══════════════════════════════════════════════════════════════ */
+let _helpOpener = null;
+let _helpFocusTrapHandler = null;
+
+function openHelp() {
+  const modal = document.getElementById("help-modal");
+  if (!modal) return;
+  _helpOpener = document.activeElement;
+  modal.classList.remove("hidden");
+  modal.setAttribute("aria-hidden", "false");
+  const closeBtn = document.getElementById("help-close-btn");
+  closeBtn?.focus();
+
+  _helpFocusTrapHandler = (e) => {
+    if (e.key !== "Tab") return;
+    const focusable = Array.from(
+      modal.querySelectorAll("button, [href], [tabindex]:not([tabindex='-1'])")
+    ).filter((el) => !el.disabled);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  };
+  if (_helpFocusTrapHandler)
+    modal.removeEventListener("keydown", _helpFocusTrapHandler);
+  modal.addEventListener("keydown", _helpFocusTrapHandler);
+}
+
+function closeHelp() {
+  const modal = document.getElementById("help-modal");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  modal.setAttribute("aria-hidden", "true");
+  if (_helpFocusTrapHandler) {
+    modal.removeEventListener("keydown", _helpFocusTrapHandler);
+    _helpFocusTrapHandler = null;
+  }
+  _helpOpener?.focus();
+  _helpOpener = null;
+}
+
+document.getElementById("help-close-btn")?.addEventListener("click", closeHelp);
+document
+  .querySelector("#help-modal .help-backdrop")
+  ?.addEventListener("click", closeHelp);
 
 /* ═══════════════════════════════════════════════════════════════
    DIAGRAM THEME SYNC (WIKI-039)

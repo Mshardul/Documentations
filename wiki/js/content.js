@@ -374,6 +374,22 @@ function addCollapsibleCodeBlocks(contentEl) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   CODE BLOCK LINE NUMBERS
+   ═══════════════════════════════════════════════════════════════ */
+function addLineNumbers(contentEl) {
+  contentEl.querySelectorAll("pre code").forEach((code) => {
+    if (code.classList.contains("language-mermaid")) return;
+    const lines = code.innerHTML.split("\n");
+    if (lines[lines.length - 1] === "") lines.pop();
+    if (lines.length < 3) return;
+    code.innerHTML = lines
+      .map((line) => `<span class="code-line">${line}</span>`)
+      .join("\n");
+    code.parentElement.classList.add("has-line-numbers");
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════
    CODE LANGUAGE LABELS
    ═══════════════════════════════════════════════════════════════ */
 function addCodeLangLabels(contentEl) {
@@ -455,6 +471,7 @@ export {
   buildTOC,
   addAnchorLinks,
   renderMermaidDiagrams,
+  addLineNumbers,
   addCollapsibleCodeBlocks,
   addCodeLangLabels,
   addImageLightbox,

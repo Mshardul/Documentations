@@ -335,6 +335,26 @@
   color: #abb2bf;
 }
 
+/* Line numbers */
+pre.has-line-numbers {
+  counter-reset: line-number;
+}
+.code-line {
+  display: block;
+  counter-increment: line-number;
+}
+.code-line::before {
+  content: counter(line-number);
+  display: inline-block;
+  min-width: 2em;
+  margin-right: 1.5em;
+  text-align: right;
+  color: #4a5568;
+  user-select: none;
+  font-size: 0.88em;
+  vertical-align: top;
+}
+
 /* Copy button */
 .copy-btn {
   position: absolute;

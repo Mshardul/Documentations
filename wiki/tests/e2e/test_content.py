@@ -53,7 +53,7 @@ def test_copy_button_writes_to_clipboard(page, base_url):
     page.wait_for_selector("#markdown-body pre .copy-btn", timeout=10_000)
 
     pre_text = page.evaluate(
-        "() => document.querySelector('#markdown-body pre code').innerText"
+        "() => document.querySelector('#markdown-body pre code').textContent"
     )
     page.locator("#markdown-body pre .copy-btn").first.click()
 

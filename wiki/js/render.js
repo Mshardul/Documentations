@@ -24,6 +24,7 @@ import {
   buildTOC,
   addAnchorLinks,
   renderMermaidDiagrams,
+  addLineNumbers,
   addCollapsibleCodeBlocks,
   addCodeLangLabels,
   addImageLightbox,
@@ -487,6 +488,9 @@ async function renderContent(
       .querySelectorAll("pre code")
       .forEach((block) => hljs.highlightElement(block));
 
+    // Line numbers (after hljs so it runs on highlighted HTML)
+    addLineNumbers(body);
+
     // Post-processing
     addCopyButtons(body);
     styleCallouts(body);
@@ -617,11 +621,11 @@ function interceptMdLinks(contentEl, wiki, currentFilePath) {
       return;
     }
 
-    // Ignore missing or non-md links
-    if (!href.endsWith(".md")) return;
+    // Ignore missing or non-md links (strip fragment before checking extension)
+    if (!href.split("#")[0].endsWith(".md")) return;
 
-    // Handle internal markdown links
-    const resolvedPath = resolvePath(baseDir, href);
+    // Handle internal markdown links (strip fragment for fetch/storage)
+    const resolvedPath = resolvePath(baseDir, href).split("#")[0];
 
     link.addEventListener("click", (e) => {
       e.preventDefault();
@@ -751,16 +755,18 @@ function updatePageTitle(title) {
 
 /* ─── Robust Relative Path Resolver ─── */
 function resolvePath(baseDir, relHref) {
-  const baseParts = baseDir.split("/");
-  const relParts = relHref.split("/");
-  const stack = [];
+  const hashIdx = relHref.indexOf("#");
+  const fragment = hashIdx >= 0 ? relHref.slice(hashIdx) : "";
+  const pathPart = hashIdx >= 0 ? relHref.slice(0, hashIdx) : relHref;
 
-  for (const p of baseParts) if (p) stack.push(p);
-  for (const p of relParts) {
-    if (p === "..") stack.pop();
-    else if (p && p !== ".") stack.push(p);
+  const stack = [];
+  for (const p of baseDir.split("/")) if (p) stack.push(p);
+  for (const p of pathPart.split("/")) {
+    if (p === "..") {
+      if (stack.length) stack.pop();
+    } else if (p && p !== ".") stack.push(p);
   }
-  return stack.join("/");
+  return stack.join("/") + fragment;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -815,7 +821,7 @@ async function renderRelatedArticles(wiki, currentPath) {
 /* ═══════════════════════════════════════════════════════════════
    TOAST (WIKI-095)
    ═══════════════════════════════════════════════════════════════ */
-function showToast(message, durationMs = 3000) {
+function showToast(message, durationMs = 3000, onUndo = null) {
   let toast = document.getElementById("wiki-toast");
   if (!toast) {
     toast = document.createElement("div");
@@ -823,7 +829,25 @@ function showToast(message, durationMs = 3000) {
     toast.className = "wiki-toast";
     document.body.appendChild(toast);
   }
-  toast.textContent = message;
+
+  if (onUndo) {
+    toast.innerHTML = "";
+    const text = document.createElement("span");
+    text.textContent = message;
+    const btn = document.createElement("button");
+    btn.className = "toast-undo-btn";
+    btn.textContent = "Undo";
+    btn.addEventListener("click", () => {
+      clearTimeout(toast._timer);
+      toast.classList.remove("visible");
+      onUndo();
+    });
+    toast.appendChild(text);
+    toast.appendChild(btn);
+  } else {
+    toast.textContent = message;
+  }
+
   toast.classList.add("visible");
   clearTimeout(toast._timer);
   toast._timer = setTimeout(

@@ -518,6 +518,64 @@
     </button>
 
     <!-- ══════════════════════════════════════
+       HELP MODAL (?)
+  ══════════════════════════════════════ -->
+    <div
+      id="help-modal"
+      class="help-modal hidden"
+      role="dialog"
+      aria-label="Keyboard shortcuts"
+      aria-modal="true"
+    >
+      <div class="help-backdrop"></div>
+      <div class="help-dialog">
+        <div class="help-header">
+          <span class="help-title">Keyboard Shortcuts</span>
+          <button class="help-close-btn" id="help-close-btn" aria-label="Close">
+            <svg viewBox="0 0 14 14" fill="none">
+              <path
+                d="M1 1l12 12M13 1L1 13"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="help-body">
+          <div class="help-group">
+            <div class="help-group-label">Global</div>
+            <div class="help-row"><kbd>⌘K</kbd><span>Open search</span></div>
+            <div class="help-row"><kbd>?</kbd><span>Show this help</span></div>
+            <div class="help-row">
+              <kbd>ESC</kbd><span>Close / go back</span>
+            </div>
+            <div class="help-row"><kbd>,</kbd><span>Open settings</span></div>
+          </div>
+          <div class="help-group">
+            <div class="help-group-label">Content view</div>
+            <div class="help-row"><kbd>B</kbd><span>Toggle bookmark</span></div>
+            <div class="help-row">
+              <kbd>F</kbd><span>Toggle focus mode</span>
+            </div>
+            <div class="help-row">
+              <kbd>D</kbd><span>Distraction-free mode</span>
+            </div>
+            <div class="help-row">
+              <kbd>T</kbd><span>Focus table of contents</span>
+            </div>
+            <div class="help-row">
+              <kbd>=</kbd><span>Increase font size</span>
+            </div>
+            <div class="help-row">
+              <kbd>-</kbd><span>Decrease font size</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
        SETTINGS PANEL
   ══════════════════════════════════════ -->
     <div

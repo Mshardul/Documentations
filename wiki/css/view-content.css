@@ -802,3 +802,22 @@
 .markdown-body.focus-mode .focus-para {
   opacity: 1;
 }
+
+/* ═══════════════════════════════════════════════
+   DISTRACTION-FREE MODE (WIKI-103)
+   ═══════════════════════════════════════════════ */
+body.distraction-free .content-topbar {
+  display: none;
+}
+body.distraction-free #toc-sidebar {
+  display: none;
+}
+body.distraction-free #reading-progress {
+  display: none;
+}
+body.distraction-free .toc-mobile-btn {
+  display: none;
+}
+body.distraction-free .content-layout {
+  padding-top: var(--s12);
+}

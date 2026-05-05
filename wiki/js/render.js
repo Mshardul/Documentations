@@ -115,6 +115,7 @@ async function resolveSlugAndRender(wiki, slug) {
 
   // Slug not found fallback
   updatePageTitle("Not Found");
+  showToast(`Article not found: "${slug}"`);
   if (history.length <= 2) history.replaceState(null, "", location.pathname);
   renderHome();
 }
@@ -427,6 +428,7 @@ async function renderContent(
     state.tocObserver = null;
   }
   cleanupFocusMode();
+  document.body.classList.remove("distraction-free");
   document.getElementById("toc-nav").innerHTML = "";
 
   const readTimeBadge = document.getElementById("content-read-time");
@@ -727,8 +729,14 @@ function setBreadcrumb(elId, items) {
    UTILITIES
    ═══════════════════════════════════════════════════════════════ */
 async function fetchText(path) {
-  const res = await fetch(encodeURI(path));
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  let res;
+  try {
+    res = await fetch(encodeURI(path));
+  } catch {
+    throw new Error("Network error — check your connection");
+  }
+  if (res.status === 404) throw new Error("Page not found (404)");
+  if (!res.ok) throw new Error(`Server error (${res.status})`);
   return res.text();
 }
 
@@ -804,8 +812,29 @@ async function renderRelatedArticles(wiki, currentPath) {
   } catch {}
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   TOAST (WIKI-095)
+   ═══════════════════════════════════════════════════════════════ */
+function showToast(message, durationMs = 3000) {
+  let toast = document.getElementById("wiki-toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "wiki-toast";
+    toast.className = "wiki-toast";
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add("visible");
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(
+    () => toast.classList.remove("visible"),
+    durationMs
+  );
+}
+
 export {
   progressBar,
+  showToast,
   showView,
   navigate,
   route,

@@ -68,6 +68,9 @@ document.addEventListener("click", (e) => {
     case "bookmark-toggle":
       Bookmarks.toggle();
       break;
+    case "focus-toggle":
+      toggleFocusMode();
+      break;
     case "offline-toggle":
       Offline.toggle();
       break;
@@ -218,9 +221,40 @@ document.addEventListener("keydown", (e) => {
           firstItem.focus();
         }
       }
+      if (e.key === "=" || e.key === "+") {
+        const sizes = ["S", "M", "L"];
+        const cur = getSettings().fontSize;
+        const next = sizes[Math.min(sizes.indexOf(cur) + 1, 2)];
+        if (next !== cur) {
+          Settings._setSize(next);
+          e.preventDefault();
+        }
+      }
+      if (e.key === "-") {
+        const sizes = ["S", "M", "L"];
+        const cur = getSettings().fontSize;
+        const next = sizes[Math.max(sizes.indexOf(cur) - 1, 0)];
+        if (next !== cur) {
+          Settings._setSize(next);
+          e.preventDefault();
+        }
+      }
+      if (e.key === "d" || e.key === "D") {
+        toggleDistractionFree();
+        e.preventDefault();
+      }
     }
   }
 });
+
+/* ═══════════════════════════════════════════════════════════════
+   DISTRACTION-FREE MODE (WIKI-103)
+   ═══════════════════════════════════════════════════════════════ */
+let _distractionFree = false;
+function toggleDistractionFree() {
+  _distractionFree = !_distractionFree;
+  document.body.classList.toggle("distraction-free", _distractionFree);
+}
 
 /* ═══════════════════════════════════════════════════════════════
    DIAGRAM THEME SYNC (WIKI-039)

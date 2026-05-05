@@ -395,11 +395,19 @@ let _focusObserver = null;
 
 const FOCUS_SELECTORS = "p, li, blockquote, pre, h2, h3";
 
+function _syncFocusBtn() {
+  const btn = document.getElementById("content-focus-btn");
+  if (!btn) return;
+  btn.classList.toggle("active", _focusMode);
+  btn.title = _focusMode ? "Exit focus mode (F)" : "Focus mode (F)";
+}
+
 function toggleFocusMode() {
   const contentEl = document.getElementById("markdown-body");
   if (!contentEl) return;
   _focusMode = !_focusMode;
   contentEl.classList.toggle("focus-mode", _focusMode);
+  _syncFocusBtn();
 
   if (_focusMode) {
     _focusObserver = new IntersectionObserver(
@@ -421,6 +429,7 @@ function toggleFocusMode() {
 function cleanupFocusMode() {
   if (!_focusMode) return;
   _focusMode = false;
+  _syncFocusBtn();
   const contentEl = document.getElementById("markdown-body");
   if (contentEl) {
     contentEl.classList.remove("focus-mode");

@@ -110,6 +110,8 @@ function openGlobalSearch() {
       }
     }
   };
+  if (_searchFocusTrapHandler)
+    gSearchModal.removeEventListener("keydown", _searchFocusTrapHandler);
   gSearchModal.addEventListener("keydown", _searchFocusTrapHandler);
 
   if (allSearchCache.loaded) {

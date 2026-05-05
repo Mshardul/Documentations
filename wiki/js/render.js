@@ -115,6 +115,7 @@ async function resolveSlugAndRender(wiki, slug) {
 
   // Slug not found fallback
   updatePageTitle("Not Found");
+  showToast(`Article not found: "${slug}"`);
   if (history.length <= 2) history.replaceState(null, "", location.pathname);
   renderHome();
 }
@@ -127,7 +128,7 @@ function renderHome() {
   grid.innerHTML = WIKIS.map(
     (w) => `
     <div class="wiki-card" data-wiki-id="${w.id}" onclick="navigate('${w.id}')" role="button" tabindex="0"
-         onkeydown="if(event.key==='Enter')navigate('${w.id}')">
+         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('${w.id}')}">
       <div class="wiki-card-icon">${w.icon}</div>
       <div class="wiki-card-body">
         <h2 class="wiki-card-title">${w.title}</h2>
@@ -219,7 +220,7 @@ function renderIndexSections(sections, wiki) {
               card.path
             )}', '${encodeURIComponent(card.title)}', '${card.slug}')"
                role="button" tabindex="0"
-               onkeydown="if(event.key==='Enter')this.click()">
+               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
             <div class="index-card-header">
               <span class="index-card-title">${escHtml(card.title)}</span>
               <span class="index-card-arrow">→</span>
@@ -298,10 +299,21 @@ async function populateIndexReadTimes() {
 /* ─── Shared index cache (used by article counts + global search) ─── */
 async function fetchWikiIndex(wiki) {
   if (indexCache[wiki.id]) return indexCache[wiki.id];
+  const ssKey = `wiki-index-${wiki.id}`;
+  try {
+    const hit = sessionStorage.getItem(ssKey);
+    if (hit) {
+      indexCache[wiki.id] = JSON.parse(hit);
+      return indexCache[wiki.id];
+    }
+  } catch {}
   const md = await fetchText(wiki.indexPath);
   const basePath = dirOf(wiki.indexPath);
   const sections = parseIndexMd(md, basePath);
   indexCache[wiki.id] = sections;
+  try {
+    sessionStorage.setItem(ssKey, JSON.stringify(sections));
+  } catch {}
   return sections;
 }
 
@@ -416,6 +428,7 @@ async function renderContent(
     state.tocObserver = null;
   }
   cleanupFocusMode();
+  document.body.classList.remove("distraction-free");
   document.getElementById("toc-nav").innerHTML = "";
 
   const readTimeBadge = document.getElementById("content-read-time");
@@ -530,17 +543,36 @@ async function renderContent(
       }
     }
 
+    // Wait for images to settle layout before restoring scroll
+    const imgs = [...body.querySelectorAll("img")];
+    if (imgs.length) {
+      await Promise.all(
+        imgs.map((img) =>
+          img.complete
+            ? Promise.resolve()
+            : new Promise((r) => {
+                img.onload = r;
+                img.onerror = r;
+              })
+        )
+      );
+    }
+
     const anchor = new URLSearchParams(location.search).get("a");
     if (anchor) {
       const target = body.querySelector(`[id="${CSS.escape(anchor)}"]`);
       if (target)
-        setTimeout(
-          () => target.scrollIntoView({ behavior: "smooth", block: "start" }),
-          150
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() =>
+            target.scrollIntoView({ behavior: "smooth", block: "start" })
+          )
         );
     } else {
       const saved = localStorage.getItem(`scroll-${filePath}`);
-      if (saved) setTimeout(() => window.scrollTo(0, parseInt(saved, 10)), 150);
+      if (saved)
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => window.scrollTo(0, parseInt(saved, 10)))
+        );
     }
   } catch (err) {
     body.innerHTML = `<p class="error">Failed to load content. (${err.message})</p>`;
@@ -697,8 +729,14 @@ function setBreadcrumb(elId, items) {
    UTILITIES
    ═══════════════════════════════════════════════════════════════ */
 async function fetchText(path) {
-  const res = await fetch(encodeURI(path));
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  let res;
+  try {
+    res = await fetch(encodeURI(path));
+  } catch {
+    throw new Error("Network error — check your connection");
+  }
+  if (res.status === 404) throw new Error("Page not found (404)");
+  if (!res.ok) throw new Error(`Server error (${res.status})`);
   return res.text();
 }
 
@@ -764,7 +802,7 @@ async function renderRelatedArticles(wiki, currentPath) {
               card.path
             )}','${encodeURIComponent(card.title)}','${card.slug}')"
                role="button" tabindex="0"
-               onkeydown="if(event.key==='Enter')this.click()">
+               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
             <span class="related-card-title">${escHtml(card.title)}</span>
             <span class="related-card-arrow">→</span>
           </div>`
@@ -774,8 +812,29 @@ async function renderRelatedArticles(wiki, currentPath) {
   } catch {}
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   TOAST (WIKI-095)
+   ═══════════════════════════════════════════════════════════════ */
+function showToast(message, durationMs = 3000) {
+  let toast = document.getElementById("wiki-toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "wiki-toast";
+    toast.className = "wiki-toast";
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add("visible");
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(
+    () => toast.classList.remove("visible"),
+    durationMs
+  );
+}
+
 export {
   progressBar,
+  showToast,
   showView,
   navigate,
   route,

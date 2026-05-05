@@ -211,6 +211,13 @@ document.addEventListener("keydown", (e) => {
         toggleFocusMode();
         e.preventDefault();
       }
+      if (e.key === "t" || e.key === "T") {
+        const firstItem = document.querySelector("#toc-nav .toc-item");
+        if (firstItem) {
+          e.preventDefault();
+          firstItem.focus();
+        }
+      }
     }
   }
 });

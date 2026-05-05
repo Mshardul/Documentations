@@ -63,7 +63,7 @@ function renderBookmarksSection(wiki) {
   section.innerHTML = `
     <div class="recents-header">
       <span class="recents-label">Bookmarked</span>
-      <button class="recents-clear-btn" onclick="Bookmarks.clearWiki('${
+      <button class="recents-clear-btn" onclick="confirmClearBookmarks('${
         wiki.id
       }')" title="Clear all">
         <svg viewBox="0 0 12 12" fill="none"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -137,9 +137,13 @@ function addToRecents(entry) {
   localStorage.setItem(RECENTS_KEY, JSON.stringify(recents));
 }
 
+function saveRecents(arr) {
+  localStorage.setItem(RECENTS_KEY, JSON.stringify(arr));
+}
+
 function clearRecents(wikiId) {
   const remaining = getRecents().filter((r) => r.wikiId !== wikiId);
-  localStorage.setItem(RECENTS_KEY, JSON.stringify(remaining));
+  saveRecents(remaining);
   document.getElementById("recents-section")?.classList.add("hidden");
 }
 
@@ -155,7 +159,7 @@ function renderRecentsSection(wiki) {
   section.innerHTML = `
     <div class="recents-header">
       <span class="recents-label">Recently visited</span>
-      <button class="recents-clear-btn" onclick="clearRecents('${
+      <button class="recents-clear-btn" onclick="confirmClearRecents('${
         wiki.id
       }')" title="Clear all">
         <svg viewBox="0 0 12 12" fill="none"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -825,6 +829,7 @@ export {
   renderBookmarksSection,
   Bookmarks,
   getRecents,
+  saveRecents,
   addToRecents,
   clearRecents,
   renderRecentsSection,

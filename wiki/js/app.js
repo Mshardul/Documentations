@@ -190,6 +190,26 @@ scrollTopBtn.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+if ("onscrollend" in window) {
+  window.addEventListener(
+    "scrollend",
+    () => {
+      if (state.currentView === "content" && state.currentFilePath) {
+        clearTimeout(_scrollSaveTimer);
+        saveScrollPos(`scroll-${state.currentFilePath}`, window.scrollY);
+      }
+      if (state.currentView === "index" && state.currentWikiId) {
+        clearTimeout(_indexScrollTimer);
+        saveScrollPos(
+          `wiki-index-scroll-${state.currentWikiId}`,
+          window.scrollY
+        );
+      }
+    },
+    { passive: true }
+  );
+}
+
 /* ═══════════════════════════════════════════════════════════════
    MODAL BACKDROP & GLOBAL KEYDOWN
    ═══════════════════════════════════════════════════════════════ */
@@ -367,7 +387,11 @@ document
 /* ═══════════════════════════════════════════════════════════════
    DIAGRAM THEME SYNC (WIKI-039)
    ═══════════════════════════════════════════════════════════════ */
-document.addEventListener("wiki:themechange", rerenderMermaidDiagrams);
+let _mermaidRerenderTimer = null;
+document.addEventListener("wiki:themechange", () => {
+  clearTimeout(_mermaidRerenderTimer);
+  _mermaidRerenderTimer = setTimeout(rerenderMermaidDiagrams, 150);
+});
 
 /* ═══════════════════════════════════════════════════════════════
    HASH ROUTER EVENT WIRING

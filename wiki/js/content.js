@@ -41,7 +41,7 @@ function openZoomOverlay(node) {
 }
 
 /* ─── Copy Buttons ─── */
-function addCopyButtons(contentEl) {
+function addCopyButtons(contentEl, onCopyError = () => {}) {
   contentEl.querySelectorAll("pre").forEach((pre) => {
     const btn = document.createElement("button");
     btn.className = "copy-btn";
@@ -60,7 +60,7 @@ function addCopyButtons(contentEl) {
             btn.innerHTML = copyIcon();
           }, 2000);
         })
-        .catch(() => {});
+        .catch(() => onCopyError());
     });
 
     pre.appendChild(btn);
@@ -193,7 +193,7 @@ function buildTOC(contentEl) {
 }
 
 /* ─── Heading Anchor Links ─── */
-function addAnchorLinks(contentEl) {
+function addAnchorLinks(contentEl, onCopyError = () => {}) {
   contentEl.querySelectorAll("h2, h3, h4").forEach((h) => {
     if (!h.id) return;
     const btn = document.createElement("button");
@@ -210,7 +210,7 @@ function addAnchorLinks(contentEl) {
           btn.classList.add("copied");
           setTimeout(() => btn.classList.remove("copied"), 2000);
         })
-        .catch(() => {});
+        .catch(() => onCopyError());
     });
     h.appendChild(btn);
   });
@@ -318,8 +318,14 @@ async function rerenderMermaidDiagrams() {
   const theme = document.documentElement.getAttribute("data-theme") || "dark";
   mermaid.initialize({ startOnLoad: false, ...getMermaidThemeConfig(theme) });
 
+  const inViewport = (el) => {
+    const r = el.getBoundingClientRect();
+    return r.bottom > 0 && r.top < window.innerHeight;
+  };
+
   let i = 0;
   for (const wrapper of diagrams) {
+    if (!inViewport(wrapper)) continue;
     const code = wrapper.dataset.mermaidSrc;
     try {
       const id = `mermaid-rerender-${Date.now()}-${i++}`;

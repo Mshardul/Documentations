@@ -492,14 +492,18 @@ async function renderContent(
     addLineNumbers(body);
 
     // Post-processing
-    addCopyButtons(body);
+    addCopyButtons(body, () =>
+      showToast("Copy failed — clipboard access denied")
+    );
     styleCallouts(body);
 
     // Prerequisites Chips
     renderPrerequisites(body);
 
     interceptMdLinks(body, wiki, filePath);
-    addAnchorLinks(body);
+    addAnchorLinks(body, () =>
+      showToast("Copy failed — clipboard access denied")
+    );
 
     // TOC
     buildTOC(body);
@@ -573,10 +577,12 @@ async function renderContent(
         );
     } else {
       const saved = localStorage.getItem(`scroll-${filePath}`);
-      if (saved)
+      if (saved) {
+        await document.fonts.ready;
         requestAnimationFrame(() =>
           requestAnimationFrame(() => window.scrollTo(0, parseInt(saved, 10)))
         );
+      }
     }
   } catch (err) {
     body.innerHTML = `<p class="error">Failed to load content. (${err.message})</p>`;
@@ -585,6 +591,8 @@ async function renderContent(
 
 /* ─── Internal .md link interception & Hover Previews ─── */
 let hoverPreviewTimer;
+let _previewAbortController = null;
+let _previewGeneration = 0;
 
 function interceptMdLinks(contentEl, wiki, currentFilePath) {
   const baseDir = dirOf(currentFilePath);
@@ -644,6 +652,11 @@ function interceptMdLinks(contentEl, wiki, currentFilePath) {
 
     link.addEventListener("mouseleave", () => {
       clearTimeout(hoverPreviewTimer);
+      if (_previewAbortController) {
+        _previewAbortController.abort();
+        _previewAbortController = null;
+      }
+      _previewGeneration++;
       if (previewEl) previewEl.classList.remove("visible");
     });
   });
@@ -652,30 +665,54 @@ function interceptMdLinks(contentEl, wiki, currentFilePath) {
 async function showHoverPreview(link, path) {
   const previewEl = document.getElementById("hover-preview");
 
-  // Position the preview
-  const rect = link.getBoundingClientRect();
-  previewEl.style.top = `${window.scrollY + rect.bottom + 8}px`;
+  // Cancel any in-flight fetch from a previous hover
+  if (_previewAbortController) _previewAbortController.abort();
+  _previewAbortController = new AbortController();
+  const { signal } = _previewAbortController;
+  const gen = ++_previewGeneration;
 
-  // Keep it inside viewport bounds
+  // Position preview — prefer below, flip above when near viewport bottom
+  const rect = link.getBoundingClientRect();
+  const PREVIEW_H = 160;
+  const spaceBelow = window.innerHeight - rect.bottom;
+  const topPos =
+    spaceBelow >= PREVIEW_H + 8
+      ? window.scrollY + rect.bottom + 8
+      : window.scrollY + rect.top - PREVIEW_H - 8;
+  previewEl.style.top = `${Math.max(window.scrollY + 8, topPos)}px`;
+
   let leftPos = rect.left;
   if (leftPos + 340 > window.innerWidth) leftPos = window.innerWidth - 360;
-  previewEl.style.left = `${leftPos}px`;
+  previewEl.style.left = `${Math.max(8, leftPos)}px`;
 
   previewEl.innerHTML = '<div class="loading">Loading preview...</div>';
   previewEl.classList.add("visible");
 
+  const SKIP_PREFIXES = ["prerequisites:", "table of contents"];
+
   try {
-    const md = await fetchText(path);
+    const md = await fetchText(path, signal);
+    if (gen !== _previewGeneration) return;
+    if (!previewEl.classList.contains("visible")) return;
     let extract = "";
 
+    // Limit scan to first 600 chars; enough for title + first few paragraphs
+    const preview = md.slice(0, 600);
+
     // Match TLDR section first
-    const tldrMatch = md.match(/##\s*TL;?DR\s*\n([\s\S]*?)(?=\n##|$)/i);
+    const tldrMatch = preview.match(/##\s*TL;?DR\s*\n([\s\S]*?)(?=\n##|$)/i);
     if (tldrMatch && tldrMatch[1].trim()) {
       extract = tldrMatch[1].trim();
     } else {
-      // Fallback to first paragraph
-      const textWithoutTitle = md.replace(/^#+ .*/gm, "").trim();
-      extract = textWithoutTitle.split("\n\n")[0];
+      // Fallback: first non-metadata paragraph
+      const textWithoutTitle = preview.replace(/^#+ .*/gm, "").trim();
+      const paras = textWithoutTitle.split("\n\n");
+      extract =
+        paras.find(
+          (p) =>
+            p.trim() &&
+            !SKIP_PREFIXES.some((s) => p.trim().toLowerCase().startsWith(s))
+        ) || "";
     }
 
     if (!extract) throw new Error("Empty");
@@ -694,7 +731,8 @@ async function showHoverPreview(link, path) {
         throwOnError: false,
       });
     }
-  } catch {
+  } catch (err) {
+    if (err.name === "AbortError") return;
     previewEl.innerHTML =
       '<p style="color:var(--text-muted)">Preview not available.</p>';
   }
@@ -732,11 +770,12 @@ function setBreadcrumb(elId, items) {
 /* ═══════════════════════════════════════════════════════════════
    UTILITIES
    ═══════════════════════════════════════════════════════════════ */
-async function fetchText(path) {
+async function fetchText(path, signal) {
   let res;
   try {
-    res = await fetch(encodeURI(path));
-  } catch {
+    res = await fetch(encodeURI(path), signal ? { signal } : {});
+  } catch (err) {
+    if (err.name === "AbortError") throw err;
     throw new Error("Network error — check your connection");
   }
   if (res.status === 404) throw new Error("Page not found (404)");

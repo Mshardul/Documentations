@@ -105,11 +105,12 @@ Then the main content follows.
 
 Each H2 section follows this fixed envelope, in this order:
 
-1. **Interviewer TL;DR** - 1-2 sentences. The single most important thing to say in an interview. Optimized for quick revision.
-2. **Mental model** - One sentence. An intuitive anchor: what this component IS and why it exists, before any mechanics.
-3. **Body** - Core mechanics → alternatives considered and rejected → trade-offs, edge cases, failure modes. Depth follows importance.
-4. **Callouts** - Interview Lens and Decision Framework where applicable (see Callouts below).
-5. **Key Takeaway** - 1-2 sentences. The most important decision or trade-off from this section.
+1. **Core Primitives** _(only when needed)_ - If the section introduces 3+ interdependent terms that aren't common knowledge, define them here BEFORE the TL;DR. Use a table: `Term | One-line definition`. Define in dependency order — each term may only use terms already defined above it in the table. The TL;DR and Mental model may freely use any term defined here.
+2. **Interviewer TL;DR** - 1-2 sentences. The single most important thing to say in an interview. Optimized for quick revision. Must not use any term not yet defined on the page.
+3. **Mental model** - One sentence. An intuitive anchor: what this component IS and why it exists, before any mechanics. Must not use any term not yet defined on the page.
+4. **Body** - Core mechanics → alternatives considered and rejected → trade-offs, edge cases, failure modes. Depth follows importance.
+5. **Callouts** - Interview Lens and Decision Framework where applicable (see Callouts below).
+6. **Key Takeaway** - 1-2 sentences. The most important decision or trade-off from this section.
 
    ✅ "Choose L7 over L4 when you need session persistence, content-based routing, or application-aware health checks - the CPU overhead is worth it at scale."
    ❌ "Load balancers are an important component and understanding their trade-offs is crucial for interviews and production systems."
@@ -142,7 +143,7 @@ For important H3 subsections, add a one-line italic TLDR immediately after the h
 
 ### Definitions
 
-No dictionary-style definitions. Define through purpose and first principle. For unfamiliar terms, add one intuitive one-liner before the deep dive.
+No dictionary-style definitions. Define through purpose and first principle. Never use a technical term in Interviewer TL;DR or Mental model that hasn't been defined earlier in the page. When a section is vocabulary-heavy (3+ interdependent terms), a Core Primitives table is the preferred form — not scattered inline one-liners.
 
 ### Tables
 
@@ -286,5 +287,6 @@ If all true → output index → STOP. Wait for user confirmation.
 **Before outputting each Phase 2 section, run:**
 
 - **TLDR flashcard test:** Can someone use this TLDR standalone as an interview flashcard? If it says "In this article…", "We will cover…", or references other sections - rewrite.
+- **TLDR vocabulary test:** Does the TL;DR use any term not yet defined on the page? If yes — add a Core Primitives block before it.
 - **Key Takeaway sticky-note test:** Would a candidate write this on a post-it? If it's longer than 2 sentences or repeats the Interviewer TL;DR - compress it.
 - **Code block whiteboard test:** Would you write this on a whiteboard in an interview? If no - cut it.

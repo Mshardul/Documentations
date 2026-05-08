@@ -27,6 +27,9 @@ Foundational building blocks. Each page covers mechanics, trade-offs, failure mo
 | [Authentication](./components/authentication.md)                               | Session vs token auth, OAuth, OIDC, MFA, service-to-service      |
 | <!--                                                                           | [JWT](./components/jwt.md)                                       | Structure, signing algorithms, JWKS, verification gotchas      | --> |
 | <!--                                                                           | [mTLS](./components/mtls.md)                                     | Handshake, PKI management, certificate lifecycle, service mesh | --> |
+| <!--                                                                           | [Kafka](./components/kafka.md)                                   | Distributed log, KRaft, producer/consumer internals, ops       | --> |
+| <!--                                                                           | [Kafka Streams](./components/kafka-streams.md)                   | Stream processing DSL, state stores, windowing, ksqlDB         | --> |
+| <!--                                                                           | [Kafka Connect](./components/kafka-connect.md)                   | Source/sink connectors, CDC, Debezium                          | --> |
 
 ---
 

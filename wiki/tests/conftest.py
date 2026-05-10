@@ -1,6 +1,6 @@
 import socket
-import subprocess
-import time
+import threading
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 import pytest
@@ -24,15 +24,21 @@ def browser_context_args(browser_context_args):
 @pytest.fixture(scope="session")
 def base_url():
     port = _free_port()
-    proc = subprocess.Popen(
-        ["python3", "-m", "http.server", str(port)],
-        cwd=REPO_ROOT,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    time.sleep(0.8)
+
+    class Handler(SimpleHTTPRequestHandler):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, directory=str(REPO_ROOT), **kwargs)
+
+        def log_message(self, *args):
+            pass
+
+    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+
     yield f"http://localhost:{port}"
-    proc.terminate()
+
+    server.shutdown()
 
 
 @pytest.fixture

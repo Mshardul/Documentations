@@ -94,7 +94,7 @@ def test_scroll_position_restored_after_navigation(page, base_url):
         "() => !document.querySelector('#markdown-body > .loading')", timeout=8_000
     )
 
-    page.evaluate("() => window.scrollTo(0, 600)")
+    page.evaluate("() => window.scrollTo({ top: 600, behavior: 'instant' })")
     page.wait_for_timeout(500)  # debounce fires at 400ms
 
     saved = page.evaluate(
@@ -110,7 +110,7 @@ def test_scroll_position_restored_after_navigation(page, base_url):
     page.evaluate(
         """() => navigateToContent(
         'system-design',
-        encodeURIComponent('../content/system-design/caching.md'),
+        encodeURIComponent('../content/system-design/components/caching.md'),
         encodeURIComponent('Caching'),
         'caching'
     )"""

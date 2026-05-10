@@ -376,6 +376,19 @@ function parseIndexMd(markdown, basePath) {
 /* ═══════════════════════════════════════════════════════════════
    VIEW 3 - CONTENT
    ═══════════════════════════════════════════════════════════════ */
+
+function normalizePath(path) {
+  const stack = [];
+  for (const p of path.split("/")) {
+    if (p === "..") {
+      if (stack.length) stack.pop();
+    } else if (p && p !== ".") stack.push(p);
+  }
+  return stack.join("/");
+}
+
+let _renderGen = 0;
+
 function navigateToContent(wikiId, encodedPath, encodedTitle, slug) {
   const filePath = decodeURIComponent(encodedPath);
   const title = decodeURIComponent(encodedTitle);
@@ -390,6 +403,9 @@ async function renderContent(
   pushNav = true,
   slug = null
 ) {
+  filePath = normalizePath(filePath);
+  const gen = ++_renderGen;
+
   state.currentWikiId = wiki.id;
   state.currentFilePath = filePath;
   state.currentTitle = title;
@@ -437,6 +453,7 @@ async function renderContent(
 
   try {
     const markdown = await fetchText(filePath);
+    if (gen !== _renderGen) return;
 
     // Only track successful loads.
     addToRecents({ wikiId: wiki.id, path: filePath, title, slug: derivedSlug });
@@ -478,6 +495,21 @@ async function renderContent(
         ],
         throwOnError: false,
       });
+    }
+
+    if (!new URLSearchParams(location.search).get("a")) {
+      const _saved = localStorage.getItem(`scroll-${filePath}`);
+      if (_saved) {
+        const _targetY = parseInt(_saved, 10);
+        let _attempts = 0;
+        const _tryScroll = () => {
+          window.scrollTo({ top: _targetY, behavior: "instant" });
+          if (window.scrollY < _targetY * 0.9 && ++_attempts < 30) {
+            requestAnimationFrame(_tryScroll);
+          }
+        };
+        requestAnimationFrame(_tryScroll);
+      }
     }
 
     // Mermaid must run before hljs so it claims those blocks first
@@ -551,21 +583,6 @@ async function renderContent(
       }
     }
 
-    // Wait for images to settle layout before restoring scroll
-    const imgs = [...body.querySelectorAll("img")];
-    if (imgs.length) {
-      await Promise.all(
-        imgs.map((img) =>
-          img.complete
-            ? Promise.resolve()
-            : new Promise((r) => {
-                img.onload = r;
-                img.onerror = r;
-              })
-        )
-      );
-    }
-
     const anchor = new URLSearchParams(location.search).get("a");
     if (anchor) {
       const target = body.querySelector(`[id="${CSS.escape(anchor)}"]`);
@@ -575,14 +592,6 @@ async function renderContent(
             target.scrollIntoView({ behavior: "smooth", block: "start" })
           )
         );
-    } else {
-      const saved = localStorage.getItem(`scroll-${filePath}`);
-      if (saved) {
-        await document.fonts.ready;
-        requestAnimationFrame(() =>
-          requestAnimationFrame(() => window.scrollTo(0, parseInt(saved, 10)))
-        );
-      }
     }
   } catch (err) {
     body.innerHTML = `<p class="error">Failed to load content. (${err.message})</p>`;
@@ -657,7 +666,10 @@ function interceptMdLinks(contentEl, wiki, currentFilePath) {
         _previewAbortController = null;
       }
       _previewGeneration++;
-      if (previewEl) previewEl.classList.remove("visible");
+      if (previewEl) {
+        previewEl.classList.remove("visible");
+        previewEl.textContent = "";
+      }
     });
   });
 }
@@ -822,7 +834,9 @@ async function renderRelatedArticles(wiki, currentPath) {
     let sectionName = "";
 
     for (const section of sections) {
-      const idx = section.cards.findIndex((c) => c.path === currentPath);
+      const idx = section.cards.findIndex(
+        (c) => normalizePath(c.path) === currentPath
+      );
       if (idx !== -1) {
         sectionName = section.heading;
         related = section.cards

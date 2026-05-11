@@ -102,8 +102,8 @@ def test_mobile_toc_closes_on_link_tap(page, base_url):
     page.wait_for_function(
         "() => document.getElementById('toc-sidebar').classList.contains('mobile-open')"
     )
-
-    page.locator("#toc-nav .toc-item").first.click()
+    # slideInRight animation is 0.2s; force=True bypasses stability check during animation
+    page.locator("#toc-nav .toc-item").first.click(force=True)
     page.wait_for_function(
         "() => !document.getElementById('toc-sidebar').classList.contains('mobile-open')"
     )

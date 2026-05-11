@@ -12,7 +12,7 @@ def _go_to_article(page, base_url, slug="system-design/caching"):
     page.goto(f"{base_url}/wiki/#{slug}")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')",
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
         timeout=10_000,
     )
 
@@ -33,7 +33,7 @@ def test_404_shows_not_found_message(page, base_url):
     )""")
     page.wait_for_selector("#view-content.active", timeout=8_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')",
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
         timeout=8_000,
     )
 
@@ -56,7 +56,7 @@ def test_network_error_shows_connection_message(page, base_url):
     )""")
     page.wait_for_selector("#view-content.active", timeout=8_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')",
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
         timeout=8_000,
     )
 

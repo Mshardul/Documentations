@@ -65,7 +65,12 @@ function navigate(hash, pushHistory = true) {
   route(hash || "");
 }
 
+let _routeTimer = null;
 function route(hash) {
+  clearTimeout(_routeTimer);
+  _routeTimer = setTimeout(() => _execRoute(hash), 0);
+}
+function _execRoute(hash) {
   const parts = hash.split("/").filter(Boolean);
   if (parts.length === 0) {
     updatePageTitle("Home");
@@ -437,6 +442,7 @@ async function renderContent(
   showView("view-content");
 
   const body = document.getElementById("markdown-body");
+  delete body.dataset.renderDone;
   body.innerHTML = '<div class="loading">Loading…</div>';
 
   // Clear old observers and modes
@@ -516,9 +522,11 @@ async function renderContent(
     await renderMermaidDiagrams(body);
 
     // Syntax highlighting
-    body
-      .querySelectorAll("pre code")
-      .forEach((block) => hljs.highlightElement(block));
+    if (typeof hljs !== "undefined") {
+      body
+        .querySelectorAll("pre code")
+        .forEach((block) => hljs.highlightElement(block));
+    }
 
     // Line numbers (after hljs so it runs on highlighted HTML)
     addLineNumbers(body);
@@ -593,8 +601,10 @@ async function renderContent(
           )
         );
     }
+    body.dataset.renderDone = "1";
   } catch (err) {
     body.innerHTML = `<p class="error">Failed to load content. (${err.message})</p>`;
+    body.dataset.renderDone = "1";
   }
 }
 
@@ -785,7 +795,10 @@ function setBreadcrumb(elId, items) {
 async function fetchText(path, signal) {
   let res;
   try {
-    res = await fetch(encodeURI(path), signal ? { signal } : {});
+    res = await fetch(
+      new URL(path, location.href).href,
+      signal ? { signal } : {}
+    );
   } catch (err) {
     if (err.name === "AbortError") throw err;
     throw new Error("Network error — check your connection");

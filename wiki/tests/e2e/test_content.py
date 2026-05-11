@@ -23,7 +23,7 @@ def _load_mock_article(page, base_url, content, slug="mock"):
     page.wait_for_selector("#view-content.active", timeout=10_000)
     # showView fires before the fetch; wait until the loading spinner is replaced
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')",
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
         timeout=10_000,
     )
 

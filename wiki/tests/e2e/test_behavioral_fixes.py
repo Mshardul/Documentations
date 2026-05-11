@@ -23,7 +23,7 @@ def _load_mock_article(page, base_url, content, slug="mock", extra_routes=None):
     )
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')",
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
         timeout=10_000,
     )
 
@@ -91,7 +91,8 @@ def test_scroll_position_restored_after_navigation(page, base_url):
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')", timeout=8_000
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
+        timeout=8_000,
     )
 
     page.evaluate("() => window.scrollTo({ top: 600, behavior: 'instant' })")
@@ -116,7 +117,8 @@ def test_scroll_position_restored_after_navigation(page, base_url):
     )"""
     )
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')", timeout=8_000
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
+        timeout=8_000,
     )
     page.wait_for_timeout(500)  # double rAF + settling
 
@@ -172,7 +174,8 @@ def test_hover_preview_filters_prerequisites_from_fallback(page, base_url):
     )
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')", timeout=10_000
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
+        timeout=10_000,
     )
     page.wait_for_selector("a:has-text('Link')", timeout=5_000)
 
@@ -213,7 +216,8 @@ def test_hover_preview_hidden_after_mouseleave_during_fetch(page, base_url):
     )
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')", timeout=10_000
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
+        timeout=10_000,
     )
     page.wait_for_selector("a:has-text('Link')", timeout=5_000)
 
@@ -268,7 +272,8 @@ def test_hover_preview_left_clamped_near_right_edge(page, base_url):
     )
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')", timeout=10_000
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
+        timeout=10_000,
     )
     page.wait_for_selector("a:has-text('Link')", timeout=5_000)
 
@@ -289,7 +294,8 @@ def test_rapid_theme_changes_do_not_crash(page, base_url):
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')", timeout=8_000
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
+        timeout=8_000,
     )
 
     errors = []
@@ -335,7 +341,8 @@ def test_mermaid_rerender_skips_offscreen_diagrams(page, base_url):
     )
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')", timeout=10_000
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
+        timeout=10_000,
     )
 
     diagrams = page.locator(".mermaid-diagram")

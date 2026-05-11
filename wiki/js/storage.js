@@ -715,6 +715,13 @@ const Settings = {
     const updated = { ...s, backgroundId, textColorId, accentId };
     saveSettings(updated);
     applySettingsToDOM(updated);
+    const presetKey = nowDark
+      ? "wiki-last-dark-preset"
+      : "wiki-last-light-preset";
+    localStorage.setItem(
+      presetKey,
+      JSON.stringify({ backgroundId, textColorId, accentId })
+    );
     this._render();
   },
 
@@ -804,17 +811,24 @@ const Settings = {
 const Theme = {
   toggle() {
     const s = getSettings();
-    const next = _isDark(s.backgroundId)
-      ? {
-          backgroundId: "light-white",
-          textColorId: "text-crisp-light",
-          accentId: "indigo-l",
-        }
-      : {
-          backgroundId: "dark-void",
-          textColorId: "text-crisp-dark",
-          accentId: "indigo",
-        };
+    const isDark = _isDark(s.backgroundId);
+    const savedKey = isDark
+      ? "wiki-last-light-preset"
+      : "wiki-last-dark-preset";
+    const saved = JSON.parse(localStorage.getItem(savedKey) || "null");
+    const next =
+      saved ||
+      (isDark
+        ? {
+            backgroundId: "light-white",
+            textColorId: "text-crisp-light",
+            accentId: "indigo-l",
+          }
+        : {
+            backgroundId: "dark-void",
+            textColorId: "text-crisp-dark",
+            accentId: "indigo",
+          });
     saveSettings({ ...s, ...next });
     applySettingsToDOM({ ...s, ...next });
   },

@@ -473,7 +473,13 @@ def test_header_toggle_shows_correct_icon(wiki_page):
     wiki_page.locator("#settings-backdrop").click(force=True)
     _settings_is_closed(wiki_page)
 
+    wiki_page.wait_for_function(
+        "() => document.documentElement.getAttribute('data-theme') === 'dark'"
+    )
     wiki_page.locator(".theme-toggle-btn").first.click()  # flip to light
+    wiki_page.wait_for_function(
+        "() => document.documentElement.getAttribute('data-theme') === 'light'"
+    )
     moon_display = wiki_page.evaluate(
         "() => document.querySelector('.theme-icon-moon').style.display"
     )
@@ -482,6 +488,75 @@ def test_header_toggle_shows_correct_icon(wiki_page):
     )
     assert moon_display == "none"
     assert sun_display != "none"
+
+
+def test_theme_toggle_restores_saved_light_preset(wiki_page):
+    """Theme.toggle() from dark restores the previously saved light preset, not the default."""
+    _open_settings(wiki_page)
+    # Switch to a non-default light preset — saves wiki-last-light-preset=light-cream
+    wiki_page.locator("#settings-backgrounds .settings-bg-swatch").nth(
+        4
+    ).click()  # Cream (light)
+    # Switch back to dark — saves wiki-last-dark-preset; app is now in dark mode
+    wiki_page.locator("#settings-backgrounds .settings-bg-swatch").nth(
+        0
+    ).click()  # Void (dark)
+    wiki_page.locator("#settings-backdrop").click(force=True)
+    _settings_is_closed(wiki_page)
+
+    # Toggle to light — must restore light-cream, not default light-white
+    wiki_page.locator(".theme-toggle-btn").first.click()
+    bg = wiki_page.evaluate(
+        "() => JSON.parse(localStorage.getItem('wiki-settings')).backgroundId"
+    )
+    assert bg == "light-cream", f"Expected light-cream preset restored, got {bg}"
+
+
+def test_theme_toggle_restores_saved_dark_preset(wiki_page):
+    """Theme.toggle() from light restores the previously saved dark preset, not the default."""
+    _open_settings(wiki_page)
+    # Switch to a non-default dark bg — saves wiki-last-dark-preset=dark-slate
+    wiki_page.locator("#settings-backgrounds .settings-bg-swatch").nth(
+        1
+    ).click()  # Slate (dark)
+    # Cross to light — saves wiki-last-light-preset; app is now in light mode
+    wiki_page.locator("#settings-backgrounds .settings-bg-swatch").nth(
+        3
+    ).click()  # White (light)
+    wiki_page.locator("#settings-backdrop").click(force=True)
+    _settings_is_closed(wiki_page)
+
+    # Toggle to dark — must restore dark-slate, not default dark-void
+    wiki_page.locator(".theme-toggle-btn").first.click()
+    bg = wiki_page.evaluate(
+        "() => JSON.parse(localStorage.getItem('wiki-settings')).backgroundId"
+    )
+    assert bg == "dark-slate", f"Expected dark-slate preset restored, got {bg}"
+
+
+def test_theme_toggle_uses_default_when_no_preset(wiki_page):
+    """Theme.toggle() falls back to light-white default when no light preset has been saved."""
+    # Force dark mode so toggle goes dark→light (OS light preference would start light)
+    wiki_page.evaluate("""() => {
+        localStorage.removeItem('wiki-last-light-preset');
+        localStorage.setItem('wiki-settings', JSON.stringify({
+            backgroundId: 'dark-void', textColorId: 'text-crisp-dark',
+            accentId: 'indigo', font: 'Inter', fontSize: 'M', contentWidth: 'Default'
+        }));
+    }""")
+    wiki_page.reload()
+    wiki_page.wait_for_load_state("networkidle")
+
+    has_preset = wiki_page.evaluate(
+        "() => !!localStorage.getItem('wiki-last-light-preset')"
+    )
+    assert not has_preset, "Test requires no saved light preset"
+
+    wiki_page.locator(".theme-toggle-btn").first.click()
+    bg = wiki_page.evaluate(
+        "() => JSON.parse(localStorage.getItem('wiki-settings')).backgroundId"
+    )
+    assert bg == "light-white", f"Expected default light-white, got {bg}"
 
 
 # ── OS theme detect ─────────────────────────────────────────────────────────────

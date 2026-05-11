@@ -13,7 +13,7 @@ def _go_to_article(page, base_url, slug="system-design/caching"):
     page.goto(f"{base_url}/wiki/#{slug}")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')",
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
         timeout=10_000,
     )
 
@@ -149,7 +149,7 @@ def test_content_scroll_restored_after_navigation(page, base_url):
     page.go_back()
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')",
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
         timeout=10_000,
     )
     # Allow images to load and rAF to fire

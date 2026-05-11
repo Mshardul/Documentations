@@ -81,7 +81,8 @@ def test_import_restores_settings(page, base_url):
         _open_settings(page)
 
         page.on("dialog", lambda d: d.accept())
-        page.locator("#import-upload").set_input_files(tmp_path)
+        with page.expect_navigation(timeout=10_000):
+            page.locator("#import-upload").set_input_files(tmp_path)
 
         page.wait_for_load_state("networkidle")
 

@@ -2,6 +2,8 @@
 Dynamic document.title updates on every view change.
 Robust resolvePath for nested ../../ links.
 404 history fallback strips bad hashes on shallow history.
+fetchText produces absolute URLs: WIKI-117
+Route deduplication on popstate+hashchange: WIKI-120
 """
 
 import re
@@ -99,3 +101,68 @@ def test_404_back_btn_redirects_when_no_history(page, base_url):
 
     page.click("#back-btn")
     page.wait_for_url(re.compile(r".*/wiki/?(?:#.*)?$"), timeout=5_000)
+
+
+# ── WIKI-117: fetchText absolute URL ──────────────────────────────────────────
+
+
+def test_fetch_produces_absolute_url(page, base_url):
+    """fetchText resolves relative .md paths to absolute URLs via new URL(path, location.origin)."""
+    with page.expect_response("**/caching.md") as resp_info:
+        page.goto(f"{base_url}/wiki/#system-design/caching")
+        page.wait_for_selector("#view-content.active", timeout=10_000)
+
+    response = resp_info.value
+    assert response.status == 200
+    assert response.url.startswith("http"), (
+        f"Expected absolute fetch URL, got: {response.url}"
+    )
+    assert "caching.md" in response.url
+
+
+# ── WIKI-120: Route deduplication ─────────────────────────────────────────────
+
+
+def test_back_forward_does_not_double_render(page, base_url):
+    """Back+forward navigation fires route handler once; popstate+hashchange both call route() but dedup fires _execRoute once."""
+    page.goto(f"{base_url}/wiki/")
+    page.wait_for_load_state("networkidle")
+
+    # Push article to history via in-app navigate (uses history.pushState)
+    page.evaluate("() => window.navigate('system-design/caching', true)")
+    page.wait_for_selector("#view-content.active", timeout=10_000)
+    page.wait_for_function(
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
+        timeout=8_000,
+    )
+
+    # Go back to home; popstate fires, route('') runs
+    page.go_back()
+    page.wait_for_selector("#view-home.active", timeout=5_000)
+
+    # Set up observer once home is stable
+    page.evaluate(
+        """() => {
+        window._loadCount = 0;
+        const obs = new MutationObserver(() => {
+            if (document.querySelector('#markdown-body > .loading')) window._loadCount++;
+        });
+        obs.observe(document.getElementById('markdown-body'), { childList: true });
+        window._routeObs = obs;
+    }"""
+    )
+
+    # Go forward — browser fires both popstate and hashchange
+    page.go_forward()
+    page.wait_for_selector("#view-content.active", timeout=10_000)
+    page.wait_for_function(
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
+        timeout=8_000,
+    )
+
+    page.evaluate("() => window._routeObs.disconnect()")
+    load_count = page.evaluate("() => window._loadCount")
+
+    assert load_count == 1, (
+        f"Content loaded {load_count} times on back+forward; expected 1 (route dedup broken)"
+    )

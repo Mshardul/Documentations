@@ -21,7 +21,7 @@ def _load_mock_article(page, base_url, content, slug="mock", extra_routes=None):
     )""")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')",
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
         timeout=10_000,
     )
 
@@ -47,7 +47,7 @@ def test_tldr_hover_preview(page, base_url):
     )""")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
-        "() => !document.querySelector('#markdown-body > .loading')",
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
         timeout=10_000,
     )
     page.wait_for_selector("a:has-text('Link')", timeout=5_000)

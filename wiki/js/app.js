@@ -409,6 +409,7 @@ window.addEventListener("hashchange", () => {
    INIT - parse hash on load
    ═══════════════════════════════════════════════════════════════ */
 (function init() {
+  history.scrollRestoration = "manual";
   applySettingsToDOM(getSettings());
 
   if ("serviceWorker" in navigator) {

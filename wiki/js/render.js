@@ -503,21 +503,6 @@ async function renderContent(
       });
     }
 
-    if (!new URLSearchParams(location.search).get("a")) {
-      const _saved = localStorage.getItem(`scroll-${filePath}`);
-      if (_saved) {
-        const _targetY = parseInt(_saved, 10);
-        let _attempts = 0;
-        const _tryScroll = () => {
-          window.scrollTo({ top: _targetY, behavior: "instant" });
-          if (window.scrollY < _targetY * 0.9 && ++_attempts < 30) {
-            requestAnimationFrame(_tryScroll);
-          }
-        };
-        requestAnimationFrame(_tryScroll);
-      }
-    }
-
     // Mermaid must run before hljs so it claims those blocks first
     await renderMermaidDiagrams(body);
 
@@ -601,6 +586,21 @@ async function renderContent(
           )
         );
     }
+
+    if (!anchor) {
+      const _saved = localStorage.getItem(`scroll-${filePath}`);
+      if (_saved) {
+        const _targetY = parseInt(_saved, 10);
+        document.fonts.ready.then(() =>
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() =>
+              window.scrollTo({ top: _targetY, behavior: "instant" })
+            )
+          )
+        );
+      }
+    }
+
     body.dataset.renderDone = "1";
   } catch (err) {
     body.innerHTML = `<p class="error">Failed to load content. (${err.message})</p>`;

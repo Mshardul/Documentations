@@ -1,4 +1,8 @@
-# AI Instructions - DevOps Cheatsheet Pages
+# AI Instructions — DevOps Cheatsheet Pages
+
+> This file is self-contained. Do NOT read `_base.md` for cheatsheet pages — the format is fundamentally different.
+
+---
 
 ## TOPIC
 
@@ -127,7 +131,7 @@ docker run \
 - Destructive commands (data loss, force delete, hard reset) must have ⚠️ in the Notes column or as an inline callout
 - No `sudo` unless the tool genuinely requires it
 - Version-specific commands must include a note: `# requires kubectl ≥ 1.26`
-- Max 3 sections before the most-used commands appear — don't bury the useful content in setup boilerplate
+- Max 3 sections before the most-used commands appear — don't bury useful content in setup boilerplate
 - No duplicate commands across sections unless the context materially changes the meaning
 
 ---

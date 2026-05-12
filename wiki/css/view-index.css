@@ -2,11 +2,37 @@
    VIEW 2 - WIKI INDEX
    ═══════════════════════════════════════════════ */
 .page-hero {
-  background: linear-gradient(180deg, var(--surface) 0%, transparent 100%);
-  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border-bottom: 1px solid var(--glass-border);
   padding: var(--s10) var(--s6) var(--s8);
 }
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(
+      ellipse at 15% 60%,
+      rgba(99, 102, 241, 0.18) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(168, 85, 247, 0.12) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 50% 90%,
+      rgba(56, 130, 246, 0.08) 0%,
+      transparent 40%
+    );
+  pointer-events: none;
+}
 .page-hero-inner {
+  position: relative;
   max-width: 800px;
   margin: 0 auto;
 }

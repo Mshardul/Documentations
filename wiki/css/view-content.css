@@ -344,6 +344,13 @@
   color: var(--text-heading);
   text-decoration-color: var(--accent);
 }
+.markdown-body a[href^="http"]::after,
+.markdown-body a[href^="https"]::after {
+  content: " ↗";
+  font-size: 0.72em;
+  opacity: 0.55;
+  font-style: normal;
+}
 
 /* Bold / Italic */
 .markdown-body strong {
@@ -550,27 +557,55 @@ pre.has-line-numbers {
 /* Callout variants */
 .markdown-body blockquote.callout {
   border-radius: var(--r);
-  padding: var(--s4) var(--s5);
+  padding: var(--s4) var(--s5) var(--s4) var(--s8);
+  border-left-width: 3px;
+  border: 1px solid;
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  position: relative;
+}
+.markdown-body blockquote.callout::before {
+  position: absolute;
+  left: var(--s3);
+  top: var(--s4);
+  font-size: var(--text-sm);
+  line-height: 1;
 }
 .markdown-body blockquote.callout-interview {
-  border-left-color: var(--callout-interview-border);
-  background: var(--callout-interview-bg);
+  border-color: var(--callout-interview-border);
+  border-left-width: 3px;
+  background: rgba(99, 102, 241, 0.08);
   color: var(--text-body);
+}
+.markdown-body blockquote.callout-interview::before {
+  content: "💡";
 }
 .markdown-body blockquote.callout-warning {
-  border-left-color: var(--callout-warning-border);
-  background: var(--callout-warning-bg);
+  border-color: var(--callout-warning-border);
+  border-left-width: 3px;
+  background: rgba(245, 158, 11, 0.08);
   color: var(--text-body);
+}
+.markdown-body blockquote.callout-warning::before {
+  content: "⚠️";
 }
 .markdown-body blockquote.callout-thought {
-  border-left-color: var(--callout-thought-border);
-  background: var(--callout-thought-bg);
+  border-color: var(--callout-thought-border);
+  border-left-width: 3px;
+  background: rgba(168, 85, 247, 0.08);
   color: var(--text-body);
 }
+.markdown-body blockquote.callout-thought::before {
+  content: "🤔";
+}
 .markdown-body blockquote.callout-decision {
-  border-left-color: var(--callout-decision-border);
-  background: var(--callout-decision-bg);
+  border-color: var(--callout-decision-border);
+  border-left-width: 3px;
+  background: rgba(16, 185, 129, 0.08);
   color: var(--text-body);
+}
+.markdown-body blockquote.callout-decision::before {
+  content: "✅";
 }
 
 /* ═══════════════════════════════════════════════
@@ -907,6 +942,53 @@ pre.has-line-numbers {
 }
 .markdown-body.focus-mode .focus-para {
   opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════
+   DETAILS / SUMMARY GLASS (WIKI-204)
+   ═══════════════════════════════════════════════ */
+.markdown-body details {
+  background: var(--glass-bg-2);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r);
+  padding: var(--s4) var(--s5);
+  margin: var(--s5) 0;
+  transition: border-color var(--t-fast);
+}
+.markdown-body details[open] {
+  border-color: var(--border-2);
+}
+.markdown-body details > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-heading);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  user-select: none;
+  transition: color var(--t-fast);
+}
+.markdown-body details > summary:hover {
+  color: var(--accent-light);
+}
+.markdown-body details > summary::before {
+  content: "▶";
+  font-size: 0.65em;
+  color: var(--accent);
+  transition: transform var(--t-fast);
+  flex-shrink: 0;
+}
+.markdown-body details[open] > summary::before {
+  transform: rotate(90deg);
+}
+.markdown-body details > summary::-webkit-details-marker {
+  display: none;
+}
+.markdown-body details > *:not(summary) {
+  margin-top: var(--s4);
 }
 
 /* ═══════════════════════════════════════════════

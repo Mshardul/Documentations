@@ -62,10 +62,19 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--bg-translucent, rgba(15, 17, 23, 0.85));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  transition: background var(--t), border-color var(--t),
+    backdrop-filter var(--t), -webkit-backdrop-filter var(--t);
+}
+.page-topbar.topbar--scrolled,
+.content-topbar.topbar--scrolled {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom-color: var(--glass-border);
 }
 .topbar-inner {
   max-width: 1280px;
@@ -189,9 +198,9 @@
 .gsearch-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
 }
 .gsearch-dialog {
   position: relative;

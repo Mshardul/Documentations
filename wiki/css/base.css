@@ -48,9 +48,31 @@ body {
   line-height: 1.6;
   color: var(--text-body);
   background-color: var(--bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.vignette-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 110% 85% at 50% 0%,
+    transparent 42%,
+    rgba(6, 7, 14, 0.55) 100%
+  );
+}
+
+[data-theme="light"] .vignette-layer {
+  background: radial-gradient(
+    ellipse 110% 85% at 50% 0%,
+    transparent 42%,
+    rgba(220, 225, 235, 0.45) 100%
+  );
 }
 
 a {

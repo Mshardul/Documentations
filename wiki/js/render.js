@@ -82,8 +82,7 @@ function _execRoute(hash) {
   const wiki = WIKIS.find((w) => w.id === wikiId);
   if (!wiki) {
     updatePageTitle("Not Found");
-    // If history is shallow, strip bad hash to prevent back-button traps
-    if (history.length <= 2) history.replaceState(null, "", location.pathname);
+    history.replaceState(null, "", location.pathname);
     renderHome();
     return;
   }
@@ -122,7 +121,7 @@ async function resolveSlugAndRender(wiki, slug) {
   // Slug not found fallback
   updatePageTitle("Not Found");
   showToast(`Article not found: "${slug}"`);
-  if (history.length <= 2) history.replaceState(null, "", location.pathname);
+  history.replaceState(null, "", location.pathname);
   renderHome();
 }
 
@@ -441,6 +440,9 @@ async function renderContent(
 
   showView("view-content");
 
+  const heroGhost = document.getElementById("article-hero-ghost");
+  if (heroGhost) heroGhost.textContent = title;
+
   const body = document.getElementById("markdown-body");
   delete body.dataset.renderDone;
   body.innerHTML = '<div class="loading">Loading…</div>';
@@ -529,6 +531,25 @@ async function renderContent(
     addAnchorLinks(body, () =>
       showToast("Copy failed — clipboard access denied")
     );
+
+    // Accent first word of h1 with gradient
+    const h1El = body.querySelector("h1");
+    if (h1El && h1El.childNodes.length > 0) {
+      const firstNode = h1El.childNodes[0];
+      if (firstNode.nodeType === Node.TEXT_NODE) {
+        const text = firstNode.textContent;
+        const spaceIdx = text.indexOf(" ");
+        if (spaceIdx > 0) {
+          const accentSpan = document.createElement("span");
+          accentSpan.className = "h1-accent";
+          accentSpan.textContent = text.slice(0, spaceIdx);
+          firstNode.replaceWith(
+            accentSpan,
+            document.createTextNode(text.slice(spaceIdx))
+          );
+        }
+      }
+    }
 
     // TOC
     buildTOC(body);

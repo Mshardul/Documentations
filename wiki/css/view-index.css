@@ -112,6 +112,7 @@
 .index-card--unavailable {
   cursor: default;
   opacity: 0.45;
+  filter: grayscale(1);
   pointer-events: none;
 }
 .index-sections--loading .index-card {

@@ -113,7 +113,7 @@
 .toc-mobile-btn {
   display: none;
   position: fixed;
-  bottom: 80px;
+  bottom: calc(var(--s6) + 42px + var(--s4));
   right: var(--s6);
   width: 42px;
   height: 42px;
@@ -317,7 +317,7 @@
 /* Code blocks */
 .markdown-body pre {
   position: relative;
-  background: #1a1d2e !important;
+  background: var(--code-bg, #1a1d2e);
   border: 1px solid var(--border-2);
   border-radius: var(--r);
   padding: var(--s5);
@@ -325,6 +325,17 @@
   overflow-x: auto;
   font-size: var(--text-sm);
   line-height: 1.6;
+}
+.markdown-body pre:not(.pre--collapsible)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 48px;
+  background: linear-gradient(to right, transparent, var(--code-bg, #1a1d2e));
+  pointer-events: none;
+  border-radius: 0 var(--r) var(--r) 0;
 }
 .markdown-body pre code {
   font-family: var(--font-mono);
@@ -773,7 +784,7 @@ pre.has-line-numbers {
   position: absolute;
   inset: auto 0 0 0;
   height: 64px;
-  background: linear-gradient(to bottom, transparent, #1a1d2e);
+  background: linear-gradient(to bottom, transparent, var(--code-bg, #1a1d2e));
   pointer-events: none;
 }
 .markdown-body pre.pre--collapsible.pre--expanded {

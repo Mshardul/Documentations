@@ -117,3 +117,27 @@ def test_section_collapse_restored_on_revisit(page, base_url):
         "el => el.classList.contains('section--collapsed')"
     )
     assert is_collapsed, "Section must remain collapsed after navigating away and back"
+
+
+# ── WIKI-129: Unavailable card grayscale ──────────────────────────────────────
+
+
+def test_unavailable_card_has_grayscale_filter(page, base_url):
+    """Cards with .index-card--unavailable must have filter: grayscale(1)."""
+    _go_to_index(page, base_url)
+    page.wait_for_selector(
+        "#index-sections:not(.index-sections--loading)", timeout=15_000
+    )
+
+    result = page.evaluate("""() => {
+        const card = document.querySelector('.index-card');
+        if (!card) return null;
+        card.classList.add('index-card--unavailable');
+        const f = window.getComputedStyle(card).filter;
+        card.classList.remove('index-card--unavailable');
+        return f;
+    }""")
+    assert result is not None, "No .index-card found on page"
+    assert "grayscale" in result, (
+        f"Expected grayscale filter on .index-card--unavailable, got: {result!r}"
+    )

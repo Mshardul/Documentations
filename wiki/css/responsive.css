@@ -38,8 +38,11 @@
     right: var(--s5);
   }
   .toc-mobile-btn {
-    bottom: 70px;
+    bottom: calc(var(--s5) + 42px + var(--s4));
     right: var(--s5);
+  }
+  .topbar-inner {
+    padding: var(--s2) var(--s4);
   }
 
   .markdown-body h1 {

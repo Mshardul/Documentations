@@ -3,11 +3,18 @@
    ═══════════════════════════════════════════════ */
 :root {
   /* Background layers */
-  --bg: #0f1117;
+  --bg: #06070e;
   --surface: #161b27;
   --surface-2: #1e2537;
   --surface-3: #252d42;
   --surface-hover: rgba(255, 255, 255, 0.04);
+
+  /* Glass surfaces */
+  --glass-bg: rgba(14, 18, 34, 0.72);
+  --glass-bg-2: rgba(20, 26, 46, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --glass-blur: blur(16px);
+  --glass-blur-sm: blur(8px);
 
   /* Borders */
   --border: #252d42;

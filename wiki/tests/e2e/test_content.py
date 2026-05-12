@@ -5,6 +5,8 @@
 - DOMPurify XSS sanitization (067)
 - KaTeX math support (074)
 - TOC items rendered in sidebar
+- Article hero presence + ghost text (WIKI-136)
+- H1 first-word accent span (WIKI-136)
 """
 
 
@@ -221,3 +223,40 @@ def test_toc_item_click_does_not_break_hash(page, base_url):
 
     assert "system-design/caching" in page.url, "Hash route lost after TOC click"
     assert "?a=" in page.url, "?a= anchor param not set after TOC click"
+
+
+# ── Article hero (WIKI-136) ────────────────────────────────────────────────────
+
+
+def test_article_hero_present_on_content_load(page, base_url):
+    """#article-hero is visible and ghost text matches article title on load."""
+    _load_mock_article(page, base_url, "# Hero Article\n\nSome content.\n", slug="hero")
+
+    assert page.locator("#article-hero").is_visible()
+    ghost_text = page.evaluate(
+        "() => document.getElementById('article-hero-ghost').textContent"
+    )
+    assert ghost_text == "Hero", f"Ghost text mismatch: got '{ghost_text}'"
+
+
+def test_h1_first_word_wrapped_in_accent_span(page, base_url):
+    """Multi-word h1 has first word wrapped in .h1-accent span; full text intact."""
+    _load_mock_article(
+        page,
+        base_url,
+        "# Distributed Systems\n\nSome content.\n",
+        slug="accent",
+    )
+    page.wait_for_selector("#markdown-body h1 .h1-accent", timeout=5_000)
+
+    accent_text = page.evaluate(
+        "() => document.querySelector('#markdown-body h1 .h1-accent').textContent"
+    )
+    assert accent_text == "Distributed", (
+        f"Expected first word accented, got '{accent_text}'"
+    )
+
+    full_text = page.evaluate(
+        "() => document.querySelector('#markdown-body h1').textContent.trim()"
+    )
+    assert full_text == "Distributed Systems", f"h1 full text altered: '{full_text}'"

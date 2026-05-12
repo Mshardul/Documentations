@@ -26,7 +26,7 @@
 }
 
 [data-theme="light"] .markdown-body pre {
-  background: var(--surface-2) !important;
+  --code-bg: var(--surface-2);
   border-color: var(--border-2);
 }
 

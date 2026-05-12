@@ -37,6 +37,35 @@ def test_code_lines_have_counter_spans(page, base_url):
     assert count > 0, "Expected .code-line spans inside numbered code blocks"
 
 
+def test_pre_background_dark_theme(page, base_url):
+    """Code block background resolves to #1a1d2e via --code-bg in dark theme."""
+    _go_to_article(page, base_url)
+    page.evaluate("() => document.documentElement.setAttribute('data-theme', 'dark')")
+    bg = page.evaluate("""() => {
+        const pre = document.querySelector('.markdown-body pre');
+        return pre ? window.getComputedStyle(pre).backgroundColor : null;
+    }""")
+    assert bg == "rgb(26, 29, 46)", (
+        f"Expected dark code-bg rgb(26, 29, 46), got: {bg!r}"
+    )
+
+
+def test_pre_background_light_theme_differs(page, base_url):
+    """In light theme, --code-bg overrides to surface-2; pre background must not be dark."""
+    _go_to_article(page, base_url)
+    page.evaluate("""() => {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.style.setProperty('--surface-2', '#f1f5f9');
+    }""")
+    bg = page.evaluate("""() => {
+        const pre = document.querySelector('.markdown-body pre');
+        return pre ? window.getComputedStyle(pre).backgroundColor : null;
+    }""")
+    assert bg != "rgb(26, 29, 46)", (
+        f"Light theme code block must not use dark background, got: {bg!r}"
+    )
+
+
 def test_short_code_blocks_no_line_numbers(page, base_url):
     """Code blocks with < 3 lines do NOT get line numbers."""
     _go_to_article(page, base_url)

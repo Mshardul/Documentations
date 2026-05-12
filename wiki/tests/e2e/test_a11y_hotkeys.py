@@ -152,8 +152,9 @@ def test_content_scroll_restored_after_navigation(page, base_url):
         "() => !!document.querySelector('#markdown-body[data-render-done]')",
         timeout=10_000,
     )
-    # Allow images to load and rAF to fire
-    page.wait_for_timeout(500)
+    # Wait for fonts to finish loading so layout is stable before rAF scroll fires
+    page.wait_for_function("() => document.fonts.status === 'loaded'", timeout=8_000)
+    page.wait_for_timeout(300)
 
     restored_y = page.evaluate("() => window.scrollY")
     assert restored_y >= saved_y * 0.6, (

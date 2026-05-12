@@ -144,12 +144,15 @@ document.getElementById("toc-nav").addEventListener("click", (e) => {
    SCROLL TO TOP
    ═══════════════════════════════════════════════════════════════ */
 const scrollTopBtn = document.getElementById("scroll-top");
+const _topbars = document.querySelectorAll(".page-topbar, .content-topbar");
 let _scrollSaveTimer;
 let _indexScrollTimer;
 
 window.addEventListener(
   "scroll",
   () => {
+    const scrolled = window.scrollY > 10;
+    _topbars.forEach((el) => el.classList.toggle("topbar--scrolled", scrolled));
     scrollTopBtn.classList.toggle("visible", window.scrollY > 300);
 
     if (state.currentView === "content") {

@@ -12,3 +12,4 @@ __pycache__/
 test-results/
 playwright-report/
 wiki/docs/superpowers/
+wiki/.superpowers/

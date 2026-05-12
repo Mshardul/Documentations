@@ -1,6 +1,7 @@
 """
 - ↑/↓ keyboard navigation in search results + Enter to select
 - stub articles (< 200 chars) excluded from ⌘K results
+- WIKI-191: search input debounce (150ms)
 """
 
 
@@ -76,3 +77,45 @@ def test_search_shows_real_articles(wiki_page):
     wiki_page.fill("#gsearch-input", "caching")
     wiki_page.wait_for_selector(".gsearch-result", timeout=8_000)
     assert wiki_page.locator(".gsearch-result").count() > 0
+
+
+# ── WIKI-191: Search input debounce ─────────────────────────────────────────
+
+
+def test_search_debounce_results_appear_after_typing(wiki_page):
+    """WIKI-191: results appear after debounce settles; rapid typing does not break search."""
+    _open_search(wiki_page)
+
+    # Type each character with no delay (simulates fast typist)
+    for char in "caching":
+        wiki_page.type("#gsearch-input", char, delay=0)
+
+    # Debounce fires at 150ms — wait well past it
+    wiki_page.wait_for_selector(".gsearch-result", timeout=2_000)
+    assert wiki_page.locator(".gsearch-result").count() > 0
+
+
+def test_search_debounce_suppresses_intermediate_updates(wiki_page):
+    """WIKI-191: rapid keystrokes trigger fewer result updates than keystrokes typed."""
+    _open_search(wiki_page)
+
+    # Attach MutationObserver to count result-list updates
+    wiki_page.evaluate("""() => {
+        window._resultUpdates = 0;
+        const el = document.getElementById('gsearch-results');
+        if (el) {
+            new MutationObserver(() => { window._resultUpdates++; })
+                .observe(el, { childList: true, subtree: true });
+        }
+    }""")
+
+    # Type 7 chars with 0ms delay — without debounce this would trigger 7 updates
+    for char in "caching":
+        wiki_page.type("#gsearch-input", char, delay=0)
+
+    # Wait for debounce + render to settle
+    wiki_page.wait_for_timeout(400)
+
+    updates = wiki_page.evaluate("() => window._resultUpdates ?? 0")
+    # With 150ms debounce, rapid typing produces far fewer updates than keystrokes
+    assert updates < 7, f"Expected debounced updates (<7) but got {updates}"

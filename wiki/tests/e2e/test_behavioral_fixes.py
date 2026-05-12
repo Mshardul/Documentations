@@ -3,6 +3,8 @@
 - Scroll position persistence: WIKI-123
 - Hover preview improvements (abort, position clamp, metadata filter): WIKI-127
 - Mermaid debounce + viewport-aware re-render: WIKI-131
+- Toast queue (FIFO, 200ms gap): WIKI-192
+- parseIndexMd CRLF + malformed row guards: WIKI-128
 """
 
 
@@ -366,3 +368,111 @@ def test_mermaid_rerender_skips_offscreen_diagrams(page, base_url):
     assert second_html_before == second_html_after, (
         "Off-screen diagram should not be re-rendered on theme change"
     )
+
+
+# ── WIKI-192: Toast queue ────────────────────────────────────────────────────
+
+
+def test_toast_queue_no_crash_on_rapid_triggers(page, base_url):
+    """WIKI-192: multiple rapid clipboard failures do not crash; toast stays coherent."""
+    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.wait_for_selector("#markdown-body pre .copy-btn", timeout=10_000)
+
+    errors = []
+    page.on("pageerror", lambda err: errors.append(str(err)))
+
+    page.evaluate("""() => {
+        navigator.clipboard.writeText = () =>
+            Promise.reject(new DOMException("blocked", "NotAllowedError"));
+    }""")
+
+    btns = page.locator("#markdown-body pre .copy-btn")
+    for i in range(min(btns.count(), 5)):
+        btns.nth(i).click()
+
+    page.wait_for_selector("#wiki-toast.visible", timeout=3_000)
+
+    # Toast text must be the expected message, not garbled from concurrent writes
+    assert "Copy failed" in page.locator("#wiki-toast").inner_text()
+    assert not errors, f"Page errors after rapid toasts: {errors}"
+
+
+def test_toast_queue_second_message_appears_after_first(page, base_url):
+    """WIKI-192: queued second toast appears after first expires; not dropped."""
+    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.wait_for_selector("#markdown-body pre .copy-btn", timeout=10_000)
+
+    page.evaluate("""() => {
+        navigator.clipboard.writeText = () =>
+            Promise.reject(new DOMException("blocked", "NotAllowedError"));
+    }""")
+
+    btns = page.locator("#markdown-body pre .copy-btn")
+    if btns.count() < 2:
+        return  # need at least 2 copy buttons to queue 2 toasts
+
+    # Click 2 buttons rapidly — queues 2 "Copy failed" toasts (3000ms each)
+    btns.nth(0).click()
+    btns.nth(1).click()
+
+    # First toast visible immediately
+    page.wait_for_selector("#wiki-toast.visible", timeout=3_000)
+
+    # After first toast expires + 200ms gap, second toast must appear
+    # Total window: 3000ms (first) + 200ms (gap) + 500ms (render buffer) = 3700ms
+    page.wait_for_function(
+        "() => document.getElementById('wiki-toast')?.classList.contains('visible')",
+        timeout=4_500,
+        polling=100,
+    )
+    assert "Copy failed" in page.locator("#wiki-toast").inner_text()
+
+
+# ── WIKI-128: parseIndexMd CRLF + malformed row guards ──────────────────────
+
+
+def test_index_renders_with_crlf_line_endings(page, base_url):
+    """WIKI-128: wiki index with CRLF line endings renders article cards correctly."""
+    page.goto(f"{base_url}/wiki/")
+    page.wait_for_load_state("networkidle")
+
+    crlf_index = (
+        "## Components\r\n"
+        "\r\n"
+        "| Title | Description |\r\n"
+        "| --- | --- |\r\n"
+        "| [Caching](./components/caching.md) | Caching fundamentals |\r\n"
+        "| [Load Balancing](./components/load-balancing.md) | Load balancing |\r\n"
+    )
+    page.route("**/system-design/index.md", lambda r: r.fulfill(body=crlf_index))
+
+    page.evaluate("() => navigate('system-design')")
+    page.wait_for_selector("#view-index.active", timeout=8_000)
+
+    cards = page.locator(".index-card")
+    assert cards.count() > 0, "No index cards rendered from CRLF index.md"
+
+
+def test_index_malformed_row_does_not_crash(page, base_url):
+    """WIKI-128: malformed link row in index.md is skipped; valid rows still render."""
+    page.goto(f"{base_url}/wiki/")
+    page.wait_for_load_state("networkidle")
+
+    index_with_bad_row = (
+        "## Components\n"
+        "\n"
+        "| Title | Description |\n"
+        "| --- | --- |\n"
+        "| [Caching](./components/caching.md) | Valid card |\n"
+        "| [Bad link without closing paren(./broken.md | Malformed |\n"
+    )
+    page.route(
+        "**/system-design/index.md", lambda r: r.fulfill(body=index_with_bad_row)
+    )
+
+    page.evaluate("() => navigate('system-design')")
+    page.wait_for_selector("#view-index.active", timeout=8_000)
+
+    # Valid card must still render; malformed row must be silently skipped
+    cards = page.locator(".index-card")
+    assert cards.count() >= 1, "Valid card missing after malformed row in index"

@@ -82,8 +82,7 @@ function _execRoute(hash) {
   const wiki = WIKIS.find((w) => w.id === wikiId);
   if (!wiki) {
     updatePageTitle("Not Found");
-    // If history is shallow, strip bad hash to prevent back-button traps
-    if (history.length <= 2) history.replaceState(null, "", location.pathname);
+    history.replaceState(null, "", location.pathname);
     renderHome();
     return;
   }
@@ -122,7 +121,7 @@ async function resolveSlugAndRender(wiki, slug) {
   // Slug not found fallback
   updatePageTitle("Not Found");
   showToast(`Article not found: "${slug}"`);
-  if (history.length <= 2) history.replaceState(null, "", location.pathname);
+  history.replaceState(null, "", location.pathname);
   renderHome();
 }
 

@@ -261,9 +261,14 @@ function applyGlobalSearch(query) {
     .join("");
 }
 
-gSearchInput.addEventListener("input", () =>
-  applyGlobalSearch(gSearchInput.value)
-);
+let _searchDebounceTimer;
+gSearchInput.addEventListener("input", () => {
+  clearTimeout(_searchDebounceTimer);
+  _searchDebounceTimer = setTimeout(
+    () => applyGlobalSearch(gSearchInput.value),
+    150
+  );
+});
 
 gSearchInput.addEventListener("keydown", (e) => {
   const items = gSearchItems();

@@ -340,20 +340,23 @@ function parseIndexMd(markdown, basePath) {
   const sections = [];
   const skipHeadings = ["how to use", "contributing"];
 
-  // Split on H2 headings (## )
-  const chunks = markdown.split(/\n(?=## )/);
+  const normalized = markdown.replace(/\r\n/g, "\n");
+  const chunks = normalized.split(/\n(?=## )/);
 
   for (const chunk of chunks) {
-    const firstLine = chunk.split("\n")[0];
+    const lines = chunk.split("\n");
+    const firstLine = lines[0];
     if (!firstLine.startsWith("## ")) continue;
 
     const heading = firstLine.replace(/^## /, "").trim();
     if (skipHeadings.some((s) => heading.toLowerCase().includes(s))) continue;
 
     const cards = [];
-    const lines = chunk.split("\n");
 
     for (const line of lines) {
+      if (!line.startsWith("|")) continue;
+      if (/^\|\s*[-:]+/.test(line)) continue; // separator row
+
       // Match table data rows: | [Title](./path.md) | Description text |
       const m = line.match(
         /^\|\s*\[([^\]]+)\]\(([^)]+\.md)\)\s*\|\s*([^|]+?)\s*\|/
@@ -368,6 +371,8 @@ function parseIndexMd(markdown, basePath) {
         const slug = relPath.split("/").pop().replace(/\.md$/, "");
 
         cards.push({ title, path: fullPath, slug, description });
+      } else if (line.includes("](")) {
+        console.warn("parseIndexMd: malformed row skipped:", line.slice(0, 80));
       }
     }
 
@@ -908,7 +913,17 @@ async function renderRelatedArticles(wiki, currentPath) {
 /* ═══════════════════════════════════════════════════════════════
    TOAST (WIKI-095)
    ═══════════════════════════════════════════════════════════════ */
-function showToast(message, durationMs = 3000, onUndo = null) {
+const _toastQueue = [];
+let _toastBusy = false;
+
+function _drainToastQueue() {
+  if (_toastBusy || !_toastQueue.length) return;
+  _toastBusy = true;
+  const { message, durationMs, onUndo } = _toastQueue.shift();
+  _showToastNow(message, durationMs, onUndo);
+}
+
+function _showToastNow(message, durationMs, onUndo) {
   let toast = document.getElementById("wiki-toast");
   if (!toast) {
     toast = document.createElement("div");
@@ -917,8 +932,16 @@ function showToast(message, durationMs = 3000, onUndo = null) {
     document.body.appendChild(toast);
   }
 
+  const advance = () => {
+    toast.classList.remove("visible");
+    setTimeout(() => {
+      _toastBusy = false;
+      _drainToastQueue();
+    }, 200);
+  };
+
   if (onUndo) {
-    toast.innerHTML = "";
+    toast.replaceChildren();
     const text = document.createElement("span");
     text.textContent = message;
     const btn = document.createElement("button");
@@ -926,8 +949,8 @@ function showToast(message, durationMs = 3000, onUndo = null) {
     btn.textContent = "Undo";
     btn.addEventListener("click", () => {
       clearTimeout(toast._timer);
-      toast.classList.remove("visible");
       onUndo();
+      advance();
     });
     toast.appendChild(text);
     toast.appendChild(btn);
@@ -936,11 +959,12 @@ function showToast(message, durationMs = 3000, onUndo = null) {
   }
 
   toast.classList.add("visible");
-  clearTimeout(toast._timer);
-  toast._timer = setTimeout(
-    () => toast.classList.remove("visible"),
-    durationMs
-  );
+  toast._timer = setTimeout(advance, durationMs);
+}
+
+function showToast(message, durationMs = 3000, onUndo = null) {
+  _toastQueue.push({ message, durationMs, onUndo });
+  _drainToastQueue();
 }
 
 export {

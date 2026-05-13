@@ -215,6 +215,7 @@ function renderIndexSections(sections, wiki) {
         <span class="section-chevron">›</span>
       </div>
       <div class="index-card-grid">
+        <p class="index-section-empty">No articles available in this section yet.</p>
         ${section.cards
           .map(
             (card) => `
@@ -290,6 +291,7 @@ async function populateIndexReadTimes() {
           card.removeAttribute("onclick");
           card.removeAttribute("tabindex");
           card.setAttribute("aria-disabled", "true");
+          card.title = "Coming soon — this article hasn't been written yet";
           const dot = card.querySelector(".index-card-read-dot");
           if (dot) dot.remove();
         }
@@ -299,6 +301,22 @@ async function populateIndexReadTimes() {
       }
     })
   );
+
+  // Update section counts to available (non-stub) articles only
+  document.querySelectorAll(".index-section").forEach((sectionEl) => {
+    const countEl = sectionEl.querySelector(".section-count");
+    if (!countEl) return;
+    const cards = sectionEl.querySelectorAll(".index-card");
+    const available = sectionEl.querySelectorAll(
+      ".index-card:not(.index-card--unavailable)"
+    );
+    countEl.textContent = available.length;
+
+    // Mark sections where every card is a stub
+    if (cards.length > 0 && available.length === 0) {
+      sectionEl.classList.add("section--all-stubs");
+    }
+  });
 }
 
 /* ─── Shared index cache (used by article counts + global search) ─── */
@@ -911,7 +929,7 @@ async function renderRelatedArticles(wiki, currentPath) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TOAST (WIKI-095)
+   TOAST
    ═══════════════════════════════════════════════════════════════ */
 const _toastQueue = [];
 let _toastBusy = false;

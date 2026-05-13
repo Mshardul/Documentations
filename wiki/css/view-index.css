@@ -136,10 +136,9 @@
   background: var(--surface-2);
 }
 .index-card--unavailable {
-  cursor: default;
+  cursor: not-allowed;
   opacity: 0.45;
   filter: grayscale(1);
-  pointer-events: none;
 }
 .index-sections--loading .index-card {
   pointer-events: none;
@@ -267,4 +266,43 @@
   border-color: var(--accent);
   background: var(--surface-2);
   color: var(--text-heading);
+}
+
+/* Chip strip row limit + expand */
+.recent-chip.chip--hidden {
+  display: none;
+}
+.recents-strip-expanded .recent-chip.chip--hidden {
+  display: inline-flex;
+}
+.recents-show-more {
+  background: none;
+  border: 1px dashed var(--border-2);
+  border-radius: var(--r-sm);
+  padding: var(--s2) var(--s4);
+  font-size: var(--text-sm);
+  font-family: var(--font);
+  color: var(--text-subtle);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color var(--t-fast), color var(--t-fast);
+}
+.recents-show-more:hover {
+  border-color: var(--accent);
+  color: var(--accent-light);
+}
+
+/* Empty section state */
+.index-section-empty {
+  display: none;
+  grid-column: 1 / -1;
+  padding: var(--s8) var(--s4);
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--text-subtle);
+  border: 1px dashed var(--border);
+  border-radius: var(--r);
+}
+.section--all-stubs .index-section-empty {
+  display: block;
 }

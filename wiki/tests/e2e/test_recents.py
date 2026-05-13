@@ -1,6 +1,7 @@
 """
 - recently visited chips on wiki index (scoped per wiki)
 - clear button removes all recents for the wiki
+- chip strip show-more button for overflow
 """
 
 
@@ -54,3 +55,71 @@ def test_clear_recents_removes_all_chips(page, base_url):
     clear_btn.click()
 
     assert "hidden" in (section.get_attribute("class") or "")
+
+
+# ── Chip strip row limit ───────────────────────────────────────────
+
+
+def _inject_recents(page, count):
+    page.evaluate(f"""() => {{
+        const items = Array.from({{length: {count}}}, (_, i) => ({{
+            wikiId: 'system-design',
+            path: `content/system-design/article-${{i}}.md`,
+            title: `Article ${{i}}`,
+            slug: `article-${{i}}`,
+        }}));
+        localStorage.setItem('wiki-recents', JSON.stringify(items));
+    }}""")
+
+
+def test_show_more_appears_when_recents_overflow(page, base_url):
+    """show-more button appears when recents count exceeds CHIP_VISIBLE_MAX (4)."""
+    page.goto(f"{base_url}/wiki/")
+    page.wait_for_load_state("networkidle")
+    _inject_recents(page, 5)
+    _go_to_index(page, base_url)
+
+    section = page.locator("#recents-section")
+    section.wait_for(state="visible")
+
+    assert section.locator(".recents-show-more").count() == 1, (
+        "show-more button must appear when recents > 4"
+    )
+    assert section.locator(".recent-chip.chip--hidden").count() == 1, (
+        "1 chip must be hidden when 5 recents exist"
+    )
+
+
+def test_show_more_absent_when_chips_within_limit(page, base_url):
+    """no show-more button when recents count <= CHIP_VISIBLE_MAX (4)."""
+    page.goto(f"{base_url}/wiki/")
+    page.wait_for_load_state("networkidle")
+    _inject_recents(page, 3)
+    _go_to_index(page, base_url)
+
+    section = page.locator("#recents-section")
+    section.wait_for(state="visible")
+
+    assert section.locator(".recents-show-more").count() == 0, (
+        "no show-more button when chips <= 4"
+    )
+
+
+def test_show_more_click_expands_strip(page, base_url):
+    """clicking show-more expands strip and reveals hidden chips."""
+    page.goto(f"{base_url}/wiki/")
+    page.wait_for_load_state("networkidle")
+    _inject_recents(page, 5)
+    _go_to_index(page, base_url)
+
+    section = page.locator("#recents-section")
+    section.wait_for(state="visible")
+
+    section.locator(".recents-show-more").click()
+
+    expanded = section.locator(".recents-strip").evaluate(
+        "el => el.classList.contains('recents-strip-expanded')"
+    )
+    assert expanded, (
+        "strip must have recents-strip-expanded class after show-more click"
+    )

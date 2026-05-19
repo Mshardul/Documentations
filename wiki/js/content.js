@@ -214,7 +214,11 @@ function buildTOC(contentEl) {
 }
 
 /* ─── Heading Anchor Links ─── */
-function addAnchorLinks(contentEl, onCopyError = () => {}) {
+function addAnchorLinks(
+  contentEl,
+  onCopyError = () => {},
+  onCopySuccess = () => {}
+) {
   contentEl.querySelectorAll("h2, h3, h4").forEach((h) => {
     if (!h.id) return;
     const btn = document.createElement("button");
@@ -229,6 +233,7 @@ function addAnchorLinks(contentEl, onCopyError = () => {}) {
         .then(() => {
           btn.classList.add("copied");
           setTimeout(() => btn.classList.remove("copied"), 2000);
+          onCopySuccess();
         })
         .catch(() => onCopyError());
     });

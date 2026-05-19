@@ -98,7 +98,7 @@
   transform: rotate(-90deg);
 }
 .section--collapsed .index-card-grid {
-  display: none;
+  max-height: 0;
 }
 
 /* Index card grid */
@@ -106,6 +106,9 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--s3);
+  max-height: 3000px;
+  overflow: hidden;
+  transition: max-height 0.2s ease;
 }
 @media (min-width: 640px) {
   .index-card-grid {

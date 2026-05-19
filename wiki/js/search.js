@@ -20,6 +20,7 @@ const gSearchModal = document.getElementById("global-search-modal");
 const gSearchInput = document.getElementById("gsearch-input");
 const gSearchResults = document.getElementById("gsearch-results");
 const gSearchBackdrop = document.getElementById("gsearch-backdrop");
+const gSearchCount = document.getElementById("gsearch-count");
 
 async function loadAllSearchEntries() {
   if (allSearchCache.loaded || allSearchCache.loading) return;
@@ -89,6 +90,7 @@ function openGlobalSearch() {
   gSearchModal.classList.remove("hidden");
   gSearchModal.setAttribute("aria-hidden", "false");
   gSearchInput.value = "";
+  gSearchCount.textContent = "";
   gSearchSelectedIdx = -1;
   gSearchInput.focus();
 
@@ -225,6 +227,7 @@ function applyGlobalSearch(query) {
   }
 
   if (!raw) {
+    gSearchCount.textContent = "";
     gSearchResults.innerHTML =
       '<div class="gsearch-empty">Type to search · <kbd class="gsearch-kbd">&gt;</kbd> to filter by section</div>';
     return;
@@ -238,11 +241,16 @@ function applyGlobalSearch(query) {
     .map((s) => s.entry);
 
   if (!scored.length) {
+    gSearchCount.textContent = "";
     gSearchResults.innerHTML = `<div class="gsearch-no-results">No results for "<strong>${escHtml(
       q
     )}</strong>"</div>`;
     return;
   }
+
+  gSearchCount.textContent = `${scored.length} result${
+    scored.length === 1 ? "" : "s"
+  }`;
 
   // Group by wiki, preserving score order within each group
   const grouped = {};

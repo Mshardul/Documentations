@@ -132,6 +132,7 @@
   height: 3px;
   width: 0%;
   background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  box-shadow: 0 0 10px 1px var(--accent);
   z-index: 9999;
   opacity: 0;
   pointer-events: none;
@@ -240,6 +241,12 @@
 }
 .gsearch-input::placeholder {
   color: var(--text-subtle);
+}
+.gsearch-count {
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .gsearch-esc-key {
   font-family: var(--font);

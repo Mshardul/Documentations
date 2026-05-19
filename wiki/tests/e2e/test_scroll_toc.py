@@ -96,13 +96,17 @@ def test_mobile_toc_closes_on_link_tap(page, base_url):
     page.set_viewport_size({"width": 375, "height": 812})
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#view-content.active", timeout=10_000)
+    page.wait_for_function(
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
+        timeout=10_000,
+    )
     page.wait_for_selector("#toc-nav .toc-item", state="attached")
 
     page.locator("#toc-mobile-btn").click()
     page.wait_for_function(
         "() => document.getElementById('toc-sidebar').classList.contains('mobile-open')"
     )
-    page.wait_for_timeout(300)  # slideInRight animation is 0.2s; wait for it to finish
+    page.wait_for_timeout(400)  # slideInRight 0.2s + toc-item transition settle buffer
     page.locator("#toc-nav .toc-item").first.click()
     page.wait_for_function(
         "() => !document.getElementById('toc-sidebar').classList.contains('mobile-open')"

@@ -7,6 +7,7 @@
 - TOC items rendered in sidebar
 - Article hero presence + ghost text
 - H1 first-word accent span
+- Lede paragraph styling (WIKI-138)
 """
 
 
@@ -260,3 +261,56 @@ def test_h1_first_word_wrapped_in_accent_span(page, base_url):
         "() => document.querySelector('#markdown-body h1').textContent.trim()"
     )
     assert full_text == "Distributed Systems", f"h1 full text altered: '{full_text}'"
+
+
+# ── Lede paragraph (WIKI-138) ─────────────────────────────────────
+
+
+def test_lede_paragraph_has_larger_font_than_body(page, base_url):
+    """First <p> in article body has larger computed font-size than subsequent paragraphs."""
+    _load_mock_article(
+        page,
+        base_url,
+        "# Lede Test\n\nLede paragraph text here.\n\n## Section\n\nBody paragraph text.\n",
+        slug="lede-font",
+    )
+    page.wait_for_selector("#markdown-body p", timeout=5_000)
+
+    result = page.evaluate("""() => {
+        const ps = document.querySelectorAll('#markdown-body > p');
+        if (ps.length < 2) return null;
+        return {
+            lede: parseFloat(window.getComputedStyle(ps[0]).fontSize),
+            body: parseFloat(window.getComputedStyle(ps[1]).fontSize),
+        };
+    }""")
+    assert result is not None, (
+        "Need at least 2 <p> elements to compare lede vs body font size"
+    )
+    assert result["lede"] > result["body"], (
+        f"Lede font ({result['lede']}px) must be larger than body font ({result['body']}px)"
+    )
+
+
+def test_lede_paragraph_has_heading_color(page, base_url):
+    """First <p> uses --text-heading color (higher contrast than body text)."""
+    _load_mock_article(
+        page,
+        base_url,
+        "# Lede Color Test\n\nLede paragraph text.\n\n## Section\n\nBody paragraph.\n",
+        slug="lede-color",
+    )
+    page.wait_for_selector("#markdown-body p", timeout=5_000)
+
+    result = page.evaluate("""() => {
+        const ps = document.querySelectorAll('#markdown-body > p');
+        if (ps.length < 2) return null;
+        return {
+            lede: window.getComputedStyle(ps[0]).color,
+            body: window.getComputedStyle(ps[1]).color,
+        };
+    }""")
+    assert result is not None, "Need at least 2 <p> elements to compare colors"
+    assert result["lede"] != result["body"], (
+        f"Lede color must differ from body paragraph color (both got '{result['lede']}')"
+    )

@@ -31,6 +31,7 @@ def test_arrow_keys_cycle_results(wiki_page):
     # Wait until at least two results are rendered before navigating.
     wiki_page.locator(".gsearch-result").nth(1).wait_for()
 
+    wiki_page.locator("#gsearch-input").focus()
     wiki_page.keyboard.press("ArrowDown")
     first = wiki_page.locator(".gsearch-result.selected").inner_text()
     wiki_page.keyboard.press("ArrowDown")

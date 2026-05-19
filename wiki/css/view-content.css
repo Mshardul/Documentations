@@ -479,7 +479,7 @@ pre.has-line-numbers {
 }
 
 /* ═══════════════════════════════════════════════
-   TABLE SCROLL CUE (WIKI-053)
+   TABLE SCROLL CUE
    ═══════════════════════════════════════════════ */
 .table-scroll-wrap {
   overflow-x: auto;
@@ -626,13 +626,13 @@ pre.has-line-numbers {
   height: auto;
 }
 
-/* zoomable images (WIKI-044) */
+/* zoomable images */
 .markdown-body img.zoomable-img {
   cursor: zoom-in;
 }
 
 /* ═══════════════════════════════════════════════
-   ZOOM OVERLAY (WIKI-044 / WIKI-045)
+   ZOOM OVERLAY
    ═══════════════════════════════════════════════ */
 .zoom-overlay {
   position: fixed;
@@ -688,6 +688,11 @@ pre.has-line-numbers {
   align-items: center;
   justify-content: center;
   overflow: auto;
+  transform: scale(0.92);
+  transition: transform 0.2s ease;
+}
+.zoom-overlay.open .zoom-overlay-content {
+  transform: scale(1);
 }
 .zoom-overlay-content img {
   max-width: 90vw;
@@ -883,7 +888,7 @@ pre.has-line-numbers {
 }
 
 /* ═══════════════════════════════════════════════
-   COLLAPSIBLE CODE BLOCKS (WIKI-085)
+   COLLAPSIBLE CODE BLOCKS
    ═══════════════════════════════════════════════ */
 .markdown-body pre.pre--collapsible {
   max-height: 360px;
@@ -929,7 +934,7 @@ pre.has-line-numbers {
 }
 
 /* ═══════════════════════════════════════════════
-   TYPEWRITER FOCUS MODE (WIKI-087)
+   TYPEWRITER FOCUS MODE
    ═══════════════════════════════════════════════ */
 .markdown-body.focus-mode p,
 .markdown-body.focus-mode li,
@@ -945,7 +950,7 @@ pre.has-line-numbers {
 }
 
 /* ═══════════════════════════════════════════════
-   DETAILS / SUMMARY GLASS (WIKI-204)
+   DETAILS / SUMMARY GLASS
    ═══════════════════════════════════════════════ */
 .markdown-body details {
   background: var(--glass-bg-2);
@@ -992,7 +997,7 @@ pre.has-line-numbers {
 }
 
 /* ═══════════════════════════════════════════════
-   DISTRACTION-FREE MODE (WIKI-103)
+   DISTRACTION-FREE MODE
    ═══════════════════════════════════════════════ */
 body.distraction-free .content-topbar {
   display: none;

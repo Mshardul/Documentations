@@ -1,9 +1,9 @@
 """
 Line numbers, multi-level pathing, clear-all confirmation, help modal:
-- WIKI-104: Code blocks with >= 3 lines get line numbers
-- WIKI-071: resolvePath strips fragments and bounds-checks pop
-- WIKI-098: Clear-all recents/bookmarks shows undo toast
-- WIKI-021: ? hotkey opens help modal; Escape closes it
+- Code blocks with >= 3 lines get line numbers
+- resolvePath strips fragments and bounds-checks pop
+- Clear-all recents/bookmarks shows undo toast
+- ? hotkey opens help modal; Escape closes it
 """
 
 
@@ -16,7 +16,7 @@ def _go_to_article(page, base_url, slug="system-design/caching"):
     )
 
 
-# ── WIKI-104: Line numbers ─────────────────────────────────────────────────
+# ── Line numbers ─────────────────────────────────────────────────
 
 
 def test_code_blocks_have_line_numbers(page, base_url):
@@ -89,7 +89,7 @@ def test_mermaid_blocks_no_line_numbers(page, base_url):
     assert not has_mermaid_numbers, "Mermaid diagrams should not have line numbers"
 
 
-# ── WIKI-071: Multi-level path resolution ─────────────────────────────────
+# ── Multi-level path resolution ─────────────────────────────────
 
 
 def test_link_with_fragment_is_intercepted(page, base_url):
@@ -155,7 +155,7 @@ def test_excess_dotdot_does_not_crash(page, base_url):
     assert not errors, f"Excess .. caused JS errors: {errors}"
 
 
-# ── WIKI-098: Clear-all confirmation / undo ────────────────────────────────
+# ── Clear-all confirmation / undo ────────────────────────────────
 
 
 def _seed_recents(page, base_url):
@@ -218,7 +218,7 @@ def test_clear_bookmarks_shows_undo_toast(page, base_url):
     )
 
 
-# ── WIKI-021: Help modal ───────────────────────────────────────────────────
+# ── Help modal ───────────────────────────────────────────────────
 
 
 def test_help_modal_hidden_on_load(page, base_url):

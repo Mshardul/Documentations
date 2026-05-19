@@ -1,10 +1,11 @@
 """
-- Clipboard failure toast: WIKI-119
-- Scroll position persistence: WIKI-123
-- Hover preview improvements (abort, position clamp, metadata filter): WIKI-127
-- Mermaid debounce + viewport-aware re-render: WIKI-131
-- Toast queue (FIFO, 200ms gap): WIKI-192
-- parseIndexMd CRLF + malformed row guards: WIKI-128
+- Clipboard failure toast
+- Scroll position persistence
+- Hover preview improvements (abort, position clamp, metadata filter)
+- Mermaid debounce + viewport-aware re-render
+- Toast queue (FIFO, 200ms gap)
+- parseIndexMd CRLF + malformed row guards
+- Debug overlay via ?debug URL param
 """
 
 
@@ -30,11 +31,11 @@ def _load_mock_article(page, base_url, content, slug="mock", extra_routes=None):
     )
 
 
-# ── WIKI-119: Clipboard failure toast ──────────────────────────────────────
+# ── Clipboard failure toast ──────────────────────────────────────
 
 
 def test_copy_button_failure_shows_toast(page, base_url):
-    """WIKI-119: denied clipboard on copy-btn click shows 'Copy failed' toast."""
+    """denied clipboard on copy-btn click shows 'Copy failed' toast."""
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#markdown-body pre .copy-btn", timeout=10_000)
 
@@ -51,7 +52,7 @@ def test_copy_button_failure_shows_toast(page, base_url):
 
 
 def test_anchor_copy_failure_shows_toast(page, base_url):
-    """WIKI-119: denied clipboard on anchor-btn click shows 'Copy failed' toast."""
+    """denied clipboard on anchor-btn click shows 'Copy failed' toast."""
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#markdown-body .anchor-btn", timeout=10_000)
 
@@ -68,7 +69,7 @@ def test_anchor_copy_failure_shows_toast(page, base_url):
 
 
 def test_successful_copy_does_not_show_toast(page, base_url):
-    """WIKI-119: successful clipboard write does not show error toast."""
+    """successful clipboard write does not show error toast."""
     page.context.grant_permissions(["clipboard-read", "clipboard-write"])
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#markdown-body pre .copy-btn", timeout=10_000)
@@ -84,11 +85,11 @@ def test_successful_copy_does_not_show_toast(page, base_url):
         assert "Copy failed" not in page.locator("#wiki-toast").inner_text()
 
 
-# ── WIKI-123: Scroll restoration ────────────────────────────────────────────
+# ── Scroll restoration ────────────────────────────────────────────
 
 
 def test_scroll_position_restored_after_navigation(page, base_url):
-    """WIKI-123: scroll position is saved and restored on article revisit."""
+    """scroll position is saved and restored on article revisit."""
     page.set_viewport_size({"width": 1280, "height": 800})
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#view-content.active", timeout=10_000)
@@ -129,7 +130,7 @@ def test_scroll_position_restored_after_navigation(page, base_url):
 
 
 def test_scroll_position_stable_after_revisit(page, base_url):
-    """WIKI-123: scroll position is not reset on second visit to same article."""
+    """scroll position is not reset on second visit to same article."""
     page.set_viewport_size({"width": 1280, "height": 800})
     _load_mock_article(
         page,
@@ -144,11 +145,11 @@ def test_scroll_position_stable_after_revisit(page, base_url):
     assert scroll_y > 0, "Scroll should be non-zero after scrollTo"
 
 
-# ── WIKI-127: Hover preview improvements ────────────────────────────────────
+# ── Hover preview improvements ────────────────────────────────────
 
 
 def test_hover_preview_filters_prerequisites_from_fallback(page, base_url):
-    """WIKI-127: fallback preview skips paragraphs starting with 'Prerequisites:'."""
+    """fallback preview skips paragraphs starting with 'Prerequisites:'."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
 
@@ -192,7 +193,7 @@ def test_hover_preview_filters_prerequisites_from_fallback(page, base_url):
 
 
 def test_hover_preview_hidden_after_mouseleave_during_fetch(page, base_url):
-    """WIKI-127: mouseleave during slow fetch hides preview; stale content not shown."""
+    """mouseleave during slow fetch hides preview; stale content not shown."""
     import threading
 
     ready = threading.Event()
@@ -250,7 +251,7 @@ def test_hover_preview_hidden_after_mouseleave_during_fetch(page, base_url):
 
 
 def test_hover_preview_left_clamped_near_right_edge(page, base_url):
-    """WIKI-127: preview left is clamped to >= 8px when viewport is narrower than preview."""
+    """preview left is clamped to >= 8px when viewport is narrower than preview."""
     # 320px viewport is narrower than the 340px preview; clamping always fires
     page.set_viewport_size({"width": 320, "height": 800})
     page.goto(f"{base_url}/wiki/")
@@ -288,11 +289,11 @@ def test_hover_preview_left_clamped_near_right_edge(page, base_url):
     assert left >= 8, f"Preview left ({left}px) should be clamped to >= 8px"
 
 
-# ── WIKI-131: Mermaid debounce + viewport-aware ──────────────────────────────
+# ── Mermaid debounce + viewport-aware ──────────────────────────────
 
 
 def test_rapid_theme_changes_do_not_crash(page, base_url):
-    """WIKI-131: 10 rapid theme changes via debounce do not throw errors."""
+    """10 rapid theme changes via debounce do not throw errors."""
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
@@ -317,7 +318,7 @@ def test_rapid_theme_changes_do_not_crash(page, base_url):
 
 
 def test_mermaid_rerender_skips_offscreen_diagrams(page, base_url):
-    """WIKI-131: rerenderMermaidDiagrams does not update diagrams outside the viewport."""
+    """rerenderMermaidDiagrams does not update diagrams outside the viewport."""
     page.set_viewport_size({"width": 1280, "height": 600})
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
@@ -370,11 +371,11 @@ def test_mermaid_rerender_skips_offscreen_diagrams(page, base_url):
     )
 
 
-# ── WIKI-192: Toast queue ────────────────────────────────────────────────────
+# ── Toast queue ────────────────────────────────────────────────────
 
 
 def test_toast_queue_no_crash_on_rapid_triggers(page, base_url):
-    """WIKI-192: multiple rapid clipboard failures do not crash; toast stays coherent."""
+    """multiple rapid clipboard failures do not crash; toast stays coherent."""
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#markdown-body pre .copy-btn", timeout=10_000)
 
@@ -398,7 +399,7 @@ def test_toast_queue_no_crash_on_rapid_triggers(page, base_url):
 
 
 def test_toast_queue_second_message_appears_after_first(page, base_url):
-    """WIKI-192: queued second toast appears after first expires; not dropped."""
+    """queued second toast appears after first expires; not dropped."""
     page.goto(f"{base_url}/wiki/#system-design/caching")
     page.wait_for_selector("#markdown-body pre .copy-btn", timeout=10_000)
 
@@ -428,11 +429,11 @@ def test_toast_queue_second_message_appears_after_first(page, base_url):
     assert "Copy failed" in page.locator("#wiki-toast").inner_text()
 
 
-# ── WIKI-128: parseIndexMd CRLF + malformed row guards ──────────────────────
+# ── parseIndexMd CRLF + malformed row guards ──────────────────────
 
 
 def test_index_renders_with_crlf_line_endings(page, base_url):
-    """WIKI-128: wiki index with CRLF line endings renders article cards correctly."""
+    """wiki index with CRLF line endings renders article cards correctly."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
 
@@ -454,7 +455,7 @@ def test_index_renders_with_crlf_line_endings(page, base_url):
 
 
 def test_index_malformed_row_does_not_crash(page, base_url):
-    """WIKI-128: malformed link row in index.md is skipped; valid rows still render."""
+    """malformed link row in index.md is skipped; valid rows still render."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
 
@@ -476,3 +477,38 @@ def test_index_malformed_row_does_not_crash(page, base_url):
     # Valid card must still render; malformed row must be silently skipped
     cards = page.locator(".index-card")
     assert cards.count() >= 1, "Valid card missing after malformed row in index"
+
+
+# ── ?debug URL param dev info overlay ───────────────────────────────
+
+
+def test_debug_overlay_appears_with_debug_param(page, base_url):
+    """?debug param mounts the debug info overlay."""
+    page.goto(f"{base_url}/wiki/?debug")
+    page.wait_for_load_state("networkidle")
+
+    overlay = page.locator("#debug-overlay")
+    assert overlay.count() == 1, "#debug-overlay must be present when ?debug is in URL"
+    assert overlay.is_visible(), "#debug-overlay must be visible"
+
+
+def test_debug_overlay_absent_without_param(page, base_url):
+    """debug overlay must not appear without ?debug param."""
+    page.goto(f"{base_url}/wiki/")
+    page.wait_for_load_state("networkidle")
+
+    assert page.locator("#debug-overlay").count() == 0, (
+        "#debug-overlay must not exist without ?debug param"
+    )
+
+
+def test_debug_overlay_close_removes_it(page, base_url):
+    """clicking the close button removes the debug overlay from DOM."""
+    page.goto(f"{base_url}/wiki/?debug")
+    page.wait_for_load_state("networkidle")
+
+    page.locator(".debug-close").click()
+
+    assert page.locator("#debug-overlay").count() == 0, (
+        "#debug-overlay must be removed after close button click"
+    )

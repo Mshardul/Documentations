@@ -2,8 +2,8 @@
 Dynamic document.title updates on every view change.
 Robust resolvePath for nested ../../ links.
 404 history fallback strips bad hashes on shallow history.
-fetchText produces absolute URLs: WIKI-117
-Route deduplication on popstate+hashchange: WIKI-120
+fetchText produces absolute URLs
+Route deduplication on popstate+hashchange
 """
 
 import re
@@ -91,7 +91,7 @@ def test_404_fallback_on_bad_article(page, base_url):
     assert "this-does-not-exist" not in page.url
 
 
-# ── WIKI-073: 404.html back-button history fallback ───────────────────────────
+# ── 404.html back-button history fallback ───────────────────────────
 
 
 def test_404_back_btn_redirects_when_no_history(page, base_url):
@@ -103,7 +103,7 @@ def test_404_back_btn_redirects_when_no_history(page, base_url):
     page.wait_for_url(re.compile(r".*/wiki/?(?:#.*)?$"), timeout=5_000)
 
 
-# ── WIKI-117: fetchText absolute URL ──────────────────────────────────────────
+# ── fetchText absolute URL ──────────────────────────────────────────
 
 
 def test_fetch_produces_absolute_url(page, base_url):
@@ -120,7 +120,7 @@ def test_fetch_produces_absolute_url(page, base_url):
     assert "caching.md" in response.url
 
 
-# ── WIKI-120: Route deduplication ─────────────────────────────────────────────
+# ── Route deduplication ─────────────────────────────────────────────
 
 
 def test_back_forward_does_not_double_render(page, base_url):

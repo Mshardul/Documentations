@@ -1,12 +1,12 @@
 """
 HTML markup integrity tests:
-- WIKI-061: Skip-to-content link (visually hidden, first focusable, links to #main-content)
-- WIKI-066: CDN scripts have defer attribute
-- WIKI-063: No inline onclick/onchange on static buttons; data-action delegation works
+- Skip-to-content link (visually hidden, first focusable, links to #main-content)
+- CDN scripts have defer attribute
+- No inline onclick/onchange on static buttons; data-action delegation works
 """
 
 
-# ── WIKI-061: Skip-to-content ────────────────────────────────────────────────
+# ── Skip-to-content ────────────────────────────────────────────────
 
 
 def test_skip_to_content_link_exists(wiki_page):
@@ -62,7 +62,7 @@ def test_skip_link_visible_on_focus(wiki_page):
     )
 
 
-# ── WIKI-066: CDN script defer ───────────────────────────────────────────────
+# ── CDN script defer ───────────────────────────────────────────────
 
 
 def test_cdn_scripts_have_defer(wiki_page):
@@ -89,7 +89,7 @@ def test_app_module_script_not_deferred_explicitly(wiki_page):
     assert is_module, "app.js should be type=module"
 
 
-# ── WIKI-063: No inline onclick/onchange ────────────────────────────────────
+# ── No inline onclick/onchange ────────────────────────────────────
 
 
 def test_no_inline_onclick_on_buttons(wiki_page):

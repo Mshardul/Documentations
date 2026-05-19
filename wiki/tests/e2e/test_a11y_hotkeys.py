@@ -1,11 +1,11 @@
 """
 Accessibility and hotkey fixes:
-- WIKI-094: Focus trap listener no longer leaks on rapid ⌘K re-open
-- WIKI-099: copy-btn and anchor-btn expose aria-label
-- WIKI-100: Space key activates role=button cards (wiki-card, index-card)
-- WIKI-105: T hotkey moves focus to first TOC item
-- WIKI-097: Scroll restoration uses rAF instead of 150ms timeout
-- WIKI-064: Parsed search index cached in sessionStorage after first ⌘K load
+- Focus trap listener no longer leaks on rapid ⌘K re-open
+- copy-btn and anchor-btn expose aria-label
+- Space key activates role=button cards (wiki-card, index-card)
+- T hotkey moves focus to first TOC item
+- Scroll restoration uses rAF instead of 150ms timeout
+- Parsed search index cached in sessionStorage after first ⌘K load
 """
 
 
@@ -23,7 +23,7 @@ def _open_search(page):
     page.wait_for_selector("#global-search-modal:not(.hidden)")
 
 
-# ── WIKI-094: Focus trap listener leak ─────────────────────────────────────
+# ── Focus trap listener leak ─────────────────────────────────────
 
 
 def test_focus_trap_survives_rapid_reopen(wiki_page):
@@ -46,7 +46,7 @@ def test_focus_trap_survives_rapid_reopen(wiki_page):
     assert not focused_outside, "Focus escaped modal after rapid ⌘K re-open"
 
 
-# ── WIKI-099: aria-label on copy/anchor buttons ────────────────────────────
+# ── aria-label on copy/anchor buttons ────────────────────────────
 
 
 def test_copy_button_has_aria_label(page, base_url):
@@ -73,7 +73,7 @@ def test_anchor_button_has_aria_label(page, base_url):
     assert missing == 0, f"{missing} anchor button(s) missing aria-label"
 
 
-# ── WIKI-100: Space key on role=button cards ───────────────────────────────
+# ── Space key on role=button cards ───────────────────────────────
 
 
 def test_space_activates_wiki_card(wiki_page):
@@ -93,7 +93,7 @@ def test_space_activates_index_card(page, base_url):
     page.wait_for_selector("#view-content.active", timeout=8_000)
 
 
-# ── WIKI-105: T hotkey focuses TOC ────────────────────────────────────────
+# ── T hotkey focuses TOC ────────────────────────────────────────
 
 
 def test_t_hotkey_focuses_first_toc_item(page, base_url):
@@ -126,7 +126,7 @@ def test_t_hotkey_uppercase(page, base_url):
     )
 
 
-# ── WIKI-097: Scroll restoration via rAF ──────────────────────────────────
+# ── Scroll restoration via rAF ──────────────────────────────────
 
 
 def test_content_scroll_restored_after_navigation(page, base_url):
@@ -162,7 +162,7 @@ def test_content_scroll_restored_after_navigation(page, base_url):
     )
 
 
-# ── WIKI-064: sessionStorage index cache ──────────────────────────────────
+# ── sessionStorage index cache ──────────────────────────────────
 
 
 def test_search_index_cached_in_session_storage(wiki_page):

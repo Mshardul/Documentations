@@ -1,12 +1,12 @@
 """
-- Prerequisites chips (016)
-- Copy button on all code blocks (028)
-- Topbar title visibility on scroll (040)
-- DOMPurify XSS sanitization (067)
-- KaTeX math support (074)
+- Prerequisites chips
+- Copy button on all code blocks
+- Topbar title visibility on scroll
+- DOMPurify XSS sanitization
+- KaTeX math support
 - TOC items rendered in sidebar
-- Article hero presence + ghost text (WIKI-136)
-- H1 first-word accent span (WIKI-136)
+- Article hero presence + ghost text
+- H1 first-word accent span
 """
 
 
@@ -225,7 +225,7 @@ def test_toc_item_click_does_not_break_hash(page, base_url):
     assert "?a=" in page.url, "?a= anchor param not set after TOC click"
 
 
-# ── Article hero (WIKI-136) ────────────────────────────────────────────────────
+# ── Article hero ────────────────────────────────────────────────────
 
 
 def test_article_hero_present_on_content_load(page, base_url):

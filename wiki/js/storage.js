@@ -1,7 +1,7 @@
 import { state, WIKIS, escHtml } from "./state.js";
 
 /* ═══════════════════════════════════════════════════════════════
-   SCROLL CACHE EVICTION (WIKI-065)
+   SCROLL CACHE EVICTION
    ═══════════════════════════════════════════════════════════════ */
 const SCROLL_KEYS_MANIFEST = "wiki-scroll-keys";
 const SCROLL_CACHE_MAX = 50;
@@ -51,6 +51,29 @@ function updateBookmarkBtn() {
   btn.title = bookmarked ? "Remove bookmark" : "Bookmark";
 }
 
+const CHIP_VISIBLE_MAX = 4;
+
+function _buildChipStrip(chips) {
+  const overflow =
+    chips.length > CHIP_VISIBLE_MAX ? chips.length - CHIP_VISIBLE_MAX : 0;
+  const chipHtml = chips
+    .map(
+      (chip, i) =>
+        `<button class="recent-chip${
+          i >= CHIP_VISIBLE_MAX ? " chip--hidden" : ""
+        }"
+          onclick="${chip.onclick}">${chip.label}</button>`
+    )
+    .join("");
+  const moreHtml = overflow
+    ? `<button class="recents-show-more"
+        onclick="var s=this.previousElementSibling;s.classList.toggle('recents-strip-expanded');this.textContent=s.classList.contains('recents-strip-expanded')?'Show less':'+${overflow} more'">
+        +${overflow} more
+      </button>`
+    : "";
+  return `<div class="recents-strip">${chipHtml}</div>${moreHtml}`;
+}
+
 function renderBookmarksSection(wiki) {
   const section = document.getElementById("bookmarks-section");
   if (!section) return;
@@ -60,6 +83,12 @@ function renderBookmarksSection(wiki) {
     return;
   }
   section.classList.remove("hidden");
+  const chips = bookmarks.map((b) => ({
+    label: escHtml(b.title),
+    onclick: `navigateToContent('${b.wikiId}','${encodeURIComponent(
+      b.path
+    )}','${encodeURIComponent(b.title)}','${b.slug}')`,
+  }));
   section.innerHTML = `
     <div class="recents-header">
       <span class="recents-label">Bookmarked</span>
@@ -69,19 +98,7 @@ function renderBookmarksSection(wiki) {
         <svg viewBox="0 0 12 12" fill="none"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
     </div>
-    <div class="recents-strip">
-      ${bookmarks
-        .map(
-          (b) => `
-        <button class="recent-chip"
-          onclick="navigateToContent('${b.wikiId}','${encodeURIComponent(
-            b.path
-          )}','${encodeURIComponent(b.title)}','${b.slug}')">
-          ${escHtml(b.title)}
-        </button>`
-        )
-        .join("")}
-    </div>`;
+    ${_buildChipStrip(chips)}`;
 }
 
 const Bookmarks = {
@@ -156,6 +173,12 @@ function renderRecentsSection(wiki) {
     return;
   }
   section.classList.remove("hidden");
+  const chips = recents.map((r) => ({
+    label: escHtml(r.title),
+    onclick: `navigateToContent('${r.wikiId}','${encodeURIComponent(
+      r.path
+    )}','${encodeURIComponent(r.title)}','${r.slug}')`,
+  }));
   section.innerHTML = `
     <div class="recents-header">
       <span class="recents-label">Recently visited</span>
@@ -165,19 +188,7 @@ function renderRecentsSection(wiki) {
         <svg viewBox="0 0 12 12" fill="none"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
     </div>
-    <div class="recents-strip">
-      ${recents
-        .map(
-          (r) => `
-        <button class="recent-chip"
-          onclick="navigateToContent('${r.wikiId}','${encodeURIComponent(
-            r.path
-          )}','${encodeURIComponent(r.title)}','${r.slug}')">
-          ${escHtml(r.title)}
-        </button>`
-        )
-        .join("")}
-    </div>`;
+    ${_buildChipStrip(chips)}`;
 }
 
 /* ═══════════════════════════════════════════════════════════════

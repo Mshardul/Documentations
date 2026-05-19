@@ -1,9 +1,9 @@
 """
 Content view enhancements:
-- WIKI-053: Table scroll cue (.table-scroll-wrap, .scroll-cue)
-- WIKI-044: Image lightbox zoom (#zoom-overlay, .zoomable-img)
-- WIKI-045: Mermaid diagram zoom (click .mermaid-diagram → overlay svg)
-- WIKI-039: Diagram theme sync (SVG re-renders on theme change)
+- Table scroll cue (.table-scroll-wrap, .scroll-cue)
+- Image lightbox zoom (#zoom-overlay, .zoomable-img)
+- Mermaid diagram zoom (click .mermaid-diagram → overlay svg)
+- Diagram theme sync (SVG re-renders on theme change)
 """
 
 ARTICLE_WITH_TABLE = """\
@@ -54,7 +54,7 @@ def _load_mock_article(page, base_url, content, slug="mock"):
     )
 
 
-# ── WIKI-053: Table scroll cue ──────────────────────────────────────────────
+# ── Table scroll cue ──────────────────────────────────────────────
 
 
 def test_table_wrapped_in_scroll_container(page, base_url):
@@ -125,7 +125,7 @@ def test_table_scroll_cue_absent_on_wide_viewport(page, base_url):
     )
 
 
-# ── WIKI-044: Image lightbox zoom ───────────────────────────────────────────
+# ── Image lightbox zoom ───────────────────────────────────────────
 
 
 def test_image_has_zoomable_class(page, base_url):
@@ -248,7 +248,7 @@ def test_escape_after_zoom_stays_in_content_view(page, base_url):
     assert still_content, "Content view was abandoned when Escape closed zoom overlay"
 
 
-# ── WIKI-045: Diagram zoom ──────────────────────────────────────────────────
+# ── Diagram zoom ──────────────────────────────────────────────────
 
 
 def test_mermaid_diagram_has_zoom_cursor(page, base_url):
@@ -297,7 +297,7 @@ def test_diagram_zoom_overlay_contains_svg(page, base_url):
     assert svg_in_overlay, "Zoom overlay does not contain an <svg> element"
 
 
-# ── WIKI-039: Diagram theme sync ────────────────────────────────────────────
+# ── Diagram theme sync ────────────────────────────────────────────
 
 
 def test_mermaid_src_stored_on_wrapper(page, base_url):

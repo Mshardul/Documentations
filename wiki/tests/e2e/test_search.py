@@ -1,7 +1,7 @@
 """
 - ↑/↓ keyboard navigation in search results + Enter to select
 - stub articles (< 200 chars) excluded from ⌘K results
-- WIKI-191: search input debounce (150ms)
+- search input debounce (150ms)
 """
 
 
@@ -31,6 +31,7 @@ def test_arrow_keys_cycle_results(wiki_page):
     # Wait until at least two results are rendered before navigating.
     wiki_page.locator(".gsearch-result").nth(1).wait_for()
 
+    wiki_page.locator("#gsearch-input").focus()
     wiki_page.keyboard.press("ArrowDown")
     first = wiki_page.locator(".gsearch-result.selected").inner_text()
     wiki_page.keyboard.press("ArrowDown")
@@ -79,11 +80,11 @@ def test_search_shows_real_articles(wiki_page):
     assert wiki_page.locator(".gsearch-result").count() > 0
 
 
-# ── WIKI-191: Search input debounce ─────────────────────────────────────────
+# ── Search input debounce ─────────────────────────────────────────
 
 
 def test_search_debounce_results_appear_after_typing(wiki_page):
-    """WIKI-191: results appear after debounce settles; rapid typing does not break search."""
+    """results appear after debounce settles; rapid typing does not break search."""
     _open_search(wiki_page)
 
     # Type each character with no delay (simulates fast typist)
@@ -96,7 +97,7 @@ def test_search_debounce_results_appear_after_typing(wiki_page):
 
 
 def test_search_debounce_suppresses_intermediate_updates(wiki_page):
-    """WIKI-191: rapid keystrokes trigger fewer result updates than keystrokes typed."""
+    """rapid keystrokes trigger fewer result updates than keystrokes typed."""
     _open_search(wiki_page)
 
     # Attach MutationObserver to count result-list updates

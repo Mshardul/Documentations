@@ -1,10 +1,10 @@
 """
 UX, hotkeys, and error handling:
-- WIKI-078: fetchText distinguishes 404 from network errors
-- WIKI-095: broken slug shows toast before redirecting home
-- WIKI-096: focus mode button shows active state
-- WIKI-102: = / - hotkeys change font size
-- WIKI-103: D key toggles distraction-free mode
+- fetchText distinguishes 404 from network errors
+- broken slug shows toast before redirecting home
+- focus mode button shows active state
+- = / - hotkeys change font size
+- D key toggles distraction-free mode
 """
 
 
@@ -17,7 +17,7 @@ def _go_to_article(page, base_url, slug="system-design/caching"):
     )
 
 
-# ── WIKI-078: Specific fetch errors ────────────────────────────────────────
+# ── Specific fetch errors ────────────────────────────────────────
 
 
 def test_404_shows_not_found_message(page, base_url):
@@ -66,7 +66,7 @@ def test_network_error_shows_connection_message(page, base_url):
     )
 
 
-# ── WIKI-095: Toast on broken slug ─────────────────────────────────────────
+# ── Toast on broken slug ─────────────────────────────────────────
 
 
 def test_broken_slug_shows_toast(page, base_url):
@@ -86,7 +86,7 @@ def test_broken_slug_redirects_home(page, base_url):
     page.wait_for_selector("#view-home.active", timeout=10_000)
 
 
-# ── WIKI-096: Focus mode active indicator ──────────────────────────────────
+# ── Focus mode active indicator ──────────────────────────────────
 
 
 def test_focus_btn_exists_in_topbar(page, base_url):
@@ -128,7 +128,7 @@ def test_focus_btn_click_toggles_mode(page, base_url):
     )
 
 
-# ── WIKI-102: Font size hotkeys ────────────────────────────────────────────
+# ── Font size hotkeys ────────────────────────────────────────────
 
 
 def test_equals_increases_font_size(page, base_url):
@@ -187,7 +187,7 @@ def test_font_size_does_not_go_below_small(page, base_url):
     assert settings["fontSize"] == "S"
 
 
-# ── WIKI-103: Distraction-free mode ────────────────────────────────────────
+# ── Distraction-free mode ────────────────────────────────────────
 
 
 def test_d_key_hides_topbar(page, base_url):

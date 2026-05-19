@@ -751,7 +751,7 @@
 }
 
 /* ═══════════════════════════════════════════════
-   TOAST (WIKI-095)
+   TOAST
    ═══════════════════════════════════════════════ */
 .wiki-toast {
   position: fixed;
@@ -894,4 +894,72 @@
   border-radius: var(--r-sm);
   color: var(--text-muted);
   white-space: nowrap;
+}
+
+/* Debug overlay */
+.debug-overlay {
+  position: fixed;
+  bottom: var(--s4);
+  right: var(--s4);
+  z-index: 9000;
+  min-width: 260px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  overflow: hidden;
+}
+.debug-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s2) var(--s3);
+  background: rgba(99, 102, 241, 0.12);
+  border-bottom: 1px solid var(--glass-border);
+}
+.debug-title {
+  font-weight: 600;
+  color: var(--accent-light);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+.debug-close {
+  color: var(--text-subtle);
+  font-size: 11px;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: var(--r-sm);
+  transition: color var(--t-fast);
+}
+.debug-close:hover {
+  color: var(--text-body);
+}
+.debug-body {
+  padding: var(--s2) 0;
+}
+.debug-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s4);
+  padding: 3px var(--s3);
+}
+.debug-row:hover {
+  background: var(--surface-hover);
+}
+.debug-key {
+  color: var(--text-subtle);
+  flex-shrink: 0;
+}
+.debug-val {
+  color: var(--text-body);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 160px;
 }

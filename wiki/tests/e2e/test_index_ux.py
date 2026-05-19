@@ -1,6 +1,7 @@
 """
-WIKI-072: Index cards must not be clickable before stub detection completes.
-WIKI-037: Index section headers collapse/expand card grids; state persists in localStorage.
+- Index cards must not be clickable before stub detection completes.
+- Index section headers collapse/expand card grids; state persists in localStorage.
+- Unavailable cards have tooltip title and allow pointer events.
 """
 
 
@@ -9,7 +10,7 @@ def _go_to_index(page, base_url):
     page.wait_for_selector("#view-index.active", timeout=10_000)
 
 
-# ── WIKI-072: Stub card click guard ───────────────────────────────────────────
+# ── Stub card click guard ───────────────────────────────────────────
 
 
 def test_cards_not_clickable_while_loading(page, base_url):
@@ -48,7 +49,7 @@ def test_cards_clickable_after_load(page, base_url):
     assert has_loading is False
 
 
-# ── WIKI-037: Collapsible index sections ──────────────────────────────────────
+# ── Collapsible index sections ──────────────────────────────────────
 
 
 def test_section_collapses_on_header_click(page, base_url):
@@ -119,7 +120,7 @@ def test_section_collapse_restored_on_revisit(page, base_url):
     assert is_collapsed, "Section must remain collapsed after navigating away and back"
 
 
-# ── WIKI-129: Unavailable card grayscale ──────────────────────────────────────
+# ── Unavailable card grayscale ──────────────────────────────────────
 
 
 def test_unavailable_card_has_grayscale_filter(page, base_url):
@@ -140,4 +141,49 @@ def test_unavailable_card_has_grayscale_filter(page, base_url):
     assert result is not None, "No .index-card found on page"
     assert "grayscale" in result, (
         f"Expected grayscale filter on .index-card--unavailable, got: {result!r}"
+    )
+
+
+# ── Unavailable card tooltip ───────────────────────────────────────
+
+
+def test_unavailable_card_allows_pointer_events(page, base_url):
+    """unavailable cards must not have pointer-events:none so tooltip is reachable."""
+    _go_to_index(page, base_url)
+    page.wait_for_selector(
+        "#index-sections:not(.index-sections--loading)", timeout=15_000
+    )
+
+    result = page.evaluate("""() => {
+        const card = document.querySelector('.index-card');
+        if (!card) return null;
+        card.classList.add('index-card--unavailable');
+        const pe = window.getComputedStyle(card).pointerEvents;
+        card.classList.remove('index-card--unavailable');
+        return pe;
+    }""")
+    assert result is not None, "No .index-card found on page"
+    assert result != "none", (
+        f"Unavailable cards must allow pointer events for tooltip hover, got: {result!r}"
+    )
+
+
+def test_unavailable_card_has_tooltip_title(page, base_url):
+    """real unavailable (stub) cards have a 'Coming soon' title attribute."""
+    _go_to_index(page, base_url)
+    page.wait_for_selector(
+        "#index-sections:not(.index-sections--loading)", timeout=15_000
+    )
+
+    result = page.evaluate("""() => {
+        const card = document.querySelector('.index-card--unavailable');
+        if (!card) return 'no-stubs';
+        return card.getAttribute('title') || '';
+    }""")
+
+    if result == "no-stubs":
+        return  # no stub cards in this wiki; test is vacuously satisfied
+
+    assert "Coming soon" in result, (
+        f"Unavailable card title must contain 'Coming soon', got: {result!r}"
     )

@@ -40,6 +40,28 @@ function openZoomOverlay(node) {
   overlay.classList.add("open");
 }
 
+/* ─── Clipboard helper with execCommand fallback for HTTP contexts ─── */
+function writeToClipboard(text) {
+  if (navigator.clipboard?.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute(
+      "style",
+      "position:fixed;top:-9999px;left:-9999px;opacity:0"
+    );
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    return Promise.resolve();
+  } catch (err) {
+    return Promise.reject(err);
+  }
+}
+
 /* ─── Copy Buttons ─── */
 function addCopyButtons(contentEl, onCopyError = () => {}) {
   contentEl.querySelectorAll("pre").forEach((pre) => {
@@ -52,8 +74,7 @@ function addCopyButtons(contentEl, onCopyError = () => {}) {
     btn.addEventListener("click", () => {
       const code = pre.querySelector("code");
       const text = code ? code.textContent : pre.textContent;
-      navigator.clipboard
-        .writeText(text)
+      writeToClipboard(text)
         .then(() => {
           btn.innerHTML = checkIcon();
           setTimeout(() => {
@@ -204,8 +225,7 @@ function addAnchorLinks(contentEl, onCopyError = () => {}) {
     btn.addEventListener("click", () => {
       const url = new URL(location.href);
       url.searchParams.set("a", h.id);
-      navigator.clipboard
-        .writeText(url.toString())
+      writeToClipboard(url.toString())
         .then(() => {
           btn.classList.add("copied");
           setTimeout(() => btn.classList.remove("copied"), 2000);
@@ -224,7 +244,7 @@ function anchorIcon() {
   </svg>`;
 }
 
-/* ─── Image Lightbox (WIKI-044) ─── */
+/* ─── Image Lightbox ─── */
 function addImageLightbox(contentEl) {
   contentEl.querySelectorAll("img").forEach((img) => {
     img.classList.add("zoomable-img");
@@ -258,7 +278,7 @@ async function renderMermaidDiagrams(contentEl) {
   }
 }
 
-/* ─── Diagram Zoom (WIKI-045) ─── */
+/* ─── Diagram Zoom ─── */
 function addDiagramZoom(contentEl) {
   contentEl.querySelectorAll(".mermaid-diagram").forEach((diagram) => {
     diagram.addEventListener("click", () => {
@@ -277,7 +297,7 @@ function addDiagramZoom(contentEl) {
   });
 }
 
-/* ─── Mermaid Theme Sync (WIKI-039) ─── */
+/* ─── Mermaid Theme Sync ─── */
 function getMermaidThemeConfig(theme) {
   if (theme === "light") {
     return {
@@ -337,7 +357,7 @@ async function rerenderMermaidDiagrams() {
   }
 }
 
-/* ─── Table Scroll Cue (WIKI-053) ─── */
+/* ─── Table Scroll Cue ─── */
 function addTableScrollCues(contentEl) {
   contentEl.querySelectorAll("table").forEach((table) => {
     const wrap = document.createElement("div");
@@ -358,7 +378,7 @@ function addTableScrollCues(contentEl) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   COLLAPSIBLE LONG CODE BLOCKS (WIKI-085)
+   COLLAPSIBLE LONG CODE BLOCKS
    ═══════════════════════════════════════════════════════════════ */
 function addCollapsibleCodeBlocks(contentEl) {
   contentEl.querySelectorAll("pre").forEach((pre) => {
@@ -410,7 +430,7 @@ function addCodeLangLabels(contentEl) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   TYPEWRITER FOCUS MODE (WIKI-087)
+   TYPEWRITER FOCUS MODE
    ═══════════════════════════════════════════════════════════════ */
 let _focusMode = false;
 let _focusObserver = null;

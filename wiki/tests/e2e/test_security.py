@@ -1,5 +1,5 @@
 """
-CDN script Subresource Integrity (SRI) attributes: WIKI-115
+CDN script Subresource Integrity (SRI) attributes
 """
 
 

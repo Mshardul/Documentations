@@ -18,6 +18,7 @@ import {
   isRead,
 } from "./storage.js";
 import {
+  addCodeBlockHeader,
   addCopyButtons,
   styleCallouts,
   renderPrerequisites,
@@ -26,11 +27,14 @@ import {
   renderMermaidDiagrams,
   addLineNumbers,
   addCollapsibleCodeBlocks,
+  addCollapsibleCallouts,
   addCodeLangLabels,
   addImageLightbox,
   addDiagramZoom,
   addTableScrollCues,
   cleanupFocusMode,
+  addStickySection,
+  cleanupStickySection,
 } from "./content.js";
 
 /* ═══════════════════════════════════════════════════════════════
@@ -476,6 +480,7 @@ async function renderContent(
     state.tocObserver = null;
   }
   cleanupFocusMode();
+  cleanupStickySection();
   document.body.classList.remove("distraction-free");
   document.getElementById("toc-nav").innerHTML = "";
 
@@ -542,10 +547,11 @@ async function renderContent(
     addLineNumbers(body);
 
     // Post-processing
-    addCopyButtons(body, () =>
+    addCodeBlockHeader(body, () =>
       showToast("Copy failed — clipboard access denied")
     );
     styleCallouts(body);
+    addCollapsibleCallouts(body);
 
     // Prerequisites Chips
     renderPrerequisites(body);
@@ -578,6 +584,7 @@ async function renderContent(
 
     // TOC
     buildTOC(body);
+    addStickySection(body);
 
     // Code language labels + collapsible long blocks
     addCodeLangLabels(body);

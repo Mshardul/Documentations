@@ -62,42 +62,61 @@ function writeToClipboard(text) {
   }
 }
 
-/* ─── Copy Buttons ─── */
-function addCopyButtons(contentEl, onCopyError = () => {}) {
+/* ─── Code Block Header (traffic lights + lang label + copy button) ─── */
+function addCodeBlockHeader(contentEl, onCopyError = () => {}) {
   contentEl.querySelectorAll("pre").forEach((pre) => {
+    const code = pre.querySelector("code");
+    const header = document.createElement("div");
+    header.className = "code-header";
+
+    // Traffic lights
+    const lights = document.createElement("div");
+    lights.className = "code-traffic-lights";
+    lights.setAttribute("aria-hidden", "true");
+    ["tl-red", "tl-yellow", "tl-green"].forEach((cls) => {
+      const dot = document.createElement("span");
+      dot.className = `tl ${cls}`;
+      lights.appendChild(dot);
+    });
+    header.appendChild(lights);
+
+    // Lang label (centered)
+    const langMatch = code?.className.match(/language-(\w+)/);
+    if (langMatch && langMatch[1] !== "mermaid") {
+      const label = document.createElement("span");
+      label.className = "code-lang-label";
+      label.textContent = langMatch[1];
+      header.appendChild(label);
+    }
+
+    // Copy button (icon-only ⧉)
     const btn = document.createElement("button");
     btn.className = "copy-btn";
-    btn.title = "Copy";
+    btn.title = "Copy code";
     btn.setAttribute("aria-label", "Copy code");
-    btn.innerHTML = copyIcon();
-
+    btn.textContent = "⧉";
     btn.addEventListener("click", () => {
-      const code = pre.querySelector("code");
       const text = code ? code.textContent : pre.textContent;
       writeToClipboard(text)
         .then(() => {
-          btn.innerHTML = checkIcon();
+          btn.textContent = "✓";
+          btn.classList.add("copied");
           setTimeout(() => {
-            btn.innerHTML = copyIcon();
+            btn.textContent = "⧉";
+            btn.classList.remove("copied");
           }, 2000);
         })
         .catch(() => onCopyError());
     });
+    header.appendChild(btn);
 
-    pre.appendChild(btn);
+    pre.insertBefore(header, pre.firstChild);
   });
 }
 
-function copyIcon() {
-  return `<svg viewBox="0 0 16 16" fill="none">
-    <rect x="5" y="5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
-    <path d="M3 10V3h7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>`;
-}
-function checkIcon() {
-  return `<svg viewBox="0 0 16 16" fill="none">
-    <path d="M3 8.5l3.5 3.5L13 4" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>`;
+/* Keep addCopyButtons as alias so existing tests referencing it still compile */
+function addCopyButtons(contentEl, onCopyError = () => {}) {
+  addCodeBlockHeader(contentEl, onCopyError);
 }
 
 /* ─── Callout Styling ─── */
@@ -252,6 +271,26 @@ function anchorIcon() {
 /* ─── Image Lightbox ─── */
 function addImageLightbox(contentEl) {
   contentEl.querySelectorAll("img").forEach((img) => {
+    img.addEventListener(
+      "error",
+      () => {
+        const placeholder = document.createElement("div");
+        placeholder.className = "img-error-placeholder";
+        placeholder.setAttribute("role", "img");
+        const altText = img.alt || "Image failed to load";
+        placeholder.setAttribute("aria-label", altText);
+        const icon = document.createElement("span");
+        icon.className = "img-error-icon";
+        icon.textContent = "🖼";
+        const label = document.createElement("span");
+        label.className = "img-error-text";
+        label.textContent = altText;
+        placeholder.appendChild(icon);
+        placeholder.appendChild(label);
+        img.replaceWith(placeholder);
+      },
+      { once: true }
+    );
     img.classList.add("zoomable-img");
     img.addEventListener("click", () => {
       const clone = img.cloneNode();
@@ -279,6 +318,10 @@ async function renderMermaidDiagrams(contentEl) {
       pre.replaceWith(wrapper);
     } catch (err) {
       console.warn("Mermaid render failed:", err);
+      const errEl = document.createElement("div");
+      errEl.className = "mermaid-error";
+      errEl.textContent = "Diagram syntax error — could not render";
+      pre.replaceWith(errEl);
     }
   }
 }
@@ -358,6 +401,10 @@ async function rerenderMermaidDiagrams() {
       wrapper.innerHTML = svg;
     } catch (err) {
       console.warn("Mermaid re-render failed:", err);
+      const errEl = document.createElement("div");
+      errEl.className = "mermaid-error";
+      errEl.textContent = "Diagram syntax error — could not render";
+      wrapper.replaceChildren(errEl);
     }
   }
 }
@@ -423,14 +470,36 @@ function addLineNumbers(contentEl) {
 /* ═══════════════════════════════════════════════════════════════
    CODE LANGUAGE LABELS
    ═══════════════════════════════════════════════════════════════ */
-function addCodeLangLabels(contentEl) {
-  contentEl.querySelectorAll("pre code[class]").forEach((code) => {
-    const match = code.className.match(/language-(\w+)/);
-    if (!match || match[1] === "mermaid") return;
-    const label = document.createElement("span");
-    label.className = "code-lang-label";
-    label.textContent = match[1];
-    code.parentElement.appendChild(label);
+/* Label is now rendered inside code-header by addCodeBlockHeader */
+function addCodeLangLabels(_contentEl) {}
+
+/* ═══════════════════════════════════════════════════════════════
+   COLLAPSIBLE CALLOUT BLOCKS
+   ═══════════════════════════════════════════════════════════════ */
+const CALLOUT_COLLAPSE_LINES_DESKTOP = 10;
+const CALLOUT_COLLAPSE_LINES_MOBILE = 5;
+const APPROX_LINE_HEIGHT_PX = 24;
+
+function addCollapsibleCallouts(contentEl) {
+  const isMobile = window.innerWidth < 768;
+  const lineLimit = isMobile
+    ? CALLOUT_COLLAPSE_LINES_MOBILE
+    : CALLOUT_COLLAPSE_LINES_DESKTOP;
+  const heightThreshold = lineLimit * APPROX_LINE_HEIGHT_PX;
+
+  contentEl.querySelectorAll("blockquote.callout").forEach((bq) => {
+    if (bq.scrollHeight <= heightThreshold) return;
+
+    bq.classList.add("callout--collapsible");
+
+    const btn = document.createElement("button");
+    btn.className = "callout-expand-btn";
+    btn.textContent = "Show more";
+    btn.addEventListener("click", () => {
+      const expanded = bq.classList.toggle("callout--expanded");
+      btn.textContent = expanded ? "Show less" : "Show more";
+    });
+    bq.appendChild(btn);
   });
 }
 
@@ -494,8 +563,49 @@ function _cleanupFocusObserver(contentEl) {
   });
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   STICKY CURRENT SECTION HEADER
+   ═══════════════════════════════════════════════════════════════ */
+function addStickySection(contentEl) {
+  const h2s = Array.from(contentEl.querySelectorAll("h2"));
+  const banner = document.getElementById("sticky-section-header");
+  if (!banner || h2s.length === 0) return;
+
+  const TOPBAR_H = 44;
+
+  const update = () => {
+    const scrollY = window.scrollY + TOPBAR_H + 2;
+    let current = null;
+    for (const h of h2s) {
+      if (h.getBoundingClientRect().top + window.scrollY <= scrollY) {
+        current = h;
+      }
+    }
+    if (current) {
+      banner.textContent = current.textContent.replace(/#+\s*$/, "").trim();
+      banner.classList.add("visible");
+    } else {
+      banner.classList.remove("visible");
+    }
+  };
+
+  state.stickySectionHandler = update;
+  window.addEventListener("scroll", update, { passive: true });
+  update();
+}
+
+function cleanupStickySection() {
+  if (state.stickySectionHandler) {
+    window.removeEventListener("scroll", state.stickySectionHandler);
+    state.stickySectionHandler = null;
+  }
+  const banner = document.getElementById("sticky-section-header");
+  if (banner) banner.classList.remove("visible");
+}
+
 export {
   closeZoomOverlay,
+  addCodeBlockHeader,
   addCopyButtons,
   styleCallouts,
   renderPrerequisites,
@@ -504,6 +614,7 @@ export {
   renderMermaidDiagrams,
   addLineNumbers,
   addCollapsibleCodeBlocks,
+  addCollapsibleCallouts,
   addCodeLangLabels,
   addImageLightbox,
   addDiagramZoom,
@@ -511,4 +622,6 @@ export {
   addTableScrollCues,
   toggleFocusMode,
   cleanupFocusMode,
+  addStickySection,
+  cleanupStickySection,
 };

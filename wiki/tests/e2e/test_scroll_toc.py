@@ -1,6 +1,7 @@
 """
 - scroll position persisted per article in localStorage
 - TOC sidebar sticky on desktop, hidden on mobile
+- Sticky section header updates on scroll (WIKI-174)
 """
 
 
@@ -131,3 +132,43 @@ def test_toc_sticky_does_not_scroll_away(page, base_url):
     assert sidebar.is_visible()
     box = sidebar.bounding_box()
     assert box["y"] >= 0 and box["y"] < page.viewport_size["height"]
+
+
+# ── Sticky section header (WIKI-174) ───────────────────────────────────────────
+
+
+def test_sticky_section_header_element_exists(page, base_url):
+    """#sticky-section-header element is present in the DOM in content view."""
+    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.wait_for_selector("#view-content.active", timeout=10_000)
+
+    exists = page.evaluate("() => !!document.getElementById('sticky-section-header')")
+    assert exists, "#sticky-section-header element not found in DOM"
+
+
+def test_sticky_section_header_shows_section_on_scroll(page, base_url):
+    """Scrolling past an h2 populates the sticky section header with the section name."""
+    page.set_viewport_size({"width": 1280, "height": 800})
+    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.wait_for_function(
+        "() => !!document.querySelector('#markdown-body[data-render-done]')",
+        timeout=10_000,
+    )
+
+    h2_top = page.evaluate("""() => {
+        const h2 = document.querySelector('#markdown-body h2');
+        return h2 ? h2.getBoundingClientRect().top + window.scrollY : null;
+    }""")
+    if h2_top is None:
+        return  # no h2 in article; skip
+
+    page.evaluate(f"() => window.scrollTo(0, {int(h2_top) + 200})")
+    page.wait_for_function(
+        "() => document.getElementById('sticky-section-header')?.textContent?.trim().length > 0",
+        timeout=3_000,
+    )
+
+    text = page.evaluate(
+        "() => document.getElementById('sticky-section-header')?.textContent?.trim()"
+    )
+    assert text, "Sticky section header is empty after scrolling past h2"

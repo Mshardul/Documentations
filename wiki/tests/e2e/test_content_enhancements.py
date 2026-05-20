@@ -6,6 +6,10 @@ Content view enhancements:
 - Diagram theme sync (SVG re-renders on theme change)
 - Anchor link toast confirmation (WIKI-178)
 - Reading progress bar glow (WIKI-140)
+- Code block header with traffic lights and copy button (WIKI-139)
+- Diff block addition/deletion highlighting (WIKI-158)
+- Collapsible tall callouts (WIKI-180)
+- Broken image error placeholder (WIKI-196)
 """
 
 ARTICLE_WITH_TABLE = """\
@@ -432,3 +436,214 @@ def test_reading_progress_bar_visible_in_content_view(page, base_url):
         "() => document.getElementById('reading-progress')?.classList.contains('visible') ?? false"
     )
     assert is_visible, "reading-progress must have .visible class in content view"
+
+
+# ── Code block header (WIKI-139) ──────────────────────────────────
+
+ARTICLE_WITH_CODE = """\
+# Code Block Test
+
+## Section
+
+```python
+def greet(name):
+    return f"Hello, {name}!"
+
+x = greet("world")
+```
+"""
+
+ARTICLE_WITH_DIFF = """\
+# Diff Test
+
+## Section
+
+```diff
++ added line here
+- removed line here
+  context line
+```
+"""
+
+
+def test_code_block_has_traffic_lights(page, base_url):
+    """Each code block gets a .code-header containing three .tl traffic-light dots."""
+    _load_mock_article(page, base_url, ARTICLE_WITH_CODE, slug="code-header-tl")
+    page.wait_for_selector("#markdown-body pre", timeout=5_000)
+
+    result = page.evaluate("""() => {
+        const pre = document.querySelector('#markdown-body pre');
+        if (!pre) return { found: false };
+        const header = pre.querySelector('.code-header');
+        const dots = header ? header.querySelectorAll('.tl').length : 0;
+        return { found: true, hasHeader: !!header, dots };
+    }""")
+    assert result["found"], "No <pre> found in article"
+    assert result["hasHeader"], "<pre> is missing .code-header"
+    assert result["dots"] == 3, (
+        f"Expected 3 .tl dots in .code-header, got {result['dots']}"
+    )
+
+
+def test_code_block_copy_button_in_header(page, base_url):
+    """Copy button lives inside .code-header and shows the ⧉ glyph."""
+    _load_mock_article(page, base_url, ARTICLE_WITH_CODE, slug="code-copybtn")
+    page.wait_for_selector("#markdown-body pre", timeout=5_000)
+
+    result = page.evaluate("""() => {
+        const header = document.querySelector('#markdown-body .code-header');
+        if (!header) return { found: false };
+        const btn = header.querySelector('.copy-btn');
+        return { found: true, hasCopyBtn: !!btn, text: btn?.textContent?.trim() };
+    }""")
+    assert result["found"], ".code-header not found inside <pre>"
+    assert result["hasCopyBtn"], ".copy-btn not found inside .code-header"
+    assert result["text"] == "⧉", (
+        f"Expected copy button glyph '⧉', got '{result['text']}'"
+    )
+
+
+# ── Diff block highlighting (WIKI-158) ────────────────────────────
+
+
+def test_diff_css_rules_for_additions_and_deletions(page, base_url):
+    """CSS rules give .hljs-addition and .hljs-deletion display:block."""
+    _load_mock_article(page, base_url, ARTICLE_WITH_DIFF, slug="diff-css")
+    page.wait_for_selector("#markdown-body", timeout=5_000)
+
+    result = page.evaluate("""() => {
+        const body = document.getElementById('markdown-body');
+        const pre = document.createElement('pre');
+        const code = document.createElement('code');
+        code.className = 'language-diff';
+        const add = document.createElement('span');
+        add.className = 'hljs-addition';
+        const del = document.createElement('span');
+        del.className = 'hljs-deletion';
+        code.appendChild(add);
+        code.appendChild(del);
+        pre.appendChild(code);
+        body.appendChild(pre);
+        const addDisplay = getComputedStyle(add).display;
+        const delDisplay = getComputedStyle(del).display;
+        body.removeChild(pre);
+        return { addDisplay, delDisplay };
+    }""")
+    assert result["addDisplay"] == "block", (
+        f".hljs-addition display should be block, got: {result['addDisplay']}"
+    )
+    assert result["delDisplay"] == "block", (
+        f".hljs-deletion display should be block, got: {result['delDisplay']}"
+    )
+
+
+# ── Collapsible callouts (WIKI-180) ───────────────────────────────
+
+ARTICLE_WITH_LONG_CALLOUT = """\
+# Callout Test
+
+## Section
+
+> ⚠️ **Warning** This callout contains many paragraphs and should be collapsed.
+>
+> Paragraph one: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph two: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph three: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph four: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph five: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph six: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph seven: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph eight: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph nine: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph ten: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph eleven: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph twelve: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph thirteen: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph fourteen: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Paragraph fifteen: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+"""
+
+
+def test_tall_callout_gets_collapsible_class(page, base_url):
+    """A tall callout gets .callout--collapsible and a toggle button after render."""
+    page.set_viewport_size({"width": 1280, "height": 800})
+    _load_mock_article(
+        page, base_url, ARTICLE_WITH_LONG_CALLOUT, slug="callout-collapsible"
+    )
+    page.wait_for_selector(".callout", timeout=5_000)
+
+    result = page.evaluate("""() => {
+        const callout = document.querySelector('.callout');
+        if (!callout) return { found: false };
+        return {
+            found: true,
+            isCollapsible: callout.classList.contains('callout--collapsible'),
+            hasBtn: !!callout.querySelector('.callout-expand-btn'),
+        };
+    }""")
+    assert result["found"], "No .callout element found in article"
+    assert result["isCollapsible"], (
+        ".callout is missing .callout--collapsible on a tall callout"
+    )
+    assert result["hasBtn"], ".callout is missing .callout-expand-btn"
+
+
+def test_callout_expand_btn_toggles_expanded(page, base_url):
+    """Clicking the expand button adds .callout--expanded; clicking again removes it."""
+    page.set_viewport_size({"width": 1280, "height": 800})
+    _load_mock_article(page, base_url, ARTICLE_WITH_LONG_CALLOUT, slug="callout-expand")
+    page.wait_for_selector(".callout--collapsible", timeout=5_000)
+
+    page.locator(".callout-expand-btn").first.click()
+    is_expanded = page.evaluate(
+        "() => document.querySelector('.callout')?.classList.contains('callout--expanded')"
+    )
+    assert is_expanded, ".callout--expanded not added after first click"
+
+    page.locator(".callout-expand-btn").first.click()
+    is_still_expanded = page.evaluate(
+        "() => document.querySelector('.callout')?.classList.contains('callout--expanded')"
+    )
+    assert not is_still_expanded, (
+        ".callout--expanded still present after second click (collapse)"
+    )
+
+
+# ── Broken image placeholder (WIKI-196) ──────────────────────────
+
+ARTICLE_WITH_BROKEN_IMAGE = """\
+# Broken Image Test
+
+## Section
+
+![Missing image](/wiki/content/broken-test-image-404-xyz.png)
+
+Some text after the image.
+"""
+
+
+def test_broken_image_shows_error_placeholder(page, base_url):
+    """A broken <img> src is replaced with .img-error-placeholder after onerror fires."""
+    page.route("**/broken-test-image-404-xyz.png", lambda r: r.abort())
+    _load_mock_article(page, base_url, ARTICLE_WITH_BROKEN_IMAGE, slug="broken-img")
+    page.wait_for_selector("#markdown-body", timeout=5_000)
+    page.wait_for_selector(".img-error-placeholder", timeout=5_000)
+
+    count = page.evaluate(
+        "() => document.querySelectorAll('#markdown-body .img-error-placeholder').length"
+    )
+    assert count > 0, "No .img-error-placeholder found — broken image not replaced"

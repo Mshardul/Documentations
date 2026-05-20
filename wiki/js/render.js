@@ -551,8 +551,10 @@ async function renderContent(
     renderPrerequisites(body);
 
     interceptMdLinks(body, wiki, filePath);
-    addAnchorLinks(body, () =>
-      showToast("Copy failed — clipboard access denied")
+    addAnchorLinks(
+      body,
+      () => showToast("Copy failed — clipboard access denied"),
+      () => showToast("Link copied")
     );
 
     // Accent first word of h1 with gradient

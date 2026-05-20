@@ -2,6 +2,7 @@
 - ↑/↓ keyboard navigation in search results + Enter to select
 - stub articles (< 200 chars) excluded from ⌘K results
 - search input debounce (150ms)
+- result count badge (WIKI-166)
 """
 
 
@@ -120,3 +121,58 @@ def test_search_debounce_suppresses_intermediate_updates(wiki_page):
     updates = wiki_page.evaluate("() => window._resultUpdates ?? 0")
     # With 150ms debounce, rapid typing produces far fewer updates than keystrokes
     assert updates < 7, f"Expected debounced updates (<7) but got {updates}"
+
+
+# ── Result count badge (WIKI-166) ─────────────────────────────────
+
+
+def test_result_count_shows_on_results(wiki_page):
+    """#gsearch-count shows 'N results' text when results exist."""
+    _open_search(wiki_page)
+    wiki_page.fill("#gsearch-input", "caching")
+    wiki_page.wait_for_selector(".gsearch-result", timeout=8_000)
+
+    count_text = wiki_page.evaluate(
+        "() => document.getElementById('gsearch-count')?.textContent ?? ''"
+    )
+    assert count_text.strip(), "Result count badge must not be empty when results exist"
+    assert "result" in count_text.lower(), (
+        f"Count badge must contain 'result', got '{count_text}'"
+    )
+
+
+def test_result_count_clears_on_empty_query(wiki_page):
+    """#gsearch-count is empty when search input is cleared."""
+    _open_search(wiki_page)
+    wiki_page.fill("#gsearch-input", "caching")
+    wiki_page.wait_for_selector(".gsearch-result", timeout=8_000)
+
+    wiki_page.fill("#gsearch-input", "")
+    wiki_page.wait_for_timeout(300)  # past debounce
+
+    count_text = wiki_page.evaluate(
+        "() => document.getElementById('gsearch-count')?.textContent ?? ''"
+    )
+    assert not count_text.strip(), (
+        f"Result count must be empty on blank query, got '{count_text}'"
+    )
+
+
+def test_result_count_clears_on_modal_reopen(wiki_page):
+    """#gsearch-count is empty when modal is closed and reopened."""
+    _open_search(wiki_page)
+    wiki_page.fill("#gsearch-input", "caching")
+    wiki_page.wait_for_selector(".gsearch-result", timeout=8_000)
+
+    wiki_page.keyboard.press("Escape")
+    wiki_page.wait_for_selector(
+        "#global-search-modal.hidden", state="attached", timeout=2_000
+    )
+
+    _open_search(wiki_page)
+    count_text = wiki_page.evaluate(
+        "() => document.getElementById('gsearch-count')?.textContent ?? ''"
+    )
+    assert not count_text.strip(), (
+        f"Count badge must be empty on modal reopen, got '{count_text}'"
+    )

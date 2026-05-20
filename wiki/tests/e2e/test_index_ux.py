@@ -2,6 +2,7 @@
 - Index cards must not be clickable before stub detection completes.
 - Index section headers collapse/expand card grids; state persists in localStorage.
 - Unavailable cards have tooltip title and allow pointer events.
+- Section collapse uses max-height transition, not display:none (WIKI-160).
 """
 
 
@@ -53,7 +54,7 @@ def test_cards_clickable_after_load(page, base_url):
 
 
 def test_section_collapses_on_header_click(page, base_url):
-    """Clicking a section header hides the card grid."""
+    """Clicking a section header collapses the card grid via max-height transition."""
     _go_to_index(page, base_url)
     page.wait_for_selector(
         "#index-sections:not(.index-sections--loading)", timeout=15_000
@@ -61,9 +62,17 @@ def test_section_collapses_on_header_click(page, base_url):
 
     page.locator(".section-header").first.click()
 
-    first_section = page.locator(".index-section").first
-    grid = first_section.locator(".index-card-grid")
-    assert grid.is_hidden(), "Card grid must be hidden after section header click"
+    # Collapse uses max-height:0 (not display:none), so is_hidden() is unreliable.
+    # Wait until computed max-height reaches 0px (transition complete).
+    page.wait_for_function(
+        """() => {
+            const section = document.querySelector('.index-section.section--collapsed');
+            if (!section) return false;
+            const grid = section.querySelector('.index-card-grid');
+            return grid && window.getComputedStyle(grid).maxHeight === '0px';
+        }""",
+        timeout=3_000,
+    )
 
 
 def test_section_expands_on_second_click(page, base_url):
@@ -186,4 +195,49 @@ def test_unavailable_card_has_tooltip_title(page, base_url):
 
     assert "Coming soon" in result, (
         f"Unavailable card title must contain 'Coming soon', got: {result!r}"
+    )
+
+
+# ── Section collapse animation (WIKI-160) ─────────────────────────
+
+
+def test_section_grid_has_css_transition(page, base_url):
+    """index-card-grid has a CSS transition property set (max-height animation)."""
+    _go_to_index(page, base_url)
+    page.wait_for_selector(
+        "#index-sections:not(.index-sections--loading)", timeout=15_000
+    )
+
+    transition = page.evaluate("""() => {
+        const grid = document.querySelector('.index-card-grid');
+        return grid ? window.getComputedStyle(grid).transition : null;
+    }""")
+    assert transition, "index-card-grid must have a CSS transition"
+    assert "max-height" in transition, (
+        f"Transition must include max-height for smooth collapse, got: '{transition}'"
+    )
+
+
+def test_collapsed_grid_not_display_none(page, base_url):
+    """Collapsed section grid uses max-height:0, not display:none."""
+    _go_to_index(page, base_url)
+    page.wait_for_selector(
+        "#index-sections:not(.index-sections--loading)", timeout=15_000
+    )
+
+    page.locator(".section-header").first.click()
+    page.wait_for_timeout(300)  # let 200ms max-height transition complete
+
+    result = page.evaluate("""() => {
+        const grid = document.querySelector('.index-section.section--collapsed .index-card-grid');
+        if (!grid) return null;
+        const style = window.getComputedStyle(grid);
+        return { display: style.display, maxHeight: style.maxHeight };
+    }""")
+    assert result is not None, "No .index-card-grid found"
+    assert result["display"] != "none", (
+        "Collapsed grid must not use display:none — must use max-height transition"
+    )
+    assert result["maxHeight"] == "0px", (
+        f"Collapsed grid max-height must be 0px, got '{result['maxHeight']}'"
     )

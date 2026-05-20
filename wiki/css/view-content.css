@@ -324,6 +324,11 @@
 .markdown-body p:last-child {
   margin-bottom: 0;
 }
+.markdown-body > p:first-of-type {
+  font-size: var(--text-lg);
+  color: var(--text-heading);
+  line-height: 1.75;
+}
 
 /* Horizontal rule */
 .markdown-body hr {

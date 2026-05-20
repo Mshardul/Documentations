@@ -4,6 +4,8 @@ Content view enhancements:
 - Image lightbox zoom (#zoom-overlay, .zoomable-img)
 - Mermaid diagram zoom (click .mermaid-diagram → overlay svg)
 - Diagram theme sync (SVG re-renders on theme change)
+- Anchor link toast confirmation (WIKI-178)
+- Reading progress bar glow (WIKI-140)
 """
 
 ARTICLE_WITH_TABLE = """\
@@ -359,3 +361,74 @@ def test_diagram_src_preserved_after_theme_change(page, base_url):
     assert src_before == src_after, (
         "data-mermaid-src changed after re-render — re-render should preserve source attribute"
     )
+
+
+# ── Anchor link toast (WIKI-178) ──────────────────────────────────
+
+ARTICLE_WITH_SECTIONS = """\
+# Toast Test
+
+First paragraph.
+
+## Section Alpha
+
+Content here.
+
+## Section Beta
+
+More content.
+"""
+
+
+def test_anchor_link_click_shows_link_copied_toast(page, base_url):
+    """Clicking a heading anchor button shows a 'Link copied' toast."""
+    _load_mock_article(page, base_url, ARTICLE_WITH_SECTIONS, slug="anchor-toast")
+    page.context.grant_permissions(["clipboard-read", "clipboard-write"])
+    page.wait_for_selector("#markdown-body h2 .anchor-btn", timeout=5_000)
+
+    page.locator("#markdown-body h2 .anchor-btn").first.click()
+    page.wait_for_selector("#wiki-toast.visible", timeout=3_000)
+
+    toast_text = page.evaluate(
+        "() => document.getElementById('wiki-toast')?.textContent"
+    )
+    assert "Link copied" in (toast_text or ""), (
+        f"Expected 'Link copied' in toast, got '{toast_text}'"
+    )
+
+
+def test_anchor_link_toast_does_not_show_on_page_load(page, base_url):
+    """No toast is visible on initial article load (no accidental trigger)."""
+    _load_mock_article(page, base_url, ARTICLE_WITH_SECTIONS, slug="anchor-no-toast")
+
+    toast_visible = page.evaluate(
+        "() => document.getElementById('wiki-toast')?.classList.contains('visible') ?? false"
+    )
+    assert not toast_visible, "Toast must not be visible on article load"
+
+
+# ── Reading progress bar glow (WIKI-140) ─────────────────────────
+
+
+def test_reading_progress_bar_has_box_shadow(page, base_url):
+    """reading-progress element has a box-shadow (accent glow) set in CSS."""
+    _load_mock_article(page, base_url, ARTICLE_WITH_SECTIONS, slug="progress-glow")
+
+    box_shadow = page.evaluate("""() => {
+        const bar = document.getElementById('reading-progress');
+        return bar ? window.getComputedStyle(bar).boxShadow : null;
+    }""")
+    assert box_shadow is not None, "#reading-progress element not found"
+    assert box_shadow != "none", (
+        "reading-progress must have a box-shadow glow, got 'none'"
+    )
+
+
+def test_reading_progress_bar_visible_in_content_view(page, base_url):
+    """reading-progress bar has .visible class when in content view."""
+    _load_mock_article(page, base_url, ARTICLE_WITH_SECTIONS, slug="progress-visible")
+
+    is_visible = page.evaluate(
+        "() => document.getElementById('reading-progress')?.classList.contains('visible') ?? false"
+    )
+    assert is_visible, "reading-progress must have .visible class in content view"

@@ -54,18 +54,25 @@ def test_cards_clickable_after_load(page, base_url):
 
 
 def test_section_collapses_on_header_click(page, base_url):
-    """Clicking a section header hides the card grid."""
+    """Clicking a section header collapses the card grid via max-height transition."""
     _go_to_index(page, base_url)
     page.wait_for_selector(
         "#index-sections:not(.index-sections--loading)", timeout=15_000
     )
 
     page.locator(".section-header").first.click()
-    page.wait_for_timeout(300)  # let 200ms max-height transition complete
 
-    first_section = page.locator(".index-section").first
-    grid = first_section.locator(".index-card-grid")
-    assert grid.is_hidden(), "Card grid must be hidden after section header click"
+    # Collapse uses max-height:0 (not display:none), so is_hidden() is unreliable.
+    # Wait until computed max-height reaches 0px (transition complete).
+    page.wait_for_function(
+        """() => {
+            const section = document.querySelector('.index-section.section--collapsed');
+            if (!section) return false;
+            const grid = section.querySelector('.index-card-grid');
+            return grid && window.getComputedStyle(grid).maxHeight === '0px';
+        }""",
+        timeout=3_000,
+    )
 
 
 def test_section_expands_on_second_click(page, base_url):

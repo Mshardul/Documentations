@@ -283,6 +283,8 @@ body.distraction-free .sticky-section-header {
   min-width: 0;
   max-width: var(--content-width, 80ch);
   overflow-x: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
   order: 1;
   color: var(--text-body);
   font-size: var(--text-base);

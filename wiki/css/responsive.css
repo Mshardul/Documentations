@@ -30,9 +30,6 @@
   .index-main {
     padding: var(--s6) var(--s4) var(--s12);
   }
-  .topbar-inner {
-    padding: var(--s3) var(--s4);
-  }
   .scroll-top-btn {
     bottom: var(--s5);
     right: var(--s5);
@@ -60,5 +57,46 @@
   .markdown-body th,
   .markdown-body td {
     padding: var(--s2) var(--s3);
+  }
+
+  /* WIKI-218: expand tappable area to 44px minimum */
+  .theme-toggle-btn,
+  .topbar-icon-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* WIKI-200: fix remaining undersized touch targets */
+  .scroll-top-btn,
+  .toc-mobile-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .prereq-chip {
+    min-height: 44px;
+    padding-top: var(--s3);
+    padding-bottom: var(--s3);
+  }
+
+  /* WIKI-175: breadcrumb truncation on mobile */
+  .breadcrumb {
+    flex-wrap: nowrap;
+    min-width: 0;
+  }
+  .breadcrumb a,
+  .breadcrumb-link {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .breadcrumb-sep {
+    flex-shrink: 0;
+  }
+  .breadcrumb span:last-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

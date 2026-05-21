@@ -56,6 +56,12 @@ body {
 }
 
 .vignette-layer {
+  display: none;
+}
+
+body.distraction-free .vignette-layer,
+body.focus-mode .vignette-layer {
+  display: block;
   position: fixed;
   inset: 0;
   z-index: 1;
@@ -67,7 +73,8 @@ body {
   );
 }
 
-[data-theme="light"] .vignette-layer {
+[data-theme="light"] body.distraction-free .vignette-layer,
+[data-theme="light"] body.focus-mode .vignette-layer {
   background: radial-gradient(
     ellipse 110% 85% at 50% 0%,
     transparent 42%,

@@ -763,7 +763,12 @@ async function showHoverPreview(link, path) {
   previewEl.innerHTML = '<div class="loading">Loading preview...</div>';
   previewEl.classList.add("visible");
 
-  const SKIP_PREFIXES = ["prerequisites:", "table of contents"];
+  const SKIP_PREFIXES = [
+    "prerequisites:",
+    "prerequisites",
+    "prerequisite",
+    "table of contents",
+  ];
 
   try {
     const md = await fetchText(path, signal);
@@ -771,23 +776,25 @@ async function showHoverPreview(link, path) {
     if (!previewEl.classList.contains("visible")) return;
     let extract = "";
 
-    // Limit scan to first 600 chars; enough for title + first few paragraphs
-    const preview = md.slice(0, 600);
-
-    // Match TLDR section first
-    const tldrMatch = preview.match(/##\s*TL;?DR\s*\n([\s\S]*?)(?=\n##|$)/i);
+    // Search whole doc for TLDR section
+    const tldrMatch = md.match(/##\s*TL;?DR\s*\n([\s\S]*?)(?=\n##|\n#|$)/i);
     if (tldrMatch && tldrMatch[1].trim()) {
       extract = tldrMatch[1].trim();
     } else {
-      // Fallback: first non-metadata paragraph
-      const textWithoutTitle = preview.replace(/^#+ .*/gm, "").trim();
-      const paras = textWithoutTitle.split("\n\n");
+      // Fallback: first substantive paragraph that isn't prereqs/TOC/heading
+      const withoutTitle = md.replace(/^#[^#][^\n]*\n/, "");
+      const paras = withoutTitle.split("\n\n");
       extract =
-        paras.find(
-          (p) =>
-            p.trim() &&
-            !SKIP_PREFIXES.some((s) => p.trim().toLowerCase().startsWith(s))
-        ) || "";
+        paras
+          .find((p) => {
+            const t = p.trim().toLowerCase();
+            return (
+              t.length > 20 &&
+              !t.startsWith("#") &&
+              !SKIP_PREFIXES.some((s) => t.startsWith(s))
+            );
+          })
+          ?.trim() || "";
     }
 
     if (!extract) throw new Error("Empty");

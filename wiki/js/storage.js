@@ -525,6 +525,11 @@ function applySettingsToDOM(s) {
   root.setProperty("--border", bg.border);
   root.setProperty("--border-2", bg.border2);
   root.setProperty("--bg-translucent", bg.translucent);
+  root.setProperty("--glass-bg", bg.translucent);
+  root.setProperty(
+    "--glass-border",
+    dark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)"
+  );
 
   const tcList = dark ? DARK_TEXT_COLORS : LIGHT_TEXT_COLORS;
   const tc = tcList.find((t) => t.id === s.textColorId) || tcList[0];
@@ -551,8 +556,8 @@ function applySettingsToDOM(s) {
   const sizes = { S: "14px", M: "16px", L: "18px" };
   document.documentElement.style.fontSize = sizes[s.fontSize] || "16px";
 
-  const widths = { Narrow: "68ch", Default: "80ch", Wide: "120ch" };
-  root.setProperty("--content-width", widths[s.contentWidth] || "80ch");
+  const widths = { Narrow: "20%", Default: "10%", Wide: "5%" };
+  root.setProperty("--layout-padding", widths[s.contentWidth] || "10%");
 
   document.dispatchEvent(
     new CustomEvent("wiki:themechange", { detail: { theme } })

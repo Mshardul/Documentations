@@ -427,28 +427,6 @@
 }
 
 /* ═══════════════════════════════════════════════
-   CODE LANGUAGE LABELS
-   ═══════════════════════════════════════════════ */
-.code-lang-label {
-  position: absolute;
-  top: var(--s3);
-  left: var(--s4);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  color: var(--text-subtle);
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Shift copy button when lang label present */
-.markdown-body pre:has(.code-lang-label) code {
-  padding-top: var(--s5);
-}
-
-/* ═══════════════════════════════════════════════
    SETTINGS PANEL
    ═══════════════════════════════════════════════ */
 .settings-panel {
@@ -664,6 +642,7 @@
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--text-muted);
+  text-align: center;
   cursor: pointer;
   transition: border-color var(--t-fast), color var(--t-fast),
     background var(--t-fast);

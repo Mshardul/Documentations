@@ -80,7 +80,7 @@ function addCodeBlockHeader(contentEl, onCopyError = () => {}) {
     });
     header.appendChild(lights);
 
-    // Lang label (centered)
+    // Lang label (centered in header)
     const langMatch = code?.className.match(/language-(\w+)/);
     if (langMatch && langMatch[1] !== "mermaid") {
       const label = document.createElement("span");
@@ -89,7 +89,9 @@ function addCodeBlockHeader(contentEl, onCopyError = () => {}) {
       header.appendChild(label);
     }
 
-    // Copy button (icon-only ⧉)
+    pre.insertBefore(header, pre.firstChild);
+
+    // Copy button — floats inside code body, hidden until hover
     const btn = document.createElement("button");
     btn.className = "copy-btn";
     btn.title = "Copy code";
@@ -108,9 +110,7 @@ function addCodeBlockHeader(contentEl, onCopyError = () => {}) {
         })
         .catch(() => onCopyError());
     });
-    header.appendChild(btn);
-
-    pre.insertBefore(header, pre.firstChild);
+    pre.appendChild(btn);
   });
 }
 
@@ -123,13 +123,24 @@ function addCopyButtons(contentEl, onCopyError = () => {}) {
 function styleCallouts(contentEl) {
   contentEl.querySelectorAll("blockquote").forEach((bq) => {
     const text = bq.textContent.trim();
-    if (text.startsWith("🎯")) bq.classList.add("callout", "callout-interview");
+    let calloutClass = null;
+    if (text.startsWith("🎯")) calloutClass = "callout-interview";
     else if (text.startsWith("⚠️") || text.startsWith("⚠"))
-      bq.classList.add("callout", "callout-warning");
-    else if (text.startsWith("🧠"))
-      bq.classList.add("callout", "callout-thought");
+      calloutClass = "callout-warning";
+    else if (text.startsWith("🧠")) calloutClass = "callout-thought";
     else if (text.startsWith("⚖️") || text.startsWith("⚖"))
-      bq.classList.add("callout", "callout-decision");
+      calloutClass = "callout-decision";
+    if (!calloutClass) return;
+    bq.classList.add("callout", calloutClass);
+
+    // Strip leading emoji from first paragraph so CSS ::before doesn't duplicate it
+    const firstP = bq.querySelector("p");
+    if (firstP?.firstChild?.nodeType === Node.TEXT_NODE) {
+      const t = firstP.firstChild.textContent;
+      const chars = [...t];
+      const skip = chars[1] === "️" ? 2 : 1;
+      firstP.firstChild.textContent = chars.slice(skip).join("").trimStart();
+    }
   });
 }
 
@@ -446,6 +457,7 @@ function addCollapsibleCodeBlocks(contentEl) {
     btn.addEventListener("click", () => {
       const expanded = pre.classList.toggle("pre--expanded");
       btn.textContent = expanded ? "Show less" : "Show more";
+      if (!expanded) pre.scrollIntoView({ behavior: "smooth", block: "start" });
     });
     pre.appendChild(btn);
   });
@@ -499,7 +511,7 @@ function addCollapsibleCallouts(contentEl) {
       const expanded = bq.classList.toggle("callout--expanded");
       btn.textContent = expanded ? "Show less" : "Show more";
     });
-    bq.appendChild(btn);
+    bq.insertAdjacentElement("afterend", btn);
   });
 }
 

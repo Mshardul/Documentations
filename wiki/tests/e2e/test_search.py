@@ -28,15 +28,18 @@ def test_arrow_keys_cycle_results(wiki_page):
     _open_search(wiki_page)
     # "cache" matches many sections inside the large caching.md → guaranteed ≥2 results.
     wiki_page.fill("#gsearch-input", "cache")
-    wiki_page.wait_for_selector(".gsearch-result")
-    # Wait until at least two results are rendered before navigating.
+    # Wait for ≥2 results and let the 150ms debounce fully settle.
     wiki_page.locator(".gsearch-result").nth(1).wait_for()
+    wiki_page.wait_for_timeout(200)
 
-    wiki_page.locator("#gsearch-input").focus()
     wiki_page.keyboard.press("ArrowDown")
-    first = wiki_page.locator(".gsearch-result.selected").inner_text()
+    wiki_page.wait_for_selector(".gsearch-result.selected")
+    first = wiki_page.locator(".gsearch-result.selected").first.inner_text()
+
     wiki_page.keyboard.press("ArrowDown")
-    second = wiki_page.locator(".gsearch-result.selected").inner_text()
+    wiki_page.wait_for_selector(".gsearch-result.selected")
+    second = wiki_page.locator(".gsearch-result.selected").first.inner_text()
+
     assert first != second
 
 

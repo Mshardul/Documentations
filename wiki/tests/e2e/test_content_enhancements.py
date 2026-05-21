@@ -486,18 +486,18 @@ def test_code_block_has_traffic_lights(page, base_url):
 
 
 def test_code_block_copy_button_in_header(page, base_url):
-    """Copy button lives inside .code-header and shows the ⧉ glyph."""
+    """Copy button lives inside <pre> (after .code-header) and shows the ⧉ glyph."""
     _load_mock_article(page, base_url, ARTICLE_WITH_CODE, slug="code-copybtn")
     page.wait_for_selector("#markdown-body pre", timeout=5_000)
 
     result = page.evaluate("""() => {
-        const header = document.querySelector('#markdown-body .code-header');
-        if (!header) return { found: false };
-        const btn = header.querySelector('.copy-btn');
+        const pre = document.querySelector('#markdown-body pre');
+        if (!pre) return { found: false };
+        const btn = pre.querySelector('.copy-btn');
         return { found: true, hasCopyBtn: !!btn, text: btn?.textContent?.trim() };
     }""")
-    assert result["found"], ".code-header not found inside <pre>"
-    assert result["hasCopyBtn"], ".copy-btn not found inside .code-header"
+    assert result["found"], "<pre> not found inside #markdown-body"
+    assert result["hasCopyBtn"], ".copy-btn not found inside <pre>"
     assert result["text"] == "⧉", (
         f"Expected copy button glyph '⧉', got '{result['text']}'"
     )
@@ -589,17 +589,18 @@ def test_tall_callout_gets_collapsible_class(page, base_url):
     result = page.evaluate("""() => {
         const callout = document.querySelector('.callout');
         if (!callout) return { found: false };
+        const nextEl = callout.nextElementSibling;
         return {
             found: true,
             isCollapsible: callout.classList.contains('callout--collapsible'),
-            hasBtn: !!callout.querySelector('.callout-expand-btn'),
+            hasBtn: nextEl?.classList.contains('callout-expand-btn') ?? false,
         };
     }""")
     assert result["found"], "No .callout element found in article"
     assert result["isCollapsible"], (
         ".callout is missing .callout--collapsible on a tall callout"
     )
-    assert result["hasBtn"], ".callout is missing .callout-expand-btn"
+    assert result["hasBtn"], ".callout-expand-btn not found after .callout"
 
 
 def test_callout_expand_btn_toggles_expanded(page, base_url):

@@ -12,7 +12,7 @@ def _open_settings(page):
 
 def _get_content_width_var(page):
     return page.evaluate(
-        "() => document.documentElement.style.getPropertyValue('--content-width').trim()"
+        "() => document.documentElement.style.getPropertyValue('--layout-padding').trim()"
     )
 
 
@@ -38,27 +38,27 @@ def test_content_width_default_is_active_on_open(wiki_page):
 
 
 def test_narrow_sets_content_width_68ch(wiki_page):
-    """clicking Narrow sets --content-width to 68ch."""
+    """clicking Narrow sets --layout-padding to 20%."""
     _open_settings(wiki_page)
     wiki_page.locator("#settings-widths .settings-size-btn").nth(0).click()  # Narrow
-    assert _get_content_width_var(wiki_page) == "68ch"
+    assert _get_content_width_var(wiki_page) == "20%"
 
 
 def test_default_sets_content_width_80ch(wiki_page):
-    """clicking Default sets --content-width to 80ch."""
+    """clicking Default sets --layout-padding to 10%."""
     _open_settings(wiki_page)
     wiki_page.locator("#settings-widths .settings-size-btn").nth(
         0
     ).click()  # Narrow first
     wiki_page.locator("#settings-widths .settings-size-btn").nth(1).click()  # Default
-    assert _get_content_width_var(wiki_page) == "80ch"
+    assert _get_content_width_var(wiki_page) == "10%"
 
 
 def test_wide_sets_content_width_120ch(wiki_page):
-    """clicking Wide sets --content-width to 120ch."""
+    """clicking Wide sets --layout-padding to 5%."""
     _open_settings(wiki_page)
     wiki_page.locator("#settings-widths .settings-size-btn").nth(2).click()  # Wide
-    assert _get_content_width_var(wiki_page) == "120ch"
+    assert _get_content_width_var(wiki_page) == "5%"
 
 
 def test_width_button_gets_active_class(wiki_page):
@@ -97,6 +97,6 @@ def test_content_width_persists_across_reload(page, base_url):
     assert stored_after == "Narrow"
 
     width_var = page.evaluate(
-        "() => document.documentElement.style.getPropertyValue('--content-width').trim()"
+        "() => document.documentElement.style.getPropertyValue('--layout-padding').trim()"
     )
-    assert width_var == "68ch"
+    assert width_var == "20%"

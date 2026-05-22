@@ -598,17 +598,28 @@ const Settings = {
   },
 
   close() {
+    if (!this.isOpen()) return;
     const panel = document.getElementById("settings-panel");
     if (this._focusTrapHandler) {
       panel.removeEventListener("keydown", this._focusTrapHandler);
       this._focusTrapHandler = null;
     }
-    panel.classList.add("hidden");
-    panel.setAttribute("aria-hidden", "true");
-    if (this._lastFocus && typeof this._lastFocus.focus === "function") {
-      this._lastFocus.focus();
-      this._lastFocus = null;
-    }
+    const drawer = panel.querySelector(".settings-drawer");
+    const lastFocus = this._lastFocus;
+    this._lastFocus = null;
+    drawer.classList.add("is-closing");
+    drawer.addEventListener(
+      "animationend",
+      () => {
+        drawer.classList.remove("is-closing");
+        panel.classList.add("hidden");
+        panel.setAttribute("aria-hidden", "true");
+        if (lastFocus && typeof lastFocus.focus === "function") {
+          lastFocus.focus();
+        }
+      },
+      { once: true }
+    );
   },
 
   isOpen() {

@@ -695,6 +695,34 @@
   }
 }
 
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slideDownSheet {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.settings-drawer.is-closing {
+  animation: slideOutRight 0.2s ease forwards;
+}
+
+@media (max-width: 640px) {
+  .settings-drawer.is-closing {
+    animation: slideDownSheet 0.2s ease forwards;
+  }
+}
+
 @keyframes slideUpSheet {
   from {
     transform: translateY(100%);

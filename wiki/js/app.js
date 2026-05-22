@@ -128,15 +128,18 @@ const tocSidebar = document.getElementById("toc-sidebar");
 tocMobileBtn.addEventListener("click", () => {
   tocSidebar.classList.add("mobile-open");
   tocMobileOverlay.classList.add("open");
+  document.body.classList.add("toc-open");
 });
 tocMobileOverlay.addEventListener("click", () => {
   tocSidebar.classList.remove("mobile-open");
   tocMobileOverlay.classList.remove("open");
+  document.body.classList.remove("toc-open");
 });
 document.getElementById("toc-nav").addEventListener("click", (e) => {
   if (e.target.closest(".toc-item")) {
     tocSidebar.classList.remove("mobile-open");
     tocMobileOverlay.classList.remove("open");
+    document.body.classList.remove("toc-open");
   }
 });
 

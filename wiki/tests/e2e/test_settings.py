@@ -620,3 +620,16 @@ def test_unrecognized_format_falls_back_to_os_preference(page, base_url):
     assert theme == "light", (
         "Unrecognized format should fall back to OS light preference"
     )
+
+
+def test_settings_close_plays_animation(wiki_page):
+    """closing settings panel briefly adds .is-closing to drawer before hiding."""
+    _open_settings(wiki_page)
+    wiki_page.locator("#settings-backdrop").click(force=True)
+    wiki_page.wait_for_function(
+        "() => document.querySelector('.settings-drawer')?.classList.contains('is-closing')"
+    )
+    _settings_is_closed(wiki_page)
+    assert not wiki_page.evaluate(
+        "() => document.querySelector('.settings-drawer')?.classList.contains('is-closing')"
+    )

@@ -112,8 +112,8 @@ def test_read_state_persists_on_revisit(page, base_url):
     page.locator("#content-back-btn").click()
     page.wait_for_selector("#view-index.active", timeout=5_000)
 
-    # Navigate back to article
-    page.goto(f"{base_url}/wiki/#{ARTICLE_HASH}")
+    # Navigate back to article via hash change (goto unreliable for same-origin hash nav)
+    page.evaluate(f"() => {{ location.hash = '#{ARTICLE_HASH}'; }}")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_selector("#content-read-btn", timeout=5_000)
 

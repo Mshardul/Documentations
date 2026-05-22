@@ -512,3 +512,27 @@ def test_debug_overlay_close_removes_it(page, base_url):
     assert page.locator("#debug-overlay").count() == 0, (
         "#debug-overlay must be removed after close button click"
     )
+
+
+def test_focus_toggle_hidden_on_narrow_mobile(page, base_url):
+    """focus-toggle button is hidden at 375px width."""
+    page.set_viewport_size({"width": 375, "height": 812})
+    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.wait_for_selector("#view-content.active", timeout=10_000)
+    assert not page.locator("[data-action='focus-toggle']").first.is_visible()
+
+
+def test_offline_toggle_hidden_on_narrow_mobile(page, base_url):
+    """offline-toggle button is hidden at 375px width."""
+    page.set_viewport_size({"width": 375, "height": 812})
+    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.wait_for_selector("#view-content.active", timeout=10_000)
+    assert not page.locator("[data-action='offline-toggle']").first.is_visible()
+
+
+def test_focus_toggle_visible_on_desktop(page, base_url):
+    """focus-toggle button is visible on desktop."""
+    page.set_viewport_size({"width": 1280, "height": 800})
+    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.wait_for_selector("#view-content.active", timeout=10_000)
+    assert page.locator("[data-action='focus-toggle']").first.is_visible()

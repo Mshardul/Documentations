@@ -44,8 +44,11 @@ def test_hotkey_comma_settings(page, base_url):
     page.keyboard.press(",")
     assert "hidden" not in (panel.get_attribute("class") or "")
 
-    # Close (toggle)
+    # Close (toggle) — wait for animation to complete before hidden is added
     page.keyboard.press(",")
+    page.wait_for_function(
+        "() => document.getElementById('settings-panel').classList.contains('hidden')"
+    )
     assert "hidden" in (panel.get_attribute("class") or "")
 
 

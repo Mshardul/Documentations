@@ -144,6 +144,31 @@
   opacity: 1;
 }
 
+.wiki-card.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-glow), 0 0 16px var(--accent-glow),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+  animation: activeCardPulse 2.5s ease-in-out infinite;
+}
+
+.wiki-card.active::before {
+  opacity: 1;
+}
+
+@keyframes activeCardPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px var(--accent-glow), 0 0 12px var(--accent-glow),
+      0 8px 32px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent);
+  }
+  50% {
+    box-shadow: 0 0 0 1.5px var(--accent-light), 0 0 24px var(--accent-glow),
+      0 8px 32px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent-light);
+  }
+}
+
 .wiki-card-icon {
   font-size: 2.25rem;
   line-height: 1;

@@ -172,3 +172,33 @@ def test_sticky_section_header_shows_section_on_scroll(page, base_url):
         "() => document.getElementById('sticky-section-header')?.textContent?.trim()"
     )
     assert text, "Sticky section header is empty after scrolling past h2"
+
+
+def test_mobile_toc_open_locks_body_scroll(page, base_url):
+    """opening mobile TOC adds toc-open class to body."""
+    page.set_viewport_size({"width": 375, "height": 812})
+    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.wait_for_selector("#view-content.active", timeout=10_000)
+
+    page.locator("#toc-mobile-btn").click()
+    page.wait_for_function(
+        "() => document.getElementById('toc-sidebar').classList.contains('mobile-open')"
+    )
+    assert page.evaluate("() => document.body.classList.contains('toc-open')")
+
+
+def test_mobile_toc_close_via_overlay_unlocks_scroll(page, base_url):
+    """closing mobile TOC via overlay removes toc-open from body."""
+    page.set_viewport_size({"width": 375, "height": 812})
+    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.wait_for_selector("#view-content.active", timeout=10_000)
+
+    page.locator("#toc-mobile-btn").click()
+    page.wait_for_function(
+        "() => document.getElementById('toc-sidebar').classList.contains('mobile-open')"
+    )
+    page.locator("#toc-mobile-overlay").click()
+    page.wait_for_function(
+        "() => !document.getElementById('toc-sidebar').classList.contains('mobile-open')"
+    )
+    assert not page.evaluate("() => document.body.classList.contains('toc-open')")

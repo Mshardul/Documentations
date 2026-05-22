@@ -136,8 +136,14 @@ function renderHome() {
   const grid = document.getElementById("wiki-grid");
   grid.innerHTML = WIKIS.map(
     (w) => `
-    <div class="wiki-card" data-wiki-id="${w.id}" onclick="navigate('${w.id}')" role="button" tabindex="0"
-         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('${w.id}')}">
+    <div class="wiki-card${
+      state.currentWikiId === w.id ? " active" : ""
+    }" data-wiki-id="${w.id}" onclick="navigate('${
+      w.id
+    }')" role="button" tabindex="0"
+         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigate('${
+           w.id
+         }')}">
       <div class="wiki-card-icon">${w.icon}</div>
       <div class="wiki-card-body">
         <h2 class="wiki-card-title">${w.title}</h2>

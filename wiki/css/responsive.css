@@ -100,3 +100,35 @@
     white-space: nowrap;
   }
 }
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .topbar-inner {
+    padding-left: max(var(--s4), env(safe-area-inset-left));
+    padding-right: max(var(--s4), env(safe-area-inset-right));
+  }
+
+  @media (max-width: 640px) {
+    .scroll-top-btn {
+      bottom: calc(var(--s5) + env(safe-area-inset-bottom));
+    }
+    .toc-mobile-btn {
+      bottom: calc(var(--s5) + 42px + var(--s4) + env(safe-area-inset-bottom));
+    }
+    .settings-drawer {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+}
+
+@media (max-width: 430px) {
+  [data-action="focus-toggle"],
+  [data-action="offline-toggle"] {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  body.toc-open {
+    overflow: hidden;
+  }
+}

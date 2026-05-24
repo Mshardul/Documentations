@@ -567,13 +567,15 @@ function applySettingsToDOM(s) {
 const Settings = {
   _lastFocus: null,
   _focusTrapHandler: null,
+  _shortcutsCache: null,
 
-  open() {
+  open(tab = "general") {
     this._lastFocus = document.activeElement;
+    const modal = document.getElementById("prefs-modal");
+    modal.classList.remove("hidden");
+    modal.setAttribute("aria-hidden", "false");
+    this._switchTab(tab);
     this._render();
-    const panel = document.getElementById("settings-panel");
-    panel.classList.remove("hidden");
-    panel.setAttribute("aria-hidden", "false");
 
     const focusable = this._getFocusable();
     if (focusable.length) focusable[0].focus();
@@ -594,47 +596,91 @@ const Settings = {
         }
       }
     };
-    panel.addEventListener("keydown", this._focusTrapHandler);
+    modal.addEventListener("keydown", this._focusTrapHandler);
+  },
+
+  openTab(name) {
+    if (!this.isOpen()) {
+      this.open(name);
+    } else {
+      this._switchTab(name);
+    }
   },
 
   close() {
     if (!this.isOpen()) return;
-    const panel = document.getElementById("settings-panel");
+    const modal = document.getElementById("prefs-modal");
     if (this._focusTrapHandler) {
-      panel.removeEventListener("keydown", this._focusTrapHandler);
+      modal.removeEventListener("keydown", this._focusTrapHandler);
       this._focusTrapHandler = null;
     }
-    const drawer = panel.querySelector(".settings-drawer");
-    const lastFocus = this._lastFocus;
-    this._lastFocus = null;
-    drawer.classList.add("is-closing");
-    drawer.addEventListener(
-      "animationend",
-      () => {
-        drawer.classList.remove("is-closing");
-        panel.classList.add("hidden");
-        panel.setAttribute("aria-hidden", "true");
-        if (lastFocus && typeof lastFocus.focus === "function") {
-          lastFocus.focus();
-        }
-      },
-      { once: true }
-    );
+    modal.classList.add("hidden");
+    modal.setAttribute("aria-hidden", "true");
+    if (this._lastFocus && typeof this._lastFocus.focus === "function") {
+      this._lastFocus.focus();
+      this._lastFocus = null;
+    }
   },
 
   isOpen() {
-    return !document
-      .getElementById("settings-panel")
-      .classList.contains("hidden");
+    return !document.getElementById("prefs-modal").classList.contains("hidden");
+  },
+
+  _switchTab(name) {
+    document.querySelectorAll(".prefs-tab").forEach((t) => {
+      const active = t.dataset.tab === name;
+      t.classList.toggle("active", active);
+      t.setAttribute("aria-selected", String(active));
+    });
+    document.querySelectorAll(".prefs-panel").forEach((p) => {
+      const active = p.id === `prefs-panel-${name}`;
+      p.classList.toggle("active", active);
+      p.setAttribute("aria-hidden", String(!active));
+    });
+    if (name === "keyboard") this._renderShortcuts();
   },
 
   _getFocusable() {
-    const panel = document.getElementById("settings-panel");
+    const modal = document.getElementById("prefs-modal");
     return [
-      ...panel.querySelectorAll(
+      ...modal.querySelectorAll(
         "button:not([disabled]), input:not([disabled])"
       ),
     ].filter((el) => el.offsetParent !== null && el.style.display !== "none");
+  },
+
+  async _renderShortcuts() {
+    const container = document.getElementById("prefs-shortcuts-body");
+    if (!container) return;
+    if (!this._shortcutsCache) {
+      try {
+        const res = await fetch("./data/shortcuts.json");
+        this._shortcutsCache = await res.json();
+      } catch {
+        container.textContent = "Could not load shortcuts.";
+        return;
+      }
+    }
+    const renderGroup = (label, items) =>
+      `<div class="help-group">
+        <div class="help-group-label">${escHtml(label)}</div>
+        ${items
+          .map(
+            (item) =>
+              `<div class="help-row"><kbd>${item.keys
+                .map(escHtml)
+                .join(" / ")}</kbd><span>${escHtml(
+                item.description
+              )}</span></div>`
+          )
+          .join("")}
+      </div>`;
+    const list = document.createElement("div");
+    list.className = "prefs-shortcuts-list";
+    list.innerHTML =
+      renderGroup("Global", this._shortcutsCache.global) +
+      renderGroup("Content", this._shortcutsCache.content);
+    container.replaceChildren(list);
   },
 
   _render() {

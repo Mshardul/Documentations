@@ -131,38 +131,8 @@
           </svg>
         </button>
         <button
-          class="theme-toggle-btn"
-          title="Toggle theme"
-          data-action="theme-toggle"
-        >
-          <svg class="theme-icon-moon" viewBox="0 0 20 20" fill="none">
-            <path
-              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          <svg class="theme-icon-sun" viewBox="0 0 20 20" fill="none">
-            <circle
-              cx="10"
-              cy="10"
-              r="4"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-            <path
-              d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-          </svg>
-        </button>
-        <button
           class="topbar-icon-btn"
-          title="Settings"
+          title="Preferences (,)"
           data-action="settings-open"
         >
           <svg viewBox="0 0 20 20" fill="none">
@@ -236,38 +206,8 @@
             </svg>
           </button>
           <button
-            class="theme-toggle-btn"
-            title="Toggle theme"
-            data-action="theme-toggle"
-          >
-            <svg class="theme-icon-moon" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <svg class="theme-icon-sun" viewBox="0 0 20 20" fill="none">
-              <circle
-                cx="10"
-                cy="10"
-                r="4"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-              <path
-                d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-            </svg>
-          </button>
-          <button
             class="topbar-icon-btn"
-            title="Settings"
+            title="Preferences (,)"
             data-action="settings-open"
           >
             <svg viewBox="0 0 20 20" fill="none">
@@ -434,38 +374,8 @@
             </svg>
           </button>
           <button
-            class="theme-toggle-btn"
-            title="Toggle theme"
-            data-action="theme-toggle"
-          >
-            <svg class="theme-icon-moon" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <svg class="theme-icon-sun" viewBox="0 0 20 20" fill="none">
-              <circle
-                cx="10"
-                cy="10"
-                r="4"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-              <path
-                d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-            </svg>
-          </button>
-          <button
             class="topbar-icon-btn"
-            title="Settings"
+            title="Preferences (,)"
             data-action="settings-open"
           >
             <svg viewBox="0 0 20 20" fill="none">
@@ -563,81 +473,28 @@
     </button>
 
     <!-- ══════════════════════════════════════
-       HELP MODAL (?)
+       PREFERENCES MODAL
   ══════════════════════════════════════ -->
     <div
-      id="help-modal"
-      class="help-modal hidden"
+      id="prefs-modal"
+      class="prefs-modal hidden"
       role="dialog"
-      aria-label="Keyboard shortcuts"
       aria-modal="true"
-    >
-      <div class="help-backdrop"></div>
-      <div class="help-dialog">
-        <div class="help-header">
-          <span class="help-title">Keyboard Shortcuts</span>
-          <button class="help-close-btn" id="help-close-btn" aria-label="Close">
-            <svg viewBox="0 0 14 14" fill="none">
-              <path
-                d="M1 1l12 12M13 1L1 13"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-            </svg>
-          </button>
-        </div>
-        <div class="help-body">
-          <div class="help-group">
-            <div class="help-group-label">Global</div>
-            <div class="help-row"><kbd>⌘K</kbd><span>Open search</span></div>
-            <div class="help-row"><kbd>?</kbd><span>Show this help</span></div>
-            <div class="help-row">
-              <kbd>ESC</kbd><span>Close / go back</span>
-            </div>
-            <div class="help-row"><kbd>,</kbd><span>Open settings</span></div>
-          </div>
-          <div class="help-group">
-            <div class="help-group-label">Content view</div>
-            <div class="help-row"><kbd>B</kbd><span>Toggle bookmark</span></div>
-            <div class="help-row">
-              <kbd>F</kbd><span>Toggle focus mode</span>
-            </div>
-            <div class="help-row">
-              <kbd>D</kbd><span>Distraction-free mode</span>
-            </div>
-            <div class="help-row">
-              <kbd>T</kbd><span>Focus table of contents</span>
-            </div>
-            <div class="help-row">
-              <kbd>=</kbd><span>Increase font size</span>
-            </div>
-            <div class="help-row">
-              <kbd>-</kbd><span>Decrease font size</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════
-       SETTINGS PANEL
-  ══════════════════════════════════════ -->
-    <div
-      id="settings-panel"
-      class="settings-panel hidden"
-      role="dialog"
-      aria-label="Settings"
+      aria-label="Preferences"
       aria-hidden="true"
     >
-      <div class="settings-backdrop" id="settings-backdrop"></div>
-      <div class="settings-drawer">
-        <div class="settings-header">
-          <span class="settings-title">Settings</span>
+      <div class="prefs-backdrop" id="prefs-backdrop"></div>
+      <div class="prefs-dialog">
+        <div class="prefs-drag-handle" aria-hidden="true"></div>
+        <div class="prefs-header">
+          <div class="prefs-header-text">
+            <span class="prefs-title">Preferences</span>
+            <span class="prefs-subtitle">Customize your experience</span>
+          </div>
           <button
-            class="settings-close-btn"
-            data-action="settings-close"
-            title="Close"
+            class="prefs-close-btn"
+            data-action="prefs-close"
+            aria-label="Close"
           >
             <svg viewBox="0 0 14 14" fill="none">
               <path
@@ -649,40 +506,95 @@
             </svg>
           </button>
         </div>
-        <div class="settings-body">
-          <div class="settings-group">
-            <div class="settings-group-label">Theme</div>
-            <div class="settings-section">
-              <div class="settings-section-label">Background</div>
-              <div id="settings-backgrounds" class="settings-bg-row"></div>
-            </div>
-            <div class="settings-section">
-              <div class="settings-section-label">Text</div>
-              <div id="settings-text-colors" class="settings-text-row"></div>
-            </div>
-            <div class="settings-section">
-              <div class="settings-section-label">Accent</div>
-              <div id="settings-accents" class="settings-accent-row"></div>
+        <div class="prefs-tabs" role="tablist" aria-label="Preferences tabs">
+          <button
+            class="prefs-tab active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="prefs-panel-general"
+            data-action="prefs-tab"
+            data-tab="general"
+          >
+            General
+          </button>
+          <button
+            class="prefs-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="prefs-panel-keyboard"
+            data-action="prefs-tab"
+            data-tab="keyboard"
+          >
+            Keyboard
+          </button>
+          <button
+            class="prefs-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="prefs-panel-advanced"
+            data-action="prefs-tab"
+            data-tab="advanced"
+          >
+            Advanced
+          </button>
+        </div>
+        <div class="prefs-body">
+          <div
+            class="prefs-panel active"
+            id="prefs-panel-general"
+            role="tabpanel"
+            aria-hidden="false"
+          >
+            <div class="prefs-general-grid">
+              <div class="prefs-col">
+                <div class="prefs-section">
+                  <div class="prefs-section-label">Background</div>
+                  <div id="settings-backgrounds" class="settings-bg-row"></div>
+                </div>
+                <div class="prefs-section">
+                  <div class="prefs-section-label">Text</div>
+                  <div
+                    id="settings-text-colors"
+                    class="settings-text-row"
+                  ></div>
+                </div>
+                <div class="prefs-section">
+                  <div class="prefs-section-label">Accent</div>
+                  <div id="settings-accents" class="settings-accent-row"></div>
+                </div>
+              </div>
+              <div class="prefs-col">
+                <div class="prefs-section">
+                  <div class="prefs-section-label">Font</div>
+                  <div id="settings-fonts" class="settings-font-grid"></div>
+                </div>
+                <div class="prefs-section">
+                  <div class="prefs-section-label">Size</div>
+                  <div id="settings-sizes" class="settings-size-row"></div>
+                </div>
+                <div class="prefs-section">
+                  <div class="prefs-section-label">Width</div>
+                  <div id="settings-widths" class="settings-size-row"></div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="settings-group">
-            <div class="settings-group-label">Text</div>
-            <div class="settings-section">
-              <div class="settings-section-label">Font</div>
-              <div id="settings-fonts" class="settings-font-grid"></div>
-            </div>
-            <div class="settings-section">
-              <div class="settings-section-label">Size</div>
-              <div id="settings-sizes" class="settings-size-row"></div>
-            </div>
-            <div class="settings-section">
-              <div class="settings-section-label">Width</div>
-              <div id="settings-widths" class="settings-size-row"></div>
-            </div>
+          <div
+            class="prefs-panel"
+            id="prefs-panel-keyboard"
+            role="tabpanel"
+            aria-hidden="true"
+          >
+            <div id="prefs-shortcuts-body" class="prefs-shortcuts-body"></div>
           </div>
-          <div class="settings-group">
-            <div class="settings-group-label">Data</div>
-            <div class="settings-section">
+          <div
+            class="prefs-panel"
+            id="prefs-panel-advanced"
+            role="tabpanel"
+            aria-hidden="true"
+          >
+            <div class="prefs-section">
+              <div class="prefs-section-label">Data</div>
               <div class="settings-size-row">
                 <button class="settings-size-btn" data-action="settings-export">
                   Export

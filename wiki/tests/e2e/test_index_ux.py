@@ -88,7 +88,7 @@ def test_section_expands_on_second_click(page, base_url):
 
     first_section = page.locator(".index-section").first
     grid = first_section.locator(".index-card-grid")
-    assert grid.is_visible(), "Card grid must be visible after second click (expand)"
+    grid.wait_for(state="visible")
 
 
 def test_section_collapse_persists_in_localstorage(page, base_url):

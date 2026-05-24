@@ -35,7 +35,7 @@ def test_hotkey_b_bookmarks(page, base_url):
 def test_hotkey_comma_settings(page, base_url):
     """Pressing ',' toggles the settings panel."""
     _go_to_article(page, base_url)
-    panel = page.locator("#settings-panel")
+    panel = page.locator("#prefs-modal")
 
     # Initially closed
     assert "hidden" in (panel.get_attribute("class") or "")
@@ -44,10 +44,10 @@ def test_hotkey_comma_settings(page, base_url):
     page.keyboard.press(",")
     assert "hidden" not in (panel.get_attribute("class") or "")
 
-    # Close (toggle) — wait for animation to complete before hidden is added
+    # Close (toggle)
     page.keyboard.press(",")
     page.wait_for_function(
-        "() => document.getElementById('settings-panel').classList.contains('hidden')"
+        "() => document.getElementById('prefs-modal').classList.contains('hidden')"
     )
     assert "hidden" in (panel.get_attribute("class") or "")
 

@@ -4,9 +4,9 @@
 
 
 def _open_settings(page):
-    page.locator("[title='Settings']").first.click()
+    page.locator("[title='Preferences (,)']").first.click()
     page.wait_for_function(
-        "() => !document.getElementById('settings-panel').classList.contains('hidden')"
+        "() => !document.getElementById('prefs-modal').classList.contains('hidden')"
     )
 
 
@@ -79,8 +79,8 @@ def test_content_width_persists_across_reload(page, base_url):
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
 
-    page.locator("[title='Settings']").first.click()
-    page.wait_for_selector("#settings-panel:not(.hidden)")
+    page.locator("[title='Preferences (,)']").first.click()
+    page.wait_for_selector("#prefs-modal:not(.hidden)")
     page.locator("#settings-widths .settings-size-btn").nth(0).click()  # Narrow
 
     stored = page.evaluate(

@@ -1,0 +1,16 @@
+{
+  "global": [
+    { "keys": ["⌘K"], "description": "Open search" },
+    { "keys": ["?"], "description": "Open keyboard shortcuts" },
+    { "keys": [","], "description": "Open preferences" },
+    { "keys": ["ESC"], "description": "Close / go back" }
+  ],
+  "content": [
+    { "keys": ["B"], "description": "Toggle bookmark" },
+    { "keys": ["F"], "description": "Toggle focus mode" },
+    { "keys": ["D"], "description": "Distraction-free mode" },
+    { "keys": ["T"], "description": "Focus table of contents" },
+    { "keys": ["="], "description": "Increase font size" },
+    { "keys": ["-"], "description": "Decrease font size" }
+  ]
+}

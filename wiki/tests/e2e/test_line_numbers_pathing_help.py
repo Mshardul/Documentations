@@ -1,9 +1,9 @@
 """
-Line numbers, multi-level pathing, clear-all confirmation, help modal:
+Line numbers, multi-level pathing, clear-all confirmation, preferences modal:
 - Code blocks with >= 3 lines get line numbers
 - resolvePath strips fragments and bounds-checks pop
 - Clear-all recents/bookmarks shows undo toast
-- ? hotkey opens help modal; Escape closes it
+- ? hotkey opens prefs modal (Keyboard tab); Escape closes it
 """
 
 
@@ -218,85 +218,90 @@ def test_clear_bookmarks_shows_undo_toast(page, base_url):
     )
 
 
-# ── Help modal ───────────────────────────────────────────────────
+# ── Preferences modal (? hotkey) ─────────────────────────────────
 
 
-def test_help_modal_hidden_on_load(page, base_url):
-    """Help modal starts hidden."""
+def test_prefs_modal_hidden_on_load(page, base_url):
+    """Prefs modal starts hidden."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
-    modal = page.locator("#help-modal")
-    assert modal.count() > 0, "Help modal should exist in DOM"
+    modal = page.locator("#prefs-modal")
+    assert modal.count() > 0, "Prefs modal should exist in DOM"
     assert "hidden" in (modal.get_attribute("class") or ""), (
-        "Help modal should start hidden"
+        "Prefs modal should start hidden"
     )
 
 
-def test_question_mark_opens_help(page, base_url):
-    """Pressing ? opens the help modal."""
+def test_question_mark_opens_prefs_keyboard_tab(page, base_url):
+    """Pressing ? opens the prefs modal with Keyboard tab active."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
     page.keyboard.press("?")
-    modal = page.locator("#help-modal")
+    modal = page.locator("#prefs-modal")
     assert "hidden" not in (modal.get_attribute("class") or ""), (
-        "Help modal should be visible after pressing ?"
+        "Prefs modal should be visible after pressing ?"
+    )
+    keyboard_tab = page.locator("[data-tab='keyboard']")
+    assert keyboard_tab.get_attribute("aria-selected") == "true", (
+        "Keyboard tab should be selected after pressing ?"
     )
 
 
-def test_escape_closes_help_modal(page, base_url):
-    """Pressing Escape closes the help modal."""
+def test_escape_closes_prefs_modal(page, base_url):
+    """Pressing Escape closes the prefs modal."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
     page.keyboard.press("?")
     page.keyboard.press("Escape")
-    modal = page.locator("#help-modal")
+    modal = page.locator("#prefs-modal")
     assert "hidden" in (modal.get_attribute("class") or ""), (
-        "Help modal should close on Escape"
+        "Prefs modal should close on Escape"
     )
 
 
-def test_help_close_btn_closes_modal(page, base_url):
-    """Clicking the close button hides the help modal."""
+def test_prefs_close_btn_closes_modal(page, base_url):
+    """Clicking the close button hides the prefs modal."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
     page.keyboard.press("?")
-    page.locator("#help-close-btn").click()
-    modal = page.locator("#help-modal")
+    page.locator("[data-action='prefs-close']").click()
+    modal = page.locator("#prefs-modal")
     assert "hidden" in (modal.get_attribute("class") or ""), (
-        "Help modal should close on close button click"
+        "Prefs modal should close on close button click"
     )
 
 
-def test_help_backdrop_closes_modal(page, base_url):
-    """Clicking the backdrop (away from dialog) closes the help modal."""
+def test_prefs_backdrop_closes_modal(page, base_url):
+    """Clicking the backdrop closes the prefs modal."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
     page.keyboard.press("?")
-    # Click top-left corner of the backdrop, outside the centered dialog
-    page.locator("#help-modal .help-backdrop").click(position={"x": 5, "y": 5})
-    modal = page.locator("#help-modal")
+    page.locator("#prefs-backdrop").click(position={"x": 5, "y": 5})
+    modal = page.locator("#prefs-modal")
     assert "hidden" in (modal.get_attribute("class") or ""), (
-        "Help modal should close on backdrop click"
+        "Prefs modal should close on backdrop click"
     )
 
 
-def test_help_modal_contains_shortcuts(page, base_url):
-    """Help modal lists at least the ⌘K and ? shortcuts."""
+def test_prefs_keyboard_tab_contains_shortcuts(page, base_url):
+    """Keyboard tab lists at least the ⌘K and ? shortcuts."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
     page.keyboard.press("?")
-    body_text = page.locator("#help-modal .help-body").inner_text()
-    assert "⌘K" in body_text or "K" in body_text, "Help should mention ⌘K shortcut"
-    assert "?" in body_text, "Help should mention ? shortcut"
-
-
-def test_help_focus_trap_tab(page, base_url):
-    """Tab cycles focus within the help modal (focus trap)."""
-    page.goto(f"{base_url}/wiki/")
-    page.wait_for_load_state("networkidle")
-    page.keyboard.press("?")
-    # Close button should be focused
-    focused = page.evaluate("() => document.activeElement?.id")
-    assert focused == "help-close-btn", (
-        f"Close button should be focused on open, got: {focused}"
+    body_text = page.locator("#prefs-panel-keyboard").inner_text()
+    assert "⌘K" in body_text or "K" in body_text, (
+        "Keyboard tab should mention ⌘K shortcut"
     )
+    assert "?" in body_text, "Keyboard tab should mention ? shortcut"
+
+
+def test_prefs_focus_trapped_on_open(page, base_url):
+    """Focus is inside the prefs modal when opened via ? key."""
+    page.goto(f"{base_url}/wiki/")
+    page.wait_for_load_state("networkidle")
+    page.keyboard.press("?")
+    focused_inside = page.evaluate("""() => {
+        const modal = document.getElementById('prefs-modal');
+        return modal.contains(document.activeElement);
+    }""")
+    assert focused_inside, "Focus should be inside prefs modal on open"

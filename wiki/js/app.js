@@ -6,7 +6,6 @@ import {
   Bookmarks,
   ReadToggle,
   Offline,
-  Theme,
   clearRecents,
   markRead,
   updateReadBtn,
@@ -77,14 +76,15 @@ document.addEventListener("click", (e) => {
     case "search-open":
       openGlobalSearch();
       break;
-    case "theme-toggle":
-      Theme.toggle();
-      break;
     case "settings-open":
       Settings.open();
       break;
     case "settings-close":
+    case "prefs-close":
       Settings.close();
+      break;
+    case "prefs-tab":
+      Settings._switchTab(btn.dataset.tab);
       break;
     case "wiki-home":
       navigate("");
@@ -220,7 +220,7 @@ if ("onscrollend" in window) {
    MODAL BACKDROP & GLOBAL KEYDOWN
    ═══════════════════════════════════════════════════════════════ */
 document
-  .getElementById("settings-backdrop")
+  .getElementById("prefs-backdrop")
   .addEventListener("click", () => Settings.close());
 
 document.addEventListener("keydown", (e) => {
@@ -230,7 +230,7 @@ document.addEventListener("keydown", (e) => {
     openGlobalSearch();
   }
 
-  // ?: Help modal (when not focused on input/textarea)
+  // ?: Open preferences on Keyboard tab (when not focused on input/textarea)
   if (e.key === "?") {
     const tag = document.activeElement.tagName;
     const isInput =
@@ -239,23 +239,26 @@ document.addEventListener("keydown", (e) => {
       document.activeElement.isContentEditable;
     if (!isInput) {
       e.preventDefault();
-      const helpModal = document.getElementById("help-modal");
-      if (helpModal && !helpModal.classList.contains("hidden")) {
-        closeHelp();
-      } else {
-        openHelp();
-      }
+      Settings.isOpen() ? Settings.close() : Settings.openTab("keyboard");
+    }
+  }
+
+  // ,: Open preferences on General tab (global shortcut)
+  if (e.key === ",") {
+    const tag = document.activeElement.tagName;
+    const isInput =
+      tag === "INPUT" ||
+      tag === "TEXTAREA" ||
+      document.activeElement.isContentEditable;
+    if (!isInput) {
+      e.preventDefault();
+      Settings.isOpen() ? Settings.close() : Settings.openTab("general");
     }
   }
 
   // Escape: Close modals or navigate back from content
   if (e.key === "Escape") {
-    const helpModal = document.getElementById("help-modal");
-    if (helpModal && !helpModal.classList.contains("hidden")) {
-      closeHelp();
-    } else if (
-      document.getElementById("zoom-overlay")?.classList.contains("open")
-    ) {
+    if (document.getElementById("zoom-overlay")?.classList.contains("open")) {
       closeZoomOverlay();
     } else if (
       !document
@@ -280,10 +283,6 @@ document.addEventListener("keydown", (e) => {
     if (!isInput) {
       if (e.key === "b" || e.key === "B") {
         Bookmarks.toggle();
-        e.preventDefault();
-      }
-      if (e.key === ",") {
-        Settings.isOpen() ? Settings.close() : Settings.open();
         e.preventDefault();
       }
       if (e.key === "f" || e.key === "F") {
@@ -331,64 +330,6 @@ function toggleDistractionFree() {
   _distractionFree = !_distractionFree;
   document.body.classList.toggle("distraction-free", _distractionFree);
 }
-
-/* ═══════════════════════════════════════════════════════════════
-   HELP MODAL
-   ═══════════════════════════════════════════════════════════════ */
-let _helpOpener = null;
-let _helpFocusTrapHandler = null;
-
-function openHelp() {
-  const modal = document.getElementById("help-modal");
-  if (!modal) return;
-  _helpOpener = document.activeElement;
-  modal.classList.remove("hidden");
-  modal.setAttribute("aria-hidden", "false");
-  const closeBtn = document.getElementById("help-close-btn");
-  closeBtn?.focus();
-
-  _helpFocusTrapHandler = (e) => {
-    if (e.key !== "Tab") return;
-    const focusable = Array.from(
-      modal.querySelectorAll("button, [href], [tabindex]:not([tabindex='-1'])")
-    ).filter((el) => !el.disabled);
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (e.shiftKey) {
-      if (document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      }
-    } else {
-      if (document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-  };
-  if (_helpFocusTrapHandler)
-    modal.removeEventListener("keydown", _helpFocusTrapHandler);
-  modal.addEventListener("keydown", _helpFocusTrapHandler);
-}
-
-function closeHelp() {
-  const modal = document.getElementById("help-modal");
-  if (!modal) return;
-  modal.classList.add("hidden");
-  modal.setAttribute("aria-hidden", "true");
-  if (_helpFocusTrapHandler) {
-    modal.removeEventListener("keydown", _helpFocusTrapHandler);
-    _helpFocusTrapHandler = null;
-  }
-  _helpOpener?.focus();
-  _helpOpener = null;
-}
-
-document.getElementById("help-close-btn")?.addEventListener("click", closeHelp);
-document
-  .querySelector("#help-modal .help-backdrop")
-  ?.addEventListener("click", closeHelp);
 
 /* ═══════════════════════════════════════════════════════════════
    DIAGRAM THEME SYNC

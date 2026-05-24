@@ -126,52 +126,40 @@ def test_data_action_search_open_works(wiki_page):
     assert not is_hidden, "Global search modal did not open via data-action=search-open"
 
 
-def test_data_action_theme_toggle_works(wiki_page):
-    """Clicking a [data-action=theme-toggle] button flips data-theme on <html>."""
-    before = wiki_page.evaluate(
-        "() => document.documentElement.getAttribute('data-theme')"
-    )
-    wiki_page.locator("[data-action='theme-toggle']").first.click()
-    after = wiki_page.evaluate(
-        "() => document.documentElement.getAttribute('data-theme')"
-    )
-    assert before != after, (
-        "Theme did not change after clicking data-action=theme-toggle"
-    )
-
-
 def test_data_action_settings_open_works(wiki_page):
     """Clicking a [data-action=settings-open] button opens the settings panel."""
     wiki_page.locator("[data-action='settings-open']").first.click()
     wiki_page.wait_for_function(
-        "() => !document.getElementById('settings-panel').classList.contains('hidden')"
+        "() => !document.getElementById('prefs-modal').classList.contains('hidden')"
     )
     is_hidden = wiki_page.evaluate(
-        "() => document.getElementById('settings-panel').classList.contains('hidden')"
+        "() => document.getElementById('prefs-modal').classList.contains('hidden')"
     )
     assert not is_hidden, "Settings panel did not open via data-action=settings-open"
 
 
 def test_data_action_settings_close_works(wiki_page):
-    """Clicking [data-action=settings-close] closes the settings panel."""
+    """Clicking [data-action=prefs-close] closes the settings panel."""
     wiki_page.locator("[data-action='settings-open']").first.click()
     wiki_page.wait_for_function(
-        "() => !document.getElementById('settings-panel').classList.contains('hidden')"
+        "() => !document.getElementById('prefs-modal').classList.contains('hidden')"
     )
-    wiki_page.locator("[data-action='settings-close']").click()
+    wiki_page.locator("[data-action='prefs-close']").click()
     wiki_page.wait_for_function(
-        "() => document.getElementById('settings-panel').classList.contains('hidden')"
+        "() => document.getElementById('prefs-modal').classList.contains('hidden')"
     )
     is_hidden = wiki_page.evaluate(
-        "() => document.getElementById('settings-panel').classList.contains('hidden')"
+        "() => document.getElementById('prefs-modal').classList.contains('hidden')"
     )
-    assert is_hidden, "Settings panel did not close via data-action=settings-close"
+    assert is_hidden, "Settings panel did not close via data-action=prefs-close"
 
 
 def test_data_action_settings_export_works(wiki_page):
     """Clicking [data-action=settings-export] triggers a file download."""
     wiki_page.locator("[data-action='settings-open']").first.click()
-    wiki_page.wait_for_selector("#settings-panel:not(.hidden)")
+    wiki_page.wait_for_selector("#prefs-modal:not(.hidden)")
+    wiki_page.locator("[data-action='prefs-tab'][data-tab='advanced']").click()
+    wiki_page.wait_for_selector("#prefs-panel-advanced.active")
 
     with wiki_page.expect_download() as dl_info:
         wiki_page.locator("[data-action='settings-export']").click()

@@ -1,5 +1,5 @@
 """
-Settings panel - open/close, background swatches, text/accent colours, font, size, persistence.
+Preferences modal - open/close, background swatches, text/accent colours, font, size, persistence.
 Theme variable sync - background/accent/text CSS vars.
 OS theme detect on first visit.
 """
@@ -7,14 +7,14 @@ OS theme detect on first visit.
 
 def _settings_is_closed(page):
     page.wait_for_function(
-        "() => document.getElementById('settings-panel').classList.contains('hidden')"
+        "() => document.getElementById('prefs-modal').classList.contains('hidden')"
     )
 
 
 def _open_settings(page):
-    page.locator("[title='Settings']").first.click()
+    page.locator("[title='Preferences (,)']").first.click()
     page.wait_for_function(
-        "() => !document.getElementById('settings-panel').classList.contains('hidden')"
+        "() => !document.getElementById('prefs-modal').classList.contains('hidden')"
     )
 
 
@@ -27,28 +27,28 @@ def _close_settings_via_escape(page):
 
 
 def test_settings_opens_on_gear_click(wiki_page):
-    """clicking gear icon removes .hidden from settings-panel."""
+    """clicking gear icon removes .hidden from prefs-modal."""
     _open_settings(wiki_page)
     assert (
-        not wiki_page.locator("#settings-panel")
+        not wiki_page.locator("#prefs-modal")
         .get_attribute("class")
         .__contains__("hidden")
     )
 
 
 def test_settings_closes_on_escape(wiki_page):
-    """Escape key closes the settings panel."""
+    """Escape key closes the preferences modal."""
     _open_settings(wiki_page)
     _close_settings_via_escape(wiki_page)
-    assert "hidden" in wiki_page.locator("#settings-panel").get_attribute("class")
+    assert "hidden" in wiki_page.locator("#prefs-modal").get_attribute("class")
 
 
 def test_settings_closes_on_backdrop_click(wiki_page):
-    """clicking backdrop closes the settings panel."""
+    """clicking backdrop closes the preferences modal."""
     _open_settings(wiki_page)
-    wiki_page.locator("#settings-backdrop").click(force=True)
+    wiki_page.locator("#prefs-backdrop").click(force=True, position={"x": 5, "y": 5})
     _settings_is_closed(wiki_page)
-    assert "hidden" in wiki_page.locator("#settings-panel").get_attribute("class")
+    assert "hidden" in wiki_page.locator("#prefs-modal").get_attribute("class")
 
 
 # ── content rendered ───────────────────────────────────────────────────────────
@@ -391,8 +391,8 @@ def test_settings_persist_across_reload(page, base_url):
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
 
-    page.locator("[title='Settings']").first.click()
-    page.wait_for_selector("#settings-panel:not(.hidden)")
+    page.locator("[title='Preferences (,)']").first.click()
+    page.wait_for_selector("#prefs-modal:not(.hidden)")
     page.locator("#settings-backgrounds .settings-bg-swatch").nth(
         3
     ).click()  # White (light)
@@ -412,8 +412,8 @@ def test_font_persists_across_reload(page, base_url):
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
 
-    page.locator("[title='Settings']").first.click()
-    page.wait_for_selector("#settings-panel:not(.hidden)")
+    page.locator("[title='Preferences (,)']").first.click()
+    page.wait_for_selector("#prefs-modal:not(.hidden)")
     page.locator("#settings-fonts .settings-font-chip").nth(3).click()  # Lora
 
     stored = page.evaluate(
@@ -439,124 +439,6 @@ def test_background_id_persists_to_localstorage(wiki_page):
         "() => JSON.parse(localStorage.getItem('wiki-settings')).backgroundId"
     )
     assert stored == "dark-dusk"
-
-
-# ── header theme toggle ───────────────────────────────────────────────────────
-
-
-def test_header_theme_toggle_works(wiki_page):
-    """Theme.toggle() via header button flips data-theme between dark and light."""
-    # Default starts dark; close settings and toggle
-    _open_settings(wiki_page)
-    wiki_page.locator("#settings-backgrounds .settings-bg-swatch").nth(
-        0
-    ).click()  # Void (dark)
-    wiki_page.locator("#settings-backdrop").click(force=True)
-    _settings_is_closed(wiki_page)
-
-    before = wiki_page.evaluate(
-        "() => document.documentElement.getAttribute('data-theme')"
-    )
-    wiki_page.locator(".theme-toggle-btn").first.click()
-    after = wiki_page.evaluate(
-        "() => document.documentElement.getAttribute('data-theme')"
-    )
-    assert before != after
-
-
-def test_header_toggle_shows_correct_icon(wiki_page):
-    """after toggling to light, moon icon hides and sun icon shows."""
-    _open_settings(wiki_page)
-    wiki_page.locator("#settings-backgrounds .settings-bg-swatch").nth(
-        0
-    ).click()  # dark
-    wiki_page.locator("#settings-backdrop").click(force=True)
-    _settings_is_closed(wiki_page)
-
-    wiki_page.wait_for_function(
-        "() => document.documentElement.getAttribute('data-theme') === 'dark'"
-    )
-    wiki_page.locator(".theme-toggle-btn").first.click()  # flip to light
-    wiki_page.wait_for_function(
-        "() => document.documentElement.getAttribute('data-theme') === 'light'"
-    )
-    moon_display = wiki_page.evaluate(
-        "() => document.querySelector('.theme-icon-moon').style.display"
-    )
-    sun_display = wiki_page.evaluate(
-        "() => document.querySelector('.theme-icon-sun').style.display"
-    )
-    assert moon_display == "none"
-    assert sun_display != "none"
-
-
-def test_theme_toggle_restores_saved_light_preset(wiki_page):
-    """Theme.toggle() from dark restores the previously saved light preset, not the default."""
-    _open_settings(wiki_page)
-    # Switch to a non-default light preset — saves wiki-last-light-preset=light-cream
-    wiki_page.locator("#settings-backgrounds .settings-bg-swatch").nth(
-        4
-    ).click()  # Cream (light)
-    # Switch back to dark — saves wiki-last-dark-preset; app is now in dark mode
-    wiki_page.locator("#settings-backgrounds .settings-bg-swatch").nth(
-        0
-    ).click()  # Void (dark)
-    wiki_page.locator("#settings-backdrop").click(force=True)
-    _settings_is_closed(wiki_page)
-
-    # Toggle to light — must restore light-cream, not default light-white
-    wiki_page.locator(".theme-toggle-btn").first.click()
-    bg = wiki_page.evaluate(
-        "() => JSON.parse(localStorage.getItem('wiki-settings')).backgroundId"
-    )
-    assert bg == "light-cream", f"Expected light-cream preset restored, got {bg}"
-
-
-def test_theme_toggle_restores_saved_dark_preset(wiki_page):
-    """Theme.toggle() from light restores the previously saved dark preset, not the default."""
-    _open_settings(wiki_page)
-    # Switch to a non-default dark bg — saves wiki-last-dark-preset=dark-slate
-    wiki_page.locator("#settings-backgrounds .settings-bg-swatch").nth(
-        1
-    ).click()  # Slate (dark)
-    # Cross to light — saves wiki-last-light-preset; app is now in light mode
-    wiki_page.locator("#settings-backgrounds .settings-bg-swatch").nth(
-        3
-    ).click()  # White (light)
-    wiki_page.locator("#settings-backdrop").click(force=True)
-    _settings_is_closed(wiki_page)
-
-    # Toggle to dark — must restore dark-slate, not default dark-void
-    wiki_page.locator(".theme-toggle-btn").first.click()
-    bg = wiki_page.evaluate(
-        "() => JSON.parse(localStorage.getItem('wiki-settings')).backgroundId"
-    )
-    assert bg == "dark-slate", f"Expected dark-slate preset restored, got {bg}"
-
-
-def test_theme_toggle_uses_default_when_no_preset(wiki_page):
-    """Theme.toggle() falls back to light-white default when no light preset has been saved."""
-    # Force dark mode so toggle goes dark→light (OS light preference would start light)
-    wiki_page.evaluate("""() => {
-        localStorage.removeItem('wiki-last-light-preset');
-        localStorage.setItem('wiki-settings', JSON.stringify({
-            backgroundId: 'dark-void', textColorId: 'text-crisp-dark',
-            accentId: 'indigo', font: 'Inter', fontSize: 'M', contentWidth: 'Default'
-        }));
-    }""")
-    wiki_page.reload()
-    wiki_page.wait_for_load_state("networkidle")
-
-    has_preset = wiki_page.evaluate(
-        "() => !!localStorage.getItem('wiki-last-light-preset')"
-    )
-    assert not has_preset, "Test requires no saved light preset"
-
-    wiki_page.locator(".theme-toggle-btn").first.click()
-    bg = wiki_page.evaluate(
-        "() => JSON.parse(localStorage.getItem('wiki-settings')).backgroundId"
-    )
-    assert bg == "light-white", f"Expected default light-white, got {bg}"
 
 
 # ── OS theme detect ─────────────────────────────────────────────────────────────
@@ -619,17 +501,4 @@ def test_unrecognized_format_falls_back_to_os_preference(page, base_url):
     theme = page.evaluate("() => document.documentElement.getAttribute('data-theme')")
     assert theme == "light", (
         "Unrecognized format should fall back to OS light preference"
-    )
-
-
-def test_settings_close_plays_animation(wiki_page):
-    """closing settings panel briefly adds .is-closing to drawer before hiding."""
-    _open_settings(wiki_page)
-    wiki_page.locator("#settings-backdrop").click(force=True)
-    wiki_page.wait_for_function(
-        "() => document.querySelector('.settings-drawer')?.classList.contains('is-closing')"
-    )
-    _settings_is_closed(wiki_page)
-    assert not wiki_page.evaluate(
-        "() => document.querySelector('.settings-drawer')?.classList.contains('is-closing')"
     )

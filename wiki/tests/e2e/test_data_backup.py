@@ -6,10 +6,12 @@ import json
 
 
 def _open_settings(page):
-    page.locator("[title='Settings']").first.click()
+    page.locator("[title='Preferences (,)']").first.click()
     page.wait_for_function(
-        "() => !document.getElementById('settings-panel').classList.contains('hidden')"
+        "() => !document.getElementById('prefs-modal').classList.contains('hidden')"
     )
+    page.locator("[data-action='prefs-tab'][data-tab='advanced']").click()
+    page.wait_for_selector("#prefs-panel-advanced.active")
 
 
 # ── Export ─────────────────────────────────────────────────────────────────────

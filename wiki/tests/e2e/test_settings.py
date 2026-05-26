@@ -355,6 +355,116 @@ def test_font_chip_updates_font_css_var(wiki_page):
 # ── size selection ────────────────────────────────────────────────────────────
 
 
+# ── line height selection ─────────────────────────────────────────────────────
+
+
+def test_settings_renders_three_line_heights(wiki_page):
+    """settings panel renders Compact, Normal, Relaxed line height buttons."""
+    _open_settings(wiki_page)
+    btns = wiki_page.locator("#settings-line-heights .settings-size-btn").all()
+    labels = [b.inner_text() for b in btns]
+    assert labels == ["Compact", "Normal", "Relaxed"]
+
+
+def test_line_height_compact_sets_css_var(wiki_page):
+    """selecting Compact sets --line-height-body to 1.4."""
+    _open_settings(wiki_page)
+    wiki_page.locator("#settings-line-heights .settings-size-btn").nth(0).click()
+    val = wiki_page.evaluate(
+        "() => document.documentElement.style.getPropertyValue('--line-height-body').trim()"
+    )
+    assert val == "1.4"
+
+
+def test_line_height_relaxed_greater_than_normal(wiki_page):
+    """Relaxed --line-height-body value is greater than Normal."""
+    _open_settings(wiki_page)
+    wiki_page.locator("#settings-line-heights .settings-size-btn").nth(1).click()
+    normal = float(
+        wiki_page.evaluate(
+            "() => document.documentElement.style.getPropertyValue('--line-height-body').trim()"
+        )
+    )
+    wiki_page.locator("#settings-line-heights .settings-size-btn").nth(2).click()
+    relaxed = float(
+        wiki_page.evaluate(
+            "() => document.documentElement.style.getPropertyValue('--line-height-body').trim()"
+        )
+    )
+    assert relaxed > normal
+
+
+def test_line_height_btn_gets_active_class(wiki_page):
+    """clicked line height button receives .active class."""
+    _open_settings(wiki_page)
+    btn = wiki_page.locator("#settings-line-heights .settings-size-btn").nth(0)
+    btn.click()
+    assert "active" in btn.get_attribute("class")
+
+
+def test_line_height_persists_to_localstorage(wiki_page):
+    """selecting a line height writes lineHeight to wiki-settings in localStorage."""
+    _open_settings(wiki_page)
+    wiki_page.locator("#settings-line-heights .settings-size-btn").nth(2).click()
+    stored = wiki_page.evaluate(
+        "() => JSON.parse(localStorage.getItem('wiki-settings')).lineHeight"
+    )
+    assert stored == "Relaxed"
+
+
+# ── paragraph spacing selection ───────────────────────────────────────────────
+
+
+def test_settings_renders_three_para_spacings(wiki_page):
+    """settings panel renders Tight, Normal, Relaxed paragraph spacing buttons."""
+    _open_settings(wiki_page)
+    btns = wiki_page.locator("#settings-para-spacings .settings-size-btn").all()
+    labels = [b.inner_text() for b in btns]
+    assert labels == ["Tight", "Normal", "Relaxed"]
+
+
+def test_para_spacing_tight_sets_css_var(wiki_page):
+    """selecting Tight sets --para-spacing to 0.5rem."""
+    _open_settings(wiki_page)
+    wiki_page.locator("#settings-para-spacings .settings-size-btn").nth(0).click()
+    val = wiki_page.evaluate(
+        "() => document.documentElement.style.getPropertyValue('--para-spacing').trim()"
+    )
+    assert val == "0.5rem"
+
+
+def test_para_spacing_relaxed_greater_than_tight(wiki_page):
+    """Relaxed --para-spacing value is larger than Tight."""
+    _open_settings(wiki_page)
+    wiki_page.locator("#settings-para-spacings .settings-size-btn").nth(0).click()
+    tight = wiki_page.evaluate(
+        "() => document.documentElement.style.getPropertyValue('--para-spacing').trim()"
+    )
+    wiki_page.locator("#settings-para-spacings .settings-size-btn").nth(2).click()
+    relaxed = wiki_page.evaluate(
+        "() => document.documentElement.style.getPropertyValue('--para-spacing').trim()"
+    )
+    assert relaxed != tight
+
+
+def test_para_spacing_btn_gets_active_class(wiki_page):
+    """clicked paragraph spacing button receives .active class."""
+    _open_settings(wiki_page)
+    btn = wiki_page.locator("#settings-para-spacings .settings-size-btn").nth(2)
+    btn.click()
+    assert "active" in btn.get_attribute("class")
+
+
+def test_para_spacing_persists_to_localstorage(wiki_page):
+    """selecting a paragraph spacing writes paraSpacing to wiki-settings in localStorage."""
+    _open_settings(wiki_page)
+    wiki_page.locator("#settings-para-spacings .settings-size-btn").nth(0).click()
+    stored = wiki_page.evaluate(
+        "() => JSON.parse(localStorage.getItem('wiki-settings')).paraSpacing"
+    )
+    assert stored == "Tight"
+
+
 def test_size_s_reduces_font_size(wiki_page):
     """selecting S sets a smaller root font-size than M."""
     _open_settings(wiki_page)

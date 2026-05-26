@@ -473,6 +473,8 @@ const DEFAULT_SETTINGS = {
   font: "Inter",
   fontSize: "M",
   contentWidth: "Default",
+  lineHeight: "Normal",
+  paraSpacing: "Normal",
 };
 
 function _isDark(backgroundId) {
@@ -558,6 +560,16 @@ function applySettingsToDOM(s) {
 
   const widths = { Narrow: "20%", Default: "10%", Wide: "5%" };
   root.setProperty("--layout-padding", widths[s.contentWidth] || "10%");
+
+  const lineHeights = { Compact: "1.4", Normal: "1.6", Relaxed: "1.85" };
+  root.setProperty("--line-height-body", lineHeights[s.lineHeight] || "1.6");
+
+  const paraSpacings = {
+    Tight: "0.5rem",
+    Normal: "0.75rem",
+    Relaxed: "1.25rem",
+  };
+  root.setProperty("--para-spacing", paraSpacings[s.paraSpacing] || "0.75rem");
 
   document.dispatchEvent(
     new CustomEvent("wiki:themechange", { detail: { theme } })
@@ -691,6 +703,8 @@ const Settings = {
     this._renderFonts(s);
     this._renderSizes(s);
     this._renderWidths(s);
+    this._renderLineHeights(s);
+    this._renderParaSpacings(s);
   },
 
   _renderBackgrounds(s) {
@@ -774,6 +788,50 @@ const Settings = {
           }"` + ` onclick="Settings._setWidth('${w}')">${w}</button>`
       )
       .join("");
+  },
+
+  _renderLineHeights(s) {
+    document.getElementById("settings-line-heights").innerHTML = [
+      "Compact",
+      "Normal",
+      "Relaxed",
+    ]
+      .map(
+        (lh) =>
+          `<button class="settings-size-btn${
+            s.lineHeight === lh ? " active" : ""
+          }"` + ` onclick="Settings._setLineHeight('${lh}')">${lh}</button>`
+      )
+      .join("");
+  },
+
+  _renderParaSpacings(s) {
+    document.getElementById("settings-para-spacings").innerHTML = [
+      "Tight",
+      "Normal",
+      "Relaxed",
+    ]
+      .map(
+        (ps) =>
+          `<button class="settings-size-btn${
+            s.paraSpacing === ps ? " active" : ""
+          }"` + ` onclick="Settings._setParaSpacing('${ps}')">${ps}</button>`
+      )
+      .join("");
+  },
+
+  _setLineHeight(lineHeight) {
+    const s = { ...getSettings(), lineHeight };
+    saveSettings(s);
+    applySettingsToDOM(s);
+    this._render();
+  },
+
+  _setParaSpacing(paraSpacing) {
+    const s = { ...getSettings(), paraSpacing };
+    saveSettings(s);
+    applySettingsToDOM(s);
+    this._render();
   },
 
   _setBackground(backgroundId) {

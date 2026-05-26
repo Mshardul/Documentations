@@ -60,7 +60,6 @@
   }
 
   /* WIKI-218: expand tappable area to 44px minimum */
-  .theme-toggle-btn,
   .topbar-icon-btn {
     min-width: 44px;
     min-height: 44px;
@@ -130,5 +129,23 @@
 @media (max-width: 900px) {
   body.toc-open {
     overflow: hidden;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  .home-header {
+    padding: var(--s16) var(--s5) var(--s8);
+  }
+  .home-main {
+    padding: 0 var(--s5) var(--s12);
+  }
+  .page-hero {
+    padding: var(--s8) var(--s5) var(--s6);
+  }
+  .index-main {
+    padding: var(--s6) var(--s5) var(--s16);
+  }
+  .topbar-inner {
+    padding: var(--s2) var(--s5);
   }
 }

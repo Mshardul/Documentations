@@ -503,6 +503,46 @@ def test_code_block_copy_button_in_header(page, base_url):
     )
 
 
+ARTICLE_WITH_CODE_NO_LANG = """\
+# Code No Lang Test
+
+## Section
+
+```
+plain code block with no language tag
+```
+"""
+
+
+# ── Code block has-lang-label class (WIKI-230) ────────────────────
+
+
+def test_code_block_with_lang_has_has_lang_label_class(page, base_url):
+    """<pre> containing a language tag gets class has-lang-label."""
+    _load_mock_article(page, base_url, ARTICLE_WITH_CODE, slug="has-lang-yes")
+    page.wait_for_selector("#markdown-body pre", timeout=5_000)
+
+    has_class = page.evaluate("""() => {
+        const pre = document.querySelector('#markdown-body pre');
+        return pre ? pre.classList.contains('has-lang-label') : null;
+    }""")
+    assert has_class is True, "<pre> with language tag is missing has-lang-label class"
+
+
+def test_code_block_without_lang_lacks_has_lang_label_class(page, base_url):
+    """<pre> without a language tag does not get class has-lang-label."""
+    _load_mock_article(page, base_url, ARTICLE_WITH_CODE_NO_LANG, slug="has-lang-no")
+    page.wait_for_selector("#markdown-body pre", timeout=5_000)
+
+    has_class = page.evaluate("""() => {
+        const pre = document.querySelector('#markdown-body pre');
+        return pre ? pre.classList.contains('has-lang-label') : null;
+    }""")
+    assert has_class is False, (
+        "<pre> without language tag must not have has-lang-label class"
+    )
+
+
 # ── Diff block highlighting (WIKI-158) ────────────────────────────
 
 

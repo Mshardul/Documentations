@@ -285,7 +285,7 @@ body.distraction-free .sticky-section-header {
   order: 1;
   color: var(--text-body);
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: var(--line-height-body);
 }
 
 /* Loading state */
@@ -348,7 +348,7 @@ body.distraction-free .sticky-section-header {
 
 /* Paragraphs */
 .markdown-body p {
-  margin-bottom: var(--s3);
+  margin-bottom: var(--para-spacing);
 }
 .markdown-body p:last-child {
   margin-bottom: 0;
@@ -403,7 +403,7 @@ body.distraction-free .sticky-section-header {
   margin-bottom: var(--s4);
 }
 .markdown-body li {
-  margin-bottom: var(--s1);
+  margin-bottom: calc(var(--para-spacing) * 0.5);
   line-height: 1.7;
 }
 .markdown-body li > ul,
@@ -445,8 +445,18 @@ body.distraction-free .sticky-section-header {
 .markdown-body pre code,
 .markdown-body pre code.hljs {
   display: block;
-  padding: 4cap var(--s2);
+  padding: var(--s4) var(--s4);
   line-height: 1;
+}
+.markdown-body pre.has-lang-label code,
+.markdown-body pre.has-lang-label code.hljs {
+  padding-top: var(--s5);
+}
+@supports selector(:has(*)) {
+  .markdown-body pre:has(.code-lang-label) code,
+  .markdown-body pre:has(.code-lang-label) code.hljs {
+    padding-top: var(--s5);
+  }
 }
 /* right-edge scroll fade — only when no header to show overflow */
 .markdown-body pre:not(.pre--collapsible)::after {

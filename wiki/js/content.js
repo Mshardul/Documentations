@@ -87,6 +87,7 @@ function addCodeBlockHeader(contentEl, onCopyError = () => {}) {
       label.className = "code-lang-label";
       label.textContent = langMatch[1];
       header.appendChild(label);
+      pre.classList.add("has-lang-label");
     }
 
     pre.insertBefore(header, pre.firstChild);

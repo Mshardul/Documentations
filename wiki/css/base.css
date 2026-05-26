@@ -85,12 +85,15 @@ body.focus-mode .vignette-layer {
 a {
   color: inherit;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
 button {
   font-family: var(--font);
   cursor: pointer;
   border: none;
   background: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 :focus-visible {

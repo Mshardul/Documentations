@@ -102,7 +102,7 @@ def test_scroll_position_restored_after_navigation(page, base_url):
     page.wait_for_timeout(500)  # debounce fires at 400ms
 
     saved = page.evaluate(
-        "() => localStorage.getItem('scroll-' + window.state.currentFilePath)"
+        "() => localStorage.getItem('scroll-' + window.state.currentWikiId + '-' + window.state.currentFilePath)"
     )
     assert saved is not None, "Scroll position not saved to localStorage"
     assert int(saved) > 0, f"Saved scroll should be > 0 (got {saved})"

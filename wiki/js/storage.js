@@ -1,5 +1,11 @@
 import { state, WIKIS, escHtml } from "./state.js";
 
+function _toast(message, durationMs = 3000, onUndo = null) {
+  document.dispatchEvent(
+    new CustomEvent("wiki:toast", { detail: { message, durationMs, onUndo } })
+  );
+}
+
 /* ═══════════════════════════════════════════════════════════════
    SCROLL CACHE EVICTION
    ═══════════════════════════════════════════════════════════════ */
@@ -194,11 +200,15 @@ function renderRecentsSection(wiki) {
 /* ═══════════════════════════════════════════════════════════════
    MARK AS READ
    ═══════════════════════════════════════════════════════════════ */
-const READ_KEY = "wiki-read";
+const READ_KEY_PREFIX = "wiki-read";
+
+function _readKey() {
+  return `${READ_KEY_PREFIX}-${state.currentWikiId || "default"}`;
+}
 
 function getReadSet() {
   try {
-    return new Set(JSON.parse(localStorage.getItem(READ_KEY) || "[]"));
+    return new Set(JSON.parse(localStorage.getItem(_readKey()) || "[]"));
   } catch {
     return new Set();
   }
@@ -212,7 +222,7 @@ function markRead(path) {
   const read = getReadSet();
   if (read.has(path)) return;
   read.add(path);
-  localStorage.setItem(READ_KEY, JSON.stringify([...read]));
+  localStorage.setItem(_readKey(), JSON.stringify([...read]));
   document.querySelectorAll(`.index-card-read-dot`).forEach((dot) => {
     const card = dot.closest(".index-card");
     const timeBadge = card?.querySelector(".index-card-read-time");
@@ -224,7 +234,7 @@ function markUnread(path) {
   const read = getReadSet();
   if (!read.has(path)) return;
   read.delete(path);
-  localStorage.setItem(READ_KEY, JSON.stringify([...read]));
+  localStorage.setItem(_readKey(), JSON.stringify([...read]));
   document.querySelectorAll(`.index-card-read-dot`).forEach((dot) => {
     const card = dot.closest(".index-card");
     const timeBadge = card?.querySelector(".index-card-read-time");
@@ -576,6 +586,20 @@ function applySettingsToDOM(s) {
   );
 }
 
+const BACKUP_SCHEMA = {
+  bookmarks: (v) => v === null || typeof v === "string",
+  recents: (v) => v === null || typeof v === "string",
+  settings: (v) => v === null || typeof v === "string",
+};
+
+function _validateBackup(data) {
+  if (typeof data !== "object" || data === null) return false;
+  for (const [key, check] of Object.entries(BACKUP_SCHEMA)) {
+    if (key in data && !check(data[key])) return false;
+  }
+  return true;
+}
+
 const Settings = {
   _lastFocus: null,
   _focusTrapHandler: null,
@@ -893,11 +917,16 @@ const Settings = {
 
   exportData() {
     const data = {
-      bookmarks: localStorage.getItem("wiki-bookmarks"),
-      recents: localStorage.getItem("wiki-recents"),
-      read: localStorage.getItem("wiki-read"),
-      settings: localStorage.getItem("wiki-settings"),
+      version: 1,
+      bookmarks: localStorage.getItem(BOOKMARKS_KEY),
+      recents: localStorage.getItem(RECENTS_KEY),
+      settings: localStorage.getItem(SETTINGS_KEY),
     };
+    for (const wiki of WIKIS) {
+      const key = `wiki-read-${wiki.id}`;
+      const val = localStorage.getItem(key);
+      if (val) data[key] = val;
+    }
 
     const blob = new Blob([JSON.stringify(data, null, 2)], {
       type: "application/json",
@@ -918,23 +947,70 @@ const Settings = {
     reader.onload = (e) => {
       try {
         const data = JSON.parse(e.target.result);
-        if (data.bookmarks)
-          localStorage.setItem("wiki-bookmarks", data.bookmarks);
-        if (data.recents) localStorage.setItem("wiki-recents", data.recents);
-        if (data.read) localStorage.setItem("wiki-read", data.read);
-        if (data.settings) localStorage.setItem("wiki-settings", data.settings);
 
-        alert("Data imported successfully! The app will now reload.");
-        location.reload();
-      } catch (err) {
-        alert("Invalid backup file.");
+        if (!_validateBackup(data)) {
+          _toast("Invalid backup file — import failed.");
+          event.target.value = "";
+          return;
+        }
+
+        const doImport = () => {
+          if (data.bookmarks)
+            localStorage.setItem(BOOKMARKS_KEY, data.bookmarks);
+          if (data.recents) localStorage.setItem(RECENTS_KEY, data.recents);
+          if (data.settings) localStorage.setItem(SETTINGS_KEY, data.settings);
+          for (const wiki of WIKIS) {
+            const key = `wiki-read-${wiki.id}`;
+            if (data[key]) localStorage.setItem(key, data[key]);
+          }
+          _toast("Data imported successfully!");
+          setTimeout(() => location.reload(), 1200);
+        };
+
+        if (data.version !== 1) {
+          _toast(
+            `Backup version ${
+              data.version ?? "unknown"
+            } — format may differ. Import anyway?`,
+            8000,
+            doImport
+          );
+        } else {
+          doImport();
+        }
+      } catch {
+        _toast("Invalid backup file — import failed.");
       }
+      event.target.value = "";
     };
     reader.readAsText(file);
-    // Reset input so it can be triggered again
-    event.target.value = "";
   },
 };
+
+/* ═══════════════════════════════════════════════════════════════
+   MULTI-TAB SYNC
+   ═══════════════════════════════════════════════════════════════ */
+window.addEventListener("storage", (e) => {
+  if (!e.key) return;
+  const wiki = WIKIS.find((w) => w.id === state.currentWikiId);
+  if (!wiki) return;
+
+  if (e.key === BOOKMARKS_KEY) {
+    renderBookmarksSection(wiki);
+    updateBookmarkBtn();
+  } else if (e.key === RECENTS_KEY) {
+    renderRecentsSection(wiki);
+  } else if (e.key === _readKey()) {
+    document.querySelectorAll(".index-card-read-dot").forEach((dot) => {
+      const card = dot.closest(".index-card");
+      const timeBadge = card?.querySelector(".index-card-read-time");
+      if (timeBadge?.dataset.path) {
+        dot.classList.toggle("visible", isRead(timeBadge.dataset.path));
+      }
+    });
+    updateReadBtn();
+  }
+});
 
 /* ═══════════════════════════════════════════════════════════════
    THEME (quick dark / light toggle)

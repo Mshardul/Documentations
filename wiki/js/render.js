@@ -346,7 +346,17 @@ async function fetchWikiIndex(wiki) {
   indexCache[wiki.id] = sections;
   try {
     sessionStorage.setItem(ssKey, JSON.stringify(sections));
-  } catch {}
+  } catch {
+    // Quota full: evict all other wiki-index-* entries then retry once
+    for (let i = sessionStorage.length - 1; i >= 0; i--) {
+      const k = sessionStorage.key(i);
+      if (k && k.startsWith("wiki-index-") && k !== ssKey)
+        sessionStorage.removeItem(k);
+    }
+    try {
+      sessionStorage.setItem(ssKey, JSON.stringify(sections));
+    } catch {}
+  }
   return sections;
 }
 
@@ -647,7 +657,7 @@ async function renderContent(
     }
 
     if (!anchor) {
-      const _saved = localStorage.getItem(`scroll-${filePath}`);
+      const _saved = localStorage.getItem(`scroll-${wiki.id}-${filePath}`);
       if (_saved) {
         const _targetY = parseInt(_saved, 10);
         document.fonts.ready.then(() =>

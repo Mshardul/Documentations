@@ -32,7 +32,7 @@ def test_export_button_triggers_download(page, base_url):
 
 
 def test_export_json_contains_expected_keys(page, base_url):
-    """Exported JSON file contains bookmarks, recents, read, settings keys."""
+    """Exported JSON contains version, bookmarks, recents, settings keys."""
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
     _open_settings(page)
@@ -45,22 +45,24 @@ def test_export_json_contains_expected_keys(page, base_url):
     with open(path) as f:
         data = json.load(f)
 
-    for key in ("bookmarks", "recents", "read", "settings"):
+    assert data.get("version") == 1, "Export JSON missing version:1"
+    for key in ("bookmarks", "recents", "settings"):
         assert key in data, f"Export JSON missing key: {key}"
+    assert "read" not in data, "Export JSON should not have legacy 'read' key"
 
 
 # ── Import ─────────────────────────────────────────────────────────────────────
 
 
 def test_import_restores_settings(page, base_url):
-    """Importing a backup file restores settings to localStorage."""
+    """Importing a valid v1 backup file restores settings to localStorage."""
     import os
     import tempfile
 
     backup = {
+        "version": 1,
         "bookmarks": "[]",
         "recents": "[]",
-        "read": "[]",
         "settings": json.dumps(
             {
                 "preset": "light",
@@ -82,7 +84,6 @@ def test_import_restores_settings(page, base_url):
         page.wait_for_load_state("networkidle")
         _open_settings(page)
 
-        page.on("dialog", lambda d: d.accept())
         with page.expect_navigation(timeout=10_000):
             page.locator("#import-upload").set_input_files(tmp_path)
 
@@ -98,8 +99,8 @@ def test_import_restores_settings(page, base_url):
         os.unlink(tmp_path)
 
 
-def test_import_invalid_file_shows_alert(page, base_url):
-    """Importing a non-JSON file shows an alert, does not crash."""
+def test_import_invalid_file_shows_toast(page, base_url):
+    """Importing a non-JSON file shows a toast error, does not crash."""
     import os
     import tempfile
 
@@ -112,13 +113,46 @@ def test_import_invalid_file_shows_alert(page, base_url):
         page.wait_for_load_state("networkidle")
         _open_settings(page)
 
-        alert_messages = []
-        page.on("dialog", lambda d: (alert_messages.append(d.message), d.accept()))
         page.locator("#import-upload").set_input_files(tmp_path)
-        page.wait_for_timeout(500)
+        page.wait_for_selector("#wiki-toast.visible", timeout=3000)
 
-        assert any("Invalid" in m or "invalid" in m for m in alert_messages), (
-            f"No error alert shown for invalid backup. Got: {alert_messages}"
+        toast_text = page.locator("#wiki-toast").inner_text()
+        assert "invalid" in toast_text.lower() or "failed" in toast_text.lower(), (
+            f"Toast did not show error message. Got: {toast_text}"
         )
+    finally:
+        os.unlink(tmp_path)
+
+
+def test_import_version_mismatch_shows_warning_toast(page, base_url):
+    """Importing a backup with unknown version shows a warning toast with undo/confirm."""
+    import os
+    import tempfile
+
+    backup = {
+        "version": 99,
+        "bookmarks": "[]",
+        "recents": "[]",
+        "settings": "{}",
+    }
+
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as tmp:
+        json.dump(backup, tmp)
+        tmp_path = tmp.name
+
+    try:
+        page.goto(f"{base_url}/wiki/")
+        page.wait_for_load_state("networkidle")
+        _open_settings(page)
+
+        page.locator("#import-upload").set_input_files(tmp_path)
+        page.wait_for_selector("#wiki-toast.visible", timeout=3000)
+
+        toast_text = page.locator("#wiki-toast").inner_text()
+        assert "version" in toast_text.lower() or "format" in toast_text.lower(), (
+            f"Toast did not show version warning. Got: {toast_text}"
+        )
+        # Undo button = "Import anyway" callback
+        assert page.locator(".toast-undo-btn").is_visible()
     finally:
         os.unlink(tmp_path)

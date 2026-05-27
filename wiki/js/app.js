@@ -45,6 +45,11 @@ window.toggleSection = toggleSection;
 window.clearRecents = clearRecents;
 window.closeGlobalSearch = closeGlobalSearch;
 
+document.addEventListener("wiki:toast", (e) => {
+  const { message, durationMs, onUndo } = e.detail;
+  showToast(message, durationMs, onUndo);
+});
+
 window.confirmClearRecents = (wikiId) => {
   const snapshot = getRecents().filter((r) => r.wikiId === wikiId);
   clearRecents(wikiId);
@@ -175,7 +180,10 @@ window.addEventListener(
       clearTimeout(_scrollSaveTimer);
       _scrollSaveTimer = setTimeout(() => {
         if (state.currentFilePath)
-          saveScrollPos(`scroll-${state.currentFilePath}`, window.scrollY);
+          saveScrollPos(
+            `scroll-${state.currentWikiId}-${state.currentFilePath}`,
+            window.scrollY
+          );
       }, 400);
     }
 
@@ -202,7 +210,10 @@ if ("onscrollend" in window) {
     () => {
       if (state.currentView === "content" && state.currentFilePath) {
         clearTimeout(_scrollSaveTimer);
-        saveScrollPos(`scroll-${state.currentFilePath}`, window.scrollY);
+        saveScrollPos(
+          `scroll-${state.currentWikiId}-${state.currentFilePath}`,
+          window.scrollY
+        );
       }
       if (state.currentView === "index" && state.currentWikiId) {
         clearTimeout(_indexScrollTimer);

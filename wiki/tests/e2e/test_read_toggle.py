@@ -8,7 +8,7 @@ ARTICLE_HASH = "system-design/caching"
 def _go_to_article(page, base_url):
     page.goto(f"{base_url}/wiki/")
     page.wait_for_load_state("networkidle")
-    page.evaluate("() => localStorage.removeItem('wiki-read')")
+    page.evaluate("() => localStorage.removeItem('wiki-read-system-design')")
     page.goto(f"{base_url}/wiki/#{ARTICLE_HASH}")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_selector("#markdown-body h1, #markdown-body h2", timeout=8_000)
@@ -46,7 +46,7 @@ def test_clicking_read_btn_marks_article_read(page, base_url):
     page.locator("#content-read-btn").click()
 
     read_set = page.evaluate(
-        "() => JSON.parse(localStorage.getItem('wiki-read') || '[]')"
+        "() => JSON.parse(localStorage.getItem('wiki-read-' + state.currentWikiId) || '[]')"
     )
     assert any("caching" in path for path in read_set)
 
@@ -77,7 +77,7 @@ def test_clicking_again_marks_article_unread(page, base_url):
     page.locator("#content-read-btn").click()  # mark unread
 
     read_set = page.evaluate(
-        "() => JSON.parse(localStorage.getItem('wiki-read') || '[]')"
+        "() => JSON.parse(localStorage.getItem('wiki-read-' + state.currentWikiId) || '[]')"
     )
     assert not any("caching" in path for path in read_set)
 

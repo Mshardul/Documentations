@@ -22,8 +22,15 @@ def test_scroll_position_saved_and_restored(page, base_url):
     file_path = page.evaluate(
         "() => (typeof state !== 'undefined' ? state.currentFilePath : null)"
     )
+    wiki_id = page.evaluate(
+        "() => (typeof state !== 'undefined' ? state.currentWikiId : null)"
+    )
     assert file_path, "Could not read state.currentFilePath from app"
-    page.evaluate("(fp) => localStorage.setItem('scroll-' + fp, '600')", file_path)
+    assert wiki_id, "Could not read state.currentWikiId from app"
+    page.evaluate(
+        "([wid, fp]) => localStorage.setItem('scroll-' + wid + '-' + fp, '600')",
+        [wiki_id, file_path],
+    )
 
     # Navigate away then back.
     page.goto(f"{base_url}/wiki/#system-design")
@@ -48,8 +55,15 @@ def test_scroll_position_not_restored_with_anchor(page, base_url):
     file_path = page.evaluate(
         "() => (typeof state !== 'undefined' ? state.currentFilePath : null)"
     )
+    wiki_id = page.evaluate(
+        "() => (typeof state !== 'undefined' ? state.currentWikiId : null)"
+    )
     assert file_path, "Could not read state.currentFilePath from app"
-    page.evaluate("(fp) => localStorage.setItem('scroll-' + fp, '600')", file_path)
+    assert wiki_id, "Could not read state.currentWikiId from app"
+    page.evaluate(
+        "([wid, fp]) => localStorage.setItem('scroll-' + wid + '-' + fp, '600')",
+        [wiki_id, file_path],
+    )
 
     # Revisit with an anchor - scroll should go to anchor, not saved position.
     first_heading = page.evaluate(

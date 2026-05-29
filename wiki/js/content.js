@@ -303,6 +303,7 @@ function addImageLightbox(contentEl) {
       },
       { once: true }
     );
+    img.loading = "lazy";
     img.classList.add("zoomable-img");
     img.addEventListener("click", () => {
       const clone = img.cloneNode();

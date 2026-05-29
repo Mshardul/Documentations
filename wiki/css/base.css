@@ -104,6 +104,23 @@ img {
   max-width: 100%;
 }
 
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  margin: var(--s6) 0;
+}
+
+kbd {
+  font-family: var(--font);
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 5px;

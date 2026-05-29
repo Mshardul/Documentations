@@ -289,7 +289,7 @@
 }
 .gsearch-result:hover,
 .gsearch-result.selected,
-.gsearch-result:focus {
+.gsearch-result:focus-visible {
   background: var(--surface-2);
   outline: none;
 }

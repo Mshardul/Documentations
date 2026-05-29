@@ -190,8 +190,13 @@ async function renderIndex(wiki) {
     renderIndexSections(state.indexSections, wiki);
 
     sectionsEl.classList.add("index-sections--loading");
-    await populateIndexReadTimes();
-    sectionsEl.classList.remove("index-sections--loading");
+    const scheduleIdle =
+      window.requestIdleCallback ?? ((fn) => setTimeout(fn, 1));
+    scheduleIdle(() =>
+      populateIndexReadTimes().finally(() =>
+        sectionsEl.classList.remove("index-sections--loading")
+      )
+    );
 
     const savedScroll = localStorage.getItem(`wiki-index-scroll-${wiki.id}`);
     if (savedScroll)

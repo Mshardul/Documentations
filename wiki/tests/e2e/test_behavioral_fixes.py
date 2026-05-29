@@ -10,7 +10,7 @@
 
 
 def _load_mock_article(page, base_url, content, slug="mock", extra_routes=None):
-    page.goto(f"{base_url}/wiki/")
+    page.goto(f"{base_url}/wiki/", wait_until="domcontentloaded")
     page.wait_for_load_state("networkidle")
     if extra_routes:
         for pattern, handler in extra_routes:
@@ -36,7 +36,7 @@ def _load_mock_article(page, base_url, content, slug="mock", extra_routes=None):
 
 def test_copy_button_failure_shows_toast(page, base_url):
     """denied clipboard on copy-btn click shows 'Copy failed' toast."""
-    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.goto(f"{base_url}/wiki/#system-design/caching", wait_until="domcontentloaded")
     page.wait_for_selector("#markdown-body pre .copy-btn", timeout=10_000)
 
     page.evaluate(
@@ -53,7 +53,7 @@ def test_copy_button_failure_shows_toast(page, base_url):
 
 def test_anchor_copy_failure_shows_toast(page, base_url):
     """denied clipboard on anchor-btn click shows 'Copy failed' toast."""
-    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.goto(f"{base_url}/wiki/#system-design/caching", wait_until="domcontentloaded")
     page.wait_for_selector("#markdown-body .anchor-btn", timeout=10_000)
 
     page.evaluate(
@@ -71,7 +71,7 @@ def test_anchor_copy_failure_shows_toast(page, base_url):
 def test_successful_copy_does_not_show_toast(page, base_url):
     """successful clipboard write does not show error toast."""
     page.context.grant_permissions(["clipboard-read", "clipboard-write"])
-    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.goto(f"{base_url}/wiki/#system-design/caching", wait_until="domcontentloaded")
     page.wait_for_selector("#markdown-body pre .copy-btn", timeout=10_000)
 
     page.locator("#markdown-body pre .copy-btn").first.click()
@@ -91,7 +91,7 @@ def test_successful_copy_does_not_show_toast(page, base_url):
 def test_scroll_position_restored_after_navigation(page, base_url):
     """scroll position is saved and restored on article revisit."""
     page.set_viewport_size({"width": 1280, "height": 800})
-    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.goto(f"{base_url}/wiki/#system-design/caching", wait_until="domcontentloaded")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
         "() => !!document.querySelector('#markdown-body[data-render-done]')",
@@ -108,7 +108,7 @@ def test_scroll_position_restored_after_navigation(page, base_url):
     assert int(saved) > 0, f"Saved scroll should be > 0 (got {saved})"
 
     # Full page reload to home avoids SPA render-race that resets scrollY
-    page.goto(f"{base_url}/wiki/")
+    page.goto(f"{base_url}/wiki/", wait_until="domcontentloaded")
     page.wait_for_selector("#view-home.active", timeout=5_000)
 
     page.evaluate(
@@ -150,7 +150,7 @@ def test_scroll_position_stable_after_revisit(page, base_url):
 
 def test_hover_preview_filters_prerequisites_from_fallback(page, base_url):
     """fallback preview skips paragraphs starting with 'Prerequisites:'."""
-    page.goto(f"{base_url}/wiki/")
+    page.goto(f"{base_url}/wiki/", wait_until="domcontentloaded")
     page.wait_for_load_state("networkidle")
 
     page.route(
@@ -202,7 +202,7 @@ def test_hover_preview_hidden_after_mouseleave_during_fetch(page, base_url):
         ready.wait(timeout=2.0)
         route.fulfill(body="# L\n\n## TL;DR\n\nStale content that must not appear.\n")
 
-    page.goto(f"{base_url}/wiki/")
+    page.goto(f"{base_url}/wiki/", wait_until="domcontentloaded")
     page.wait_for_load_state("networkidle")
     page.route("**/slow-link.md", slow_handler)
     page.route(
@@ -254,7 +254,7 @@ def test_hover_preview_left_clamped_near_right_edge(page, base_url):
     """preview left is clamped to >= 8px when viewport is narrower than preview."""
     # 320px viewport is narrower than the 340px preview; clamping always fires
     page.set_viewport_size({"width": 320, "height": 800})
-    page.goto(f"{base_url}/wiki/")
+    page.goto(f"{base_url}/wiki/", wait_until="domcontentloaded")
     page.wait_for_load_state("networkidle")
 
     page.route(
@@ -294,7 +294,7 @@ def test_hover_preview_left_clamped_near_right_edge(page, base_url):
 
 def test_rapid_theme_changes_do_not_crash(page, base_url):
     """10 rapid theme changes via debounce do not throw errors."""
-    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.goto(f"{base_url}/wiki/#system-design/caching", wait_until="domcontentloaded")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     page.wait_for_function(
         "() => !!document.querySelector('#markdown-body[data-render-done]')",
@@ -320,7 +320,7 @@ def test_rapid_theme_changes_do_not_crash(page, base_url):
 def test_mermaid_rerender_skips_offscreen_diagrams(page, base_url):
     """rerenderMermaidDiagrams does not update diagrams outside the viewport."""
     page.set_viewport_size({"width": 1280, "height": 600})
-    page.goto(f"{base_url}/wiki/")
+    page.goto(f"{base_url}/wiki/", wait_until="domcontentloaded")
     page.wait_for_load_state("networkidle")
 
     page.route(
@@ -376,7 +376,7 @@ def test_mermaid_rerender_skips_offscreen_diagrams(page, base_url):
 
 def test_toast_queue_no_crash_on_rapid_triggers(page, base_url):
     """multiple rapid clipboard failures do not crash; toast stays coherent."""
-    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.goto(f"{base_url}/wiki/#system-design/caching", wait_until="domcontentloaded")
     page.wait_for_selector("#markdown-body pre .copy-btn", timeout=10_000)
 
     errors = []
@@ -400,7 +400,7 @@ def test_toast_queue_no_crash_on_rapid_triggers(page, base_url):
 
 def test_toast_queue_second_message_appears_after_first(page, base_url):
     """queued second toast appears after first expires; not dropped."""
-    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.goto(f"{base_url}/wiki/#system-design/caching", wait_until="domcontentloaded")
     page.wait_for_selector("#markdown-body pre .copy-btn", timeout=10_000)
 
     page.evaluate("""() => {
@@ -434,7 +434,7 @@ def test_toast_queue_second_message_appears_after_first(page, base_url):
 
 def test_index_renders_with_crlf_line_endings(page, base_url):
     """wiki index with CRLF line endings renders article cards correctly."""
-    page.goto(f"{base_url}/wiki/")
+    page.goto(f"{base_url}/wiki/", wait_until="domcontentloaded")
     page.wait_for_load_state("networkidle")
 
     crlf_index = (
@@ -456,7 +456,7 @@ def test_index_renders_with_crlf_line_endings(page, base_url):
 
 def test_index_malformed_row_does_not_crash(page, base_url):
     """malformed link row in index.md is skipped; valid rows still render."""
-    page.goto(f"{base_url}/wiki/")
+    page.goto(f"{base_url}/wiki/", wait_until="domcontentloaded")
     page.wait_for_load_state("networkidle")
 
     index_with_bad_row = (
@@ -484,7 +484,7 @@ def test_index_malformed_row_does_not_crash(page, base_url):
 
 def test_debug_overlay_appears_with_debug_param(page, base_url):
     """?debug param mounts the debug info overlay."""
-    page.goto(f"{base_url}/wiki/?debug")
+    page.goto(f"{base_url}/wiki/?debug", wait_until="domcontentloaded")
     page.wait_for_load_state("networkidle")
 
     overlay = page.locator("#debug-overlay")
@@ -494,7 +494,7 @@ def test_debug_overlay_appears_with_debug_param(page, base_url):
 
 def test_debug_overlay_absent_without_param(page, base_url):
     """debug overlay must not appear without ?debug param."""
-    page.goto(f"{base_url}/wiki/")
+    page.goto(f"{base_url}/wiki/", wait_until="domcontentloaded")
     page.wait_for_load_state("networkidle")
 
     assert page.locator("#debug-overlay").count() == 0, (
@@ -504,7 +504,7 @@ def test_debug_overlay_absent_without_param(page, base_url):
 
 def test_debug_overlay_close_removes_it(page, base_url):
     """clicking the close button removes the debug overlay from DOM."""
-    page.goto(f"{base_url}/wiki/?debug")
+    page.goto(f"{base_url}/wiki/?debug", wait_until="domcontentloaded")
     page.wait_for_load_state("networkidle")
 
     page.locator(".debug-close").click()
@@ -517,7 +517,7 @@ def test_debug_overlay_close_removes_it(page, base_url):
 def test_focus_toggle_hidden_on_narrow_mobile(page, base_url):
     """focus-toggle button is hidden at 375px width."""
     page.set_viewport_size({"width": 375, "height": 812})
-    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.goto(f"{base_url}/wiki/#system-design/caching", wait_until="domcontentloaded")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     assert not page.locator("[data-action='focus-toggle']").first.is_visible()
 
@@ -525,7 +525,7 @@ def test_focus_toggle_hidden_on_narrow_mobile(page, base_url):
 def test_offline_toggle_hidden_on_narrow_mobile(page, base_url):
     """offline-toggle button is hidden at 375px width."""
     page.set_viewport_size({"width": 375, "height": 812})
-    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.goto(f"{base_url}/wiki/#system-design/caching", wait_until="domcontentloaded")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     assert not page.locator("[data-action='offline-toggle']").first.is_visible()
 
@@ -533,6 +533,6 @@ def test_offline_toggle_hidden_on_narrow_mobile(page, base_url):
 def test_focus_toggle_visible_on_desktop(page, base_url):
     """focus-toggle button is visible on desktop."""
     page.set_viewport_size({"width": 1280, "height": 800})
-    page.goto(f"{base_url}/wiki/#system-design/caching")
+    page.goto(f"{base_url}/wiki/#system-design/caching", wait_until="domcontentloaded")
     page.wait_for_selector("#view-content.active", timeout=10_000)
     assert page.locator("[data-action='focus-toggle']").first.is_visible()

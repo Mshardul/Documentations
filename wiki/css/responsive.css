@@ -98,6 +98,16 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  .anchor-btn {
+    opacity: 1;
+    width: 16px;
+    height: 16px;
+  }
+  .anchor-btn svg {
+    width: 11px;
+    height: 11px;
+  }
 }
 
 @supports (padding-bottom: env(safe-area-inset-bottom)) {

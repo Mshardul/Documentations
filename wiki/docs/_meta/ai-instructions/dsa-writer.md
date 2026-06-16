@@ -14,6 +14,22 @@ Companion files:
 
 ---
 
+## Article kinds — specific vs consolidated
+
+Before anything else, decide which **kind** of article you're writing. The kind decides whether the structure below is mandatory.
+
+- **Specific article** — covers **one** structure, algorithm, or pattern (`array`, `binary-search`, `sliding-window`). This is the default and the overwhelming majority. A specific article **must** follow its section's full structure: every universal param, the section block, the one family block, the ordered headings. The rater scores it against all of them and gates on the structure being present. Everything else in this file is written for specific articles.
+
+- **Consolidated (hub) article** — covers a **family or cluster** of related topics that each deserve their own specific page, and exists to _survey and route_, not to teach any one of them in depth (`sorting` surveys merge/quick/heap/counting/radix; a future `tree-traversals` hub might survey pre/in/post/level-order). A hub is a **decision layer**: what the family is, the shared theory, a comparison table, "which one when", and a **linked list of its members** with a 2–3 sentence description each. It **does not** trace a single algorithm, and is therefore **exempt from the per-section structure** — no worked example, no single invariant, no one implementation, no family block, no practice problems are required, because those live on the member pages.
+
+  **Mark a hub explicitly.** The first thing under the title (after Prerequisites/TOC) must be a blockquote declaring it: `> **Hub article.** This page is the survey + decision layer for <family> — it does not trace any single algorithm. Each <member> has its own page …`. This is the signal the rater keys on; an unmarked article is treated as specific and scored against the full structure.
+
+  **A hub still owns:** U7/U8/U9/U10/U11/U12/U13 (format spine, title↔filename, prerequisites, TOC, soundbite, working links), U1 (what the family is + mental model), a member list with one working link per member (or plain-text name until the member page exists — never a broken `.md` link), and any genuinely family-level content (the comparison table, the shared lower-bound/theory, the "which one when" prose). It is judged on _those_, not on the per-algorithm params.
+
+  **When to split into a hub + members vs. one specific article:** if a single page would have to trace **two or more genuinely different procedures** to be complete (sorting must trace merge _and_ quick _and_ counting), it's a family → hub + member pages. If one procedure with variants covers it (binary search + its boundary/exponential variants), it's one specific article. When unsure, default to specific.
+
+---
+
 ## How to write one
 
 1. **Pick section + family.** Section from the target folder; family from the tables below (DS / Algorithm only — Patterns have none).
@@ -171,12 +187,18 @@ Pick the one family matching the article. Write its block under the **expected h
 
 ### Algorithm families
 
-| Family          | Members                                            | Heading + must-cover                                                                  |
-| --------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| Search/divide   | binary-search, sorting, divide & conquer           | `## Loop/recurrence invariant` — search-space shrink; recurrence → Master theorem.    |
-| Traversal       | BFS, DFS, topological-sort, Dijkstra, Bellman-Ford | `## Graph/tree assumptions` — visited-state, directed/weighted, queue vs stack vs PQ. |
-| Recursive/build | recursion, backtracking, DP                        | `## State & recurrence` — state def, base case, memo vs tabulation, state-space size. |
-| Bit/greedy      | bit-manipulation, greedy                           | `## Greedy-choice proof` (exchange argument) OR `## Bit-tricks table`.                |
+| Family          | Members                                            | Heading + must-cover                                                                                                                                                              |
+| --------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Search/divide   | binary-search, sorting, divide & conquer           | `## Loop/recurrence invariant` — search-space shrink; recurrence → Master theorem.                                                                                                |
+| Traversal       | BFS, DFS, topological-sort, Dijkstra, Bellman-Ford | `## Graph/tree assumptions` — visited-state, directed/weighted, queue vs stack vs PQ.                                                                                             |
+| Recursive/build | recursion, backtracking, DP                        | `## State & recurrence` — state def, base case, memo vs tabulation, state-space size.                                                                                             |
+| Bit/greedy      | bit-manipulation, greedy                           | `## Greedy-choice proof` (exchange argument) OR `## Bit-tricks table`.                                                                                                            |
+| Distribution    | counting-sort, radix-sort, bucket-sort             | `## Key & distribution` — what the key is, the key range `k` (or digit count `d` / bucket count), why it sidesteps the comparison lower bound, and the space cost the range buys. |
+
+**Non-comparison / no-clean-fit algorithms.** A few algorithms don't sit in any family above — non-comparison sorts (counting/radix/bucket) and iterative loop-invariant sorts (insertion/selection). Two rules:
+
+- **Non-comparison sorts** use the **Distribution** family block (`## Key & distribution`) — they genuinely share a mechanism (index/bucket by key value, not compare), so it's a real family, not a dumping ground.
+- **Anything still without a fit** (e.g. insertion sort's incremental loop) picks the **nearest** family, repurposes its heading to the algorithm's actual structure (loop state, not a recurrence), and **flags the stretch in a `> Family note` blockquote** in the article so the rater doesn't penalize a forced fit. The depth must live somewhere real (the invariant, the cost analysis) — the family label is bookkeeping, not the substance.
 
 ---
 

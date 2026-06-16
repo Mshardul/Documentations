@@ -7,6 +7,8 @@
 
 ## Table of Contents
 
+- [Prerequisites](#prerequisites)
+- [Table of Contents](#table-of-contents)
 - [What it is](#what-it-is)
 - [How it works](#how-it-works)
 - [Operations](#operations)
@@ -17,12 +19,14 @@
 - [Memory layout](#memory-layout)
 - [Implementation](#implementation)
 - [CP-primitives](#cp-primitives)
+  - [Growable buffer as a stack — `append` / `pop` = O(1)](#growable-buffer-as-a-stack--append--pop--o1)
+  - [Sorted dynamic array + binary insertion — `bisect.insort`](#sorted-dynamic-array--binary-insertion--bisectinsort)
+  - [Growable result buffer — build output in one O(n) pass](#growable-result-buffer--build-output-in-one-on-pass)
 - [Gotchas / edge cases](#gotchas--edge-cases)
-- [Practice problems](#practice-problems)
-  - [Insert Delete GetRandom O(1)](#1-insert-delete-getrandom-o1--swap-with-last--index-map)
-  - [Min Stack](#2-min-stack--parallel-auxiliary-buffer)
-  - [Implement a Resizable Array](#3-implement-a-resizable-array--the-doubling-resize-itself)
-  - [Implement Queue using Stacks](#4-implement-queue-using-stacks--amortized-analysis-across-two-buffers)
+  - [1. Insert Delete GetRandom O(1) — _swap-with-last + index map_](#1-insert-delete-getrandom-o1--swap-with-last--index-map)
+  - [2. Min Stack — _parallel auxiliary buffer_](#2-min-stack--parallel-auxiliary-buffer)
+  - [3. Implement a Resizable Array — _the doubling resize itself_](#3-implement-a-resizable-array--the-doubling-resize-itself)
+  - [4. Implement Queue using Stacks — _amortized analysis across two buffers_](#4-implement-queue-using-stacks--amortized-analysis-across-two-buffers)
 
 ## What it is
 
@@ -42,7 +46,7 @@ A dynamic array tracks two numbers: **size** (how many elements are in use) and 
 ```
 capacity 4, size 4 — FULL.  append(99):
 
-old block:  [ 42 | 17 | 99 |  8 ]                size=4 cap=4
+old block:  [ 42 | 17 | 99 |  8 ]                       size=4 cap=4
                   │ allocate 2× = cap 8, copy over │
 new block:  [ 42 | 17 | 99 |  8 |    |    |    |    ]   size=4 cap=8
                   │ now there is room — place 99    │
@@ -130,7 +134,7 @@ DynamicArray header           backing block (capacity 8)
 +--------+----------+         +----+----+----+----+----+----+----+----+
 | size=5 | cap=8    |  data──▶| 42 | 17 | 99 |  8 | 23 |    |    |    |
 +--------+----------+         +----+----+----+----+----+----+----+----+
-                               └──────── in use ───────┘ └─ slack ─┘
+                               └──────── in use ──────┘ └─── slack ──┘
 ```
 
 **Cache behavior.** Same as a plain array — adjacent elements share cache lines, sequential scans are fast. The slack at the end costs memory but not access speed.

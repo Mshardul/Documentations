@@ -11,14 +11,39 @@ Scores a written DSA article (`content/dsa/**/*.md`) for interview-readiness and
 Input: one article path (or a glob to batch-rate several, one report each).
 
 1. **Read the article.**
-2. **Detect the section** from the folder:
+2. **Detect the article kind** (see [dsa-writer.md › Article kinds](./dsa-writer.md#article-kinds--specific-vs-consolidated)). If the article opens (after Prerequisites/TOC) with a `> **Hub article.**` blockquote, it is a **consolidated (hub) article** — score it with the **hub rubric** below and skip the rest of the per-section scoring. Otherwise it is a **specific article** — proceed with steps 3–6 as normal. An article without the hub marker is always treated as specific, even if its title names a family.
+3. **Detect the section** from the folder:
    - `content/dsa/data-structures/…` → **DS**
    - `content/dsa/algorithms/…` → **Algorithm**
    - `content/dsa/patterns/…` → **Pattern**
-3. **Detect the family** (DS and Algorithm only — Pattern has none) using the family tables in the writer. **Tie-breaker:** family = the article's _primary subject_, not techniques touched in passing (Sorting = Search/divide even though heap-sort references a heap; Backtracking = Recursive/build even though it recurses). When genuinely split, pick the family whose must-cover block the article covers at most depth, and name the runner-up in the report.
-4. **Apply params in three tiers:** universal (every article) + the matching section block + the matching family block — all defined in the writer. Params that don't apply (e.g. recognition-signals on an algorithm) are marked **n/a** and dropped from the total.
-5. **Resolve filesystem checks via the pre-check script — facts supplied, not guessed.** U8, U11, U12 are deterministic and must not vary run-to-run. Run `./scripts/dsa-check.sh <article.md>` (Bash wrapper over `dsa_check.py`) and paste its PASS/FAIL lines into the U8/U11/U12 rows. Do **not** judge these three from reading alone. If the script can't run, say so in the report and fall back to a manual tree check — never silently guess.
-6. **Score, gate, and report** in the output format at the bottom.
+4. **Detect the family** (DS and Algorithm only — Pattern has none) using the family tables in the writer. **Tie-breaker:** family = the article's _primary subject_, not techniques touched in passing (Backtracking = Recursive/build even though it recurses). When genuinely split, pick the family whose must-cover block the article covers at most depth, and name the runner-up in the report. _(Hubs have no family — skip this step.)_
+5. **Apply params in three tiers:** universal (every article) + the matching section block + the matching family block — all defined in the writer. Params that don't apply (e.g. recognition-signals on an algorithm) are marked **n/a** and dropped from the total.
+6. **Resolve filesystem checks via the pre-check script — facts supplied, not guessed.** U8, U11, U12 are deterministic and must not vary run-to-run. Run `./scripts/dsa-check.sh <article.md>` (Bash wrapper over `dsa_check.py`) and paste its PASS/FAIL lines into the U8/U11/U12 rows. Do **not** judge these three from reading alone. If the script can't run, say so in the report and fall back to a manual tree check — never silently guess.
+7. **Score, gate, and report** in the output format at the bottom.
+
+---
+
+## Hub (consolidated) article rubric
+
+A hub article surveys a family and routes to member pages; it is **exempt from the per-section structure** (no worked example, single invariant, family block, or practice problems — those live on the member pages). Do **not** score it against DS/AL/PA section params or the family block; mark those **n/a** with the reason "hub article — covered on member pages."
+
+Score a hub against **only** these:
+
+| #   | Param                | Gate | What to check                                                                                                                                                     |
+| --- | -------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| U1  | Family definition    | gate | What the family is + a mental model — at the family level, not one member's.                                                                                      |
+| H1  | Member list          | gate | Every member named, each with a 2–3 sentence description; **one working link per member, or plain-text name** until that page exists (never a broken `.md` link). |
+| H2  | Decision layer       | gate | A "which one when" — comparison table and/or selection prose that genuinely helps the reader choose between members.                                              |
+| H3  | Shared theory        | adv  | Any genuinely family-level reasoning (the lower bound, the shared recurrence, the unifying invariant) — where one exists.                                         |
+| U7  | Format spine         | gate | Title → Prerequisites → TOC → body; the `> **Hub article.**` marker present.                                                                                      |
+| U8  | Title ↔ filename     | gate | Script.                                                                                                                                                           |
+| U9  | Prerequisites format | adv  | Standard prerequisites block.                                                                                                                                     |
+| U10 | TOC                  | adv  | Reflects headings.                                                                                                                                                |
+| U11 | Filename convention  | gate | Script.                                                                                                                                                           |
+| U12 | Links resolve        | gate | Script — every live `.md` link resolves (member links not yet wired must be plain text, not broken links).                                                        |
+| U13 | Soundbite            | adv  | One spoken-aloud family summary.                                                                                                                                  |
+
+Scoring scale, weights (U1/H-params weight 1; U8–U13 weight 0.5), the ≥6 gate, and the report format are unchanged. The gate is SHIP only if every gated hub param scores ≥6.
 
 ---
 

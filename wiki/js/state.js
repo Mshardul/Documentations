@@ -12,6 +12,16 @@ const WIKIS = [
     indexPath: "./content/system-design/index.md",
     articleCount: 38,
   },
+  {
+    id: "dsa",
+    title: "Data Structures & Algorithms",
+    description:
+      "Interview-ready DSA reference: data structures, algorithms, and the patterns that recognise them.",
+    icon: "🧩",
+    color: "#10b981",
+    indexPath: "./content/dsa/index.md",
+    articleCount: 0,
+  },
 ];
 
 /* ═══════════════════════════════════════════════════════════════

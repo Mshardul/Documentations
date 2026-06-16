@@ -10,8 +10,11 @@ Three sections: **data structures** (structural reference), **algorithms** (proc
 
 Structural references. Each page covers how it works, operations with their complexity, when to use it, variants, and an implementation.
 
-| Structure | Description |
-| --------- | ----------- |
+| Structure                                               | Description                                                                                                                |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| [Array](./data-structures/array.md)                     | Contiguous block, O(1) indexed access, O(n) middle insert/delete. The foundation every other structure builds on.          |
+| [Dynamic Array](./data-structures/dynamic-array.md)     | Growable array that doubles when full. Amortized O(1) append — the canonical amortization argument.                        |
+| [Circular Buffer](./data-structures/circular-buffer.md) | Fixed-size ring with head/tail wraparound. True O(1) enqueue/dequeue, no resize — fixed-capacity FIFO and sliding windows. |
 
 ---
 

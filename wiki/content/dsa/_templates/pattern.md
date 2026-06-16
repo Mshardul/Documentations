@@ -38,13 +38,21 @@
 
 <!-- PA4: typical time/space of the pattern. -->
 
+## Constraints & approach
+
+<!-- PA10 (gated): input size → reach for this pattern (or not). n ≤ 1e5 and "contiguous subarray" → sliding window, not O(n²). State when the constraint pushes you OFF this pattern. Distinct from PA11: PA10 = when the constraint selects this pattern; PA11 = the contest tricks once you're in it. -->
+
 ## Variations
 
-<!-- PA5 (advisory): common twists. -->
+<!-- PA5 (advisory): common twists (general). -->
+
+## CP-primitives
+
+<!-- PA11 (gated): the contest-flavored tricks/variants of THIS mechanic — the ones that show up in contests, not basic interviews (sliding window → monotonic-deque window-max; two pointers → meet-in-the-middle; binary-search-on-answer). ≥2, each with a one-line "why for CP". Distinct from PA5 (general twists). -->
 
 ## Worked problems
 
-<!-- PA6: 3–5 problems reusing the pattern, each with a 2–3 sentence approach sketch (not a full solution). -->
+<!-- PA6: 3–5 problems reusing the pattern, each with a 2–3 sentence approach sketch (not a full solution). Favor staples; note constraint ranges where they change the approach. -->
 
 ## Pitfalls
 
@@ -60,4 +68,5 @@
 
 ## Practice problems
 
-<!-- U6: ≥3 problems, each tagged by pattern + relative .md cross-link. -->
+<!-- U6: ≥3 problems, each a WORKED entry (### subheading per problem): (1) full problem statement in 2–3 sentences + constraints where they matter; (2) approach/insight in prose; (3) short runnable Python solution; (4) time/space complexity. EVERY PROBLEM MUST EXERCISE A DISTINCT TECHNIQUE — no duplicates padding the count.
+     Note: keep this distinct from PA6 (Worked problems = brief approach sketches reusing the pattern). U6 here = fully worked, with code. -->

@@ -4,6 +4,19 @@ A fast, offline-capable reference wiki for interview prep. Two verticals — **S
 
 ---
 
+## Goals
+
+Each vertical serves a specific dual purpose — every article is written against these:
+
+| Vertical          | Purpose                                                                                                                                                                    |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **System Design** | **Interview** readiness **+ learning new tools** (understand a component/tool deeply enough to choose and use it).                                                         |
+| **DSA**           | **Interview** readiness **+ competitive programming** (the theory, the working, the reasoning — plus the CP toolkit: prefix sums, constraints→approach, contest pitfalls). |
+
+These goals drive the writer/rater params: the DSA params exist to make an article interview- **and** contest-ready, not merely complete.
+
+---
+
 ## Verticals
 
 | Vertical                         | Icon | Content root             | Status                  |

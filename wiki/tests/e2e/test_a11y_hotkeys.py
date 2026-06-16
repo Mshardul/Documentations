@@ -185,12 +185,20 @@ def test_search_index_cache_is_valid_json(wiki_page):
     wiki_page.wait_for_selector(".gsearch-result", timeout=15_000)
     wiki_page.keyboard.press("Escape")
 
+    # Every cached index must parse to an array (never corrupt). An empty
+    # vertical legitimately caches [] during buildout, so we require at least
+    # one non-empty index rather than demanding every vertical be populated.
     result = wiki_page.evaluate("""() => {
-        const key = Object.keys(sessionStorage).find(k => k.startsWith('wiki-index-'));
-        if (!key) return null;
-        const parsed = JSON.parse(sessionStorage.getItem(key));
-        return Array.isArray(parsed) ? parsed.length : -1;
+        const keys = Object.keys(sessionStorage).filter(k => k.startsWith('wiki-index-'));
+        if (!keys.length) return null;
+        const lengths = [];
+        for (const k of keys) {
+            const parsed = JSON.parse(sessionStorage.getItem(k));
+            if (!Array.isArray(parsed)) return -1;  // corrupt / not an array
+            lengths.push(parsed.length);
+        }
+        return lengths;
     }""")
-    assert result is not None and result > 0, (
-        f"sessionStorage index is not a valid non-empty array (got {result})"
-    )
+    assert result is not None, "No wiki-index-* keys found in sessionStorage"
+    assert result != -1, "A sessionStorage index is not a valid JSON array"
+    assert max(result) > 0, f"No non-empty index cached (section counts: {result})"

@@ -102,7 +102,7 @@ const state = {
 const readTimeCache = {};
 const indexCache = {};
 const allSearchCache = { loaded: false, loading: false, entries: [] };
-const STUB_THRESHOLD = 200; // bytes - stubs are just "# Title\n---"
+const STUB_THRESHOLD = 5000; // bytes - stubs are template skeletons (~3k of HTML-comment scaffolding); real articles are 8k+
 
 /* ─── Pure utilities (placed here to avoid circular deps between storage/render) ─── */
 function escHtml(str) {

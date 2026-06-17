@@ -1,4 +1,4 @@
-const SHELL_CACHE = "wiki-shell-v3";
+const SHELL_CACHE = "wiki-shell-v4";
 const ARTICLE_CACHE = "wiki-articles-v1";
 
 self.addEventListener("install", (e) => {
